@@ -245,7 +245,9 @@ function InstallMSYS2 {
     Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | Tee-Object -a "`"$log`""
 
     # Upgrade MSYS2
-    Output "Upgrade OS : for continue installation please close the window after the update is completed !!!"
+    Output -fgcolor Red "╔══════════════════════════════════════════════════════════════════════════════════════════════════╗"
+    Output -fgcolor Red "║ Upgrade OS : for continue installation please close the window after the update is completed !!! ║"
+    Output -fgcolor Red "╚══════════════════════════════════════════════════════════════════════════════════════════════════╝"
     $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
     MSYS2Cmd @("$update_cmd", "$update_cmd")
 
