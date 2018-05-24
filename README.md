@@ -475,7 +475,7 @@ Configure environment for [Javascript](https://developer.mozilla.org/docs/Web/Ja
 
 VSCode extensions :
 
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Node.js Extension Pack](https://marketplace.visualstudio.com/items?itemName=waderyan.nodejs-extension-pack)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/javascript)
 
