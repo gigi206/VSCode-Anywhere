@@ -1,4 +1,4 @@
-﻿############
+############
 #   INFO   #
 ############
 #
@@ -117,6 +117,9 @@ function InstallVSCode {
         Output "$VSCAppName already installed (skipped). If you want to reinstall delete $VSCAppPath_install directory"
         return
     }
+
+    # Refresh repositories before install new components
+    MSYS2Cmd @('pacman -Sy')
 
     # Install git for consult last tag version from github
     InstallMSYS2Pkg @('git')
