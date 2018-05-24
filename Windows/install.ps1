@@ -1,4 +1,4 @@
-############
+﻿############
 #   INFO   #
 ############
 #
@@ -241,8 +241,8 @@ function InstallMSYS2 {
     }
 
     # Need to login for init MSYS2 env
-    Output "Initializing $MSYS2AppName" | tee -a "`"$log`""
-    Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | tee -a "`"$log`""
+    Output "Initializing $MSYS2AppName" | Tee-Object -a "`"$log`""
+    Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | Tee-Object -a "`"$log`""
 
     # Upgrade MSYS2
     Output "Upgrade OS : for continue installation please close the window after the update is completed !!!"
@@ -327,8 +327,8 @@ function InstallMSYS2Pkg([string[]]$pkg) {
 # Install VSCode plugins
 function InstallVSCPkg([string[]]$pkgs) {
     foreach ($pkg in $pkgs) {
-        output "Installing VSCode extension : $pkg" | tee -a "`"$log`""
-        Start-Process -Wait -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg" | tee -a "`"$log`""
+        output "Installing VSCode extension : $pkg" | Tee-Object -a "`"$log`""
+        Start-Process -Wait -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg" | Tee-Object -a "`"$log`""
     }
 }
 
