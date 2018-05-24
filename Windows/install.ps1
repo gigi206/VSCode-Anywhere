@@ -247,7 +247,7 @@ function InstallMSYS2 {
     # Upgrade MSYS2
     Output "Upgrade OS : for continue installation please close the window after the update is completed !!!"
     $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
-    MSYS2Cmd @("$update_cmd", "$update_cmd", "$update_cmd")
+    MSYS2Cmd @("$update_cmd", "$update_cmd")
 
     Output "$MSYS2AppName is sucessfully installed"
 }
@@ -876,8 +876,7 @@ function Update {
 function UpdateMSYS2 {
     InstallAppHeader "Update $MSYS2AppName"
 
-    $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
-    MSYS2Cmd @("$update_cmd", "$update_cmd", "$update_cmd")
+    MSYS2Cmd @('yes y | LC_ALL=C pacman -Syu')
 }
 
 # Update VSCode
