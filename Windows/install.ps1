@@ -189,6 +189,11 @@ function Install7zip {
 
 # Install MSYS2
 function InstallMSYS2 {
+    # Check if install device is a NTFS filesystem
+    if ((Get-Volume -FilePath "$InstallDir").FileSystem -ne 'NTFS') {
+        OutputErrror "Install Path $InstallDir must be installed on a NTFS filesystem !"
+    }
+
     # Needed for extract archive tar.xz
     Install7zip
 
