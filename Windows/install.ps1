@@ -1,4 +1,4 @@
-############
+﻿############
 #   INFO   #
 ############
 #
@@ -362,6 +362,8 @@ function InstallZealPkg([string[]]$pkgs) {
             Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
         }
 
+        Add-Type -Assembly System.Drawing
+
         foreach ($pkg in $pkgs) {
             if (Test-Path -Path "${ZealAppPath_docsets}\${pkg}.docset") {
                 Output "Zeal docsets $pkg is already installed (skipped)"
@@ -370,23 +372,18 @@ function InstallZealPkg([string[]]$pkgs) {
 
             Output "Installing Zeal docset $pkg"
 
-            New-Item -ItemType Directory -Force -Path "${ZealAppPath}\tmp" | Out-Null
-            $tmp_file1 = "${ZealAppPath}\tmp\${pkg}.tgz"
-            $tmp_file2 = "${ZealAppPath}\tmp\${pkg}.tar"
+            # Request zeal api
+            $pkg_api = (Invoke-WebRequest -Uri "http://api.zealdocs.org/v1/docsets" | ConvertFrom-Json) | Where-Object { $_.name -eq "$pkg" }
 
-            # Download dash docsets
-            try {
-                [xml]$xml = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml"
-                $pkg_url = $xml.GetElementsByTagName('url')[0].'#text'
+            if($pkg_api) {
+                New-Item -ItemType Directory -Force -Path "${ZealAppPath}\tmp" | Out-Null
+                $tmp_file1 = "${ZealAppPath}\tmp\${pkg}.tgz"
+                $tmp_file2 = "${ZealAppPath}\tmp\${pkg}.tar"
 
-                #Output "Downloading Zeal $name to $tmp_file1"
-                Invoke-WebRequest -Uri $pkg_url -OutFile "$tmp_file1"
-            }
-            catch {
-                # Download user contrib docsets
+                # Download dash docsets
                 try {
-                    # http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json
-                    $pkg_url = "http://sanfrancisco.kapeli.com/feeds/zzz/user_contributed/build/${pkg}/${pkg}.tgz"
+                    [xml]$xml = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml"
+                    $pkg_url = $xml.GetElementsByTagName('url')[0].'#text'
 
                     #Output "Downloading Zeal $name to $tmp_file1"
                     Invoke-WebRequest -Uri $pkg_url -OutFile "$tmp_file1"
@@ -394,32 +391,25 @@ function InstallZealPkg([string[]]$pkgs) {
                 catch {
                     OutputErrror "failed to download docset for $pkg => $pkg_url : $_"
                 }
-            }
 
-            # Extract zip file
-            #Output "Extracting $tmp_file1"
-            7zipExtract -source "$tmp_file1" -target "${ZealAppPath}\tmp"
-            7zipExtract -source "$tmp_file2" -target "${ZealAppPath}\tmp"
-            Move-Item -Force -Path "${ZealAppPath}\tmp\*" -Destination "${ZealAppPath_docsets}\${pkg}.docset"
-            Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
-
-            # Request zeal api
-            $pkg_api = (Invoke-WebRequest -Uri "http://api.zealdocs.org/v1/docsets" | ConvertFrom-Json) | Where-Object { $_.name -eq "$pkg" }
-
-            if($pkg_api) {
-                Add-Type -Assembly System.Drawing
+                # Extract zip file
+                #Output "Extracting $tmp_file1"
+                7zipExtract -source "$tmp_file1" -target "${ZealAppPath}\tmp"
+                7zipExtract -source "$tmp_file2" -target "${ZealAppPath}\tmp"
+                Move-Item -Force -Path "${ZealAppPath}\tmp\*" -Destination "${ZealAppPath_docsets}\${pkg}.docset"
+                Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
 
                 # Generate icons
                 $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                 $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
                 $ms.Write($imageBytes, 0, $imageBytes.Length);
-                  $image = [System.Drawing.Image]::FromStream($ms, $true)
+                $image = [System.Drawing.Image]::FromStream($ms, $true)
                 $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
 
                 $imageBytes = [Convert]::FromBase64String($pkg_api.icon2x)
                 $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
                 $ms.Write($imageBytes, 0, $imageBytes.Length);
-                  $image = [System.Drawing.Image]::FromStream($ms, $true)
+                $image = [System.Drawing.Image]::FromStream($ms, $true)
                 $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
 
                 # Generate meta.json file
@@ -429,6 +419,60 @@ function InstallZealPkg([string[]]$pkgs) {
                 $pkg_api.PSObject.Properties.Remove('icon2x')
                 $pkg_api.PSObject.Properties.Remove('icon')
                 $pkg_api.PSObject.Properties.Remove('id')
+                $pkg_api | ConvertTo-Json | Out-File -Encoding utf8 "${ZealAppPath_docsets}\${pkg}.docset\meta.json"
+            }
+            else {
+                # Request zeal api
+                $pkg_api = (Invoke-WebRequest -Uri "http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json" | ConvertFrom-Json).docsets."$pkg"
+
+                if (! $pkg_api) {
+                    OutputErrror "$pkg not found ! => $pkg_api"
+                }
+
+                New-Item -ItemType Directory -Force -Path "${ZealAppPath}\tmp" | Out-Null
+                $tmp_file1 = "${ZealAppPath}\tmp\${pkg}.tgz"
+                $tmp_file2 = "${ZealAppPath}\tmp\${pkg}.tar"
+
+                # Download dash docsets
+                try {
+                    $pkg_url = "http://sanfrancisco.kapeli.com/feeds/zzz/user_contributed/build/${pkg}/${pkg}.tgz"
+                    #Output "Downloading Zeal $name to $tmp_file1"
+                    Invoke-WebRequest -Uri $pkg_url -OutFile "$tmp_file1"
+                }
+                catch {
+                    OutputErrror "failed to download docset for $pkg => $pkg_url : $_"
+                }
+
+                # Extract zip file
+                #Output "Extracting $tmp_file1"
+                7zipExtract -source "$tmp_file1" -target "${ZealAppPath}\tmp"
+                7zipExtract -source "$tmp_file2" -target "${ZealAppPath}\tmp"
+                Move-Item -Force -Path "${ZealAppPath}\tmp\*" -Destination "${ZealAppPath_docsets}\${pkg}.docset"
+                Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
+
+                # Generate icons
+                $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
+                $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
+                $ms.Write($imageBytes, 0, $imageBytes.Length);
+                $image = [System.Drawing.Image]::FromStream($ms, $true)
+                $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
+                $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
+                $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
+                $ms.Write($imageBytes, 0, $imageBytes.Length);
+                $image = [System.Drawing.Image]::FromStream($ms, $true)
+                $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
+
+                # Generate meta.json file
+                if ($pkg_api.name) {
+                    $pkg_api | Add-Member -NotePropertyName title -NotePropertyValue $pkg_api.name
+                    $pkg_api.name = "$pkg"
+                }
+                $pkg_api.PSObject.Properties.Remove('author')
+                $pkg_api.PSObject.Properties.Remove('archive')
+                $pkg_api.PSObject.Properties.Remove('icon')
+                $pkg_api.PSObject.Properties.Remove('icon@2x')
+                $pkg_api.PSObject.Properties.Remove('aliases')
+                $pkg_api.PSObject.Properties.Remove('specific_versions')
                 $pkg_api | ConvertTo-Json | Out-File -Encoding utf8 "${ZealAppPath_docsets}\${pkg}.docset\meta.json"
             }
         }
@@ -1030,20 +1074,20 @@ function UpdateZealPkg([string[]]$pkgs) {
             Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
         }
 
+        Add-Type -Assembly System.Drawing
+
         foreach ($pkg in $pkgs) {
             # Request zeal api
             $pkg_api = (Invoke-WebRequest -Uri "http://api.zealdocs.org/v1/docsets" | ConvertFrom-Json) | Where-Object { $_.name -eq "$pkg" }
 
             if($pkg_api) {
-                Add-Type -Assembly System.Drawing
+                # Current version of the docset
+                if ((Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).version) { $version_installed = (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).version + '-' + (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).revision }
+                else { $version_installed = (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).revision }
 
                 # Last version of the docset
                 if ($pkg_api.versions -and $pkg_api.versions[0]) { $version_api = $pkg_api.versions[0] + '-' + $pkg_api.revision }
                 else { $version_api = $pkg_api.revision }
-
-                # Current version of the docset
-                if ((Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).version) { $version_installed = (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).version + '-' + (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).revision }
-                else { $version_installed = (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).revision }
 
                 if ("$version_api" -ne "$version_installed") {
                     Output "Updating Zeal docset $pkg from version $version_installed to $version_api"
@@ -1073,8 +1117,6 @@ function UpdateZealPkg([string[]]$pkgs) {
                     Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
 
                     # Generate icons
-                    Add-Type -Assembly System.Drawing
-
                     $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
                     $ms.Write($imageBytes, 0, $imageBytes.Length);
@@ -1094,6 +1136,76 @@ function UpdateZealPkg([string[]]$pkgs) {
                     $pkg_api.PSObject.Properties.Remove('icon2x')
                     $pkg_api.PSObject.Properties.Remove('icon')
                     $pkg_api.PSObject.Properties.Remove('id')
+                    $pkg_api | ConvertTo-Json | Out-File -Encoding utf8 "${ZealAppPath_docsets}\${pkg}.docset\meta.json"
+                }
+                else {
+                    Output "Zeal docset $pkg is already to the last version $version_installed"
+                }
+            }
+            else {
+               # Request zeal api
+               $pkg_api = (Invoke-WebRequest -Uri "http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json" | ConvertFrom-Json).docsets."$pkg"
+
+                if (! $pkg_api) {
+                    OutputErrror "$pkg not found !"
+                }
+
+                # Current version of the docset
+                $version_installed = (Get-Content "${ZealAppPath_docsets}\${pkg}.docset\meta.json" | ConvertFrom-Json).version
+
+                # Last version of the docset
+                $version_api = $pkg_api.version
+
+                if ("$version_api" -ne "$version_installed") {
+                    Output "Updating Zeal docset $pkg from version $version_installed to $version_api"
+
+                    New-Item -ItemType Directory -Force -Path "${ZealAppPath}\tmp" | Out-Null
+                    $tmp_file1 = "${ZealAppPath}\tmp\${pkg}.tgz"
+                    $tmp_file2 = "${ZealAppPath}\tmp\${pkg}.tar"
+
+                    # Download dash docsets
+                    try {
+                        $pkg_url = "http://sanfrancisco.kapeli.com/feeds/zzz/user_contributed/build/${pkg}/${pkg}.tgz"
+
+                        #Output "Downloading Zeal $name to $tmp_file1"
+                        Invoke-WebRequest -Uri $pkg_url -OutFile "$tmp_file1"
+                    }
+                    catch {
+                        OutputErrror "failed to download docset for $pkg => $pkg_url : $_"
+                    }
+
+                    # Extract zip file
+                    #Output "Extracting $tmp_file1"
+                    7zipExtract -source "$tmp_file1" -target "${ZealAppPath}\tmp"
+                    7zipExtract -source "$tmp_file2" -target "${ZealAppPath}\tmp"
+                    Remove-Item -Force -Recurse "${ZealAppPath_docsets}\${pkg}.docset"
+                    Move-Item -Force -Path "${ZealAppPath}\tmp\*" -Destination "${ZealAppPath_docsets}\${pkg}.docset"
+                    Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
+
+                    # Generate icons
+                    $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
+                    $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
+                    $ms.Write($imageBytes, 0, $imageBytes.Length);
+                    $image = [System.Drawing.Image]::FromStream($ms, $true)
+                    $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
+
+                    $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
+                    $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
+                    $ms.Write($imageBytes, 0, $imageBytes.Length);
+                    $image = [System.Drawing.Image]::FromStream($ms, $true)
+                    $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
+
+                    # Generate meta.json file
+                    if ($pkg_api.name) {
+                        $pkg_api | Add-Member -NotePropertyName title -NotePropertyValue $pkg_api.name
+                        $pkg_api.name = "$pkg"
+                    }
+                    $pkg_api.PSObject.Properties.Remove('author')
+                    $pkg_api.PSObject.Properties.Remove('archive')
+                    $pkg_api.PSObject.Properties.Remove('icon')
+                    $pkg_api.PSObject.Properties.Remove('icon@2x')
+                    $pkg_api.PSObject.Properties.Remove('aliases')
+                    $pkg_api.PSObject.Properties.Remove('specific_versions')
                     $pkg_api | ConvertTo-Json | Out-File -Encoding utf8 "${ZealAppPath_docsets}\${pkg}.docset\meta.json"
                 }
                 else {
