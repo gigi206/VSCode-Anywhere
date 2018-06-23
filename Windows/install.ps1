@@ -51,6 +51,9 @@ function InstallAppHeader([string]$AppName) {
 }
 
 function Init  {
+    # Test Internet connection
+    TestInternet
+
     # Init config env
     MSYS2Env
     VSCEnv
@@ -105,6 +108,13 @@ function Init  {
     if ("$PSScriptRoot" -ne "$ToolsDir") {
         Copy-Item "$PSCommandPath" -Destination "${ToolsDir}\install.ps1" -Force
         Copy-Item "$ProgramConfig" -Destination "${ConfDir}\${ProgramName}.conf" -Force
+    }
+}
+
+function TestInternet {
+    $internet = Test-Connection -computer google.com -count 2 -quiet
+    If (!($internet)) {
+        OutputErrror "your computer is not connected to Internet"
     }
 }
 
@@ -844,15 +854,6 @@ function MakeScripts {
     MakeScriptInstallFonts
     MakeScriptLink
 }
-
-# Update VSCode, MSYS2 and other
-# function Update {
-#     Update7zip
-#     UpdateVSCode
-#     UpdateCmd
-#     UpdateZeal
-#     UpdateZealPkg
-# }
 
 # Update VSCode and Third-Party
 function Update {
