@@ -994,7 +994,7 @@ function UpdateZeal {
         Expand-Archive -Path "${ZealAppPath}\${ZealAppName}.zip" -DestinationPath "$ZealAppPath"
 
         # Move extracted files to $ZealAppPath_install
-        Get-ChildItem "${ZealAppPath_install}" -Recurse | Where { $_.FullName -notlike "*\" + (Get-Item "$ZealAppPath_docsets").BaseName + "\*" } | Remove-Item -Recurse -Exclude (Get-Item "$ZealAppPath_docsets").BaseName
+        Get-ChildItem "${ZealAppPath_install}" -Recurse | Where-Object { $_.FullName -notlike "*\" + (Get-Item "$ZealAppPath_docsets").BaseName + "\*" } | Remove-Item -Recurse -Exclude (Get-Item "$ZealAppPath_docsets").BaseName
         Move-Item -Force -Path "${ZealAppPath}\zeal-portable*\*" -Destination "$ZealAppPath_install"
 
         # Remove downloading file archive
