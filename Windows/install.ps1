@@ -883,7 +883,8 @@ function Update {
 function UpdateMSYS2 {
     InstallAppHeader "Update $MSYS2AppName"
 
-    MSYS2Cmd @('yes y | LC_ALL=C pacman -Syu')
+    $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
+    MSYS2Cmd @("$update_cmd", "$update_cmd")
 }
 
 # Update VSCode
