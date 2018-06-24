@@ -261,7 +261,7 @@ function InstallMSYS2 {
     Output -fgcolor Red "║ Upgrade OS : for continue installation please close the window after the update is completed !!! ║"
     Output -fgcolor Red "╚══════════════════════════════════════════════════════════════════════════════════════════════════╝"
     $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
-    MSYS2Cmd @("$update_cmd", "$update_cmd")
+    MSYS2Cmd @("$update_cmd", "$update_cmd; kill -9 -1")
 
     Output "$MSYS2AppName is sucessfully installed"
 }
@@ -925,7 +925,7 @@ function Update {
 function UpdateMSYS2 {
     InstallAppHeader "Update $MSYS2AppName"
 
-    $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
+    $update_cmd = 'yes y | LC_ALL=C pacman -Syu; kill -9 -1'
     MSYS2Cmd @("$update_cmd", "$update_cmd")
 }
 
