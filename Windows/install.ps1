@@ -128,9 +128,6 @@ function InstallVSCode {
         return
     }
 
-    # Refresh repositories before install new components
-    MSYS2Cmd @('pacman -Sy')
-
     # Install git for consult last tag version from github
     InstallMSYS2Pkg @('git')
 
@@ -338,7 +335,7 @@ function InstallZeal {
 function InstallMSYS2Pkg([string[]]$pkg) {
     $pkg = $pkg -join ' '
     Output "Installing MSYS2 packages : $pkg"
-    MSYS2Cmd @("pacman --noconfirm --force --needed -S $pkg")
+    MSYS2Cmd @("pacman --noconfirm --force --needed -Sy $pkg")
 }
 
 # Install VSCode plugins
