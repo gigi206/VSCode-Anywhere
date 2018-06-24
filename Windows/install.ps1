@@ -447,17 +447,23 @@ function InstallZealPkg([string[]]$pkgs) {
                 Move-Item -Force -Path "${ZealAppPath}\tmp\*" -Destination "${ZealAppPath_docsets}\${pkg}.docset"
                 Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
 
-                # Generate icons
-                $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
-                $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                $ms.Write($imageBytes, 0, $imageBytes.Length)
-                $image = [System.Drawing.Image]::FromStream($ms, $true)
-                $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
-                $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
-                $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                $ms.Write($imageBytes, 0, $imageBytes.Length)
-                $image = [System.Drawing.Image]::FromStream($ms, $true)
-                $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
+                # Generate icon
+                if ($pkg_api.icon) {
+                    $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
+                    $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
+                    $ms.Write($imageBytes, 0, $imageBytes.Length)
+                    $image = [System.Drawing.Image]::FromStream($ms, $true)
+                    $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
+                }
+
+                # Generate icon@2x
+                if ($pkg_api.'icon@2x') {
+                    $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
+                    $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
+                    $ms.Write($imageBytes, 0, $imageBytes.Length)
+                    $image = [System.Drawing.Image]::FromStream($ms, $true)
+                    $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
+                }
 
                 # Generate meta.json file
                 if ($pkg_api.name) {
@@ -1113,18 +1119,23 @@ function UpdateZealPkg([string[]]$pkgs) {
                     Move-Item -Force -Path "${ZealAppPath}\tmp\*" -Destination "${ZealAppPath_docsets}\${pkg}.docset"
                     Remove-Item -Force -Recurse "${ZealAppPath}\tmp"
 
-                    # Generate icons
+                # Generate icon
+                if ($pkg_api.icon) {
                     $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
                     $ms.Write($imageBytes, 0, $imageBytes.Length)
                     $image = [System.Drawing.Image]::FromStream($ms, $true)
                     $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
+                }
 
-                    $imageBytes = [Convert]::FromBase64String($pkg_api.icon2x)
+                # Generate icon@2x
+                if ($pkg_api.'icon@2x') {
+                    $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
                     $ms.Write($imageBytes, 0, $imageBytes.Length)
                     $image = [System.Drawing.Image]::FromStream($ms, $true)
                     $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
+                }
 
                     # Generate meta.json file
                     if ($pkg_api.versions) { $pkg_api | Add-Member -NotePropertyName version -NotePropertyValue $pkg_api.versions[0] }
