@@ -399,13 +399,13 @@ function InstallZealPkg([string[]]$pkgs) {
                 # Generate icons
                 $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                 $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                $ms.Write($imageBytes, 0, $imageBytes.Length);
+                $ms.Write($imageBytes, 0, $imageBytes.Length)
                 $image = [System.Drawing.Image]::FromStream($ms, $true)
                 $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
 
                 $imageBytes = [Convert]::FromBase64String($pkg_api.icon2x)
                 $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                $ms.Write($imageBytes, 0, $imageBytes.Length);
+                $ms.Write($imageBytes, 0, $imageBytes.Length)
                 $image = [System.Drawing.Image]::FromStream($ms, $true)
                 $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
 
@@ -450,12 +450,12 @@ function InstallZealPkg([string[]]$pkgs) {
                 # Generate icons
                 $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                 $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                $ms.Write($imageBytes, 0, $imageBytes.Length);
+                $ms.Write($imageBytes, 0, $imageBytes.Length)
                 $image = [System.Drawing.Image]::FromStream($ms, $true)
                 $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
                 $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
                 $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                $ms.Write($imageBytes, 0, $imageBytes.Length);
+                $ms.Write($imageBytes, 0, $imageBytes.Length)
                 $image = [System.Drawing.Image]::FromStream($ms, $true)
                 $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
 
@@ -1116,13 +1116,13 @@ function UpdateZealPkg([string[]]$pkgs) {
                     # Generate icons
                     $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                    $ms.Write($imageBytes, 0, $imageBytes.Length);
+                    $ms.Write($imageBytes, 0, $imageBytes.Length)
                     $image = [System.Drawing.Image]::FromStream($ms, $true)
                     $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
 
                     $imageBytes = [Convert]::FromBase64String($pkg_api.icon2x)
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                    $ms.Write($imageBytes, 0, $imageBytes.Length);
+                    $ms.Write($imageBytes, 0, $imageBytes.Length)
                     $image = [System.Drawing.Image]::FromStream($ms, $true)
                     $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
 
@@ -1182,13 +1182,13 @@ function UpdateZealPkg([string[]]$pkgs) {
                     # Generate icons
                     $imageBytes = [Convert]::FromBase64String($pkg_api.icon)
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                    $ms.Write($imageBytes, 0, $imageBytes.Length);
+                    $ms.Write($imageBytes, 0, $imageBytes.Length)
                     $image = [System.Drawing.Image]::FromStream($ms, $true)
                     $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon.png")
 
                     $imageBytes = [Convert]::FromBase64String($pkg_api.'icon@2x')
                     $ms = New-Object IO.MemoryStream($imageBytes, 0, $imageBytes.Length)
-                    $ms.Write($imageBytes, 0, $imageBytes.Length);
+                    $ms.Write($imageBytes, 0, $imageBytes.Length)
                     $image = [System.Drawing.Image]::FromStream($ms, $true)
                     $image.Save("${ZealAppPath_docsets}\${pkg}.docset\icon@2x.png")
 
