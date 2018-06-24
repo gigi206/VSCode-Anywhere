@@ -169,7 +169,7 @@ In directory Tools, run **InstallFonts** for example if you use an USB device an
 
 **NOTE :** fonts are stored in _Third-Party\Fonts_ directory (_$FontsDir_)
 
-[![VSCode-Anywhere Fonts installation](https://img.youtube.com/vi/mukPUFYOEeY/0.jpg)](https://www.youtube.com/watch?v=mukPUFYOEeY)
+[![VSCode-Anywhere Fonts installation](https://img.youtube.com/vi/XXmzSDbJZg8/0.jpg)](https://www.youtube.com/watch?v=XXmzSDbJZg8)
 
 #### 3.3.3. Update
 
