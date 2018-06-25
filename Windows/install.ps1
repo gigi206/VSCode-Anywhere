@@ -1,4 +1,4 @@
-############
+﻿############
 #   INFO   #
 ############
 #
@@ -52,9 +52,6 @@ function InstallAppHeader([string]$AppName) {
 
 # First function called (create dirs, configure proxy, source env, ...)
 function Init  {
-    # Test Internet connection
-    TestInternet
-
     # Init config env
     MSYS2Env
     VSCEnv
@@ -112,6 +109,7 @@ function Init  {
     }
 }
 
+# Test Internet connection
 function TestInternet {
     $internet = Test-Connection -computer google.com -count 2 -quiet
     If (!($internet)) {
@@ -1308,6 +1306,7 @@ $ZealAppPath_docsets = Join-Path -Path "$ZealAppPath_install" -ChildPath "docset
 Init
 
 if ($update) {
+    TestInternet
     Update
 }
 elseif ($fonts) {
@@ -1317,6 +1316,7 @@ elseif ($link) {
     MakeScripts
 }
 else {
+    TestInternet
     InstallMSYS2
     InstallVSCode
     InstallZeal
