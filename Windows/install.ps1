@@ -1,4 +1,4 @@
-﻿############
+############
 #   INFO   #
 ############
 #
@@ -50,6 +50,7 @@ function InstallAppHeader([string]$AppName) {
     Write-Host ""                                                               -ForegroundColor Green
 }
 
+# First function called (create dirs, configure proxy, source env, ...)
 function Init  {
     # Test Internet connection
     TestInternet
@@ -162,6 +163,7 @@ function InstallVSCode {
     Output "$VSCAppName is sucessfully installed"
 }
 
+# Install 7zip
 function Install7zip {
     InstallAppHeader "Installing $7zAppName"
 
