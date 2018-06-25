@@ -298,9 +298,9 @@ Add extensions for Git :
 
 ![Git History](https://raw.githubusercontent.com/DonJayamanne/gitHistoryVSCode/master/images/gitLogv2.gif)
 
-- [GitLens — Git supercharged](https://raw.githubusercontent.com/eamodio/vscode-gitlens/master/images/gitlens-preview.gif)
+- [GitLens — Git supercharged](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
-![GitLens — Git supercharged]()
+![GitLens — Git supercharged](https://raw.githubusercontent.com/eamodio/vscode-gitlens/master/images/gitlens-preview.gif)
 
 - [Ungit](https://marketplace.visualstudio.com/items?itemName=Hirse.vscode-ungit)
 
