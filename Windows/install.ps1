@@ -1,4 +1,4 @@
-﻿############
+############
 #   INFO   #
 ############
 #
@@ -1256,8 +1256,10 @@ else {
 }
 
 $LogDir = Join-Path -Path "$InstallDir" -ChildPath "Logs"
+$log = Join-Path -Path "$LogDir" -ChildPath "install.log"
 if ($update) { $log = Join-Path -Path "$LogDir" -ChildPath "update.log" }
-else { $log = Join-Path -Path "$LogDir" -ChildPath "install.log" }
+if ($fonts) { $log = Join-Path -Path "$LogDir" -ChildPath "fonts.log" }
+if ($link) { $log = Join-Path -Path "$LogDir" -ChildPath "link.log" }
 $ThirdParty = Join-Path -Path "$InstallDir" -ChildPath "Third-Party"
 $FontsDir = Join-Path -Path "$ThirdParty" -ChildPath "Fonts"
 $ToolsDir = Join-Path -Path "$InstallDir" -ChildPath "Tools"
