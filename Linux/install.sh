@@ -91,12 +91,12 @@ function InstallAppHeader {
     message="${*}"
 
     tput setaf 2
-    echo                                                                  | tee -a "${Log}"
-    echo "/=============================================================" | tee -a "${Log}"
-    echo "|"                                                              | tee -a "${Log}"
-    echo "| ${message}"                                                   | tee -a "${Log}"
-    echo "|"                                                              | tee -a "${Log}"
-    echo "\=============================================================" | tee -a "${Log}"
+    echo                                                                  2>&1 | tee -a "${Log}"
+    echo "/=============================================================" 2>&1 | tee -a "${Log}"
+    echo "|"                                                              2>&1 | tee -a "${Log}"
+    echo "| ${message}"                                                   2>&1 | tee -a "${Log}"
+    echo "|"                                                              2>&1 | tee -a "${Log}"
+    echo "\=============================================================" 2>&1 | tee -a "${Log}"
     tput sgr0
 }
 
@@ -106,7 +106,7 @@ function Output {
     message="${1}"
 
     echo -en "\n$(tput setaf 2)* $(tput setaf 6)"
-    eval echo '${message}' | tee -a "${Log}"
+    eval echo '${message}' 2>&1 | tee -a "${Log}"
     tput sgr0
 }
 
@@ -117,7 +117,7 @@ function OutputErrror {
 
     tput setaf 1
     tput bold
-    echo -e "\nError : ${message}\n" | tee -a "${Log}"
+    echo -e "\nError : ${message}\n" 2>&1 | tee -a "${Log}"
     tput sgr0
     exit ${exit:-1}
 }
@@ -129,7 +129,7 @@ function Cmd {
 
     echo -e "\n\n>>> ${cmd} (Cmd) <<<" &>> "${Log}"
 
-    eval ${cmd} | tee -a "${Log}"
+    eval ${cmd} 2>&1 | tee -a "${Log}"
 
     ret_code="${?}"
 
@@ -143,7 +143,7 @@ function JunestCmd {
 
     echo -e "\n\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
 
-    PROOT_NO_SECCOMP=1 JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -p "-b /:/${JunestExternalPath}" -f /bin/bash -l << EOF  | tee -a "$Log"
+    PROOT_NO_SECCOMP=1 JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -p "-b /:/${JunestExternalPath}" -f /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
     ret_code=${?}
