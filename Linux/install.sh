@@ -129,7 +129,7 @@ function Cmd {
 
     echo -e "\\n\\n>>> ${cmd} (Cmd) <<<" &>> "${Log}"
 
-    eval "${cmd}" 2>&1 | tee -a "${Log}"
+    eval ${cmd} 2>&1 | tee -a "${Log}"
 
     ret_code="${?}"
 
