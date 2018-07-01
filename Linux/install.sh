@@ -15,7 +15,7 @@ set -o pipefail
 # Define parameters for VSCode-Anywhere
 function Params {
     # Execute getopt on the arguments passed to this program, identified by the special character ${@}
-    eval set -- $(getopt -n "${0}" -o hufldp:c: --long "help,update,fonts,link,path:,conf:" -- "${@}")
+    eval set -- $(getopt -n "${0}" -o hufldp:c: --long 'help,update,fonts,link,path:,conf:' -- "${@}")
 
     # Now goes through all the options with a case and using shift to analyse 1 argument at a time
     # ${1} identifies the first argument, and when we use shift we discard the first argument, so $2 becomes ${1} and goes again through the case
@@ -91,12 +91,12 @@ function InstallAppHeader {
     message="${*}"
 
     tput setaf 2
-    echo                                                                  2>&1 | tee -a "${Log}"
-    echo "/=============================================================" 2>&1 | tee -a "${Log}"
-    echo "|"                                                              2>&1 | tee -a "${Log}"
-    echo "| ${message}"                                                   2>&1 | tee -a "${Log}"
-    echo "|"                                                              2>&1 | tee -a "${Log}"
-    echo "\=============================================================" 2>&1 | tee -a "${Log}"
+    echo                                                                   2>&1 | tee -a "${Log}"
+    echo "/============================================================="  2>&1 | tee -a "${Log}"
+    echo "|"                                                               2>&1 | tee -a "${Log}"
+    echo "| ${message}"                                                    2>&1 | tee -a "${Log}"
+    echo "|"                                                               2>&1 | tee -a "${Log}"
+    echo "\\=============================================================" 2>&1 | tee -a "${Log}"
     tput sgr0
 }
 
@@ -105,7 +105,7 @@ function InstallAppHeader {
 function Output {
     message="${1}"
 
-    echo -en "\n$(tput setaf 2)* $(tput setaf 6)"
+    echo -en "\\n$(tput setaf 2)* $(tput setaf 6)"
     eval echo '${message}' 2>&1 | tee -a "${Log}"
     tput sgr0
 }
@@ -117,7 +117,7 @@ function OutputErrror {
 
     tput setaf 1
     tput bold
-    echo -e "\nError : ${message}\n" 2>&1 | tee -a "${Log}"
+    echo -e "\\nError : ${message}\\n" 2>&1 | tee -a "${Log}"
     tput sgr0
     exit "${exit:-1}"
 }
@@ -129,7 +129,7 @@ function Cmd {
 
     echo -e "\\n\\n>>> ${cmd} (Cmd) <<<" &>> "${Log}"
 
-    eval ${cmd} 2>&1 | tee -a "${Log}"
+    eval "${cmd}" 2>&1 | tee -a "${Log}"
 
     ret_code="${?}"
 
@@ -156,7 +156,7 @@ function Init {
     for bin in wget tput tar
     do
         # Check if $bin is installed
-        ([ -f "$(which ${bin})" ]) &>/dev/null || OutputErrror "${bin} is mandatory !"
+        [ -f "$(command -v ${bin})" ] &>/dev/null || OutputErrror "${bin} is mandatory !"
     done
 
     [ -f "${ProgramConfig}" ] || OutputErrror "configuration file ${ProgramConfig} doesn't exist !"
@@ -180,7 +180,7 @@ function Init {
     then
         [ "$(GetConfig '.base.proxy.password')" != 'null' ] && proxy=":$(GetConfig '.base.proxy.password')"
         [ "$(GetConfig '.base.proxy.login')" != 'null' ] && proxy="$(GetConfig '.base.proxy.login')${proxy}@"
-        [ "$(GetConfig '.base.proxy.url')" != 'null' ] && proxy="$(echo $(GetConfig '.base.proxy.url') | cut -d':' -f1)://${proxy}$(echo $(GetConfig '.base.proxy.url') | cut -d'/' -f3-)" && export http_proxy="${proxy}" && export https_proxy="${proxy}"
+        [ "$(GetConfig '.base.proxy.url')" != 'null' ] && proxy="$(GetConfig '.base.proxy.url' | cut -d':' -f1)://${proxy}$(GetConfig '.base.proxy.url' | cut -d'/' -f3-)" && export http_proxy="${proxy}" && export https_proxy="${proxy}"
     fi
 }
 
@@ -259,7 +259,7 @@ function InstallVSCode {
     InstallJunestPkg gtk2 nss libxkbfile libxtst libxss gconf alsa-lib gsfonts git
 
     # Define last tag version for download VSCode
-    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 1)
+    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 1)
     VSCUrl="https://vscode-update.azurewebsites.net/${VSCTag}/linux-x64/stable"
 
     # Create install directories
@@ -288,7 +288,7 @@ function InstallZeal {
 
 # Install VSCode plugins
 function InstallVSCPkg {
-    pkgs="${@}"
+    pkgs="${*}"
 
     for pkg in ${pkgs}
     do
@@ -304,7 +304,7 @@ function InstallZealPkg {
     then
         [ -d "${ZealAppPath_docsets}" ] || Cmd "mkdir -p '${ZealAppPath_docsets}'" 1
 
-        pkgs="${@}"
+        pkgs="${*}"
 
         for pkg in ${pkgs}
         do
@@ -463,7 +463,7 @@ function MakeScriptVSC {
         if [ "${env}" = 'PATH' ]
         then
             mypath=$(JunestCmd "echo '${PATH}'")
-            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":${mypath}\"' | tr '\n' ':' | xargs" 1)\\\")
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":${mypath}\"' | tr '\\n' ':' | xargs" 1)\\\")
 
         else
             myenv=$(eval echo export ${env}=\\\"$(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .${env} | select(. != null)][-1]")\\\")
@@ -471,7 +471,7 @@ function MakeScriptVSC {
         Cmd "echo '${myenv}' >> '${ScriptFile}'" 1
     done
 
-    Cmd "echo 'unset FPATH\n' >> '${ScriptFile}'" 1
+    Cmd "echo 'unset FPATH\\n' >> '${ScriptFile}'" 1
     Cmd "echo 'PROOT_NO_SECCOMP=1 JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -p \"-b ${InstallDir}:${JunestExternalPath}\" -- QT_AUTO_SCREEN_SCALE_FACTOR=0 ELECTRON_RUN_AS_NODE=1 \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_install})/code\" \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_install})/resources/app/out/cli.js\" --user-data-dir \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_user_data})\" --extensions-dir \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_extensions})\" \"\${@}\"' >> '${ScriptFile}'" 1
 
     # Create shortcut
@@ -507,7 +507,7 @@ function MakeScriptJunest {
         if [ "${env}" = 'PATH' ]
         then
             mypath=$(JunestCmd "echo '${PATH}'")
-            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .PATH | select(. != null) + \":${mypath}\"' | tr '\n' ':' | xargs" 1)\\\")
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .PATH | select(. != null) + \":${mypath}\"' | tr '\\n' ':' | xargs" 1)\\\")
         else
             myenv=$(eval echo export ${env}=\\\"$(GetConfig "[.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .${env} | select(. != null)][-1]")\\\")
         fi
@@ -682,7 +682,7 @@ function UpdateVSCode {
     fi
 
     # Define last tag version for download VSCode
-    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 1)
+    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 1)
     VSCUrl="https://vscode-update.azurewebsites.net/${VSCTag}/linux-x64/stable"
 
     if [ "${VSCPkg}" != "${VSCTag}" ]
@@ -698,7 +698,7 @@ function UpdateVSCode {
 
 # Update Zeal docsets
 function UpdateZealPkg {
-    pkgs="${@}"
+    pkgs="${*}"
 
     # Update docsets only if Zeal is enabled
     if [ "$(GetConfig '.base.zeal_enabled')" = 'true' ]
@@ -821,7 +821,7 @@ function Update {
 function InstallFonts {
     InstallAppHeader "Installing fonts"
 
-    for font in $(ls -1 "${FontsDir}/"*.ttf)
+    for font in "${FontsDir}"/*.ttf
     do
         Output "Installing font ${font}"
         Cmd "mkdir -p ~/.local/share/fonts"
@@ -839,8 +839,8 @@ function UninstallJunest {
 function Finish {
     InstallAppHeader "Congratulations, installation is finished !!!"
     echo
-    read -s -p 'Press enter to finish'
-    echo -e "\n"
+    read -r -s -p 'Press enter to finish'
+    echo -e "\\n"
 }
 
 
@@ -859,22 +859,26 @@ then
     export InstallDir="${path}/${ProgramName}"
 elif [ "$(basename $(dirname $(realpath $(dirname ${0}))))" = "${ProgramName}" ]
 then
-    export InstallDir="$(dirname $(realpath $(dirname ${0})))"
+    InstallDir="$(dirname $(realpath $(dirname ${0})))"
 else
-    export InstallDir="$(realpath $(dirname ${0}))/${ProgramName}"
+    InstallDir="$(realpath $(dirname ${0}))/${ProgramName}"
+
 fi
+
+export InstallDir
 
 # Define ProgramConfig var => location of the configuration file
 if [ "${conf}" ]
 then
-    export ProgramConfig="$(realpath ${conf})"
+    ProgramConfig="$(realpath ${conf})"
 elif [ "$(basename $(dirname $(realpath $(dirname ${0}))))" = "${ProgramName}" ]
 then
-    export ProgramConfig="$(dirname $(realpath $(dirname ${0})))/Conf/${ProgramName}.conf"
+    ProgramConfig="$(dirname $(realpath $(dirname ${0})))/Conf/${ProgramName}.conf"
 else
-    export ProgramConfig="$(realpath $(dirname ${0}))/${ProgramName}.conf"
+    ProgramConfig="$(realpath $(dirname ${0}))/${ProgramName}.conf"
 fi
 
+export ProgramConfig
 export LogDir="${InstallDir}/Logs"
 export Log="${LogDir}/install.log"
 [ "${update}" = 1 ] && export Log="${LogDir}/update.log"
