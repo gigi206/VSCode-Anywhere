@@ -105,7 +105,7 @@ function InstallAppHeader {
 function Output {
     message="${1}"
 
-    echo -en "\n$(tput setaf 2)* $(tput setaf 6)"
+    echo -en "\\n$(tput setaf 2)* $(tput setaf 6)"
     eval echo '${message}' | tee -a "${Log}"
     tput sgr0
 }
@@ -117,9 +117,9 @@ function OutputErrror {
 
     tput setaf 1
     tput bold
-    echo -e "\nError : ${message}\n" | tee -a "${Log}"
+    echo -e "\\nError : ${message}\\n" | tee -a "${Log}"
     tput sgr0
-    exit ${exit:-1}
+    exit "${exit:-1}"
 }
 
 # Run shell Command
@@ -127,13 +127,13 @@ function Cmd {
     cmd="${1}"
     exit="${2}"
 
-    echo -e "\n\n>>> ${cmd} (Cmd) <<<" &>> "${Log}"
+    echo -e "\\n\\n>>> ${cmd} (Cmd) <<<" &>> "${Log}"
 
     eval ${cmd} | tee -a "${Log}"
 
     ret_code="${?}"
 
-    [ ${ret_code} -ne 0 -a "${exit}" ] && OutputErrror "A critical error has occurred !" ${exit:-1}
+    [ ${ret_code} -ne 0 ] && [ "${exit}" ] && OutputErrror "A critical error has occurred !" "${exit:-1}"
 }
 
 # Run Junest command
@@ -141,14 +141,14 @@ function JunestCmd {
     cmd="${1}"
     exit="${2}"
 
-    echo -e "\n\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
+    echo -e "\\n\\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
 
     PROOT_NO_SECCOMP=1 JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -p "-b /:/${JunestExternalPath}" -f /bin/bash -l << EOF  | tee -a "$Log"
 ${cmd}
 EOF
     ret_code=${?}
 
-    [ ${ret_code} -ne 0 -a "${exit}" ] && OutputErrror "A critical error has occurred !" ${exit:-1}
+    [ ${ret_code} -ne 0 ] && [ "${exit}" ] && OutputErrror "A critical error has occurred !" "${exit:-1}"
 }
 
 # First function called
@@ -195,7 +195,7 @@ function InstallJunest {
     InstallAppHeader "Installing ${JunestAppName}"
 
     # Skip install if VSCode is already installed
-    if [ -d "${JunestAppPath_install}" -a -d "${JunestAppPath_chroot}" ]
+    if [ -d "${JunestAppPath_install}" ] && [ -d "${JunestAppPath_chroot}" ]
     then
         Output "${JunestAppName} already installed (skipped). If you want to reinstall delete ${JunestAppPath_install} directory"
         return
@@ -555,7 +555,7 @@ Categories=Utility;Application;
 
         # TODO : Bug => impossible to symlink (or bind the directory) elsewhere (a workaround that I have found is to rsync...). Need to find a better way but it works...
         Output "Relink ${ZealAppName} local docsets"
-        JunestCmd "rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
+        JunestCmd "mkdir -p '${JunestExternalPath}/${ZealAppPath_docsets}' && rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
     fi
 }
 
