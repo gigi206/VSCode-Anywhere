@@ -471,7 +471,7 @@ function MakeScriptVSC {
         Cmd "echo '${myenv}' >> '${ScriptFile}'" 1
     done
 
-    Cmd "echo 'unset FPATH\\n' >> '${ScriptFile}'" 1
+    Cmd "echo 'unset FPATH' >> '${ScriptFile}'" 1
     Cmd "echo 'PROOT_NO_SECCOMP=1 JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -p \"-b ${InstallDir}:${JunestExternalPath}\" -- QT_AUTO_SCREEN_SCALE_FACTOR=0 ELECTRON_RUN_AS_NODE=1 \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_install})/code\" \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_install})/resources/app/out/cli.js\" --user-data-dir \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_user_data})\" --extensions-dir \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_extensions})\" \"\${@}\"' >> '${ScriptFile}'" 1
 
     # Create shortcut
