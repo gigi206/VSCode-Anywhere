@@ -244,6 +244,11 @@ function InstallJunestPkg {
     JunestCmd "pacman -Sy --noconfirm --needed --force ${*}" 1
 }
 
+# Test Internet connection
+function TestInternet {
+    ping -c2 google.com -i 0.2 &>/dev/null || OutputErrror "your computer is not connected to Internet"
+}
+
 # Install last VSCode application
 function InstallVSCode {
     InstallAppHeader "Installing ${VSCAppName}"
@@ -920,6 +925,7 @@ Init
 
 if [ "${update}" = 1 ]
 then
+    TestInternet
     Update
     InstallAppHeader "Relink ${ZealAppName}"
     MakeScriptZeal
@@ -933,6 +939,7 @@ elif [ "${delete}" = 1 ]
 then
     UninstallJunest
 else
+    TestInternet
     InstallJunest
     InstallVSCode
     InstallZeal
