@@ -50,8 +50,9 @@
     - [4.22. ansible](#422-ansible)
     - [4.23. puppet](#423-puppet)
     - [4.24. saltstack](#424-saltstack)
-    - [4.25. markdown](#425-markdown)
-    - [4.26. restructuredtext](#426-restructuredtext)
+    - [4.25. chef](#425-chef)
+    - [4.26. markdown](#426-markdown)
+    - [4.27. restructuredtext](#427-restructuredtext)
 
 <!-- /TOC -->
 
@@ -706,7 +707,18 @@ VSCode extensions :
 
 ![SaltStack](https://raw.githubusercontent.com/korekontrol/vscode-saltstack/master/example.png)
 
-### 4.25. markdown
+### 4.25. chef
+
+Configure environment for [Chef](https://www.chef.io/chef/) language.
+
+VSCode extensions :
+
+- [Chef](https://marketplace.visualstudio.com/items?itemName=Pendrica.Chef)
+
+![Chef](https://github.com/pendrica/vscode-chef/raw/master/images/vscode-chef-install.gif)
+
+
+### 4.26. markdown
 
 Configure environment for [markdown](https://daringfireball.net/projects/markdown/) language.
 
@@ -720,7 +732,7 @@ VSCode extensions :
 
 ![Markdown TOC](https://github.com/AlanWalk/Markdown-TOC/raw/master/img/insert-toc.gif)
 
-### 4.26. restructuredtext
+### 4.27. restructuredtext
 
 Configure environment for [reStructuredText](http://docutils.sourceforge.net/rst.html) language.
 
