@@ -560,7 +560,7 @@ Categories=Utility;Application;
 
         # TODO : Bug => impossible to symlink (or bind the directory) elsewhere (a workaround that I have found is to rsync...). Need to find a better way but it works...
         Output "Relink ${ZealAppName} local docsets"
-        JunestCmd "mkdir -p '${JunestExternalPath}/${ZealAppPath_docsets}' && rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
+        JunestCmd "mkdir -p '${HOME}/.local/share/Zeal/Zeal/docsets' && rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
     fi
 }
 
