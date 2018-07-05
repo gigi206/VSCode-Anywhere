@@ -133,7 +133,18 @@ function Cmd {
 
     ret_code="${?}"
 
-    [ ${ret_code} -ne 0 ] && [ "${exit}" ] && OutputErrror "A critical error has occurred !" "${exit:-1}"
+    if [ ${ret_code} -ne 0 ];
+    then
+        if [ "${exit}" ];
+        then
+            OutputErrror "A critical error has occurred !" "${exit:-1}"
+        else
+            tput setaf 1
+            tput bold
+            echo -e "\\nError : an error has occured (not critical)\\n" 2>&1 | tee -a "${Log}"
+            tput sgr0
+        fi
+    fi
 }
 
 # Run Junest command
@@ -148,7 +159,18 @@ ${cmd}
 EOF
     ret_code=${?}
 
-    [ ${ret_code} -ne 0 ] && [ "${exit}" ] && OutputErrror "A critical error has occurred !" "${exit:-1}"
+    if [ ${ret_code} -ne 0 ];
+    then
+        if [ "${exit}" ];
+        then
+            OutputErrror "A critical error has occurred !" "${exit:-1}"
+        else
+            tput setaf 1
+            tput bold
+            echo -e "\\nError : an error has occured (not critical)\\n" 2>&1 | tee -a "${Log}"
+            tput sgr0
+        fi
+    fi
 }
 
 # First function called
