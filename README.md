@@ -288,7 +288,11 @@ Add some VSCode extensions :
 
 - [Code Outline](https://marketplace.visualstudio.com/items?itemName=patrys.vscode-code-outline)
 
-These extensions add some basic features to VSCode and we recommend to keep enabled this section.
+- [GitKraken Glo](https://marketplace.visualstudio.com/items?itemName=axosoft.gitkraken-glo)
+
+![GitKraken Glo](https://user-images.githubusercontent.com/899916/37066976-01877280-2165-11e8-87ff-d6b04e1d9ca5.png)
+
+These extensions add some features to VSCode and it's recommended to keep enabled this section.
 
 ### 4.4. git
 
