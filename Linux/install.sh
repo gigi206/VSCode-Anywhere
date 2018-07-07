@@ -334,14 +334,14 @@ function InstallZealPkg {
 
         for pkg in ${pkgs}
         do
-            Output "Installing Zeal docset ${pkg}"
-
             # Skip install if Zeal is already installed
             if [ -d "${ZealAppPath_docsets}/${pkg}.docset" ]
             then
                 Output "Zeal docsets ${pkg} is already installed (skipped)"
                 continue
             fi
+
+            Output "Installing Zeal docset ${pkg}"
 
             # Request zeal api
             pkg_api=$(JunestCmd "curl -s http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"")
