@@ -186,7 +186,7 @@ The simple way to know if you need to relink is that you will not see icons in _
 
 ![Bad link](Screenshots/Linux/Links_bad.png)
 
-You don't need to relink if you see icons :
+You don't need to relink if you see theses icons :
 
 ![Bad link](Screenshots/Linux/Links_good.png)
 
