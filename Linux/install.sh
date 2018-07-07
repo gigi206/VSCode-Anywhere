@@ -496,7 +496,7 @@ function MakeScriptVSC {
     do
         if [ "${env}" = 'PATH' ]
         then
-            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":/usr/local/bin:/usr/local/sbin:/usr/:/usr/bin\"' | tr '\\n' ':' | xargs" 1)\\\")
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
         elif [ "${env}" = 'LD_LIBRARY_PATH' ]
         then
             myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .LD_LIBRARY_PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
@@ -544,7 +544,7 @@ function MakeScriptJunest {
     do
         if [ "${env}" = 'PATH' ]
         then
-            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .PATH | select(. != null) + \":/usr/local/bin:/usr/local/sbin:/usr/:/usr/bin\"' | tr '\\n' ':' | xargs" 1)\\\")
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
         elif [ "${env}" = 'LD_LIBRARY_PATH' ]
         then
             myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .LD_LIBRARY_PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
@@ -594,7 +594,7 @@ function MakeScriptZeal {
         do
             if [ "${env}" = 'PATH' ]
             then
-                myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":/usr/local/bin:/usr/local/sbin:/usr/:/usr/bin\"' | tr '\\n' ':' | xargs" 1)\\\")
+                myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
             elif [ "${env}" = 'LD_LIBRARY_PATH' ]
             then
                 myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .LD_LIBRARY_PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
