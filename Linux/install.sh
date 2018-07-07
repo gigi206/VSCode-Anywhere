@@ -418,7 +418,7 @@ function SetVSCKeyboard {
 # Install all references from config file
 function InstallConfig {
     # For all settings extensions from config file
-    for item in $(GetConfig '.extensions | keys[]')
+    for item in $(GetConfig '.extensions | keys_unsorted[]')
     do
         if [ $(GetConfig ".extensions.\"${item}\".enabled") = 'true' ]
         then
@@ -484,7 +484,7 @@ function MakeScriptVSC {
     Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
 
     # Generate env
-    for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys[]] | unique[]")
+    for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys_unsorted[]] | unique[]")
     do
         if [ "${env}" = 'PATH' ]
         then
@@ -532,7 +532,7 @@ function MakeScriptJunest {
     Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
 
     # Generate env
-    for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .junest_env | select(.!= null) | keys[]] | unique[]")
+    for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .junest_env | select(.!= null) | keys_unsorted[]] | unique[]")
     do
         if [ "${env}" = 'PATH' ]
         then
@@ -582,7 +582,7 @@ function MakeScriptZeal {
         Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
 
         # Generate env
-        for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys[]] | unique[]")
+        for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys_unsorted[]] | unique[]")
         do
             if [ "${env}" = 'PATH' ]
             then
@@ -680,7 +680,7 @@ function MakeScriptLink {
 
     # For all settings extensions from config file
         # For all settings extensions from config file
-    for item in $(GetConfig '.extensions | keys[]')
+    for item in $(GetConfig '.extensions | keys_unsorted[]')
     do
         if [ $(GetConfig ".extensions.\"${item}\".enabled") = 'true' ]
         then
@@ -845,7 +845,7 @@ function Update {
     UpdateVSCode
 
     # For all settings extensions from config file
-    for item in $(GetConfig '.extensions | keys[]')
+    for item in $(GetConfig '.extensions | keys_unsorted[]')
     do
         if [ $(GetConfig ".extensions.\"${item}\".enabled") = 'true' ]
         then
