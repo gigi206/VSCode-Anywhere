@@ -309,13 +309,6 @@ function InstallZeal {
         Output "Installing ${ZealAppName}"
         InstallJunestPkg zeal libcanberra libxml2
         InstallVSCPkg 'deerawan.vscode-dash'
-#
-#        if [ ! -d "${JunestAppPath_home}" ]
-#        then
-#            # Simulate HOME for Zeal for avoid to download docsets in HOME of current user
-#            Cmd "mkdir -p ${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets" 1
-#            Cmd "cd ${JunestAppPath_home}/.local/share/Zeal/Zeal && ln -s ../../../../../install/docsets . && cd - > /dev/null" 1
-#        fi
     fi
 }
 
@@ -604,7 +597,6 @@ function MakeScriptZeal {
         done
 
         # Write script for run Zeal
-        local ZealAppPath_home=$(echo ${JunestExternalPath}$(echo ${JunestAppPath_home} | sed "s@${InstallDir}\(.*\)@\1@g"))
         Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
 
         # Create shortcut
