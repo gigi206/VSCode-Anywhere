@@ -154,7 +154,7 @@ function JunestCmd {
 
     echo -e "\\n\\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
 
-    PROOT_NO_SECCOMP=1 JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -p "-b /:/${JunestExternalPath}" -f /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u -p "-b /:/${JunestExternalPath}" -f /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
     ret_code=${?}
@@ -242,15 +242,15 @@ function InstallJunest {
     # Upgrade chroot packages (kill parent for avoid hang after pacman upgrade !)
     Output "Updating ${JunestAppName} chroot packages"
     update='yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
-    PROOT_NO_SECCOMP=1 JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -f /bin/bash -l -- 2>/dev/null << EOF
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u /bin/bash -l -- 2>/dev/null << EOF
 ${update}
 EOF
 
-    # Generation locale (buggy)
-    #JunestCmd 'sed -i "s@^#\(${LANG}.*\)@\1@g" /etc/locale.gen'
-    #JunestCmd 'locale-gen'
-    # Workaround
-    Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
+    # Generation locale (buggy with Proot)
+    JunestCmd 'sed -i "s@^#\(${LANG}.*\)@\1@g" /etc/locale.gen'
+    JunestCmd 'locale-gen'
+    # Workaround with Proot
+    #Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
 
     # Install requirements
     InstallJunestPkg git curl wget tar jq unzip rsync
@@ -298,7 +298,7 @@ function InstallVSCode {
     Output "Installing ${VSCAppName} ${VSCTag}"
 
     # Download latest VSCode zip file
-    JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 1
+    JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 1
 }
 
 # Install Zeal if enabled
@@ -310,6 +310,13 @@ function InstallZeal {
         Output "Installing ${ZealAppName}"
         InstallJunestPkg zeal libcanberra libxml2
         InstallVSCPkg 'deerawan.vscode-dash'
+
+        if [ ! -d "${ZealAppPath_home}" ]
+        then
+            # Simulate HOME for Zeal for avoid to download docsets in HOME of current user
+            Cmd "mkdir -p ${ZealAppPath_home}/.local/share/Zeal/Zeal" 1
+            Cmd "cd ${ZealAppPath_home}/.local/share/Zeal/Zeal && ln -s ../../../../../install/docsets . && cd - > /dev/null" 1
+        fi
     fi
 }
 
@@ -353,7 +360,7 @@ function InstallZealPkg {
 
                 # Download docset
                 JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 1
-                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
 
                 # Generate icons
                 JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
@@ -371,7 +378,7 @@ function InstallZealPkg {
 
                 # Download docset
                 JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp"
-                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
 
                 # Generate icons
                 JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
@@ -489,9 +496,10 @@ function MakeScriptVSC {
     do
         if [ "${env}" = 'PATH' ]
         then
-            mypath=$(JunestCmd "echo '${PATH}'")
-            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":${mypath}\"' | tr '\\n' ':' | xargs" 1)\\\")
-
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":/usr/local/bin:/usr/local/sbin:/usr/:/usr/bin\"' | tr '\\n' ':' | xargs" 1)\\\")
+        elif [ "${env}" = 'LD_LIBRARY_PATH' ]
+        then
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .LD_LIBRARY_PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
         else
             myenv=$(eval echo export ${env}=\\\"$(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .${env} | select(. != null)][-1]")\\\")
         fi
@@ -499,7 +507,10 @@ function MakeScriptVSC {
     done
 
     Cmd "echo 'unset FPATH' >> '${ScriptFile}'" 1
-    Cmd "echo 'PROOT_NO_SECCOMP=1 JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -p \"-b ${InstallDir}:${JunestExternalPath}\" -- QT_AUTO_SCREEN_SCALE_FACTOR=0 ELECTRON_RUN_AS_NODE=1 \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_install})/code\" \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_install})/resources/app/out/cli.js\" --user-data-dir \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_user_data})\" --extensions-dir \"${JunestExternalPath}/$(basename ${VSCAppPath})/$(basename ${VSCAppPath_extensions})\" \"\${@}\"' >> '${ScriptFile}'" 1
+    local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
+    local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
+    local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
+    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
 
     # Create shortcut
     echo "[Desktop Entry]
@@ -533,8 +544,10 @@ function MakeScriptJunest {
     do
         if [ "${env}" = 'PATH' ]
         then
-            mypath=$(JunestCmd "echo '${PATH}'")
-            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .PATH | select(. != null) + \":${mypath}\"' | tr '\\n' ':' | xargs" 1)\\\")
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .PATH | select(. != null) + \":/usr/local/bin:/usr/local/sbin:/usr/:/usr/bin\"' | tr '\\n' ':' | xargs" 1)\\\")
+        elif [ "${env}" = 'LD_LIBRARY_PATH' ]
+        then
+            myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .LD_LIBRARY_PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
         else
             myenv=$(eval echo export ${env}=\\\"$(GetConfig "[.extensions[] | select(.enabled == true) | .junest_env | select(. != null) | .${env} | select(. != null)][-1]")\\\")
         fi
@@ -545,7 +558,7 @@ function MakeScriptJunest {
     junest_terminal_opts="$(eval echo $(GetConfig '.base.junest_terminal_opts'))"
 
     # Write script for run terminal
-    Cmd "echo 'PROOT_NO_SECCOMP=1 JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
+    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
 
     # Create shortcut
     echo "[Desktop Entry]
@@ -567,22 +580,50 @@ function MakeScriptZeal {
     then
         Output "Make install script file ${InstallDir}/Documentation"
 
+        # Define location
+        ScriptFile="${ToolsDir}/${ZealAppName}.sh"
+
+        # Remove it if exists
+        Cmd "rm -f '${ScriptFile}'" 1
+
+        # Write code to script
+        Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
+
+        # Generate env
+        for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys[]] | unique[]")
+        do
+            if [ "${env}" = 'PATH' ]
+            then
+                myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .PATH | select(. != null) + \":/usr/local/bin:/usr/local/sbin:/usr/:/usr/bin\"' | tr '\\n' ':' | xargs" 1)\\\")
+            elif [ "${env}" = 'LD_LIBRARY_PATH' ]
+            then
+                myenv=$(eval echo export ${env}=\\\"$(Cmd "GetConfig '.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .LD_LIBRARY_PATH | select(. != null)' | tr '\\n' ':' | xargs" 1)\\\")
+            else
+                myenv=$(eval echo export ${env}=\\\"$(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(. != null) | .${env} | select(. != null)][-1]")\\\")
+            fi
+            Cmd "echo '${myenv}' >> '${ScriptFile}'" 1
+        done
+
+        # Write script for run Zeal
+        local ZealAppPath_home=$(echo ${JunestExternalPath}$(echo ${ZealAppPath_home} | sed "s@${InstallDir}\(.*\)@\1@g"))
+        Cmd "echo 'HOME=\"${ZealAppPath_home}\" JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
+
         # Create shortcut
         echo "[Desktop Entry]
 Name=Documentation
 Comment=Run ${ZealAppName}
-Exec=env PROOT_NO_SECCOMP=1 JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" QT_AUTO_SCREEN_SCALE_FACTOR=0 ${ZealAppName,,}
+Exec='${ScriptFile}'
 Icon=${JunestAppPath_chroot}/usr/share/icons/hicolor/128x128/apps/zeal.png
 Terminal=false
 Type=Application
 Categories=Utility;Application;
 " > "${InstallDir}/Documentation.desktop"
 
-        Cmd "chmod +x '${InstallDir}/Documentation.desktop'" 1
+        Cmd "chmod +x '${ScriptFile}' '${InstallDir}/Documentation.desktop'" 1
 
         # TODO : Bug => impossible to symlink (or bind the directory) elsewhere (a workaround that I have found is to rsync...). Need to find a better way but it works...
-        Output "Relink ${ZealAppName} local docsets"
-        JunestCmd "mkdir -p '${HOME}/.local/share/Zeal/Zeal/docsets' && rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
+        #Output "Relink ${ZealAppName} local docsets"
+        #JunestCmd "mkdir -p '${HOME}/.local/share/Zeal/Zeal/docsets' && rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
     fi
 }
 
@@ -717,7 +758,7 @@ function UpdateVSCode {
         Output "Updating ${VSCAppName} from version ${VSCPkg} to ${VSCTag}"
 
         # Download latest VSCode zip file
-        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 1
+        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 1
     else
         Output "VSCode is already to the latest version ${VSCPkg}"
     fi
@@ -764,7 +805,7 @@ function UpdateZealPkg {
 
                     # Download docset
                     JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${ZealAppPath}/tmp" 1
-                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
 
                     # Generate icons
                     JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
@@ -796,7 +837,7 @@ function UpdateZealPkg {
 
                     # Download docset
                     JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp"
-                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
 
                     # Generate icons
                     JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
@@ -859,7 +900,7 @@ function InstallFonts {
 # Uninstall Junest chroot
 function UninstallJunest {
     InstallAppHeader "Deleting ${JunestAppPath_chroot}"
-    PROOT_NO_SECCOMP=1 JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -d
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -d
 }
 
 # Installation is finished
@@ -936,6 +977,7 @@ export ZealAppName="Zeal"
 export ZealAppPath="${ThirdParty}/${ZealAppName}"
 export ZealAppPath_install="${ZealAppPath}/install"
 export ZealAppPath_bin="${ZealAppPath_install}/zeal"
+export ZealAppPath_home="${ZealAppPath}/home"
 export ZealAppPath_docsets="${ZealAppPath_install}/docsets"
 
 
