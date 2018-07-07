@@ -154,7 +154,7 @@ function JunestCmd {
 
     echo -e "\\n\\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
 
-    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u -p "-b /:/${JunestExternalPath}" -f /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u -p "-b $(echo ~):${JunestAppPath_user_home} -b /:/${JunestExternalPath}" -f /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
     ret_code=${?}
@@ -187,8 +187,7 @@ function Init {
     [ -f "${Log}" ] && Cmd "mv '${Log}' '${Log}.old'"
 
     # Create FontsDir / ToolsDir / ConfDir / Logdir
-    [ -d "${LogDir}" ] || mkdir -p "${LogDir}"
-    Cmd "mkdir -p '${FontsDir}' '${ToolsDir}' '${ConfDir}'" 1
+    Cmd "mkdir -p '${FontsDir}' '${ToolsDir}' '${ConfDir}' '${LogDir}'" 1
 
     # Copy install and config files to $ToolsDir
     if [ $(realpath $(dirname "${0}")) != "${ToolsDir}" ]
@@ -224,7 +223,7 @@ function InstallJunest {
     fi
 
     # Create Junest directory
-    Cmd "mkdir -p '${JunestAppPath}'" 1
+    Cmd "mkdir -p '${JunestAppPath_home}'" 1
 
     # Install Junest
     Cmd "rm -fr '${JunestAppPath_install}'" 1
@@ -253,7 +252,7 @@ EOF
     #Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
 
     # Install requirements
-    InstallJunestPkg git curl wget tar jq unzip rsync
+    InstallJunestPkg git curl wget tar jq unzip rsync adwaita-icon-theme
 
     # Reinstall junest bin from github for be to be able to git pull
     JunestCmd "git clone https://github.com/fsquillace/junest.git '${JunestExternalPath}${JunestAppPath_install}_tmp' --depth 1" 1
@@ -310,13 +309,13 @@ function InstallZeal {
         Output "Installing ${ZealAppName}"
         InstallJunestPkg zeal libcanberra libxml2
         InstallVSCPkg 'deerawan.vscode-dash'
-
-        if [ ! -d "${ZealAppPath_home}" ]
-        then
-            # Simulate HOME for Zeal for avoid to download docsets in HOME of current user
-            Cmd "mkdir -p ${ZealAppPath_home}/.local/share/Zeal/Zeal" 1
-            Cmd "cd ${ZealAppPath_home}/.local/share/Zeal/Zeal && ln -s ../../../../../install/docsets . && cd - > /dev/null" 1
-        fi
+#
+#        if [ ! -d "${JunestAppPath_home}" ]
+#        then
+#            # Simulate HOME for Zeal for avoid to download docsets in HOME of current user
+#            Cmd "mkdir -p ${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets" 1
+#            Cmd "cd ${JunestAppPath_home}/.local/share/Zeal/Zeal && ln -s ../../../../../install/docsets . && cd - > /dev/null" 1
+#        fi
     fi
 }
 
@@ -510,7 +509,7 @@ function MakeScriptVSC {
     local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
+    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
 
     # Create shortcut
     echo "[Desktop Entry]
@@ -605,8 +604,8 @@ function MakeScriptZeal {
         done
 
         # Write script for run Zeal
-        local ZealAppPath_home=$(echo ${JunestExternalPath}$(echo ${ZealAppPath_home} | sed "s@${InstallDir}\(.*\)@\1@g"))
-        Cmd "echo 'HOME=\"${ZealAppPath_home}\" JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
+        local ZealAppPath_home=$(echo ${JunestExternalPath}$(echo ${JunestAppPath_home} | sed "s@${InstallDir}\(.*\)@\1@g"))
+        Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
 
         # Create shortcut
         echo "[Desktop Entry]
@@ -620,10 +619,6 @@ Categories=Utility;Application;
 " > "${InstallDir}/Documentation.desktop"
 
         Cmd "chmod +x '${ScriptFile}' '${InstallDir}/Documentation.desktop'" 1
-
-        # TODO : Bug => impossible to symlink (or bind the directory) elsewhere (a workaround that I have found is to rsync...). Need to find a better way but it works...
-        #Output "Relink ${ZealAppName} local docsets"
-        #JunestCmd "mkdir -p '${HOME}/.local/share/Zeal/Zeal/docsets' && rsync -aH --delete '${JunestExternalPath}/${ZealAppPath_docsets}/' '${HOME}/.local/share/Zeal/Zeal/docsets'" 1
     fi
 }
 
@@ -714,7 +709,6 @@ function MakeScriptLink {
 # Create scripts
 function MakeScripts {
     InstallAppHeader "Make tools scripts..."
-    InstallJunestPkg adwaita-icon-theme
     MakeScriptVSC
     MakeScriptJunest
     MakeScriptZeal
@@ -968,6 +962,8 @@ export VSCAppPath_user_data="${VSCAppPath}/user-data"
 export JunestAppName="Junest"
 export JunestAppPath="${ThirdParty}/${JunestAppName}"
 export JunestAppPath_install="${JunestAppPath}/install"
+export JunestAppPath_home="${JunestAppPath}/home"
+export JunestAppPath_user_home="${JunestAppPath_home}/HOME"
 export JunestAppPath_chroot="${JunestAppPath}/chroot"
 export JunestAppPath_bin="${JunestAppPath_install}/bin/junest"
 export JunestExternalPath="/${ProgramName}"
@@ -977,7 +973,6 @@ export ZealAppName="Zeal"
 export ZealAppPath="${ThirdParty}/${ZealAppName}"
 export ZealAppPath_install="${ZealAppPath}/install"
 export ZealAppPath_bin="${ZealAppPath_install}/zeal"
-export ZealAppPath_home="${ZealAppPath}/home"
 export ZealAppPath_docsets="${ZealAppPath_install}/docsets"
 
 
