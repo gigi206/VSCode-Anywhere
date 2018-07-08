@@ -154,7 +154,7 @@ function JunestCmd {
 
     echo -e "\\n\\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
 
-    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u -p "-b $(echo ~):${JunestAppPath_user_home} -b /:/${JunestExternalPath}" -f /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u -p "-b $(echo ~):${JunestAppPath_user_home} -b /:/${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
     ret_code=${?}
