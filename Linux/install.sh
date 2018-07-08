@@ -100,7 +100,6 @@ function InstallAppHeader {
     tput sgr0
 }
 
-
 # Output actions to console
 function Output {
     message="${1}"
@@ -240,7 +239,7 @@ function InstallJunest {
     Output "Downloading ${JunestAppName} binaries"
     Cmd "cd '${JunestAppPath}' && wget -q http://api.github.com/repos/fsquillace/junest/tarball -O - | tar xz && mv fsquillace-junest-* '${JunestAppPath_install}'" 1
 
-    # Link ~/.junest to chroot
+    # Create chroot junest directory
     Cmd "mkdir -p '${JunestAppPath_chroot}'" 1
 
     # Init Junest
@@ -709,7 +708,7 @@ function MakeScriptLink {
 
 # Create scripts
 function MakeScripts {
-    InstallAppHeader "Make tools scripts..."
+    InstallAppHeader "Make Tools scripts..."
     MakeScriptVSC
     MakeScriptJunest
     MakeScriptZeal
@@ -978,6 +977,7 @@ export ZealAppPath_docsets="${ZealAppPath_install}/docsets"
 
 # Proot
 export PROOT_NO_SECCOMP=1
+
 
 ############
 #   CODE   #
