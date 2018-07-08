@@ -550,7 +550,7 @@ function MakeScriptJunest {
     junest_terminal_opts="$(eval echo $(GetConfig '.base.junest_terminal_opts'))"
 
     # Write script for run terminal
-    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
+    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
 
     # Create shortcut
     echo "[Desktop Entry]
