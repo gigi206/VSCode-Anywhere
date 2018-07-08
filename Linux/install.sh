@@ -160,7 +160,7 @@ else
     chroot_type='-u'
 fi
 
-    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" ${chroot_type} -p "-b $(echo ~):${JunestAppPath_user_home} -b /:/${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
+    HOME="${Home_chroot}" JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" ${chroot_type} -p "-b ${JunestAppPath_home}:${Home_chroot} -b /:/${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
 
@@ -520,10 +520,12 @@ Categories=Utility;Application;
     Cmd "chmod +x '${ScriptFile}' '${InstallDir}/${ProgramName}.desktop'" 1
 
     Cmd "echo 'unset FPATH' >> '${ScriptFile}'" 1
+    Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
+    Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
     local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
+    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
 }
 
 # Create start script for run Junest console
@@ -567,11 +569,20 @@ Categories=Utility;Application;
 
     Cmd "chmod +x '${ScriptFile}' '${InstallDir}/Terminal.desktop'" 1
 
+    # Relink HOME directory
+    Cmd "rm -f \"${JunestAppPath_user_home}\" && ln -fs \"${Home_real}\" \"${JunestAppPath_user_home}\"" 1
+
+    # Bookmark real HOME directory
+    Cmd "echo 'file://${Home_real} HOME' > \"${JunestAppPath_home}/.gtk-bookmarks\""
+    Cmd "echo 'file://${JunestExternalPath} VSCode-Anywhere' >> \"${JunestAppPath_home}/.gtk-bookmarks\""
+
     # Define terminal settings
     junest_terminal_opts="$(eval echo $(GetConfig '.base.junest_terminal_opts'))"
 
     # Write script for run terminal
-    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
+    Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
+    Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
+    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
 }
 
 # Create script for Zeal
@@ -618,7 +629,9 @@ Categories=Utility;Application;
         Cmd "chmod +x '${ScriptFile}' '${InstallDir}/Documentation.desktop'" 1
 
         # Write script for run Zeal
-        Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
+        Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
+        Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
+        Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
     fi
 }
 
@@ -886,8 +899,8 @@ function InstallFonts {
     for font in "${FontsDir}"/*.ttf
     do
         Output "Installing font ${font}"
-        Cmd "mkdir -p ~/.local/share/fonts"
-        Cmd "cp -f '${font}' ~/.local/share/fonts" 1
+        Cmd "mkdir -p ${Home_real}/.local/share/fonts" 1
+        Cmd "cp -f '${font}' ${Home_real}/.local/share/fonts" 1
     done
 }
 
@@ -940,6 +953,11 @@ else
     ProgramConfig="$(realpath $(dirname ${0}))/${ProgramName}.conf"
 fi
 
+# Home user
+export Home_real="$(echo ~)"
+export Home_chroot="/home/${ProgramName}"
+
+# Install vars
 export ProgramConfig
 export LogDir="${InstallDir}/Logs"
 export Log="${LogDir}/install.log"
