@@ -187,7 +187,8 @@ function Init {
     [ -f "${Log}" ] && Cmd "mv '${Log}' '${Log}.old'"
 
     # Create FontsDir / ToolsDir / ConfDir / Logdir
-    Cmd "mkdir -p '${FontsDir}' '${ToolsDir}' '${ConfDir}' '${LogDir}'" 1
+    mkdir -p "${LogDir}" # Don't merge this line with the bottom line (we need log dir before use Cmd function) 
+    Cmd "mkdir -p '${FontsDir}' '${ToolsDir}' '${ConfDir}'" 1
 
     # Copy install and config files to $ToolsDir
     if [ $(realpath $(dirname "${0}")) != "${ToolsDir}" ]
