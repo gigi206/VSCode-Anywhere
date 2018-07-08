@@ -150,13 +150,21 @@ function Cmd {
 # Run Junest command
 function JunestCmd {
     cmd="${1}"
-    exit="${2}"
+    type="${2}"
+    exit="${3}"
 
     echo -e "\\n\\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
+if [ "$type" = 'proot' ]
+then
+    chroot_type='-f'
+else
+    chroot_type='-u'
+fi
 
-    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u -p "-b $(echo ~):${JunestAppPath_user_home} -b /:/${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" ${chroot_type} -p "-b $(echo ~):${JunestAppPath_user_home} -b /:/${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
+
     ret_code=${?}
 
     if [ ${ret_code} -ne 0 ];
@@ -209,7 +217,7 @@ function Init {
 # Return current config in json format
 function GetConfig {
     config="${1}"
-    JunestCmd "cat '${JunestExternalPath}${ProgramConfig}' | jq -r '${config}'" 1
+    JunestCmd "cat '${JunestExternalPath}${ProgramConfig}' | jq -r '${config}'" 'namespace' 1
 }
 
 # Install Junest for chroot
@@ -237,7 +245,7 @@ function InstallJunest {
 
     # Init Junest
     Output "Installing ${JunestAppName} chroot"
-    JunestCmd ''
+    JunestCmd '' 'namespace'
 
     # Upgrade chroot packages (kill parent for avoid hang after pacman upgrade !)
     Output "Updating ${JunestAppName} chroot packages"
@@ -247,8 +255,8 @@ ${update}
 EOF
 
     # Generation locale (buggy with Proot)
-    JunestCmd 'sed -i "s@^#\(${LANG}.*\)@\1@g" /etc/locale.gen'
-    JunestCmd 'locale-gen'
+    JunestCmd 'sed -i "s@^#\(${LANG}.*\)@\1@g" /etc/locale.gen' 'namespace'
+    JunestCmd 'locale-gen' 'namespace'
     # Workaround with Proot
     #Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
 
@@ -256,14 +264,14 @@ EOF
     InstallJunestPkg git curl wget tar jq unzip rsync adwaita-icon-theme
 
     # Reinstall junest bin from github for be to be able to git pull
-    JunestCmd "git clone https://github.com/fsquillace/junest.git '${JunestExternalPath}${JunestAppPath_install}_tmp' --depth 1" 1
+    JunestCmd "git clone https://github.com/fsquillace/junest.git '${JunestExternalPath}${JunestAppPath_install}_tmp' --depth 1" 'namespace' 1
     Cmd "rm -fr '${JunestAppPath_install}' && mv '${JunestAppPath_install}_tmp' '${JunestAppPath_install}'" 1
 }
 
 # Install a packahe inside chroot
 function InstallJunestPkg {
     Output "Install Junest packages : ${*}"
-    JunestCmd "pacman -Sy --noconfirm --needed --force ${*}" 1
+    JunestCmd "pacman -Sy --noconfirm --needed --force ${*}" 'namespace' 1
 }
 
 # Test Internet connection
@@ -286,19 +294,19 @@ function InstallVSCode {
     InstallJunestPkg gtk2 nss libxkbfile libxtst libxss gconf alsa-lib gsfonts git
 
     # Define last tag version for download VSCode
-    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 1)
+    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 'namespace' 1)
     VSCUrl="https://vscode-update.azurewebsites.net/${VSCTag}/linux-x64/stable"
 
     # Create install directories
     Output "Create ${VSCAppPath_extensions} and ${VSCAppPath_user_data} directories"
     Cmd "mkdir -p '${VSCAppPath_extensions}' '${VSCAppPath_user_data}'" 1
 
-    JunestCmd "mkdir -p /run/user/$(id -u)" 1
+    JunestCmd "mkdir -p /run/user/$(id -u)" 'namespace' 1
 
     Output "Installing ${VSCAppName} ${VSCTag}"
 
     # Download latest VSCode zip file
-    JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 1
+    JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
 }
 
 # Install Zeal if enabled
@@ -320,7 +328,7 @@ function InstallVSCPkg {
     for pkg in ${pkgs}
     do
         Output "Installing VSCode extension : ${pkg}"
-        JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}'"
+        JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}'" 'proot'
     done
 }
 
@@ -345,40 +353,40 @@ function InstallZealPkg {
             Output "Installing Zeal docset ${pkg}"
 
             # Request zeal api
-            pkg_api=$(JunestCmd "curl -s http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"")
+            pkg_api=$(JunestCmd "curl -s http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"" 'namespace')
 
             if [ "${pkg_api}" ]
             then
-                pkg_url=$(JunestCmd "curl -Ls https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null")
+                pkg_url=$(JunestCmd "curl -Ls https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null" 'namespace')
 
                 # Download docset
-                JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 1
-                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace' 1
+                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                 # Generate icons
-                JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
-                JunestCmd "echo '${pkg_api}' | jq -r '.icon2x' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'"
+                JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
+                JunestCmd "echo '${pkg_api}' | jq -r '.icon2x' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'" 'namespace'
 
                 # Generate meta.json file
-                JunestCmd "echo '${pkg_api}' | jq -r 'del(.sourceId, .versions, .icon, .icon2x, .id) + {\"version\": .versions[0]}' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'"
+                JunestCmd "echo '${pkg_api}' | jq -r 'del(.sourceId, .versions, .icon, .icon2x, .id) + {\"version\": .versions[0]}' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'" 'namespace'
             else
                 # Request zeal api
-                pkg_api=$(JunestCmd "curl -s http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'")
+                pkg_api=$(JunestCmd "curl -s http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'" 'namespace')
 
                 [ "${pkg_api}" = 'null' ] && echo "${pkg} not found !" && continue
 
                 pkg_url="http://sanfrancisco.kapeli.com/feeds/zzz/user_contributed/build/${pkg}/${pkg}.tgz"
 
                 # Download docset
-                JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp"
-                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
+                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                 # Generate icons
-                JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
-                JunestCmd "echo '${pkg_api}' | jq -r '.\"icon@2x\"' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'"
+                JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
+                JunestCmd "echo '${pkg_api}' | jq -r '.\"icon@2x\"' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'" 'namespace'
 
                 # Generate meta.json file
-                JunestCmd "echo '${pkg_api}' | jq -r 'del(.author, .archive, .icon, .\"icon@2x\", .aliases, .specific_versions) | .title = .name | .name=\"${pkg}\"' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'"
+                JunestCmd "echo '${pkg_api}' | jq -r 'del(.author, .archive, .icon, .\"icon@2x\", .aliases, .specific_versions) | .title = .name | .name=\"${pkg}\"' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'" 'namespace'
             fi
         done
     fi
@@ -392,12 +400,12 @@ function SetVSCSettings {
     settings_path="${VSCAppPath_user_data}/User/settings.json"
 
     # Create settings file if doesn't exist
-    [ -f "${settings_path}" ] || JunestCmd "echo {} > '${JunestExternalPath}${settings_path}'" 1
+    [ -f "${settings_path}" ] || JunestCmd "echo {} > '${JunestExternalPath}${settings_path}'" 'namespace' 1
 
     # Apply config to current settings
     Output "Set VSCode settings : ${settings}"
-    full_settings=$(JunestCmd "cat '${JunestExternalPath}${settings_path}' | jq -r '. + ${settings}'" 1)
-    [ -n "${full_settings}" ] && JunestCmd "echo '${full_settings}' > '${JunestExternalPath}${settings_path}'" 1
+    full_settings=$(JunestCmd "cat '${JunestExternalPath}${settings_path}' | jq -r '. + ${settings}'" 'namespace' 1)
+    [ -n "${full_settings}" ] && JunestCmd "echo '${full_settings}' > '${JunestExternalPath}${settings_path}'" 'namespace' 1
 }
 
 # Set keyboard settings inside VSCode
@@ -408,12 +416,12 @@ function SetVSCKeyboard {
     keybindings_path="${VSCAppPath_user_data}/User/keybindings.json"
 
     # Create keyboard key bindings file if doesn't exist
-    [ -f "${keybindings_path}" ] || JunestCmd "echo [] > '${JunestExternalPath}${keybindings_path}'" 1
+    [ -f "${keybindings_path}" ] || JunestCmd "echo [] > '${JunestExternalPath}${keybindings_path}'" 'namespace' 1
 
     # Apply config to current settings
     Output "Set VSCode keyboard : ${settings}"
-    full_settings=$(JunestCmd "cat '${JunestExternalPath}${keybindings_path}' | jq -r '. + ${settings}'" 1)
-    [ -n "${full_settings}" ] && JunestCmd "echo '${full_settings}' > '${JunestExternalPath}${keybindings_path}'" 1
+    full_settings=$(JunestCmd "cat '${JunestExternalPath}${keybindings_path}' | jq -r '. + ${settings}'" 'namespace' 1)
+    [ -n "${full_settings}" ] && JunestCmd "echo '${full_settings}' > '${JunestExternalPath}${keybindings_path}'" 'namespace' 1
 }
 
 # Install all references from config file
@@ -436,7 +444,7 @@ function InstallConfig {
             [ $(GetConfig ".extensions.\"${item}\".junest_cmd_pre | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".junest_cmd_pre[]" | while read -r cmd
             do
                 Output "RUN Junest command : ${cmd}"
-                JunestCmd "${cmd}"
+                JunestCmd "${cmd}" 'proot'
             done
 
             # Call InstallJunestPkg function if junest_pkg is defined
@@ -465,7 +473,7 @@ function InstallConfig {
             [ $(GetConfig ".extensions.\"${item}\".junest_cmd_post | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".junest_cmd_post[]" | while read -r cmd
             do
                 Output "RUN Junest command : ${cmd}"
-                JunestCmd "${cmd}"
+                JunestCmd "${cmd}" 'proot'
             done
         fi
     done
@@ -717,11 +725,11 @@ function UpdateJunest {
 
     # Update junest source code
     Output "Update ${JunestAppName} source code"
-    JunestCmd "cd '${JunestExternalPath}$JunestAppPath_install' && git pull origin master" 1
+    JunestCmd "cd '${JunestExternalPath}$JunestAppPath_install' && git pull origin master" 'namespace' 1
 
     # Update chroot packages
     Output "Update ${JunestAppName} chroot"
-    JunestCmd 'yes y | LC_ALL=C pacman -Syu' 1
+    JunestCmd 'yes y | LC_ALL=C pacman -Syu' 'namespace' 1
 }
 
 # Update VSCode
@@ -731,13 +739,13 @@ function UpdateVSCode {
     # Update VSCode
     if [ -f "${VSCAppPath_install}/resources/app/package.json" ]
     then
-        VSCPkg=$(JunestCmd "cat ${JunestExternalPath}${VSCAppPath_install}/resources/app/package.json | jq -r '.version'" 1)
+        VSCPkg=$(JunestCmd "cat ${JunestExternalPath}${VSCAppPath_install}/resources/app/package.json | jq -r '.version'" 'namespace' 1)
     else
         VSCPkg='Unknown'
     fi
 
     # Define last tag version for download VSCode
-    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 1)
+    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 'namespace' 1)
     VSCUrl="https://vscode-update.azurewebsites.net/${VSCTag}/linux-x64/stable"
 
     if [ "${VSCPkg}" != "${VSCTag}" ]
@@ -745,7 +753,7 @@ function UpdateVSCode {
         Output "Updating ${VSCAppName} from version ${VSCPkg} to ${VSCTag}"
 
         # Download latest VSCode zip file
-        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 1
+        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
     else
         Output "VSCode is already to the latest version ${VSCPkg}"
     fi
@@ -761,26 +769,26 @@ function UpdateZealPkg {
         for pkg in ${pkgs}
         do
             # Request zeal api
-            pkg_api=$(JunestCmd "curl -Ls http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"")
+            pkg_api=$(JunestCmd "curl -Ls http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"" 'namespace')
 
             if [ "${pkg_api}" ]
             then
-                pkg_url=$(JunestCmd "curl -Ls https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null")
+                pkg_url=$(JunestCmd "curl -Ls https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null" 'namespace')
 
                 # Last version of the docset
-                if [ $(JunestCmd "echo '${pkg_api}' | jq -r \".versions[0]\"") != 'null' ]
+                if [ $(JunestCmd "echo '${pkg_api}' | jq -r \".versions[0]\"" 'namespace') != 'null' ]
                 then
-                    version_api=$(JunestCmd "echo '${pkg_api}' | jq -r \".versions[0] + \\\"-\\\" + .revision\"")
+                    version_api=$(JunestCmd "echo '${pkg_api}' | jq -r \".versions[0] + \\\"-\\\" + .revision\"" 'namespace')
                 else
-                    version_api=$(JunestCmd "echo '${pkg_api}' | jq -r \".revision\"")
+                    version_api=$(JunestCmd "echo '${pkg_api}' | jq -r \".revision\"" 'namespace')
                 fi
 
                 # Current version of the docset
-                if [ $(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".version\"") != 'null' ]
+                if [ $(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".version\"" 'namespace') != 'null' ]
                 then
-                    version_installed=$(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".version + \\\"-\\\" + .revision\"")
+                    version_installed=$(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".version + \\\"-\\\" + .revision\"" 'namespace')
                 else
-                    version_installed=$(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".revision\"")
+                    version_installed=$(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".revision\"" 'namespace')
                 fi
 
                 if [ "${version_api}" != "${version_installed}" ]
@@ -791,29 +799,29 @@ function UpdateZealPkg {
                     Cmd "rm -fr ${ZealAppPath_docsets}/${pkg}.docset" 1
 
                     # Download docset
-                    JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${ZealAppPath}/tmp" 1
-                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                    JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${ZealAppPath}/tmp" 'namespace' 1
+                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                     # Generate icons
-                    JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
-                    JunestCmd "echo '${pkg_api}' | jq -r '.icon2x' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'"
+                    JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
+                    JunestCmd "echo '${pkg_api}' | jq -r '.icon2x' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'" 'namespace'
 
                     # Generate meta.json file
-                    JunestCmd "echo '${pkg_api}' | jq -r 'del(.sourceId, .versions, .icon, .icon2x, .id) + {\"version\": .versions[0]}' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'"
+                    JunestCmd "echo '${pkg_api}' | jq -r 'del(.sourceId, .versions, .icon, .icon2x, .id) + {\"version\": .versions[0]}' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'" 'namespace'
                 else
                     Output "Zeal docset ${pkg} is already to the last version ${version_installed}"
                 fi
             else
                 # Request zeal api
-                pkg_api=$(JunestCmd "curl -s http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'")
+                pkg_api=$(JunestCmd "curl -s http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'" 'namespace')
 
                 [ "${pkg_api}" = 'null' ] && echo "${pkg} not found !" && continue
 
                 pkg_url="http://sanfrancisco.kapeli.com/feeds/zzz/user_contributed/build/${pkg}/${pkg}.tgz"
 
 
-                version_api=$(JunestCmd "echo '${pkg_api}' | jq -r \".version\"")
-                version_installed=$(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".version\"")
+                version_api=$(JunestCmd "echo '${pkg_api}' | jq -r \".version\"" 'namespace')
+                version_installed=$(JunestCmd "cat '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json' | jq -r \".version\"" 'namespace')
 
                 if [ "${version_api}" != "${version_installed}" ]
                 then
@@ -823,15 +831,15 @@ function UpdateZealPkg {
                     Cmd "rm -fr ${ZealAppPath_docsets}/${pkg}.docset" 1
 
                     # Download docset
-                    JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp"
-                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp"
+                    JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
+                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                     # Generate icons
-                    JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'"
-                    JunestCmd "echo '${pkg_api}' | jq -r '.\"icon@2x\"' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'"
+                    JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
+                    JunestCmd "echo '${pkg_api}' | jq -r '.\"icon@2x\"' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon@2x.png'" 'namespace'
 
                     # Generate meta.json file
-                    JunestCmd "echo '${pkg_api}' | jq -r 'del(.author, .archive, .icon, .\"icon@2x\", .aliases) | .title = .name | .name=\"${pkg}\"' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'"
+                    JunestCmd "echo '${pkg_api}' | jq -r 'del(.author, .archive, .icon, .\"icon@2x\", .aliases) | .title = .name | .name=\"${pkg}\"' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'" 'namespace'
                 else
                     Output "Zeal docset ${pkg} is already to the last version ${version_installed}"
                 fi
@@ -863,7 +871,7 @@ function Update {
             [ $(GetConfig ".extensions.\"${item}\".junest_cmd_update | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".junest_cmd_update[]" | while read -r cmd
             do
                 Output "RUN Junest command : ${cmd}"
-                JunestCmd "${cmd}"
+                JunestCmd "${cmd}" 'proot'
             done
 
             # Call InstallZealPkg function if zeal_pkg is defined
@@ -968,6 +976,8 @@ export ZealAppPath_install="${ZealAppPath}/install"
 export ZealAppPath_bin="${ZealAppPath_install}/zeal"
 export ZealAppPath_docsets="${ZealAppPath_install}/docsets"
 
+# Proot
+export PROOT_NO_SECCOMP=1
 
 ############
 #   CODE   #
