@@ -499,12 +499,6 @@ function MakeScriptVSC {
         Cmd "echo '${myenv}' >> '${ScriptFile}'" 1
     done
 
-    Cmd "echo 'unset FPATH' >> '${ScriptFile}'" 1
-    local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
-
     # Create shortcut
     echo "[Desktop Entry]
 Name=${ProgramName}
@@ -517,6 +511,12 @@ Categories=Utility;Application;
 " > ${InstallDir}/${ProgramName}.desktop
 
     Cmd "chmod +x '${ScriptFile}' '${InstallDir}/${ProgramName}.desktop'" 1
+
+    Cmd "echo 'unset FPATH' >> '${ScriptFile}'" 1
+    local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
+    local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
+    local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
+    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
 }
 
 # Create start script for run Junest console
@@ -547,12 +547,6 @@ function MakeScriptJunest {
         Cmd "echo '${myenv}' >> '${ScriptFile}'" 1
     done
 
-    # Define terminal settings
-    junest_terminal_opts="$(eval echo $(GetConfig '.base.junest_terminal_opts'))"
-
-    # Write script for run terminal
-    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
-
     # Create shortcut
     echo "[Desktop Entry]
 Name=Terminal
@@ -565,6 +559,12 @@ Categories=Utility;Application;
 " > "${InstallDir}/Terminal.desktop"
 
     Cmd "chmod +x '${ScriptFile}' '${InstallDir}/Terminal.desktop'" 1
+
+    # Define terminal settings
+    junest_terminal_opts="$(eval echo $(GetConfig '.base.junest_terminal_opts'))"
+
+    # Write script for run terminal
+    Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
 }
 
 # Create script for Zeal
@@ -597,9 +597,6 @@ function MakeScriptZeal {
             Cmd "echo '${myenv}' >> '${ScriptFile}'" 1
         done
 
-        # Write script for run Zeal
-        Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
-
         # Create shortcut
         echo "[Desktop Entry]
 Name=Documentation
@@ -612,6 +609,9 @@ Categories=Utility;Application;
 " > "${InstallDir}/Documentation.desktop"
 
         Cmd "chmod +x '${ScriptFile}' '${InstallDir}/Documentation.desktop'" 1
+
+        # Write script for run Zeal
+        Cmd "echo 'JUNEST_HOME=\"${JunestAppPath_chroot}\" \"${JunestAppPath_bin}\" -u -p \"-b $(echo ~):${JunestAppPath_user_home} -b ${ZealAppPath_docsets}:${JunestAppPath_home}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
     fi
 }
 
