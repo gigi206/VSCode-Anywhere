@@ -270,7 +270,7 @@ EOF
 # Install a packahe inside chroot
 function InstallJunestPkg {
     Output "Install Junest packages : ${*}"
-    JunestCmd "pacman -Sy --noconfirm --needed --force ${*}" 'namespace' 1
+    JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Sy --noconfirm --needed --force ${*}" 'namespace' 1
 }
 
 # Test Internet connection
