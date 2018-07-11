@@ -14,6 +14,7 @@
         - [2.3.3. Update](#233-update)
         - [2.3.4. Link](#234-link)
     - [2.4. Linux configuration file](#24-linux-configuration-file)
+    - [2.5. Information](#25-information)
 - [3. Windows](#3-windows)
     - [3.1. Installation](#31-installation)
         - [3.1.1. Installation parameters](#311-installation-parameters)
@@ -75,8 +76,8 @@ VSCode-Anywhere install for you (if *zeal_enabled* is set to _true_) the documen
 
 Dependancies (like Python, modules and documentation) will be installed with :
 
-- [Junest](https://github.com/fsquillace/junest) (only on Linux)
-- [MSYS2](https://www.msys2.org) (only on Windows)
+- [Junest](https://github.com/fsquillace/junest) (Linux only)
+- [MSYS2](https://www.msys2.org) (Windows only)
 - [Zeal](https://zealdocs.org)
 
 ## 2. Linux
@@ -119,12 +120,9 @@ mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi2
 - Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders)
 - Installation can take a long time depending on your Internet connection speed and the IO performance of your device
 
-VSCode-Anywhere will install and upgrade MSYS2. During the upgade of MSYS2, the window must to be closed for continue the installation :
-![install pacman upgrade](Screenshots/Windows/msys2_pacman_upgrade.png)
-
 ### 2.2. Vars
 
-Vars can be used in the config files for functions : **cmd_pre**, **vsc_settings**, **cmd_post**, **cmd_update**, **msys2_env** and **vsc_env**
+Vars can be used in the config files for functions : **cmd_pre**, **vsc_settings**, **cmd_post**, **cmd_update**, **junest_env** and **vsc_env**
 
 Vars :
 
@@ -224,6 +222,14 @@ You can use **null** value to disable one of these functions.
 
 Installation execution order if enabled (not **null**) :
 _**cmd_pre**_ > _**junest_cmd_pre**_ > _**junest_pkg**_ > _**vsc_pkg**_ > _**vsc_settings**_ > _**vsc_keyboard**_ > _**zeal_pkg**_ > _**junest_cmd_post**_ > _**cmd_post**_
+
+### 2.5. Information
+
+On Linux version, inside the terminal and VSCode application, you have access to :
+
+- **/home/VSCode-Anywhere** : home directory on the installation directory
+- **/home/VSCode-Anywhere/HOME** : real home directory (outside the chroot)
+- **/VSCode-Anywhere** : installation directory
 
 ## 3. Windows
 
@@ -720,7 +726,6 @@ VSCode extensions :
 - [Chef](https://marketplace.visualstudio.com/items?itemName=Pendrica.Chef)
 
 ![Chef](https://github.com/pendrica/vscode-chef/raw/master/images/vscode-chef-install.gif)
-
 
 ### 4.26. markdown
 
