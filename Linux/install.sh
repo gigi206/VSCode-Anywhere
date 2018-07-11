@@ -118,6 +118,11 @@ function OutputErrror {
     tput bold
     echo -e "\\nError : ${message}\\n" 2>&1 | tee -a "${Log}"
     tput sgr0
+
+    echo
+    read -r -s -p 'Press enter to finish'
+    echo -e "\\n"
+    
     exit "${exit:-1}"
 }
 
