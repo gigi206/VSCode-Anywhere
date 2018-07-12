@@ -122,7 +122,7 @@ function OutputErrror {
     echo
     read -r -s -p 'Press enter to finish'
     echo -e "\\n"
-    
+
     exit "${exit:-1}"
 }
 
@@ -199,7 +199,7 @@ function Init {
     [ -f "${Log}" ] && Cmd "mv '${Log}' '${Log}.old'"
 
     # Create FontsDir / ToolsDir / ConfDir / Logdir
-    mkdir -p "${LogDir}" # Don't merge this line with the bottom line (we need log dir before use Cmd function) 
+    mkdir -p "${LogDir}" # Don't merge this line with the bottom line (we need log dir before use Cmd function)
     Cmd "mkdir -p '${FontsDir}' '${ToolsDir}' '${ConfDir}'" 1
 
     # Copy install and config files to $ToolsDir
