@@ -70,7 +70,7 @@ VSCode-Anywhere is based on [VSCode](https://code.visualstudio.com), a cross-pla
 
 VSCode-Anywhere is preconfigured with features, you can modify or add your own features in the configuration file.
 
-With traditionnal VSCode,for example if you want to developped in _Python_ language, you must to have Python installed with some Python modules like **flake8**. With VSCode-Anywhere you have just to enabled Python section in the configuration file and start the installation process.
+With traditionnal VSCode, for example if you want to developped in _Python_ language, you must have Python installed with some Python modules like **flake8**. With VSCode-Anywhere you just have to enabled Python section in the configuration file and start the installation process.
 
 VSCode-Anywhere install for you (if *zeal_enabled* is set to _true_) the documentation of your language (with Zeal software). Always with Python example, Python2 and Python3 documentation will be downloaded add you will have access to this documentation accross your code.
 
@@ -79,6 +79,8 @@ Dependancies (like Python, modules and documentation) will be installed with :
 - [Junest](https://github.com/fsquillace/junest) (Linux only)
 - [MSYS2](https://www.msys2.org) (Windows only)
 - [Zeal](https://zealdocs.org)
+
+I recommand to see these [tutorials](https://code.visualstudio.com/docs/getstarted/introvideos).
 
 ## 2. Linux
 
