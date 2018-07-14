@@ -440,8 +440,6 @@ Add some VSCode extensions :
 
 ![Highlight Trailing White Spaces](https://github.com/yifu/highlight-trailing-whitespaces/raw/master/illustration.gif)
 
-- [Code Outline](https://marketplace.visualstudio.com/items?itemName=patrys.vscode-code-outline)
-
 - [GitKraken Glo](https://marketplace.visualstudio.com/items?itemName=axosoft.gitkraken-glo)
 
 ![GitKraken Glo](https://user-images.githubusercontent.com/899916/37066976-01877280-2165-11e8-87ff-d6b04e1d9ca5.png)
