@@ -1,4 +1,4 @@
-﻿############
+############
 #   INFO   #
 ############
 #
@@ -251,6 +251,9 @@ function InstallMSYS2 {
     else {
         Add-Content -Path "${MSYS2AppPath_install}\etc\nsswitch.conf" -Value "db_home:  /home/${ProgramName}"
     }
+
+    # Configure DNS for avoid timeout with some applications
+    Write-Output "nameserver 8.8.8.8`nnameserver 8.8.4.4" | Out-File -Encoding utf8 "${MSYS2AppPath_install}\etc\resolv.conf"
 
     # Need to login for init MSYS2 env
     Output "Initializing $MSYS2AppName" | Tee-Object -a "`"$log`""
