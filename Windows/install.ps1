@@ -641,7 +641,7 @@ function MSYS2Cmd([string[]]$cmds, [string]$shell="$MSYS2AppPath_install\usr\bin
 }
 
 # Run Powershell command
-function Cmd([string[]]$cmds) {
+function Cmd([string[]]$cmds, [bool]$exit=$false) {
     foreach ($cmd in $cmds) {
         $cmd = $ExecutionContext.InvokeCommand.ExpandString($cmd)
         Output "RUN command : $cmd"
@@ -658,8 +658,14 @@ function Cmd([string[]]$cmds) {
         "`n`n>>> $cmd <<<" | Out-File -Force -Append -Encoding utf8 "$log"
 
         # Run command with variables translated
+        try {
         Invoke-Expression $cmd | Out-File -Force -Append -Encoding utf8 "$log"
     }
+        catch {
+            if ($exit) { OutputErrror "command failed => $cmd" }
+            else { OutputErrror "command failed => $cmd" -exit $false }
+        }
+}
 }
 
 # Define MSYS2 env
