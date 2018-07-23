@@ -494,7 +494,7 @@ function MakeScriptVSC {
     Cmd "rm -f '${ScriptFile}'" 1
 
     # Write code to script
-    Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
+    Cmd "echo '#!/usr/bin/env bash' >> '${ScriptFile}'" 1
 
     # Generate env
     for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys_unsorted[]] | unique[]")
@@ -544,7 +544,7 @@ function MakeScriptJunest {
     Cmd "rm -f '${ScriptFile}'" 1
 
     # Write code to script
-    Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
+    Cmd "echo '#!/usr/bin/env bash' >> '${ScriptFile}'" 1
 
     # Generate env
     for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .junest_env | select(.!= null) | keys_unsorted[]] | unique[]")
@@ -603,7 +603,7 @@ function MakeScriptZeal {
         Cmd "rm -f '${ScriptFile}'" 1
 
         # Write code to script
-        Cmd "echo '#!/usr/bin/bash' >> '${ScriptFile}'" 1
+        Cmd "echo '#!/usr/bin/env bash' >> '${ScriptFile}'" 1
 
         # Generate env
         for env in $(GetConfig "[.extensions[] | select(.enabled == true) | .vsc_env | select(.!= null) | keys_unsorted[]] | unique[]")
