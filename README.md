@@ -227,7 +227,9 @@ _**cmd_pre**_ > _**junest_cmd_pre**_ > _**junest_pkg**_ > _**vsc_pkg**_ > _**vsc
 
 ### 2.5. Information
 
-On Linux version, inside the terminal and VSCode application, you have access to :
+On Linux version, press **alt** key for show / hide the menu bar.
+
+Also, inside the terminal and VSCode application, you have access to :
 
 - **/home/VSCode-Anywhere** : home directory on the installation directory
 - **/home/VSCode-Anywhere/HOME** : real home directory (outside the chroot)
@@ -471,6 +473,12 @@ Add icons pack and themes :
 - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
 
 ![vscode-icons](https://raw.githubusercontent.com/vscode-icons/vscode-icons/master/images/screenshot.gif)
+
+For Linux only :
+
+- [GTK Dark Title Bar](https://marketplace.visualstudio.com/items?itemName=fkrull.gtk-dark-titlebar)
+
+![GTK Dark Title Bar](https://github.com/fkrull/vscode-gtk-dark-titlebar/raw/master/images/screenshot.png)
 
 ### 4.6. VSC-fonts
 
