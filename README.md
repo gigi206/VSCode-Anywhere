@@ -465,10 +465,17 @@ Add extensions for Git :
 
 Add icons pack and themes :
 
-- [OneDark++](https://marketplace.visualstudio.com/items?itemName=ifaxity.onedark)
 - [Atom One Dark Theme](https://marketplace.visualstudio.com/items?itemName=akamud.vscode-theme-onedark)
 
 ![Atom One Dark Theme](https://raw.githubusercontent.com/akamud/vscode-theme-onedark/master/screenshots/preview.png)
+
+- [Ysgrifennwr Theme](https://marketplace.visualstudio.com/items?itemName=xaver.theme-ysgrifennwr)
+
+![Ysgrifennwr Theme](https://github.com/xaverh/theme-ysgrifennwr/raw/master/screenshot.png)
+
+- [Solarized Light](https://marketplace.visualstudio.com/items?itemName=yogipatel.solarized-light-no-bold)
+
+![Solarized Light](https://github.com/yogipatel/vscode-solarized-light-no-bold/raw/master/screenshot.png)
 
 - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
 
