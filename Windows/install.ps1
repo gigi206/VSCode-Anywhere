@@ -38,7 +38,8 @@ function OutputErrror([string]$msg, [bool]$newline=$true, [bool]$exit=$true, [in
     else { Write-Host -nonewline "$message" -ForegroundColor Red }
 
     if ($exit) {
-        Pause
+        if (!($env:VSCode_Anywhere_CI)) { Pause }
+
         exit $exit_code
     }
 }
@@ -1265,7 +1266,8 @@ function InstallFonts {
 # Installation is finished
 function Finish {
     InstallAppHeader "Congratulations, installation is finished !!!"
-    Pause
+
+    if (!($env:VSCode_Anywhere_CI)) { Pause }
 }
 
 

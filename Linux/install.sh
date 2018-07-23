@@ -119,9 +119,7 @@ function OutputErrror {
     echo -e "\\nError : ${message}\\n" 2>&1 | tee -a "${Log}"
     tput sgr0
 
-    echo
-    read -r -s -p 'Press enter to finish'
-    echo -e "\\n"
+    Finish
 
     exit "${exit:-1}"
 }
@@ -980,10 +978,12 @@ function UninstallJunest {
 
 # Installation is finished
 function Finish {
-    InstallAppHeader "Congratulations, installation is finished !!!"
+    if [ "${VSCode_Anywhere_CI:-0}" -ne 1 ]
+    then
     echo
     read -r -s -p 'Press enter to finish'
     echo -e "\\n"
+    fi
 }
 
 
@@ -1095,5 +1095,7 @@ else
     MakeScripts
     InstallFonts
 fi
+
+InstallAppHeader "Congratulations, installation is finished !!!"
 
 Finish
