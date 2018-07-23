@@ -104,9 +104,9 @@ Install parameters :
 
 There are 3 configuration files available with all the same features configured but not the same features enabled :
 
-- [VSCode-Anywhere_minimal.conf](Windows/VSCode-Anywhere_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only Junest and VSCode (without extension) will be installed
-- [VSCode-Anywhere_recommended.conf](Windows/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
-- [VSCode-Anywhere_full.conf](Windows/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time
+- [VSCode-Anywhere_minimal.conf](Linux/VSCode-Anywhere_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only Junest and VSCode (without extension) will be installed
+- [VSCode-Anywhere_recommended.conf](Linux/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
+- [VSCode-Anywhere_full.conf](Linux/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time
 
 Install with bash (paste the following line on your terminal) :
 
