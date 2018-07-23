@@ -119,7 +119,7 @@ mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi2
 - Replace _**/MyPATH**_ by your installation path
 - Also you can choose one of these preconfigured profiles : _**VSCode-Anywhere_minimal.conf**_, _**VSCode-Anywhere_recommended.conf**_ or _**VSCode-Anywhere_full.conf**_
 - After installation you can edit configuration file _**VSCode-Anywhere\Conf\VSCode-Anywhere.conf**_ and install your own settings with run _**[VSCode-Anywhere\Tools\Install](#331-install)**_.
-- Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders)
+- Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders). This configuration file is used for continuous integration.
 - Installation can take a long time depending on your Internet connection speed and the IO performance of your device
 
 ### 2.2. Vars
@@ -272,7 +272,7 @@ powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gi
 - Replace _**C:\MyPATH**_ by your installation path
 - Also you can choose one of these preconfigured profiles : _**VSCode-Anywhere_minimal.conf**_, _**VSCode-Anywhere_recommended.conf**_ or _**VSCode-Anywhere_full.conf**_
 - After installation you can edit configuration file _**VSCode-Anywhere\Conf\VSCode-Anywhere.conf**_ and install your own settings with run _**[VSCode-Anywhere\Tools\Install](#331-install)**_.
-- Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders)
+- Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders). This configuration file is used for continuous integration.
 - Installation can take a long time depending on your Internet connection speed and the IO performance of your device
 
 ### 3.2. Vars

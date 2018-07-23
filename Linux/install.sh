@@ -311,6 +311,69 @@ function InstallVSCode {
 
     # Download latest VSCode zip file
     JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
+
+    # Create User directory
+    JunestCmd "mkdir -p '${VSCAppPath_user_data}/User'" 'namespace' 1
+
+    # Install language pack
+    case $(echo ${LANG} | cut -d '.' -f 1) in
+        en_*)
+        ;;
+        fr_*)
+            InstallVSCPkg MS-CEINTL.vscode-language-pack-fr
+            JunestCmd "echo '{ \"locale\": \"fr\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        es_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-es
+            JunestCmd "echo '{ \"locale\": \"es\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        de_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-de
+            JunestCmd "echo '{ \"locale\": \"de\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        it_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-it
+            JunestCmd "echo '{ \"locale\": \"it\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        ja_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-ja
+            JunestCmd "echo '{ \"locale\": \"ja\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        pt_BR)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-pt-br
+            JunestCmd "echo '{ \"locale\": \"pt-br\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        ru_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-ru
+            JunestCmd "echo '{ \"locale\": \"ru\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        tr_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-tr
+            JunestCmd "echo '{ \"locale\": \"tr\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        hu_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-hu
+            JunestCmd "echo '{ \"locale\": \"hu\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        ko_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-ko
+            JunestCmd "echo '{ \"locale\": \"ko\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        bg_*)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-bg
+            JunestCmd "echo '{ \"locale\": \"bg\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        zh-CN)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-zh-hans
+            JunestCmd "echo '{ \"locale\": \"zh-cn\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        zh-TW)
+            InstallVSCPkg ms-ceintl.vscode-language-pack-zh-hant
+            JunestCmd "echo '{ \"locale\": \"zh-tw\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
+        ;;
+        *)
+            Output "No language found for $LANG"
+    esac
 }
 
 # Install Zeal if enabled
