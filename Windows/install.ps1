@@ -269,11 +269,8 @@ function InstallMSYS2 {
 
 
     # Upgrade MSYS2
-    Output -fgcolor Red "╔══════════════════════════════════════════════════════════════════════════════════════════════════╗"
-    Output -fgcolor Red "║ Upgrade OS : for continue installation please close the window after the update is completed !!! ║"
-    Output -fgcolor Red "╚══════════════════════════════════════════════════════════════════════════════════════════════════╝"
-    $update_cmd = 'yes y | LC_ALL=C pacman -Syu'
-    MSYS2Cmd @("$update_cmd", "$update_cmd; kill -9 -1")
+    $update_cmd = 'pacman -Syu --noconfirm'
+    MSYS2Cmd @("$update_cmd", "$update_cmd; kill -9 -1") -exit $true
 
     Output "$MSYS2AppName is sucessfully installed"
 }
@@ -347,7 +344,7 @@ function InstallZeal {
 function InstallMSYS2Pkg([string[]]$pkg) {
     $pkg = $pkg -join ' '
     Output "Installing MSYS2 packages : $pkg"
-    MSYS2Cmd @("pacman -Qk $pkg 2>/dev/null || pacman --noconfirm --force --needed -Sy $pkg")
+    MSYS2Cmd @("pacman -Qk $pkg 2>/dev/null || pacman --noconfirm --force --needed -Sy $pkg") -exit $true
 }
 
 # Install VSCode plugins
@@ -963,7 +960,7 @@ function UpdateMSYS2 {
     InstallAppHeader "Update $MSYS2AppName"
 
     $update_cmd = 'yes y | LC_ALL=C pacman -Syu; kill -9 -1'
-    MSYS2Cmd @("$update_cmd", "$update_cmd")
+    MSYS2Cmd @("$update_cmd", "$update_cmd") -exit $true
 }
 
 # Update VSCode
