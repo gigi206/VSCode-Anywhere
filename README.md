@@ -273,9 +273,6 @@ powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gi
 - Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders)
 - Installation can take a long time depending on your Internet connection speed and the IO performance of your device
 
-VSCode-Anywhere will install and upgrade MSYS2. During the upgade of MSYS2, the window must to be closed for continue the installation :
-![install pacman upgrade](Screenshots/Windows/msys2_pacman_upgrade.png)
-
 ### 3.2. Vars
 
 Vars can be used in the config files for functions : **cmd_pre**, **vsc_settings**, **cmd_post**, **cmd_update**, **msys2_env** and **vsc_env**
