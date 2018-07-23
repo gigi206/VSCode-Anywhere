@@ -90,8 +90,8 @@ I recommand to see these [tutorials](https://code.visualstudio.com/docs/getstart
 
 Install parameters :
 
-- **-path** : installation directory (folder _VSCode-Anywhere_ will be automatically created in this directory)
-- **-conf** : specify the configuration file path
+- **--path** : installation directory (folder _VSCode-Anywhere_ will be automatically created in this directory)
+- **--conf** : specify the configuration file path
 
 #### 2.1.2. Installation process
 
