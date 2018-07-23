@@ -31,8 +31,12 @@ function Output([string]$msg, [bool]$newline=$true, [string]$fgcolor='Cyan', [bo
 
 # Output errors to console
 function OutputErrror([string]$msg, [bool]$newline=$true, [bool]$exit=$true, [int]$exit_code=1) {
-    if ($newline) { Write-Host "Error : $msg" }
-    else { Write-Host -nonewline "Error : $msg"n }
+    if ($exit) { $message = "A critical error has occurred : $msg" }
+    else { $message = "An error has occured (not critical) : $msg" }
+
+    if ($newline) { Write-Host "$message" -ForegroundColor Red }
+    else { Write-Host -nonewline "$message" -ForegroundColor Red }
+
     if ($exit) {
         Pause
         exit $exit_code
