@@ -251,7 +251,7 @@ function InstallJunest {
 
     # Upgrade chroot packages (kill parent for avoid hang after pacman upgrade !)
     Output "Updating ${JunestAppName} chroot packages"
-    update='yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
+    update='pacman -Sy --noconfirm --needed --force archlinux-keyring; pacman --init; pacman-key --populate archlinux;yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
     JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u /bin/bash -l -- 2>/dev/null << EOF
 ${update}
 EOF
@@ -980,9 +980,9 @@ function UninstallJunest {
 function Finish {
     if [ "${VSCode_Anywhere_CI:-0}" -ne 1 ]
     then
-    echo
-    read -r -s -p 'Press enter to finish'
-    echo -e "\\n"
+        echo
+        read -r -s -p 'Press enter to finish'
+        echo -e "\\n"
     fi
 }
 
