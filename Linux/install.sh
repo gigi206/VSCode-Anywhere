@@ -941,7 +941,7 @@ function Update {
             InstallAppHeader "Updating ${item}"
 
             # Call Cmd function if cmd_update is defined
-            [ $(GetConfig ".extensions.\"${item}\".cmd_update | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".cmd_update[]" | while rea-r d cmd
+            [ $(GetConfig ".extensions.\"${item}\".cmd_update | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".cmd_update[]" | while read -r cmd
             do
                 Output "RUN command : ${cmd}"
                 Cmd "${cmd}"
