@@ -2,7 +2,7 @@ language: bash
 sudo: true
 dist: trusty
 addons:
-#  apt:
+  apt:
 #    update: true
 #    sources:
 #      - sourceline: "deb [arch=amd64] https://packages.microsoft.com/ubuntu/14.04/prod trusty main"
