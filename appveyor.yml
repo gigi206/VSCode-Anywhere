@@ -1,0 +1,33 @@
+
+platform: x64
+
+branches:
+  only:
+    - master
+
+clone_depth: 1
+
+
+build: off
+
+install:
+  - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere_full.conf -path "C:\"
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -update
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -link
+  - ps: if (Get-Content C:\VSCode-Anywhere\Logs\* | Select-String -Pattern 'error has occured') { exit 1 }
+
+#skip_commits:
+#  files:
+#    - '*.md'
+#    - Linux/*
+#    - Screenshots/*
+
+environment:
+  VSCode_Anywhere_CI: true
+
+only_commits:
+  files:
+    - Windows/*.conf
+    - Windows/*.ps1
+    - appveyor.yml

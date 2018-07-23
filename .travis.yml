@@ -1,0 +1,65 @@
+language: bash
+sudo: true
+dist: trusty
+addons:
+#  apt:
+#    update: true
+#    sources:
+#      - sourceline: "deb [arch=amd64] https://packages.microsoft.com/ubuntu/14.04/prod trusty main"
+#        key_url: "https://packages.microsoft.com/keys/microsoft.asc"
+    packages:
+      #- xvfb
+      #- gnome-terminal
+      #- wmctrl
+      #- udev
+      #- powershell
+      - realpath
+      - bash
+branches:
+  only:
+    - master
+env:
+  global:
+    #- DISPLAY=:99.0
+    - VSCode_Anywhere_CI=1
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - LANG=fr_FR.UTF-8
+git:
+  depth: 1
+install:
+  - unset GEM_PATH
+  - unset GEM_HOME
+  - unset MY_RUBY_HOME
+  - unset rvm_bin_path
+  - unset PYENV_ROOT
+  - unset NVM_DIR
+  - unset rvm_path
+  - unset rvm_prefix
+  - unset RAILS_ENV
+  - unset GOROOT
+  - unset GOPATH
+#before_script:
+  #- mkdir -p /tmp/{Linux,Windows}
+  #- Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+  #- sleep 3
+script:
+  - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_full.conf
+  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh
+  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh -u
+  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh -f
+  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh -l
+  #- $(grep Exec /tmp/Linux/VSCode-Anywhere/Documentation.desktop | cut -d '=' -f2- | xargs) &
+  #- $(grep Exec /tmp/Linux/VSCode-Anywhere/VSCode-Anywhere.desktop | cut -d '=' -f2- | xargs) &
+  #- $(grep Exec /tmp/Linux/VSCode-Anywhere/Terminal.desktop | cut -d '=' -f2- | xargs) &
+  #- sleep 5
+  #- xwininfo -tree -root | grep '"Terminal"'
+  #- xwininfo -tree -root | grep '"zeal"'
+  #- xwininfo -tree -root | grep 'Visual Studio Code'
+  #- xwininfo -tree -root
+  #- wmctrl -l
+  #- wmctrl -l | cut -d ' ' -f 5- | egrep 'Zeal'
+  #- wmctrl -l | cut -d ' ' -f 5- | egrep 'Visual Studio Code'
+  #- wmctrl -l | cut -d ' ' -f 5- | egrep 'Terminal'
+  - cd /tmp/VSCode-Anywhere/Tools && yes | ./install.sh -d
+after_script:
+  - test $(echo $(egrep -i 'error has occured' /tmp/VSCode-Anywhere/Logs/*) | wc -l) = 0
