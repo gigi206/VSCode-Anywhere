@@ -261,7 +261,12 @@ function InstallMSYS2 {
 
     # Need to login for init MSYS2 env
     Output "Initializing $MSYS2AppName" | Tee-Object -a "`"$log`""
-    Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | Tee-Object -a "`"$log`""
+    #Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | Tee-Object -a "`"$log`""
+    $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''"
+
+    # Exit if failed
+    if ($process.ExitCode -eq 1 ) { OutputErrror "command failed => $cmd" -exit $true }
+
 
     # Upgrade MSYS2
     Output -fgcolor Red "╔══════════════════════════════════════════════════════════════════════════════════════════════════╗"
@@ -349,7 +354,11 @@ function InstallMSYS2Pkg([string[]]$pkg) {
 function InstallVSCPkg([string[]]$pkgs) {
     foreach ($pkg in $pkgs) {
         output "Installing VSCode extension : $pkg" | Tee-Object -a "`"$log`""
-        Start-Process -Wait -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg" | Tee-Object -a "`"$log`""
+        #Start-Process -Wait -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg" | Tee-Object -a "`"$log`""
+        $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg"
+
+        # Warn if failed
+        if ($process.ExitCode -eq 1 ) { OutputErrror "command failed => $cmd" -exit $false }
     }
 }
 
@@ -492,7 +501,11 @@ function InstallZealPkg([string[]]$pkgs) {
 # Extract with 7-zip
 function 7zipExtract ([string]$source, [string]$target, [string]$delete=$true) {
     Output "Extracting $source => $target"
-    Start-Process -Wait -WorkingDirectory "$target" -FilePath "$7zAppPath_bin" -ArgumentList "x `"$source`" -y"
+    #Start-Process -Wait -WorkingDirectory "$target" -FilePath "$7zAppPath_bin" -ArgumentList "x `"$source`" -y"
+    $process = Start-Process -Wait -PassThru -NoNewWindow -WorkingDirectory "$target" -FilePath "$7zAppPath_bin" -ArgumentList "x `"$source`" -y"
+
+    # Exit if failed
+    if ($process.ExitCode -eq 1 ) { OutputErrror "command failed => $cmd" -exit $true }
 
     # Delete archive if delete=$true
     if ($delete) { Remove-Item -Path "$source" }
@@ -601,11 +614,12 @@ function SetVSCKeyboard([object[]]$conf) {
 }
 
 # Run MSYS2 command
-function MSYS2Cmd([string[]]$cmds, [string]$shell="$MSYS2AppPath_install\usr\bin\mintty.exe", [string]$shell_args="-t $ProgramName /usr/bin/env CHERE_INVOKING=1 /usr/bin/bash --login -c", [bool]$wait=$true) {
+function MSYS2Cmd([string[]]$cmds, [string]$shell="$MSYS2AppPath_install\usr\bin\bash", [string]$shell_args="-lc", [bool]$exit=$false) {
     foreach ($cmd in $cmds) {
         Output "RUN MSYS2 command : $cmd"
 
         # Define env before RUN command
+        $env:CHERE_INVOKING = 1
         $env:MSYS2_PATH_TYPE = 'inherit'
         foreach ($key in $MSYS2Env.keys) {
             #if ($key -eq 'path') { [Environment]::SetEnvironmentVariable("$key", $MSYS2Env.$key + $env:Path) }
@@ -617,8 +631,12 @@ function MSYS2Cmd([string[]]$cmds, [string]$shell="$MSYS2AppPath_install\usr\bin
         "`n`n>>> $cmd <<<" | Out-File -Force -Append -Encoding utf8 "$log"
 
         # Run command (no translation variable here). If you need to translate vars, prefer run cmd
-        if ($wait) { Start-Process -Wait -FilePath "$shell" -ArgumentList "$shell_args '($cmd) 2>&1 | tee -a `"$log`"'" }
-        else { Start-Process -Wait -FilePath "$shell" -ArgumentList "$shell_args '($cmd) 2>&1 | tee -a `"$log`"'" }
+        $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "$shell" -ArgumentList "$shell_args '($cmd) 2>&1 | tee -a `"$log`"'"
+
+        if ($process.ExitCode -eq 1 ) {
+            if ($exit) { OutputErrror "MSYS2 command failed => $cmd" }
+            else { OutputErrror "MSYS2 command failed => $cmd" -exit $false }
+        }
     }
 }
 
