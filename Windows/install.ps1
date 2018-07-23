@@ -1274,8 +1274,8 @@ function Finish {
 ############
 $ProgramName = "VSCode-Anywhere"
 
-if (!($conf)) { $ProgramConfig = Join-Path -Path "$PSScriptRoot" -ChildPath "${ProgramName}.conf" }
-else { $ProgramConfig = $conf }
+if ($conf) { $ProgramConfig = $conf }
+else { $ProgramConfig = Join-Path -Path "$PSScriptRoot" -ChildPath "${ProgramName}.conf" }
 
 if ("$path") { $InstallDir = Join-Path -Path "$path" -ChildPath "$ProgramName" }
 else {
