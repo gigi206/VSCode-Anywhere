@@ -1,7 +1,8 @@
 # VSCode-Anywhere
 
-| Linux  | [![Build Status Linux](https://travis-ci.org/gigi206/VSCode-Anywhere.svg?branch=master)](https://travis-ci.org/gigi206/VSCode-Anywhere) |
-| ------ | ------- |
+| OS      | Build status                                                                                                                                                                          |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux   | [![Build Status Linux](https://travis-ci.org/gigi206/VSCode-Anywhere.svg?branch=master)](https://travis-ci.org/gigi206/VSCode-Anywhere)                                               |
 | Windows | [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/gigi206/VSCode-Anywhere?branch=master&svg=true)](https://ci.appveyor.com/project/gigi206/VSCode-Anywhere) |
 
 <!-- TOC -->
