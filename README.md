@@ -119,6 +119,8 @@ Install with bash (paste the following line on your terminal) :
 mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/install.sh -O /tmp/VSCode-Anywhere/VSCode-Anywhere.sh && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/VSCode-Anywhere_recommended.conf -O /tmp/VSCode-Anywhere/VSCode-Anywhere.conf && cd /tmp/VSCode-Anywhere && chmod +x VSCode-Anywhere.sh && ./VSCode-Anywhere.sh --path "/MyPATH" && cd - && rm -fr /tmp/VSCode-Anywhere
 ```
 
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/UMqVXpt5qZE/0.jpg)](https://www.youtube.com/watch?v=UMqVXpt5qZE)
+
 **NOTE :**
 
 - Replace _**/MyPATH**_ by your installation path
@@ -167,11 +169,15 @@ In directory Tools, run _**Install**_ for install new components from configurat
 
 **NOTE :** Set **enabled** from **true** to **false** don't uninstall plugins/settings (section just be ignored) !
 
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/8W1bxo8aUb4/0.jpg)](https://www.youtube.com/watch?v=8W1bxo8aUb4)
+
 #### 2.3.2. InstallFonts
 
 In directory Tools, run **InstallFonts** for example if you use an USB device and you change computer. If needed fonts are not installed on the computer, you can install them by clicking on **InstallFonts**.
 
 **NOTE :** fonts are stored in _Third-Party/Fonts_ directory (_${FontsDir}_)
+
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/IUV1mAecQbw/0.jpg)](https://www.youtube.com/watch?v=IUV1mAecQbw)
 
 #### 2.3.3. Update
 
@@ -182,6 +188,8 @@ In directory Tools, run **Update** to :
 - update Zeal and its documentation (if Zeal is enabled inconfiguration file)
 
 **NOTE :** **junest_cmd_update** and **cmd_update** are not run with **Install**
+
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/h8qS457Ocf4/0.jpg)](https://www.youtube.com/watch?v=h8qS457Ocf4)
 
 #### 2.3.4. Link
 
@@ -194,6 +202,8 @@ The simple way to know if you need to relink is that you will not see icons in _
 You don't need to relink if you see theses icons :
 
 ![Bad link](Screenshots/Linux/Links_good.png)
+
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/goAph7VH87c/0.jpg)](https://www.youtube.com/watch?v=goAph7VH87c)
 
 ### 2.4. Linux configuration file
 
