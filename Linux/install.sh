@@ -361,16 +361,16 @@ function InstallVSCode {
             InstallVSCPkg ms-ceintl.vscode-language-pack-bg
             JunestCmd "echo '{ \"locale\": \"bg\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
         ;;
-        zh-CN)
+        zh_CN)
             InstallVSCPkg ms-ceintl.vscode-language-pack-zh-hans
             JunestCmd "echo '{ \"locale\": \"zh-cn\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
         ;;
-        zh-TW)
+        zh_TW)
             InstallVSCPkg ms-ceintl.vscode-language-pack-zh-hant
             JunestCmd "echo '{ \"locale\": \"zh-tw\" }' > '${VSCAppPath_user_data}/User/locale.json'" 'namespace'
         ;;
         *)
-            Output "No language found for $LANG"
+            Output "No language pack found for $LANG"
     esac
 }
 
