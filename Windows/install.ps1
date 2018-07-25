@@ -163,6 +163,65 @@ function InstallVSCode {
     Output "Removing $VSCAppPath\${VSCAppName}.zip"
     Remove-Item -Path "$VSCAppPath\${VSCAppName}.zip"
 
+    switch -regex ((Get-Culture).Name) {
+        'en-*' { }
+        'fr-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-fr")
+            Cmd "Write-Output '{ `"locale`": `"fr`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'es-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-es")
+            Cmd "Write-Output '{ `"locale`": `"es`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'de-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-de")
+            Cmd "Write-Output '{ `"locale`": `"de`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'it-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-it")
+            Cmd "Write-Output '{ `"locale`": `"it`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'ja-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-ja")
+            Cmd "Write-Output '{ `"locale`": `"ja`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'pt-BR' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-pt-br")
+            Cmd "Write-Output '{ `"locale`": `"pt-br`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'ru-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-ru")
+            Cmd "Write-Output '{ `"locale`": `"ru`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'tr-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-tr")
+            Cmd "Write-Output '{ `"locale`": `"tr`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'hu-' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-hu")
+            Cmd "Write-Output '{ `"locale`": `"hu`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'ko-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-ko")
+            Cmd "Write-Output '{ `"locale`": `"ko`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'bg-*' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-bg")
+            Cmd "Write-Output '{ `"locale`": `"bg`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'zh-CN' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-zh-hans")
+            Cmd "Write-Output '{ `"locale`": `"zh-cn`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        'zh-TW' {
+            InstallVSCPkg @("MS-CEINTL.vscode-language-pack-zh-hant")
+            Cmd "Write-Output '{ `"locale`": `"zh-tw`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+        }
+        default {
+            Output "No language pack found for", (Get-Culture).Name
+        }
+    }
+
     Output "$VSCAppName is sucessfully installed"
 }
 
@@ -657,8 +716,8 @@ function Cmd([string[]]$cmds, [bool]$exit=$false) {
 
         # Run command with variables translated
         try {
-        Invoke-Expression $cmd | Out-File -Force -Append -Encoding utf8 "$log"
-    }
+            Invoke-Expression $cmd | Out-File -Force -Append -Encoding utf8 "$log"
+        }
         catch {
             if ($exit) { OutputErrror "command failed => $cmd" }
             else { OutputErrror "command failed => $cmd" -exit $false }
