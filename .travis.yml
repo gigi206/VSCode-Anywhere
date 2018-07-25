@@ -25,7 +25,7 @@ env:
     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     - LANG=fr_FR.UTF-8
 git:
-  depth: 1
+  depth: 20
 install:
   - unset GEM_PATH
   - unset GEM_HOME
