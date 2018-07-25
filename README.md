@@ -77,15 +77,15 @@ VSCode-Anywhere is preconfigured with features, you can modify or add your own f
 
 With traditionnal VSCode, for example if you want to developped in _Python_ language, you must have Python installed with some Python modules like **flake8**. With VSCode-Anywhere you just have to enabled Python section in the configuration file and start the installation process.
 
-VSCode-Anywhere install for you (if *zeal_enabled* is set to _true_) the documentation of your language (with Zeal software). Always with Python example, Python2 and Python3 documentation will be downloaded add you will have access to this documentation accross your code.
+VSCode-Anywhere install for you (if *zeal_enabled* is set to _true_) the documentation of your language (with Zeal software). Always with Python example, Python2 and Python3 documentation will be downloaded and you will have access to this documentation accross your code.
 
-Dependancies (like Python, modules and documentation) will be installed with :
+Dependencies (like Python, modules and documentation) will be installed with :
 
 - [Junest](https://github.com/fsquillace/junest) (Linux only)
 - [MSYS2](https://www.msys2.org) (Windows only)
 - [Zeal](https://zealdocs.org)
 
-I recommand to see these [tutorials](https://code.visualstudio.com/docs/getstarted/introvideos).
+I recommend to see these [tutorials](https://code.visualstudio.com/docs/getstarted/introvideos).
 
 ## 2. Linux
 
@@ -112,9 +112,9 @@ There are 3 configuration files available with all the same features configured 
 
 - [VSCode-Anywhere_minimal.conf](Linux/VSCode-Anywhere_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only Junest and VSCode (without extension) will be installed
 - [VSCode-Anywhere_recommended.conf](Linux/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
-- [VSCode-Anywhere_full.conf](Linux/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time
+- [VSCode-Anywhere_full.conf](Linux/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses a lot of space
 
-Install with bash (paste the following line on your terminal) :
+Install with bash (paste the following line inside your terminal) :
 
 ```bash
 mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/install.sh -O /tmp/VSCode-Anywhere/VSCode-Anywhere.sh && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/VSCode-Anywhere_recommended.conf -O /tmp/VSCode-Anywhere/VSCode-Anywhere.conf && cd /tmp/VSCode-Anywhere && chmod +x VSCode-Anywhere.sh && ./VSCode-Anywhere.sh --path "/MyPATH" && cd - && rm -fr /tmp/VSCode-Anywhere
@@ -127,7 +127,6 @@ mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi2
 - Replace _**/MyPATH**_ by your installation path
 - Also you can choose one of these preconfigured profiles : _**VSCode-Anywhere_minimal.conf**_, _**VSCode-Anywhere_recommended.conf**_ or _**VSCode-Anywhere_full.conf**_
 - After installation you can edit configuration file _**VSCode-Anywhere\Conf\VSCode-Anywhere.conf**_ and install your own settings with run _**[VSCode-Anywhere\Tools\Install](#331-install)**_.
-- Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders). This configuration file is used for continuous integration.
 - Installation can take a long time depending on your Internet connection speed and the IO performance of your device
 
 ### 2.2. Vars
@@ -157,7 +156,7 @@ Vars :
 - __$JunestAppPath_bin :__ path to Junest binary (_${JunestAppPath_install}/bin/junest_)
 - __$JunestExternalPath :__ path is __/__ when *__JunestCmd__* is called or installation path when you are inside VSCode (_/${ProgramName}_)"
 - __$ZealAppName :__ Zeal name (_Zeal_)
-- __$ZealAppPath :__ = path to Zeal directory (_${ThirdParty}/${ZealAppName}_)
+- __$ZealAppPath :__ path to Zeal directory (_${ThirdParty}/${ZealAppName}_)
 - __$ZealAppPath_install :__ path to Zeal install directory (_${ZealAppPath}/install_)
 - __$ZealAppPath_bin :__ path to Zeal install directory (_${ZealAppPath_install}/zeal.exe_)
 - __$ZealAppPath_docsets :__ path to Zeal docsets directory (_${ZealAppPath_install}/docsets_)
@@ -168,13 +167,13 @@ Vars :
 
 In directory Tools, run _**Install**_ for install new components from configuration file (if you have changed a section **enabled** from **false** to **true**).
 
-**NOTE :** Set **enabled** from **true** to **false** don't uninstall plugins/settings (section just be ignored) !
+**NOTE :** Set **enabled** from **true** to **false** don't uninstall plugins/settings (the section just will be ignored) !
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/8W1bxo8aUb4/0.jpg)](https://www.youtube.com/watch?v=8W1bxo8aUb4)
 
 #### 2.3.2. InstallFonts
 
-In directory Tools, run **InstallFonts** for example if you use an USB device and you change computer. If needed fonts are not installed on the computer, you can install them by clicking on **InstallFonts**.
+In directory Tools, run **InstallFonts** for example if you use an USB device and you plug it on another computer. If needed fonts are not installed on the computer, you can install them by clicking on **InstallFonts**.
 
 **NOTE :** fonts are stored in _Third-Party/Fonts_ directory (_${FontsDir}_)
 
@@ -200,7 +199,7 @@ The simple way to know if you need to relink is that you will not see icons in _
 
 ![Bad link](Screenshots/Linux/Links_bad.png)
 
-You don't need to relink if you see theses icons :
+You don't need to relink if you see these icons :
 
 ![Bad link](Screenshots/Linux/Links_good.png)
 
@@ -267,13 +266,13 @@ Install parameters :
 **Requirements :**
 
 - PowerShell
-- your device must be format with NTFS filesystem
+- your installation device must be format with NTFS filesystem
 
 There are 3 configuration files available with all the same features configured but not the same features enabled :
 
 - [VSCode-Anywhere_minimal.conf](Windows/VSCode-Anywhere_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only MSYS2, Git and VSCode (without extension) will be installed
 - [VSCode-Anywhere_recommended.conf](Windows/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. MSYS2 (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
-- [VSCode-Anywhere_full.conf](Windows/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time
+- [VSCode-Anywhere_full.conf](Windows/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses average 7 Go data space on your device (270 000 files with 37 000 folders)
 
 Install with **powershell.exe** :
 
@@ -288,7 +287,6 @@ powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gi
 - Replace _**C:\MyPATH**_ by your installation path
 - Also you can choose one of these preconfigured profiles : _**VSCode-Anywhere_minimal.conf**_, _**VSCode-Anywhere_recommended.conf**_ or _**VSCode-Anywhere_full.conf**_
 - After installation you can edit configuration file _**VSCode-Anywhere\Conf\VSCode-Anywhere.conf**_ and install your own settings with run _**[VSCode-Anywhere\Tools\Install](#331-install)**_.
-- Full installation (with all sections enabled) used average 7 Go data space on your device (270 000 files with 37 000 folders). This configuration file is used for continuous integration.
 - Installation can take a long time depending on your Internet connection speed and the IO performance of your device
 
 ### 3.2. Vars
@@ -319,7 +317,7 @@ Vars :
 - __$7zAppPath_install :__ path to 7-zip install directory (_$7zAppPath\install_)
 - __$7zAppPath_bin :__ path to 7-zip install directory (_$7zAppPath_install\7za.exe_)
 - __$ZealAppName :__ Zeal name (_Zeal_)
-- __$ZealAppPath :__ = path to Zeal directory (_$ThirdParty\$ZealAppName_)
+- __$ZealAppPath :__ path to Zeal directory (_$ThirdParty\$ZealAppName_)
 - __$ZealAppPath_install :__ path to Zeal install directory (_$ZealAppPath\install_)
 - __$ZealAppPath_bin :__ path to Zeal install directory (_$ZealAppPath_install\zeal.exe_)
 - __$ZealAppPath_docsets :__ path to Zeal docsets directory (_$ZealAppPath_install\docsets_)
@@ -363,7 +361,7 @@ The simple way to know if you need to relink is that you will not see icons in _
 
 ![Bad link](Screenshots/Windows/Links_bad.png)
 
-You don't need to relink if you see icons :
+You don't need to relink if you see these icons :
 
 ![Bad link](Screenshots/Windows/Links_good.png)
 
@@ -419,9 +417,9 @@ _**cmd_pre**_ > _**msys2_cmd_pre**_ > _**msys2_pkg**_ > _**vsc_pkg**_ > _**vsc_s
 
 **minimal** is the minimal for running VSCode-Anywhere
 
-**Important :** It is recommanded to keep this extension enabled
+**Important :** It is recommended to keep this extension enabled
 
-**NOTE :** for compatibility reasons we use [official git](https://git-scm.com/download/win). MSYS2 git package seems to have problems with some VSCode extensions
+**NOTE :** for compatibility reasons we use [official git](https://git-scm.com/download/win). MSYS2 git package seems to have issue with some VSCode extensions
 
 ### 4.3. general
 
