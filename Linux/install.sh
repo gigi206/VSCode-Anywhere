@@ -185,7 +185,7 @@ EOF
 
 # First function called
 function Init {
-    for bin in wget tput tar
+    for bin in wget tput tar realpath
     do
         # Check if $bin is installed
         [ -f "$(command -v ${bin})" ] &>/dev/null || OutputErrror "${bin} is mandatory !"

@@ -106,6 +106,7 @@ Install parameters :
 - wget
 - tput
 - tar
+- realpath
 
 There are 3 configuration files available with all the same features configured but not the same features enabled :
 
