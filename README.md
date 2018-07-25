@@ -71,7 +71,7 @@ VSCode-Anywhere is based on [VSCode](https://code.visualstudio.com), a cross-pla
 - [Git](https://code.visualstudio.com/#built-in-git) if you want to manage your code with git
 - [Extensions](https://code.visualstudio.com/#hundreds-of-extensions) for add new languages, themes, debuggers, and to connect to additional services
 
-**_VSCode-Anywhere_** is a portable software. This means that you can use this tool anywhere (with an USB key for example) without privileges (you don't need **Administrator** account on Windows or **root** on Linux). The only thing you need for [installation](#312-process) is Internet (Internet is also needed if you want to [install](#331-install) new components or [update](#333-update) components already installed).
+**_VSCode-Anywhere_** is a portable software. This means that you can use this tool anywhere (with an USB key for example) without privileges (you don't need **Administrator** account on Windows or **root** on Linux). The only thing you need for [installation](#312-installation-process) is Internet (Internet is also needed if you want to [install](#331-install) new components or [update](#333-update) components already installed).
 
 VSCode-Anywhere is preconfigured with features, you can modify or add your own features in the configuration file.
 
