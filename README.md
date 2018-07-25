@@ -274,7 +274,7 @@ There are 3 configuration files available with all the same features configured 
 - [VSCode-Anywhere_recommended.conf](Windows/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. MSYS2 (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
 - [VSCode-Anywhere_full.conf](Windows/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time
 
-Install with **cmd.exe** :
+Install with **powershell.exe** :
 
 ```bat
 powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/VSCode-Anywhere_recommended.conf -OutFile VSCode-Anywhere.conf"; powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/install.ps1 -OutFile install.ps1"; powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File install.ps1 -path "C:\MyPATH"; Remove-Item -Force install.ps1, VSCode-Anywhere.conf
