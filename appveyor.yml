@@ -5,8 +5,6 @@ branches:
   only:
     - master
 
-clone_depth: 1
-
 #only_commits:
 #  files:
 #    - Windows/*.conf
