@@ -558,7 +558,6 @@ function InstallZealPkg([string[]]$pkgs) {
 # Extract with 7-zip
 function 7zipExtract ([string]$source, [string]$target, [string]$delete=$true) {
     Output "Extracting $source => $target"
-    #Start-Process -Wait -WorkingDirectory "$target" -FilePath "$7zAppPath_bin" -ArgumentList "x `"$source`" -y"
     $process = Start-Process -Wait -PassThru -NoNewWindow -WorkingDirectory "$target" -FilePath "$7zAppPath_bin" -ArgumentList "x `"$source`" -y"
 
     # Exit if failed
@@ -1083,13 +1082,16 @@ function UpdateVSCode {
 function Update7zip {
     InstallAppHeader "Update $7zAppName"
     $url= 'https://www.7-zip.org'
-    $current_version_url = 'a/7z' + (&$7zAppPath_bin)[1].Split()[2].Replace('.', '') + '-extra.7z'
-    $last_version_url = ((Invoke-WebRequest -Uri "${url}/download.html").Links.href -match '^a/7z[0-9]+-extra.7z')[0]
+    $current_version_url = 'a/7z' + (&$7zAppPath_bin)[1].Split()[2].Replace('.', '') + '-x64.7z'
+    $last_version_url = ((Invoke-WebRequest -Uri "${url}/download.html").Links.href -match '^a/7z[0-9]+-x64.exe')[0]
+    $last_version_url_extra = ((Invoke-WebRequest -Uri "${url}/download.html").Links.href -match '^a/7z[0-9]+-extra.7z')[0]
 
     if ("$current_version_url" -ne "$last_version_url") {
         New-Item -ItemType Directory -Force -Path "${7zAppPath}\tmp" | Out-Null
-        Invoke-WebRequest -Uri "${url}/$last_version_url" -OutFile "${7zAppPath}\tmp\${7zAppName}.7z"
-        7zipExtract -source "${7zAppPath}\tmp\${7zAppName}.7z" -target "${7zAppPath}\tmp"
+        Invoke-WebRequest -Uri "${url}/$last_version_url" -OutFile "${7zAppPath}\tmp\${7zAppName}.exe"
+        7zipExtract -source "${7zAppPath}\tmp\${7zAppName}.exe" -target "${7zAppPath}\tmp"
+        Invoke-WebRequest -Uri "${url}/$last_version_url_extra" -OutFile "${7zAppPath}\tmp\${7zAppName}-extra.7z"
+        7zipExtract -source "${7zAppPath}\tmp\${7zAppName}-extra.7z" -target "${7zAppPath}\tmp"
         Remove-Item "$7zAppPath_install" -Force -Recurse
         Move-Item -Path "${7zAppPath}\tmp" -Destination "$7zAppPath_install"
     }
