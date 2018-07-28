@@ -7,15 +7,63 @@ branches:
 
 clone_depth: 1
 
+#only_commits:
+#  files:
+#    - Windows/*.conf
+#    - Windows/*.ps1
+#    - appveyor.yml
 
-build: off
+environment:
+  VSCode_Anywhere_CI: true
+
+clone_depth: 20
 
 install:
-  - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere_full.conf -path "C:\"
+  - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere_minimal.conf -path "C:\"
+  #- ps: C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-Win64-minimal.zip C:\VSCode-Anywhere
+  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\VSCode-Anywhere_recommended.conf" -Destination "C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf"
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
+  - ps: C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-Win64-recommended.zip C:\VSCode-Anywhere
+  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\VSCode-Anywhere_full.conf" -Destination "C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf"
   - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
   - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -update
   - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -link
   - ps: if (Get-Content C:\VSCode-Anywhere\Logs\* | Select-String -Pattern 'error has occured') { exit 1 }
+  - ps: Set-Location "C:\projects\vscode-anywhere"
+
+artifacts:
+  - path: VSCode-Anywhere-Win64-*.zip
+    name: VSCode-Anywhere-Win64
+
+#https://www.appveyor.com/docs/deployment/github/
+deploy:
+#  - provider: GitHub
+#    name: branch
+#    #release: $(APPVEYOR_REPO_TAG_NAME)
+#    description: |
+#      1st packaged version of VSCode-Anywhere.
+#    auth_token:
+#      secure: ld6PNFxh5Mp4/xa7/Kud00ABN8flWZUjGzeIhlmEqVETRi4kC7ZRdpaTOUcAE4Fi # your encrypted token from GitHub
+#    artifact: VSCode-Anywhere-Win64
+#    draft: false
+#    prerelease: false
+#    force_update: true
+#    on:
+#      branch: dev
+
+  - provider: GitHub
+    name: tag
+    #release: $(APPVEYOR_REPO_TAG_NAME)
+    description: |
+      1st packaged version of VSCode-Anywhere.
+    auth_token:
+      secure: ld6PNFxh5Mp4/xa7/Kud00ABN8flWZUjGzeIhlmEqVETRi4kC7ZRdpaTOUcAE4Fi # your encrypted token from GitHub
+    artifact: VSCode-Anywhere-Win64
+    draft: false
+    prerelease: false
+    force_update: true
+    on:
+      appveyor_repo_tag: true        # deploy on tag push only
 
 #skip_commits:
 #  files:
@@ -23,11 +71,4 @@ install:
 #    - Linux/*
 #    - Screenshots/*
 
-environment:
-  VSCode_Anywhere_CI: true
-
-only_commits:
-  files:
-    - Windows/*.conf
-    - Windows/*.ps1
-    - appveyor.yml
+build: off
