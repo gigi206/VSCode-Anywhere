@@ -960,10 +960,11 @@ function Update {
 function InstallFonts {
     InstallAppHeader "Installing fonts"
 
-    for font in $(ls "${FontsDir}"/*.ttf)
+    Cmd "mkdir -p ${Home_real}/.local/share/fonts" 1
+
+    for font in $(ls "${FontsDir}"/*.ttf 2>/dev/null)
     do
         Output "Installing font ${font}"
-        Cmd "mkdir -p ${Home_real}/.local/share/fonts" 1
         Cmd "cp -f '${font}' ${Home_real}/.local/share/fonts" 1
     done
 }
