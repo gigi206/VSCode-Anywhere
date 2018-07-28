@@ -18,10 +18,10 @@ clone_depth: 20
 
 install:
   - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere_minimal.conf -path "C:\"
-  #- ps: C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-$(APPVEYOR_REPO_TAG_NAME)-Win64-minimal.zip C:\VSCode-Anywhere
+  #- ps: if ("{Env:APPVEYOR_REPO_TAG_NAME}") { C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-${Env:APPVEYOR_REPO_TAG_NAME}-Win64-minimal.zip C:\VSCode-Anywhere }
   - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\VSCode-Anywhere_recommended.conf" -Destination "C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf"
   - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
-  - ps: C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-$(APPVEYOR_REPO_TAG_NAME)-Win64-recommended.zip C:\VSCode-Anywhere
+  - ps: if ("{Env:APPVEYOR_REPO_TAG_NAME}") { C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-${Env:APPVEYOR_REPO_TAG_NAME}-Win64-recommended.zip C:\VSCode-Anywhere }
   - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\VSCode-Anywhere_full.conf" -Destination "C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf"
   - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
   - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -update

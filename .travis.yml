@@ -45,12 +45,10 @@ install:
   #- sleep 3
 script:
   - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_minimal.conf
-  #- tar -czf /tmp/VSCode-Anywhere-Linux-amd64-minimal.tar.gz /tmp/VSCode-Anywhere
-  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-minimal.bin -sfx VSCode-Anywhere >/dev/null
+  - if [ "${TRAVIS_TAG}" != "" ]; then cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-minimal.bin -sfx VSCode-Anywhere >/dev/null; fi
   - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_recommended.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
-  #- tar -czf /tmp/VSCode-Anywhere-Linux-amd64-recommended.tar.gz /tmp/VSCode-Anywhere
-  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-recommended.bin -sfx VSCode-Anywhere >/dev/null
+  - if [ "${TRAVIS_TAG}" != "" ]; then cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-recommended.bin -sfx VSCode-Anywhere >/dev/null; fi
   - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_full.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -u
