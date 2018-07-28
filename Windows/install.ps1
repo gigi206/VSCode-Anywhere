@@ -975,7 +975,7 @@ function MakeScriptLink {
 
     # Write code to script
     "@echo off" | Out-File -Encoding ascii -Append "$ScriptFile"
-    ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\WindowsPowerShell\v1.0\powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + (Get-Item $PSCommandPath).Name + '" -conf "' + "..\" + (Get-Item $ConfDir).Name + "\" + ${ProgramName}.conf + '" -link') | Out-File -Encoding ascii -Append "$ScriptFile"
+    ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\WindowsPowerShell\v1.0\powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + (Get-Item $PSCommandPath).Name + '" -conf "' + "..\" + (Get-Item $ConfDir).Name + "\" + "${ProgramName}.conf" + '" -link') | Out-File -Encoding ascii -Append "$ScriptFile"
 }
 
 # Create VSCode / MSYS2 scripts
