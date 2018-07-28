@@ -962,7 +962,7 @@ function Update {
 function InstallFonts {
     InstallAppHeader "Installing fonts"
 
-    for font in "${FontsDir}"/*.ttf
+    for font in $(ls "${FontsDir}"/*.ttf)
     do
         Output "Installing font ${font}"
         Cmd "mkdir -p ${Home_real}/.local/share/fonts" 1
