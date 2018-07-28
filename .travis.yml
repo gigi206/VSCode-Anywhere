@@ -22,9 +22,9 @@ addons:
 env:
   global:
     #- DISPLAY=:99.0
+    #- LANG=fr_FR.UTF-8
     - VSCode_Anywhere_CI=1
     - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    - LANG=fr_FR.UTF-8
 git:
   depth: 20
 install:
