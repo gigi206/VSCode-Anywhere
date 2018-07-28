@@ -13,11 +13,12 @@ addons:
       #- wmctrl
       #- udev
       #- powershell
+      - p7zip-full
       - realpath
       - bash
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
 env:
   global:
     #- DISPLAY=:99.0
@@ -43,23 +44,41 @@ install:
   #- Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
   #- sleep 3
 script:
-  - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_full.conf
-  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh
-  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh -u
-  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh -f
-  - cd /tmp/VSCode-Anywhere/Tools && ./install.sh -l
-  #- $(grep Exec /tmp/Linux/VSCode-Anywhere/Documentation.desktop | cut -d '=' -f2- | xargs) &
-  #- $(grep Exec /tmp/Linux/VSCode-Anywhere/VSCode-Anywhere.desktop | cut -d '=' -f2- | xargs) &
-  #- $(grep Exec /tmp/Linux/VSCode-Anywhere/Terminal.desktop | cut -d '=' -f2- | xargs) &
-  #- sleep 5
-  #- xwininfo -tree -root | grep '"Terminal"'
-  #- xwininfo -tree -root | grep '"zeal"'
-  #- xwininfo -tree -root | grep 'Visual Studio Code'
-  #- xwininfo -tree -root
-  #- wmctrl -l
-  #- wmctrl -l | cut -d ' ' -f 5- | egrep 'Zeal'
-  #- wmctrl -l | cut -d ' ' -f 5- | egrep 'Visual Studio Code'
-  #- wmctrl -l | cut -d ' ' -f 5- | egrep 'Terminal'
-  - cd /tmp/VSCode-Anywhere/Tools && yes | ./install.sh -d
+  - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_minimal.conf
+  #- tar -czf /tmp/VSCode-Anywhere-Linux-amd64-minimal.tar.gz /tmp/VSCode-Anywhere
+  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-Linux-amd64-minimal.bin -sfx VSCode-Anywhere >/dev/null
+  - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_recommended.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
+  #- tar -czf /tmp/VSCode-Anywhere-Linux-amd64-recommended.tar.gz /tmp/VSCode-Anywhere
+  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-Linux-amd64-recommended.bin -sfx VSCode-Anywhere >/dev/null
+  - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_full.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -u
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -f
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -l
+  - yes | /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -d
 after_script:
   - test $(echo $(egrep -i 'error has occured' /tmp/VSCode-Anywhere/Logs/*) | wc -l) = 0
+deploy:
+#  - provider: releases
+#    #body: my message
+#    draft: true
+#    prerelease: false
+#    skip_cleanup: true
+#    api_key:
+#      secure: EzmyBGjtZl4tPmrO46dCm8S6aVsU+8rf7AbWjmGdv6umoOthaI9n46WDj7Obrr6IV70ujYewWj3F60VSO3XQb8f7tslgYprRjQQSwawrH6NsMzBCSAbPeyWaJe3EMu3ALa9vDnsWsY7JFtzvWWfDcJrTQo9QET5ZfmV5qcX9Z86cAqfuHckOQfOXtSeQIdVEsJPEz+QvUnmjDmIE+NVc3tB4KuiPRGXeFro5Eo5mFCRRmanYYm2R11tZqc4jmXNoWD4QU39LbsDskOLPKpmJqR5159kFe+cvYi6nB07zJTtbI92MVlvxiUuQ4ubwXOPZOik5YAHcUZ+50GPMf/blWSzyzfOXcRYDSNOx9HQQZp/qNfAuGe/teZwZmLtJYzWaDlNWDB++0tAJVpROPGpamvMWC0ksQQYQ3tnPOxSnm1/TH9PPmwwxLWV5ETDe0k95F39qNt8QEnJLpebw/V4DQ5QUI19n5a0QrailE6mxmTiMaYTAsbJk5N+MktfOmSc7tkrfl6HU6WMn4SphjiEw1rf4u4sNdBXG6CBq0mBpu+dNOe+Q8U1dawgOUW81yeNePbuik2QVAUk4pBKV7lFay6QnjfkkRy9hABlUhssJUzqFkf1NeB39cYMZavCXZHbRfN9ug4vuUayaFHiSou4D4ObvqeSNaoKcOlbaC4Ai+S4=
+#    file_glob: true
+#    file: VSCode-Anywhere-Linux-amd64-*.tar.gz
+#    on:
+#      branch: dev
+  - provider: releases
+    #body: my message
+    draft: false
+    prerelease: false
+    skip_cleanup: true
+    api_key:
+      secure: EzmyBGjtZl4tPmrO46dCm8S6aVsU+8rf7AbWjmGdv6umoOthaI9n46WDj7Obrr6IV70ujYewWj3F60VSO3XQb8f7tslgYprRjQQSwawrH6NsMzBCSAbPeyWaJe3EMu3ALa9vDnsWsY7JFtzvWWfDcJrTQo9QET5ZfmV5qcX9Z86cAqfuHckOQfOXtSeQIdVEsJPEz+QvUnmjDmIE+NVc3tB4KuiPRGXeFro5Eo5mFCRRmanYYm2R11tZqc4jmXNoWD4QU39LbsDskOLPKpmJqR5159kFe+cvYi6nB07zJTtbI92MVlvxiUuQ4ubwXOPZOik5YAHcUZ+50GPMf/blWSzyzfOXcRYDSNOx9HQQZp/qNfAuGe/teZwZmLtJYzWaDlNWDB++0tAJVpROPGpamvMWC0ksQQYQ3tnPOxSnm1/TH9PPmwwxLWV5ETDe0k95F39qNt8QEnJLpebw/V4DQ5QUI19n5a0QrailE6mxmTiMaYTAsbJk5N+MktfOmSc7tkrfl6HU6WMn4SphjiEw1rf4u4sNdBXG6CBq0mBpu+dNOe+Q8U1dawgOUW81yeNePbuik2QVAUk4pBKV7lFay6QnjfkkRy9hABlUhssJUzqFkf1NeB39cYMZavCXZHbRfN9ug4vuUayaFHiSou4D4ObvqeSNaoKcOlbaC4Ai+S4=
+    file_glob: true
+    file: VSCode-Anywhere-Linux-amd64-*.bin
+    on:
+      tags: true
