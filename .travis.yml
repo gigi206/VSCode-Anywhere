@@ -46,11 +46,11 @@ install:
 script:
   - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_minimal.conf
   #- tar -czf /tmp/VSCode-Anywhere-Linux-amd64-minimal.tar.gz /tmp/VSCode-Anywhere
-  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-Linux-amd64-minimal.bin -sfx VSCode-Anywhere >/dev/null
+  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-minimal.bin -sfx VSCode-Anywhere >/dev/null
   - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_recommended.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   #- tar -czf /tmp/VSCode-Anywhere-Linux-amd64-recommended.tar.gz /tmp/VSCode-Anywhere
-  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-Linux-amd64-recommended.bin -sfx VSCode-Anywhere >/dev/null
+  - cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-recommended.bin -sfx VSCode-Anywhere >/dev/null
   - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_full.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -u
@@ -79,6 +79,6 @@ deploy:
     api_key:
       secure: EzmyBGjtZl4tPmrO46dCm8S6aVsU+8rf7AbWjmGdv6umoOthaI9n46WDj7Obrr6IV70ujYewWj3F60VSO3XQb8f7tslgYprRjQQSwawrH6NsMzBCSAbPeyWaJe3EMu3ALa9vDnsWsY7JFtzvWWfDcJrTQo9QET5ZfmV5qcX9Z86cAqfuHckOQfOXtSeQIdVEsJPEz+QvUnmjDmIE+NVc3tB4KuiPRGXeFro5Eo5mFCRRmanYYm2R11tZqc4jmXNoWD4QU39LbsDskOLPKpmJqR5159kFe+cvYi6nB07zJTtbI92MVlvxiUuQ4ubwXOPZOik5YAHcUZ+50GPMf/blWSzyzfOXcRYDSNOx9HQQZp/qNfAuGe/teZwZmLtJYzWaDlNWDB++0tAJVpROPGpamvMWC0ksQQYQ3tnPOxSnm1/TH9PPmwwxLWV5ETDe0k95F39qNt8QEnJLpebw/V4DQ5QUI19n5a0QrailE6mxmTiMaYTAsbJk5N+MktfOmSc7tkrfl6HU6WMn4SphjiEw1rf4u4sNdBXG6CBq0mBpu+dNOe+Q8U1dawgOUW81yeNePbuik2QVAUk4pBKV7lFay6QnjfkkRy9hABlUhssJUzqFkf1NeB39cYMZavCXZHbRfN9ug4vuUayaFHiSou4D4ObvqeSNaoKcOlbaC4Ai+S4=
     file_glob: true
-    file: VSCode-Anywhere-Linux-amd64-*.bin
+    file: VSCode-Anywhere-*.bin
     on:
       tags: true
