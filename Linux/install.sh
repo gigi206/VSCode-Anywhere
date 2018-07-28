@@ -303,8 +303,6 @@ function InstallVSCode {
     Output "Create ${VSCAppPath_extensions} and ${VSCAppPath_user_data} directories"
     Cmd "mkdir -p '${VSCAppPath_extensions}' '${VSCAppPath_user_data}'" 1
 
-    JunestCmd "mkdir -p /run/user/$(id -u)" 'namespace' 1
-
     Output "Installing ${VSCAppName} ${VSCTag}"
 
     # Download latest VSCode zip file
@@ -591,7 +589,7 @@ Categories=Utility;Application;
     local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
+    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
 }
 
 # Create start script for run Junest console
