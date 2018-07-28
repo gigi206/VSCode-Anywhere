@@ -1,9 +1,9 @@
 
 platform: x64
 
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
 
 #only_commits:
 #  files:
