@@ -57,7 +57,7 @@ deploy:
     auth_token:
       secure: ld6PNFxh5Mp4/xa7/Kud00ABN8flWZUjGzeIhlmEqVETRi4kC7ZRdpaTOUcAE4Fi # your encrypted token from GitHub
     artifact: VSCode-Anywhere-Win64
-    draft: false
+    draft: true
     prerelease: false
     force_update: true
     on:

@@ -73,7 +73,7 @@ deploy:
 #      branch: dev
   - provider: releases
     #body: my message
-    draft: false
+    draft: true
     prerelease: false
     skip_cleanup: true
     api_key:
