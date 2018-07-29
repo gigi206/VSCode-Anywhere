@@ -16,10 +16,10 @@ addons:
       - p7zip-full
       - realpath
       - bash
-branches:
-  only:
-    - master
-    - dev
+#branches:
+#  only:
+#    - master
+#    - dev
 env:
   global:
     #- DISPLAY=:99.0

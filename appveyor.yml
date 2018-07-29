@@ -1,16 +1,16 @@
 
 platform: x64
 
-branches:
-  only:
-    - master
-    - dev
+#branches:
+#  only:
+#    - master
+#    - dev
 
-only_commits:
-  files:
-    - Windows/*.conf
-    - Windows/*.ps1
-    - appveyor.yml
+#only_commits:
+#  files:
+#    - Windows/*.conf
+#    - Windows/*.ps1
+#    - appveyor.yml
 
 environment:
   VSCode_Anywhere_CI: true
