@@ -6,11 +6,11 @@ branches:
     - master
     - dev
 
-#only_commits:
-#  files:
-#    - Windows/*.conf
-#    - Windows/*.ps1
-#    - appveyor.yml
+only_commits:
+  files:
+    - Windows/*.conf
+    - Windows/*.ps1
+    - appveyor.yml
 
 environment:
   VSCode_Anywhere_CI: true
