@@ -125,6 +125,7 @@ mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi2
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/UMqVXpt5qZE/0.jpg)](https://www.youtube.com/watch?v=UMqVXpt5qZE)
 
 **Install from a Github release :**
+
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/uktzBRDmnMU/0.jpg)](https://www.youtube.com/watch?v=uktzBRDmnMU)
 
 **NOTE :**
@@ -290,6 +291,7 @@ powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gi
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/A4HhkL78OVQ/0.jpg)](https://www.youtube.com/watch?v=A4HhkL78OVQ)
 
 **Install from a Github release :**
+
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/UkovhY_XQhw/0.jpg)](https://www.youtube.com/watch?v=UkovhY_XQhw)
 
 **NOTE :**
