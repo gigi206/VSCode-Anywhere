@@ -1018,8 +1018,9 @@ function Update {
 function UpdateMSYS2 {
     InstallAppHeader "Update $MSYS2AppName"
 
-    $update_cmd = 'yes y | LC_ALL=C pacman -Syu; kill -9 -1'
-    MSYS2Cmd @("$update_cmd", "$update_cmd") -exit $true
+    # Upgrade MSYS2
+    $update_cmd = 'pacman -Syu --noconfirm'
+    MSYS2Cmd @("$update_cmd", "$update_cmd; kill -9 -1") -exit $true
 }
 
 # Update VSCode
