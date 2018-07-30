@@ -114,6 +114,8 @@ There are 3 configuration files available with all the same features configured 
 - [VSCode-Anywhere_recommended.conf](Linux/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
 - [VSCode-Anywhere_full.conf](Linux/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses a lot of space
 
+**Install from scratch :**
+
 Install with bash (paste the following line inside your terminal) :
 
 ```bash
@@ -121,6 +123,9 @@ mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi2
 ```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/UMqVXpt5qZE/0.jpg)](https://www.youtube.com/watch?v=UMqVXpt5qZE)
+
+**Install from a Github release :**
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/uktzBRDmnMU/0.jpg)](https://www.youtube.com/watch?v=uktzBRDmnMU)
 
 **NOTE :**
 
@@ -274,6 +279,8 @@ There are 3 configuration files available with all the same features configured 
 - [VSCode-Anywhere_recommended.conf](Windows/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. MSYS2 (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
 - [VSCode-Anywhere_full.conf](Windows/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses average 7 Go data space on your device (270 000 files with 37 000 folders)
 
+**Install from scratch :**
+
 Install with **powershell.exe** :
 
 ```bat
@@ -281,6 +288,9 @@ powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gi
 ```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/A4HhkL78OVQ/0.jpg)](https://www.youtube.com/watch?v=A4HhkL78OVQ)
+
+**Install from a Github release :**
+[![VSCode-Anywhere installation](https://img.youtube.com/vi/UkovhY_XQhw/0.jpg)](https://www.youtube.com/watch?v=UkovhY_XQhw)
 
 **NOTE :**
 
