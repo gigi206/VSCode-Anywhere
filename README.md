@@ -507,11 +507,7 @@ Add icons pack and themes :
 
 ![vscode-icons](https://raw.githubusercontent.com/vscode-icons/vscode-icons/master/images/screenshot.gif)
 
-For Linux only :
-
-- [GTK Dark Title Bar](https://marketplace.visualstudio.com/items?itemName=fkrull.gtk-dark-titlebar)
-
-![GTK Dark Title Bar](https://github.com/fkrull/vscode-gtk-dark-titlebar/raw/master/images/screenshot.png)
+**Warning** : press _ALT_ key for show the menu bar.
 
 ### 4.6. VSC-fonts
 
