@@ -50,7 +50,7 @@
     - [4.16. java](#416-java)
     - [4.17. php](#417-php)
     - [4.18. javascript](#418-javascript)
-    - [4.19. css](#419-css)
+    - [4.19. html](#419-html)
     - [4.20. powershell](#420-powershell)
     - [4.21. docker](#421-docker)
     - [4.22. ansible](#422-ansible)
@@ -692,18 +692,21 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ja
 
 **NOTE :** you need to configure _ESLint_ first !
 
-### 4.19. css
+### 4.19. html
 
-Configure environment for [CSS](https://www.w3.org/Style/CSS/) language.
+Configure environment for [HTML](https://www.w3.org/html/) / [CSS](https://www.w3.org/Style/CSS/) language.
 
 VSCode extensions :
 
 - [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion)
 - [CSS Peek](https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek)
+- [htmltagwrap](https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/css)
 
 ![IntelliSense for CSS class names in HTML](https://i.imgur.com/5crMfTj.gif)
+
+![htmltagwrap](https://github.com/bgashler1/vscode-htmltagwrap/raw/master/images/screenshot.gif)
 
 ### 4.20. powershell
 
