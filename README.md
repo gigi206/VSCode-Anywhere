@@ -531,10 +531,13 @@ Configure environment for [Python2/3](https://www.python.org) languages.
 VSCode Extensions :
 
 - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+- [Visual Studio IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/python)
 
 ![Python](https://raw.githubusercontent.com/microsoft/vscode-python/master/images/general.gif)
+
+![Visual Studio IntelliCode](https://go.microsoft.com/fwlink/?linkid=2006041)
 
 ### 4.10. ruby
 
