@@ -10,8 +10,9 @@
 #   Params   #
 ##############
 Param(
-    [string]$path="$null",
-    [string]$conf="$null",
+    [string]$path = "$null",
+    [string]$conf = "$null",
+    [string]$user_conf = "$null",
     [switch]$update,
     [switch]$fonts,
     [switch]$link
@@ -53,6 +54,45 @@ function InstallAppHeader([string]$AppName) {
     Write-Host "|"                                                              -ForegroundColor Green
     Write-Host "\=============================================================" -ForegroundColor Green
     Write-Host ""                                                               -ForegroundColor Green
+}
+
+# Merge User.conf file with VSCode-Anywhere.conf file
+function LoadConfig {
+    InstallAppHeader "Loading config"
+
+    try {
+        Output "Parsing configuration file $ProgramConfig"
+        if (!(Test-Path -Path "$ProgramConfig")) { OutputErrror "configuration file $ProgramConfig doesn't exist !" }
+        $config = Get-Content "$ProgramConfig" -Raw | ConvertFrom-Json
+    }
+    catch {
+        OutputErrror "mistake in configuration file $ProgramConfig => $_"
+    }
+
+    try {
+        Output "Parsing configuration file $ProgramConfigUser"
+        if (!(Test-Path -Path "$ProgramConfigUser")) { OutputErrror "configuration file $ProgramConfigUser doesn't exist !" }
+        $configUser = Get-Content "$ProgramConfigUser" -Raw | ConvertFrom-Json
+    }
+    catch {
+        OutputErrror "mistake in configuration file $ProgramConfigUser => $_"
+    }
+
+    # merge $configUser within $config
+    try {
+        foreach ($category in $configUser.psobject.properties.name) {
+            foreach ($plugin in $configUser.$category.psobject.properties.name) {
+                foreach ($item in $configUser.$category.$plugin.psobject.properties.name) {
+                    $config.$category.$plugin.$item = $configUser.$category.$plugin.$item
+                }
+            }
+        }
+    }
+    catch {
+        OutputErrror "Failed to merge $ProgramConfigUser file in $ProgramConfig file => $_"
+    }
+
+    Set-Variable -Name config -Value ($config) -Scope Global
 }
 
 # First function called (create dirs, configure proxy, source env, ...)
@@ -111,6 +151,7 @@ function Init  {
     if ("$PSScriptRoot" -ne "$ToolsDir") {
         Copy-Item "$PSCommandPath" -Destination "${ToolsDir}\install.ps1" -Force
         Copy-Item "$ProgramConfig" -Destination "${ConfDir}\${ProgramName}.conf" -Force
+        Copy-Item "$ProgramConfigUser" -Destination "${ConfDir}\User.conf" -Force
     }
 }
 
@@ -991,6 +1032,7 @@ function MakeScripts {
 
 # Update VSCode and Third-Party
 function Update {
+    UpdateVscodeAnywhere
     Update7zip
     UpdateMSYS2
     UpdateVSCode
@@ -1076,6 +1118,40 @@ function UpdateVSCode {
     }
     else {
         Output "VSCode is already to the latest version $VSCVersion"
+    }
+}
+
+# Update VSCode-Anywhere
+function UpdateVscodeAnywhere {
+    if ((split-path $MyInvocation.PSCommandPath -Leaf) -eq "install-update.ps1") {
+        Cmd "Copy-Item '${ToolsDir}/install-update.ps1' -Destination '${ToolsDir}\install.ps1' -Force"
+    }
+    else {
+        InstallAppHeader "Updating $ProgramName"
+
+        # Backup current config file
+        Output "Backup current configuration file $ProgramConfig to ${ProgramConfig}.bak"
+        Cmd -exit $true "Copy-Item '$ProgramConfig' -Destination '${ProgramConfig}.bak' -Force"
+
+        # Download the last config file for update
+        Output "Updating $ProgramConfig to the last version from $ProgramConfigUrl"
+        Cmd -exit $true "Invoke-WebRequest -Uri '$ProgramConfigUrl' -OutFile '$ProgramConfig'"
+
+        # Backup current script
+        Output "Backup current script file ${ToolsDir}/install.sh to ${ToolsDir}/install.sh.bak"
+        Cmd -exit $true "Copy-Item '${ToolsDir}/install.ps1' '${ToolsDir}/install.ps1.bak'"
+
+        # Download the last install script file for update
+        Output "Updating ${ToolsDir}/install.sh to the last version from ${ProgramConfigUrl}"
+        Cmd -exit $true "Invoke-WebRequest -Uri '$InstallScriptUrl' -OutFile '${ToolsDir}/install-update.ps1'"
+
+        # Get-Content -Path $ProgramConfig -raw
+
+        # Start now the update with the last script
+        #Start-Process -PassThru -FilePath ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -ArgumentList "-NoProfile -InputFormat None -ExecutionPolicy Bypass -File '${ToolsDir}/install-update.ps1'"
+        & ${ToolsDir}/install-update.ps1 -conf $conf -user_conf $user_conf -update
+
+        exit
     }
 }
 
@@ -1341,11 +1417,25 @@ $ProgramName = "VSCode-Anywhere"
 if ($conf) { $ProgramConfig = $conf }
 else { $ProgramConfig = Join-Path -Path "$PSScriptRoot" -ChildPath "${ProgramName}.conf" }
 
-if ("$path") { $InstallDir = Join-Path -Path "$path" -ChildPath "$ProgramName" }
+if ($user_conf) { $ProgramConfigUser = $user_conf }
+else { $ProgramConfigUser = Join-Path -Path "$PSScriptRoot" -ChildPath "User.conf" }
+
+if ($path) { $InstallDir = Join-Path -Path "$path" -ChildPath "$ProgramName" }
 else {
     if ((Get-Item -Path "$PSScriptRoot").Parent.Name -eq "$ProgramName") { $InstallDir = (Get-Item -Path "$PSScriptRoot").Parent.FullName }
     else { $InstallDir = Join-Path -Path "$PSScriptRoot" -ChildPath "$ProgramName" }
 }
+
+# Config URL
+if (${Env:APPVEYOR_REPO_TAG} -eq $true) {
+    $branch = ${Env:APPVEYOR_REPO_TAG_NAME}
+}
+else {
+    $branch = ${Env:APPVEYOR_REPO_BRANCH}
+}
+
+$ProgramConfigUrl = "https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Windows/VSCode-Anywhere.conf"
+$InstallScriptUrl = "https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Windows/install.ps1"
 
 $LogDir = Join-Path -Path "$InstallDir" -ChildPath "Logs"
 $log = Join-Path -Path "$LogDir" -ChildPath "install.log"
@@ -1356,16 +1446,6 @@ $ThirdParty = Join-Path -Path "$InstallDir" -ChildPath "Third-Party"
 $FontsDir = Join-Path -Path "$ThirdParty" -ChildPath "Fonts"
 $ToolsDir = Join-Path -Path "$InstallDir" -ChildPath "Tools"
 $ConfDir = Join-Path -Path "$InstallDir" -ChildPath "Conf"
-
-try {
-    InstallAppHeader "Loading config"
-    Output "Parsing config file $ProgramConfig"
-    if (!(Test-Path -Path "$ProgramConfig")) { OutputErrror "configuration file $ProgramConfig doesn't exist !" }
-    $config = Get-Content "$ProgramConfig" -Raw | ConvertFrom-Json
-}
-catch {
-    OutputErrror "mistake in configuration file $ProgramConfig : $_"
-}
 
 # VSCode
 $VSCAppName = "VSCode"
@@ -1397,6 +1477,7 @@ $ZealAppPath_docsets = Join-Path -Path "$ZealAppPath_install" -ChildPath "docset
 #   CODE   #
 ############
 
+LoadConfig
 Init
 
 if ($update) {

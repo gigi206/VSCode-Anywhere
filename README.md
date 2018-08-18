@@ -303,7 +303,8 @@ Also, inside the terminal and VSCode application, you have access to :
 Install parameters :
 
 - **-path** : installation directory (folder _VSCode-Anywhere_ will be automatically created in this directory)
-- **-conf** : specify the configuration file path
+- **--conf** : specify the VSCode-Anywhere configuration file path
+- **--user_conf** : specify the user configuration file path
 
 #### 3.1.2. Installation process
 
@@ -312,18 +313,18 @@ Install parameters :
 - PowerShell
 - your installation device must be format with NTFS filesystem
 
-There are 3 configuration files available with all the same features configured but not the same features enabled :
+There are 3 configuration files available :
 
-- [VSCode-Anywhere_minimal.conf](Windows/VSCode-Anywhere_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only MSYS2, Git and VSCode (without extension) will be installed
-- [VSCode-Anywhere_recommended.conf](Windows/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. MSYS2 (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
-- [VSCode-Anywhere_full.conf](Windows/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses average 7 Go data space on your device (270 000 files with 37 000 folders)
+- [VSCode-Anywhere_minimal.conf](Windows/User_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only Junest and VSCode (without extension) will be installed
+- [VSCode-Anywhere_recommended.conf](Windows/VSCode-Anywhere_User.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
+- [VSCode-Anywhere_full.conf](Windows/User_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses a lot of space
 
 **Install from scratch :**
 
 Install with **powershell.exe** :
 
 ```bat
-powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/VSCode-Anywhere_recommended.conf -OutFile VSCode-Anywhere.conf"; powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/install.ps1 -OutFile install.ps1"; powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File install.ps1 -path "C:\MyPATH"; Remove-Item -Force install.ps1, VSCode-Anywhere.conf
+powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/VSCode-Anywhere.conf -OutFile VSCode-Anywhere.conf; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/User_recommended.conf -OutFile User.conf; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/install.ps1 -OutFile install.ps1"; powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File install.ps1 -path "C:\MyPATH"; Remove-Item -Force install.ps1, VSCode-Anywhere.conf, User.conf
 ```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/A4HhkL78OVQ/0.jpg)](https://www.youtube.com/watch?v=A4HhkL78OVQ)
@@ -377,9 +378,46 @@ Vars :
 
 #### 3.3.1. Install
 
-In directory Tools, run _**Install**_ for install new components from configuration file (if you have changed a section **enabled** from **false** to **true**).
+In directory Tools, run _**Install**_ for install new components from Conf\User.conf file (if you have added a section).
 
 **NOTE :** Set **enabled** from **true** to **false** don't uninstall plugins/settings (section just be ignored) !
+
+Don't edit the main configuration file Conf\VSCode-Anywhere.conf because it will be overwritten by a future update. You must configure your settings in Conf\User.conf file instead. This file is in json format and it overrides settings present in Conf\VSCode-Anywhere.conf file.
+
+For example for install Python, override it within the **extensions** section by set **enabled** to **true**. Example :
+```json
+{
+"base": {
+	"zeal_enabled": true
+},
+"extensions": {
+	"minimal": {
+		"enabled": true
+	},
+	"general": {
+		"enabled": true
+	},
+	"git": {
+		"enabled": true
+	},
+	"theme": {
+		"enabled": true
+	},
+	"VSC-fonts": {
+		"enabled": true
+	},
+	"tmux-gigix": {
+		"enabled": true
+	},
+	"vim-gigix": {
+		"enabled": true
+	},
+	"python": {
+		"enabled": true
+	}
+}
+}
+```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/9Rpxrar_VbU/0.jpg)](https://www.youtube.com/watch?v=9Rpxrar_VbU)
 

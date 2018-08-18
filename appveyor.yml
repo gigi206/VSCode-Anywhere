@@ -18,15 +18,15 @@ environment:
 clone_depth: 20
 
 install:
-  - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere_minimal.conf -path "C:\"
+  - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere.conf -user_conf Windows\User_minimal.conf -path C:\
   - ps: if ("${Env:APPVEYOR_REPO_TAG_NAME}") { C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-${Env:APPVEYOR_REPO_TAG_NAME}-Win64-minimal.zip C:\VSCode-Anywhere }
-  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\VSCode-Anywhere_recommended.conf" -Destination "C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf"
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
+  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\User_recommended.conf" -Destination "C:\VSCode-Anywhere\Conf\User.conf"
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf
   - ps: if ("${Env:APPVEYOR_REPO_TAG_NAME}") { C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-${Env:APPVEYOR_REPO_TAG_NAME}-Win64-recommended.zip C:\VSCode-Anywhere }
-  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\VSCode-Anywhere_full.conf" -Destination "C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf"
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -update
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -link
+  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\User_full.conf" -Destination "C:\VSCode-Anywhere\Conf\User.conf"
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf -update
+  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf -link
   - ps: if (Get-Content C:\VSCode-Anywhere\Logs\* | Select-String -Pattern 'error has occured') { exit 1 }
   - ps: Set-Location "C:\projects\vscode-anywhere"
 
