@@ -45,19 +45,19 @@ install:
   #- Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
   #- sleep 3
 script:
-  - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_minimal.conf
+  - cd /tmp && $TRAVIS_BUILD_DIR/Linux/install.sh --path /tmp --conf $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere.conf --user_conf $TRAVIS_BUILD_DIR/Linux/User_minimal.conf
   #- if [ "${TRAVIS_TAG}" != "" ]; then cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-minimal.bin -sfx VSCode-Anywhere >/dev/null; fi
   - if [ "${TRAVIS_TAG}" != "" ]; then cd /tmp && tar czf /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-minimal.tar.gz VSCode-Anywhere; fi
-  - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_recommended.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
-  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
+  - cp $TRAVIS_BUILD_DIR/Linux/User_recommended.conf /tmp/VSCode-Anywhere/Conf/User.conf
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf
   #- if [ "${TRAVIS_TAG}" != "" ]; then cd /tmp && 7za a -mx1 -mmt /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-recommended.bin -sfx VSCode-Anywhere >/dev/null; fi
   - if [ "${TRAVIS_TAG}" != "" ]; then cd /tmp && tar czf /tmp/VSCode-Anywhere-${TRAVIS_TAG}-Linux-amd64-recommended.tar.gz VSCode-Anywhere; fi
-  - cp $TRAVIS_BUILD_DIR/Linux/VSCode-Anywhere_full.conf /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
-  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf
-  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -u
-  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -f
-  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -l
-  - yes | /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -d
+  - cp $TRAVIS_BUILD_DIR/Linux/User_full.conf /tmp/VSCode-Anywhere/Conf/User.conf
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf -u
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf -f
+  - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf -l
+  - yes | /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf -d
 after_script:
   - test $(echo $(egrep -i 'error has occured' /tmp/VSCode-Anywhere/Logs/*) | wc -l) = 0
 deploy:

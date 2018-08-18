@@ -96,7 +96,8 @@ I recommend to see these [tutorials](https://code.visualstudio.com/docs/getstart
 Install parameters :
 
 - **--path** : installation directory (folder _VSCode-Anywhere_ will be automatically created in this directory)
-- **--conf** : specify the configuration file path
+- **--conf** : specify the VSCode-Anywhere configuration file path
+- **--user_conf** : specify the user configuration file path
 
 #### 2.1.2. Installation process
 
@@ -108,18 +109,18 @@ Install parameters :
 - tar
 - realpath
 
-There are 3 configuration files available with all the same features configured but not the same features enabled :
+There are 3 user configuration files available :
 
-- [VSCode-Anywhere_minimal.conf](Linux/VSCode-Anywhere_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only Junest and VSCode (without extension) will be installed
-- [VSCode-Anywhere_recommended.conf](Linux/VSCode-Anywhere_recommended.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
-- [VSCode-Anywhere_full.conf](Linux/VSCode-Anywhere_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses a lot of space
+- [VSCode-Anywhere_minimal.conf](Linux/User_minimal.conf) : install VSCode-Anywhere with the minimal features (Zeal is disabled). Only Junest and VSCode (without extension) will be installed
+- [VSCode-Anywhere_recommended.conf](Linux/VSCode-Anywhere_User.conf) : install VSCode-Anywhere with the recommended components. Junest (configured with tmux-gigix, vim-gigix), Git, Zeal and VSCode (with theme, icons pack, fonts, and some extensions present in general section) will be installed. This is the recommended initial setup
+- [VSCode-Anywhere_full.conf](Linux/User_full.conf) : install VSCode-Anywhere with all sections enabled in the configuration file. Install can take a long time (not recommended) because it uses a lot of space
 
 **Install from scratch :**
 
 Install with bash (paste the following line inside your terminal) :
 
 ```bash
-mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/install.sh -O /tmp/VSCode-Anywhere/VSCode-Anywhere.sh && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/VSCode-Anywhere_recommended.conf -O /tmp/VSCode-Anywhere/VSCode-Anywhere.conf && cd /tmp/VSCode-Anywhere && chmod +x VSCode-Anywhere.sh && ./VSCode-Anywhere.sh --path "/MyPATH" && cd - && rm -fr /tmp/VSCode-Anywhere
+mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/install.sh -O /tmp/VSCode-Anywhere/VSCode-Anywhere.sh && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/VSCode-Anywhere.conf -O /tmp/VSCode-Anywhere/VSCode-Anywhere.conf && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/User_recommended.conf -O /tmp/VSCode-Anywhere/User.conf && cd /tmp/VSCode-Anywhere && chmod +x VSCode-Anywhere.sh && ./VSCode-Anywhere.sh --path /MyPATH && cd - && rm -fr /tmp/VSCode-Anywhere
 ```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/UMqVXpt5qZE/0.jpg)](https://www.youtube.com/watch?v=UMqVXpt5qZE)
@@ -171,9 +172,46 @@ Vars :
 
 #### 2.3.1. Install
 
-In directory Tools, run _**Install**_ for install new components from configuration file (if you have changed a section **enabled** from **false** to **true**).
+In directory Tools, run _**Install**_ for install new components from Conf/User.conf file (if you have added a new section).
 
 **NOTE :** Set **enabled** from **true** to **false** don't uninstall plugins/settings (the section just will be ignored) !
+
+Don't edit the main configuration file Conf/VSCode-Anywhere.conf because it will be overwritten by a future update. You must configure your settings in Conf/User.conf file instead. This file is in json format and it overrides settings present in Conf/VSCode-Anywhere.conf file.
+
+For example for install Python, override it within the **extensions** section by set **enabled** to **true**. Example :
+```json
+{
+"base": {
+	"zeal_enabled": true
+},
+"extensions": {
+	"minimal": {
+		"enabled": true
+	},
+	"general": {
+		"enabled": true
+	},
+	"git": {
+		"enabled": true
+	},
+	"theme": {
+		"enabled": true
+	},
+	"VSC-fonts": {
+		"enabled": true
+	},
+	"tmux-gigix": {
+		"enabled": true
+	},
+	"vim-gigix": {
+		"enabled": true
+	},
+	"python": {
+		"enabled": true
+	}
+}
+}
+```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/8W1bxo8aUb4/0.jpg)](https://www.youtube.com/watch?v=8W1bxo8aUb4)
 

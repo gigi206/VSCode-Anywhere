@@ -15,7 +15,7 @@ set -o pipefail
 # Define parameters for VSCode-Anywhere
 function Params {
     # Execute getopt on the arguments passed to this program, identified by the special character ${@}
-    eval set -- $(getopt -n "${0}" -o hufldp:c: --long 'help,update,fonts,link,path:,conf:' -- "${@}")
+    eval set -- $(getopt -n "${0}" -o hufldp:c:a: --long 'help,update,fonts,link,path:,conf:,user_conf:' -- "${@}")
 
     # Now goes through all the options with a case and using shift to analyse 1 argument at a time
     # ${1} identifies the first argument, and when we use shift we discard the first argument, so $2 becomes ${1} and goes again through the case
@@ -54,6 +54,11 @@ function Params {
 
             -c|--conf)
                 [ -n "${2}" ] && conf="${2}"
+                shift 2
+            ;;
+
+            -a|--user_conf)
+                [ -n "${2}" ] && user_conf="${2}"
                 shift 2
             ;;
 
@@ -191,7 +196,9 @@ function Init {
         [ -f "$(command -v ${bin})" ] &>/dev/null || OutputErrror "${bin} is mandatory !"
     done
 
-    [ -f "${ProgramConfig}" ] || OutputErrror "configuration file ${ProgramConfig} doesn't exist !"
+    [ -f "${ProgramConfig}" ] || OutputErrror "configuration file ${ProgramConfig} doesn't exist ! Use option --conf to specify a valid config file path"
+
+    [ -f "${ProgramConfigUser}" ] || OutputErrror "configuration file ${ProgramConfigUser} doesn't exist ! Use option --user_conf to specify a valid config file path"
 
     # Rename previous log file to logfile.old
     [ -f "${Log}" ] && Cmd "mv '${Log}' '${Log}.old'"
@@ -205,6 +212,7 @@ function Init {
     then
         Cmd "cp -f '${0}' ${ToolsDir}/install.sh" 1
         Cmd "cp -f '${ProgramConfig}' '${ConfDir}/${ProgramName}.conf'" 1
+        Cmd "cp -f '${ProgramConfigUser}' '${ConfDir}/User.conf'" 1
     fi
 
     # Configure proxy
@@ -219,7 +227,8 @@ function Init {
 # Return current config in json format
 function GetConfig {
     config="${1}"
-    JunestCmd "cat '${JunestExternalPath}${ProgramConfig}' | jq -r '${config}'" 'namespace' 1
+    # Merge the 2 config files
+    JunestCmd "jq -rs '.[0] * .[1]' '${JunestExternalPath}${ProgramConfig}' '${JunestExternalPath}${ProgramConfigUser}' | jq -r '${config}'" 'namespace' 1
 }
 
 # Install Junest for chroot
@@ -795,6 +804,37 @@ function MakeScripts {
     MakeScriptLink
 }
 
+
+# Update to the last config
+function UpdateVSCodeAnywhere {
+    if [ "${VSCodeAnywhereUpdate:-0}" -eq 1 ]
+    then
+        Cmd "cp -a ${ToolsDir}/install-update.sh ${ToolsDir}/install.sh"
+    else
+        InstallAppHeader "Updating ${ProgramName}"
+
+        # Backup current config file
+        Output "Backup current configuration file ${ProgramConfig} to ${ProgramConfig}.bak"
+        Cmd "cp -a '${ProgramConfig}' '${ProgramConfig}.bak'" 1
+
+        # Download the last config file for update
+        Output "Updating ${ProgramConfig} to the last version from ${ProgramConfigUrl}"
+        Cmd "wget -q '${ProgramConfigUrl}' -O '${ProgramConfig}'" 1
+
+        # Backup current script
+        Output "Backup current script file ${ToolsDir}/install.sh to ${ToolsDir}/install.sh.bak"
+        Cmd "cp -a '${ToolsDir}/install.sh' '${ToolsDir}/install.sh.bak'" 1
+
+        # Download the last install script file for update
+        Output "Updating ${ToolsDir}/install.sh to the last version from ${ProgramConfigUrl}"
+        Cmd "wget -q '${InstallScriptUrl}' -O '${ToolsDir}/install-update.sh'" 1
+        Cmd "chmod +x '${ToolsDir}/'*.sh" 1
+
+        Cmd "VSCodeAnywhereUpdate=1 ${ToolsDir}/install-update.sh -u" 1
+        exit
+    fi
+}
+
 # Update Junest
 function UpdateJunest {
     InstallAppHeader "Updating ${JunestAppName}"
@@ -926,6 +966,7 @@ function UpdateZealPkg {
 
 # Update VSCode and Third-Party
 function Update {
+    UpdateVSCodeAnywhere
     UpdateJunest
     UpdateVSCode
 
@@ -1019,6 +1060,31 @@ then
 else
     ProgramConfig="$(realpath $(dirname ${0}))/${ProgramName}.conf"
 fi
+
+# Define ProgramConfigUser var => location of the configuration user file
+if [ "${user_conf}" ]
+then
+    ProgramConfigUser="$(realpath ${user_conf})"
+elif [ "$(basename $(dirname $(realpath $(dirname ${0}))))" = "${ProgramName}" ]
+then
+    ProgramConfigUser="$(dirname $(realpath $(dirname ${0})))/Conf/User.conf"
+else
+    ProgramConfigUser="$(realpath $(dirname ${0}))/User.conf"
+fi
+
+# Config URL
+if [ "${TRAVIS_TAG}" ]
+then
+    branch="${TRAVIS_TAG}"
+elif [ "${TRAVIS_BRANCH}" ]
+then
+    branch="${TRAVIS_BRANCH}"
+else
+    branch='master'
+fi
+
+export ProgramConfigUrl="https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Linux/VSCode-Anywhere.conf"
+export InstallScriptUrl="https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Linux/install.sh"
 
 # Home user
 export Home_real="$(echo ~)"
