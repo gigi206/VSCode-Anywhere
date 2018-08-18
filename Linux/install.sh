@@ -263,7 +263,7 @@ EOF
     #Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
 
     # Install requirements
-    InstallJunestPkg git curl wget tar jq unzip rsync adwaita-icon-theme
+    InstallJunestPkg git curl wget tar jq unzip adwaita-icon-theme
 
     # Reinstall junest bin from github for be to be able to git pull
     JunestCmd "git clone https://github.com/fsquillace/junest.git '${JunestExternalPath}${JunestAppPath_install}_tmp' --depth 1" 'namespace' 1
