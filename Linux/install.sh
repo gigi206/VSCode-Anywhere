@@ -293,7 +293,7 @@ function InstallVSCode {
     fi
 
     # Install dependancies
-    InstallJunestPkg gtk2 nss libxkbfile libxtst libxss gconf alsa-lib gsfonts git
+    InstallJunestPkg gtk3 nss libxkbfile libxtst libxss gconf alsa-lib gsfonts git
 
     # Define last tag version for download VSCode
     VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 'namespace' 1)
