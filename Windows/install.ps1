@@ -1430,8 +1430,11 @@ else {
 if (${Env:APPVEYOR_REPO_TAG} -eq $true) {
     $branch = ${Env:APPVEYOR_REPO_TAG_NAME}
 }
-else {
+elseif (${Env:APPVEYOR_REPO_BRANCH} -ne $null) {
     $branch = ${Env:APPVEYOR_REPO_BRANCH}
+}
+else {
+    branch = 'master'
 }
 
 $ProgramConfigUrl = "https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Windows/VSCode-Anywhere.conf"
