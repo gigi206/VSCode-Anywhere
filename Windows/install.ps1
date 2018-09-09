@@ -962,7 +962,7 @@ function MakeScriptInstall {
     Output "Make install script file ${ToolsDir}\Install"
 
     $source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
-    $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -conf "' + "${ConfDir}\${ProgramName}.conf" + '"'
+    $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '"'
     $icon = ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,13')
     Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\Install" -cwd "$ToolsDir" -arguments "$arguments" -description "Install $ProgramName" -icon "$icon"
 }
@@ -972,7 +972,7 @@ function MakeScriptUpdate {
     Output "Make update script file $ToolsDir\Update"
 
     $source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
-    $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -conf "' + "${ConfDir}\${ProgramName}.conf" + '" -update'
+    $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -update'
     $icon = ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,46')
     Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\Update" -cwd "$ToolsDir" -arguments "$arguments" -description "Update $ProgramName" -icon "$icon"
 }
@@ -982,7 +982,7 @@ function MakeScriptInstallFonts {
     Output "Make install font script file ${ToolsDir}\InstallFonts"
 
     $source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
-    $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -conf "' + "${ConfDir}\${ProgramName}.conf" + '" -fonts'
+    $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -fonts'
     $icon = (New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,74'
     Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\InstallFonts" -cwd "$ToolsDir" -arguments "$arguments" -description "Install fonts for $ProgramName" -icon "$icon"
 }
@@ -1015,7 +1015,7 @@ function MakeScriptLink {
 
     # Write code to script
     "@echo off" | Out-File -Encoding ascii -Append "$ScriptFile"
-    ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\WindowsPowerShell\v1.0\powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + (Get-Item $PSCommandPath).Name + '" -conf "' + "..\" + (Get-Item $ConfDir).Name + "\" + "${ProgramName}.conf" + '" -link') | Out-File -Encoding ascii -Append "$ScriptFile"
+    ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\WindowsPowerShell\v1.0\powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + (Get-Item $PSCommandPath).Name + '" -link') | Out-File -Encoding ascii -Append "$ScriptFile"
 }
 
 # Create VSCode / MSYS2 scripts
@@ -1149,7 +1149,7 @@ function UpdateVscodeAnywhere {
 
         # Start now the update with the last script
         #Start-Process -PassThru -FilePath ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -ArgumentList "-NoProfile -InputFormat None -ExecutionPolicy Bypass -File '${ToolsDir}/install-update.ps1'"
-        & ${ToolsDir}/install-update.ps1 -conf $conf -user_conf $user_conf -update
+        & ${ToolsDir}/install-update.ps1 -conf $ProgramConfig -user_conf $ProgramConfigUser -update
 
         exit
     }
@@ -1415,9 +1415,11 @@ function Finish {
 $ProgramName = "VSCode-Anywhere"
 
 if ($conf) { $ProgramConfig = $conf }
+elseif ((Get-Item -Path "$PSScriptRoot").Parent.Name -eq $ProgramName) { $ProgramConfig = Join-Path -Path (Resolve-Path ..).Path -ChildPath "\Conf\${ProgramName}.conf" }
 else { $ProgramConfig = Join-Path -Path "$PSScriptRoot" -ChildPath "${ProgramName}.conf" }
 
 if ($user_conf) { $ProgramConfigUser = $user_conf }
+elseif ((Get-Item -Path "$PSScriptRoot").Parent.Name -eq $ProgramName) { $ProgramConfigUser = Join-Path -Path (Resolve-Path ..).Path -ChildPath "\Conf\User.conf" }
 else { $ProgramConfigUser = Join-Path -Path "$PSScriptRoot" -ChildPath "User.conf" }
 
 if ($path) { $InstallDir = Join-Path -Path "$path" -ChildPath "$ProgramName" }
