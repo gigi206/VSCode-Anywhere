@@ -1434,7 +1434,7 @@ elseif (${Env:APPVEYOR_REPO_BRANCH} -ne $null) {
     $branch = ${Env:APPVEYOR_REPO_BRANCH}
 }
 else {
-    branch = 'master'
+    $branch = 'master'
 }
 
 $ProgramConfigUrl = "https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Windows/VSCode-Anywhere.conf"
