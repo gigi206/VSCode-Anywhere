@@ -210,55 +210,55 @@ function InstallVSCode {
         'en-*' { }
         'fr-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-fr")
-            Cmd "Write-Output '{ `"locale`": `"fr`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "fr" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'es-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-es")
-            Cmd "Write-Output '{ `"locale`": `"es`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "es" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'de-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-de")
-            Cmd "Write-Output '{ `"locale`": `"de`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "de" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'it-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-it")
-            Cmd "Write-Output '{ `"locale`": `"it`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "it" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'ja-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-ja")
-            Cmd "Write-Output '{ `"locale`": `"ja`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "ja" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'pt-BR' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-pt-br")
-            Cmd "Write-Output '{ `"locale`": `"pt-br`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "pt-br" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'ru-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-ru")
-            Cmd "Write-Output '{ `"locale`": `"ru`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "ru" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'tr-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-tr")
-            Cmd "Write-Output '{ `"locale`": `"tr`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "tr" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'hu-' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-hu")
-            Cmd "Write-Output '{ `"locale`": `"hu`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "hu" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'ko-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-ko")
-            Cmd "Write-Output '{ `"locale`": `"ko`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "ko" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'bg-*' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-bg")
-            Cmd "Write-Output '{ `"locale`": `"bg`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "bg" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'zh-CN' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-zh-hans")
-            Cmd "Write-Output '{ `"locale`": `"zh-cn`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "zh-cn" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         'zh-TW' {
             InstallVSCPkg @("MS-CEINTL.vscode-language-pack-zh-hant")
-            Cmd "Write-Output '{ `"locale`": `"zh-tw`" }' | Out-File -Encoding utf8 '${VSCAppPath_user_data}\User\locale.json'"
+            Write-Output '{ "locale": "zh-tw" }' | Out-File -Encoding utf8 "${VSCAppPath_user_data}\User\locale.json"
         }
         default {
             Output "No language pack found for", (Get-Culture).Name
@@ -1126,31 +1126,28 @@ function UpdateVSCode {
 # Update VSCode-Anywhere
 function UpdateVscodeAnywhere {
     if ((split-path $MyInvocation.PSCommandPath -Leaf) -eq "install-update.ps1") {
-        Cmd "Copy-Item '${ToolsDir}/install-update.ps1' -Destination '${ToolsDir}\install.ps1' -Force"
+        Copy-Item "${ToolsDir}/install-update.ps1" -Destination "${ToolsDir}\install.ps1" -Force
     }
     else {
         InstallAppHeader "Updating $ProgramName"
 
         # Backup current config file
         Output "Backup current configuration file $ProgramConfig to ${ProgramConfig}.bak"
-        Cmd -exit $true "Copy-Item '$ProgramConfig' -Destination '${ProgramConfig}.bak' -Force"
+        Copy-Item "$ProgramConfig" -Destination "${ProgramConfig}.bak" -Force
 
         # Download the last config file for update
         Output "Updating $ProgramConfig to the last version from $ProgramConfigUrl"
-        Cmd -exit $true "Invoke-WebRequest -Uri '$ProgramConfigUrl' -OutFile '$ProgramConfig'"
+        Invoke-WebRequest -Uri "$ProgramConfigUrl" -OutFile "$ProgramConfig"
 
         # Backup current script
         Output "Backup current script file ${ToolsDir}/install.sh to ${ToolsDir}/install.sh.bak"
-        Cmd -exit $true "Copy-Item '${ToolsDir}/install.ps1' '${ToolsDir}/install.ps1.bak'"
+        Copy-Item "${ToolsDir}/install.ps1" "${ToolsDir}/install.ps1.bak"
 
         # Download the last install script file for update
         Output "Updating ${ToolsDir}/install.sh to the last version from ${ProgramConfigUrl}"
-        Cmd -exit $true "Invoke-WebRequest -Uri '$InstallScriptUrl' -OutFile '${ToolsDir}/install-update.ps1'"
-
-        # Get-Content -Path $ProgramConfig -raw
+        Invoke-WebRequest -Uri "$InstallScriptUrl" -OutFile "${ToolsDir}/install-update.ps1"
 
         # Start now the update with the last script
-        #Start-Process -PassThru -FilePath ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -ArgumentList "-NoProfile -InputFormat None -ExecutionPolicy Bypass -File '${ToolsDir}/install-update.ps1'"
         & ${ToolsDir}/install-update.ps1 -conf $ProgramConfig -user_conf $ProgramConfigUser -update
 
         exit
