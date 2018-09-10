@@ -82,6 +82,8 @@ function LoadConfig {
     try {
         foreach ($category in $configUser.psobject.properties.name) {
             foreach ($plugin in $configUser.$category.psobject.properties.name) {
+                if ($config.$category.$plugin -eq $null) { $config.$category | Add-Member -MemberType NoteProperty -Name $plugin -value @{} }
+
                 foreach ($item in $configUser.$category.$plugin.psobject.properties.name) {
                     $config.$category.$plugin.$item = $configUser.$category.$plugin.$item
                 }
