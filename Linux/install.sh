@@ -1017,6 +1017,8 @@ function UninstallJunest {
 
 # Installation is finished
 function Finish {
+    exit="${1}"
+    
     if [ "${VSCode_Anywhere_CI:-0}" -ne 1 ]
     then
         echo
@@ -1024,12 +1026,7 @@ function Finish {
         echo -e "\\n"
     fi
 
-    if [ $(basename $0) = 'install-update.sh' ]
-    then
-        exit
-    else
-        kill -9 $$
-    fi
+    exit "${exit:-0}"
 }
 
 
