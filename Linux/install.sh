@@ -19,7 +19,7 @@ function Params {
 
     # Now goes through all the options with a case and using shift to analyse 1 argument at a time
     # ${1} identifies the first argument, and when we use shift we discard the first argument, so $2 becomes ${1} and goes again through the case
-    while true;
+    while true
     do
         case "${1}" in
             -h|--help)
@@ -88,7 +88,7 @@ function usage {
     echo "    -f | --fonts  : reinstall fonts (if you change computer for example)"
     echo "    -l | --link   : needed if you change computer or change the install diirectory"
     echo "    -d | --delete : delete chroot directory"
-    exit 0;
+    exit 0
 }
 
 # Output header
@@ -138,9 +138,9 @@ function Cmd {
 
     ret_code="${?}"
 
-    if [ ${ret_code} -ne 0 ];
+    if [ ${ret_code} -ne 0 ]
     then
-        if [ "${exit}" ];
+        if [ "${exit}" ]
         then
             OutputErrror "A critical error has occurred !" "${exit:-1}"
         else
@@ -173,9 +173,9 @@ EOF
 
     ret_code=${?}
 
-    if [ ${ret_code} -ne 0 ];
+    if [ ${ret_code} -ne 0 ]
     then
-        if [ "${exit}" ];
+        if [ "${exit}" ]
         then
             OutputErrror "A critical error has occurred !" "${exit:-1}"
         else
@@ -1024,7 +1024,12 @@ function Finish {
         echo -e "\\n"
     fi
 
-    kill -9 $$
+    if [ $(basename $0) = 'install-update.sh' ]
+    then
+        exit
+    else
+        kill -9 $$
+    fi
 }
 
 
