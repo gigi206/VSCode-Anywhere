@@ -491,7 +491,7 @@ function SetVSCKeyboard {
 
     # Apply config to current settings
     Output "Set VSCode keyboard : ${settings}"
-    full_settings=$(JunestCmd "cat '${JunestExternalPath}${keybindings_path}' | jq -r '. + ${settings}'" 'namespace' 1)
+    full_settings=$(JunestCmd "cat '${JunestExternalPath}${keybindings_path}' | jq -r '. + ${settings} | unique'" 'namespace' 1)
     [ -n "${full_settings}" ] && JunestCmd "echo '${full_settings}' > '${JunestExternalPath}${keybindings_path}'" 'namespace' 1
 }
 
