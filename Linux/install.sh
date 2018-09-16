@@ -121,12 +121,10 @@ function OutputErrror {
 
     tput setaf 1
     tput bold
-    echo -e "\\nError : ${message}\\n" 2>&1 | tee -a "${Log}"
+    >&2 echo -e "\\nError : ${message}\\n"
+    echo -e "\\nError : ${message}\\n" >> "${Log}"
     tput sgr0
-
-    Finish
-
-    exit "${exit:-1}"
+    Finish "${exit:-1}"
 }
 
 # Run shell Command
@@ -148,7 +146,8 @@ function Cmd {
         else
             tput setaf 1
             tput bold
-            echo -e "\\nError : an error has occured (not critical)\\n" 2>&1 | tee -a "${Log}"
+            >&2 echo -e "\\nError : an error has occured (not critical)\\n"
+            echo -e "\\nError : an error has occured (not critical)\\n" >> "${Log}"
             tput sgr0
         fi
     fi
@@ -1024,6 +1023,8 @@ function Finish {
         read -r -s -p 'Press enter to finish'
         echo -e "\\n"
     fi
+
+    kill -9 $$
 }
 
 
