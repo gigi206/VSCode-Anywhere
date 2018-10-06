@@ -278,7 +278,7 @@ EOF
     Cmd "rm -fr '${JunestAppPath_install}' && mv '${JunestAppPath_install}_tmp' '${JunestAppPath_install}'" 1
 }
 
-# Install a packahe inside chroot
+# Install a package inside chroot
 function InstallJunestPkg {
     Output "Install Junest packages : ${*}"
     JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Sy --noconfirm --needed --force ${*}" 'namespace' 1
