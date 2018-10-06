@@ -781,12 +781,16 @@ VSCode extensions :
 - [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion)
 - [CSS Peek](https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek)
 - [htmltagwrap](https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap)
+- [CSSTree validator](https://marketplace.visualstudio.com/items?itemName=smelukov.vscode-csstree)
+- [W3C Validation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/css)
 
 ![IntelliSense for CSS class names in HTML](https://i.imgur.com/5crMfTj.gif)
 
 ![htmltagwrap](https://github.com/bgashler1/vscode-htmltagwrap/raw/master/images/screenshot.gif)
+
+![CSSTree validator](https://cloud.githubusercontent.com/assets/6654581/18788246/d0d4c7ca-81ae-11e6-9777-36806fd4cbfb.png)
 
 ### 4.21. powershell
 
