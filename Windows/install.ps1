@@ -1044,7 +1044,7 @@ function Update {
     UpdateMSYS2
     UpdateVSCode
     UpdateZeal
-
+    InstallConfig
     # For all settings extensions from config file
     foreach ($item in $config.extensions.psobject.properties.name) {
         # Define settings only if extension is enabled

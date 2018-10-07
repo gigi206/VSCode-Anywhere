@@ -968,6 +968,7 @@ function Update {
     UpdateVSCodeAnywhere
     UpdateJunest
     UpdateVSCode
+    InstallConfig
 
     # For all settings extensions from config file
     for item in $(GetConfig '.extensions | keys_unsorted[]')
