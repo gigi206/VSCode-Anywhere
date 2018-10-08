@@ -1079,7 +1079,7 @@ function UpdateVSCode {
     # Update VSCode
     if (Test-Path "${VSCAppPath_install}\resources\app\package.json") {
         $VSCPkg = Get-Content "${VSCAppPath_install}\resources\app\package.json" -Raw | ConvertFrom-Json
-    $VSCVersion = $VSCPkg.version
+        $VSCVersion = $VSCPkg.version
     }
     else { $VSCVersion = 'Unknown' }
 
@@ -1091,15 +1091,6 @@ function UpdateVSCode {
 
     # Install new version of VSCode
     if ($VSCVersion -ne $VSCTag) {
-        # Remove previous version
-        Output "Remove previous VSCode version $VSCVersion"
-        try {
-            if (Test-Path "$VSCAppPath_install") { Remove-Item -Recurse -Force "$VSCAppPath_install" }
-        }
-        catch {
-            OutputErrror "failed to remove $VSCAppPath_install ! VSCode is in use ? : $_"
-        }
-
         # Create install directories
         Output "Create $VSCAppPath_install directory"
         New-Item -ItemType Directory -Force -Path "$VSCAppPath_install" | Out-Null
@@ -1111,6 +1102,15 @@ function UpdateVSCode {
         }
         catch {
             OutputErrror "failed to download $VSCAppName : $_"
+        }
+
+        # Remove previous version
+        Output "Remove previous VSCode version $VSCVersion"
+        try {
+            if (Test-Path "$VSCAppPath_install") { Remove-Item -Recurse -Force "$VSCAppPath_install" }
+        }
+        catch {
+            OutputErrror "failed to remove $VSCAppPath_install ! VSCode is in use ? : $_"
         }
 
         # Extract VSCode zip file to install dir
