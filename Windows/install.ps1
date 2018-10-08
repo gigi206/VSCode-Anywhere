@@ -1044,7 +1044,7 @@ function Update {
     UpdateMSYS2
     UpdateVSCode
     UpdateZeal
-    InstallConfig
+
     # For all settings extensions from config file
     foreach ($item in $config.extensions.psobject.properties.name) {
         # Define settings only if extension is enabled
@@ -1131,6 +1131,9 @@ function UpdateVSCode {
 # Update VSCode-Anywhere
 function UpdateVscodeAnywhere {
     if ((split-path $MyInvocation.PSCommandPath -Leaf) -eq "install-update.ps1") {
+        # Make sure all is already installed before updating
+        InstallConfig
+
         Copy-Item "${ToolsDir}/install-update.ps1" -Destination "${ToolsDir}\install.ps1" -Force
     }
     else {

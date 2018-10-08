@@ -808,6 +808,9 @@ function MakeScripts {
 function UpdateVSCodeAnywhere {
     if [ "${VSCodeAnywhereUpdate:-0}" -eq 1 ]
     then
+        # Make sure all is already installed before updating
+        InstallConfig
+
         Cmd "cp -a ${ToolsDir}/install-update.sh ${ToolsDir}/install.sh"
     else
         InstallAppHeader "Updating ${ProgramName}"
@@ -968,7 +971,6 @@ function Update {
     UpdateVSCodeAnywhere
     UpdateJunest
     UpdateVSCode
-    InstallConfig
 
     # For all settings extensions from config file
     for item in $(GetConfig '.extensions | keys_unsorted[]')
