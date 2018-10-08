@@ -1166,7 +1166,7 @@ function UpdateVscodeAnywhere {
 function Update7zip {
     InstallAppHeader "Update $7zAppName"
     $url= 'https://www.7-zip.org'
-    $current_version_url = 'a/7z' + (&$7zAppPath_bin)[1].Split()[2].Replace('.', '') + '-x64.7z'
+    $current_version_url = 'a/7z' + (&$7zAppPath_bin)[1].Split()[2].Replace('.', '') + '-x64.exe'
     $last_version_url = ((Invoke-WebRequest -Uri "${url}/download.html").Links.href -match '^a/7z[0-9]+-x64.exe')[0]
     $last_version_url_extra = ((Invoke-WebRequest -Uri "${url}/download.html").Links.href -match '^a/7z[0-9]+-extra.7z')[0]
 

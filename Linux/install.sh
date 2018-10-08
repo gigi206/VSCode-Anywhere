@@ -1021,7 +1021,7 @@ function UninstallJunest {
 # Installation is finished
 function Finish {
     exit="${1}"
-    
+
     if [ "${VSCode_Anywhere_CI:-0}" -ne 1 ]
     then
         echo
