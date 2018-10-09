@@ -783,6 +783,8 @@ VSCode extensions :
 - [htmltagwrap](https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap)
 - [CSSTree validator](https://marketplace.visualstudio.com/items?itemName=smelukov.vscode-csstree)
 - [W3C Validation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)
+- [Highlight Matching Tag](https://marketplace.visualstudio.com/items?itemName=vincaslt.highlight-matching-tag)
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/css)
 
@@ -791,6 +793,10 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cs
 ![htmltagwrap](https://github.com/bgashler1/vscode-htmltagwrap/raw/master/images/screenshot.gif)
 
 ![CSSTree validator](https://cloud.githubusercontent.com/assets/6654581/18788246/d0d4c7ca-81ae-11e6-9777-36806fd4cbfb.png)
+
+![Highlight Matching Tag](https://i.imgbox.com/DUXLFvW7.gif)
+
+![Auto Rename Tag](https://github.com/formulahendry/vscode-auto-rename-tag/raw/master/images/usage.gif)
 
 ### 4.21. powershell
 
