@@ -248,7 +248,7 @@ function InstallJunest {
     Cmd "rm -fr '${JunestAppPath_install}'" 1
 
     Output "Downloading ${JunestAppName} binaries"
-    Cmd "cd '${JunestAppPath}' && wget -q http://api.github.com/repos/fsquillace/junest/tarball -O - | tar xz && mv fsquillace-junest-* '${JunestAppPath_install}'" 1
+    Cmd "cd '${JunestAppPath}' && wget -qO - http://api.github.com/repos/fsquillace/junest/tarball | tar xz && mv fsquillace-junest-* '${JunestAppPath_install}'" 1
 
     # Create chroot junest directory
     Cmd "mkdir -p '${JunestAppPath_chroot}'" 1
@@ -314,7 +314,7 @@ function InstallVSCode {
     Output "Installing ${VSCAppName} ${VSCTag}"
 
     # Download latest VSCode zip file
-    JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
+    JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && wget --show-progress --progress=bar:force -qO '${VSCAppName}.tar.gz' '${VSCUrl}' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
 
     # Create User directory
     JunestCmd "mkdir -p '${VSCAppPath_user_data}/User'" 'namespace' 1
@@ -424,15 +424,15 @@ function InstallZealPkg {
             Output "Installing Zeal docset ${pkg}"
 
             # Request zeal api
-            pkg_api=$(JunestCmd "curl -s http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"" 'namespace')
+            pkg_api=$(JunestCmd "wget -qO - http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"" 'namespace')
 
             if [ "${pkg_api}" ]
             then
-                pkg_url=$(JunestCmd "curl -Ls https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null" 'namespace')
+                pkg_url=$(JunestCmd "wget -qO - https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null" 'namespace')
 
                 # Download docset
                 JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace' 1
-                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
+                [ "${pkg_url}" ] && JunestCmd "wget --show-progress --progress=bar:force -qO - '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                 # Generate icons
                 JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
@@ -442,7 +442,7 @@ function InstallZealPkg {
                 JunestCmd "echo '${pkg_api}' | jq -r 'del(.sourceId, .versions, .icon, .icon2x, .id) + {\"version\": .versions[0]}' > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/meta.json'" 'namespace'
             else
                 # Request zeal api
-                pkg_api=$(JunestCmd "curl -s http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'" 'namespace')
+                pkg_api=$(JunestCmd "wget -qO - http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'" 'namespace')
 
                 [ "${pkg_api}" = 'null' ] && echo "${pkg} not found !" && continue
 
@@ -450,7 +450,7 @@ function InstallZealPkg {
 
                 # Download docset
                 JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
-                [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
+                [ "${pkg_url}" ] && JunestCmd "wget --show-progress --progress=bar:force -qO - '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                 # Generate icons
                 JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
@@ -821,7 +821,7 @@ function UpdateVSCodeAnywhere {
 
         # Download the last config file for update
         Output "Updating ${ProgramConfig} to the last version from ${ProgramConfigUrl}"
-        Cmd "wget -q '${ProgramConfigUrl}' -O '${ProgramConfig}'" 1
+        Cmd "wget -qO '${ProgramConfig}' '${ProgramConfigUrl}'" 1
 
         # Backup current script
         Output "Backup current script file ${ToolsDir}/install.sh to ${ToolsDir}/install.sh.bak"
@@ -829,7 +829,7 @@ function UpdateVSCodeAnywhere {
 
         # Download the last install script file for update
         Output "Updating ${ToolsDir}/install.sh to the last version from ${ProgramConfigUrl}"
-        Cmd "wget -q '${InstallScriptUrl}' -O '${ToolsDir}/install-update.sh'" 1
+        Cmd "wget -qO '${ToolsDir}/install-update.sh' '${InstallScriptUrl}'" 1
         Cmd "chmod +x '${ToolsDir}/'*.sh" 1
 
         Cmd "VSCodeAnywhereUpdate=1 ${ToolsDir}/install-update.sh -u" 1
@@ -871,7 +871,7 @@ function UpdateVSCode {
         Output "Updating ${VSCAppName} from version ${VSCPkg} to ${VSCTag}"
 
         # Download latest VSCode zip file
-        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && curl -L '${VSCUrl}' > '${VSCAppName}.tar.gz' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
+        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && wget --show-progress --progress=bar:force -qO '${VSCAppName}.tar.gz' '${VSCUrl}' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
     else
         Output "VSCode is already to the latest version ${VSCPkg}"
     fi
@@ -887,11 +887,11 @@ function UpdateZealPkg {
         for pkg in ${pkgs}
         do
             # Request zeal api
-            pkg_api=$(JunestCmd "curl -Ls http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"" 'namespace')
+            pkg_api=$(JunestCmd "wget -qO - http://api.zealdocs.org/v1/docsets | jq -r \".[] | select (.name==\\\"${pkg}\\\")\"" 'namespace')
 
             if [ "${pkg_api}" ]
             then
-                pkg_url=$(JunestCmd "curl -Ls https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null" 'namespace')
+                pkg_url=$(JunestCmd "wget -qO - https://raw.githubusercontent.com/Kapeli/feeds/master/${pkg}.xml | xmllint --format --xpath 'string(/entry/url)' - 2>/dev/null" 'namespace')
 
                 # Last version of the docset
                 if [ $(JunestCmd "echo '${pkg_api}' | jq -r \".versions[0]\"" 'namespace') != 'null' ]
@@ -918,7 +918,7 @@ function UpdateZealPkg {
 
                     # Download docset
                     JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${ZealAppPath}/tmp" 'namespace' 1
-                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
+                    [ "${pkg_url}" ] && JunestCmd "wget --show-progress --progress=bar:force -qO - '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                     # Generate icons
                     JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
@@ -931,7 +931,7 @@ function UpdateZealPkg {
                 fi
             else
                 # Request zeal api
-                pkg_api=$(JunestCmd "curl -s http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'" 'namespace')
+                pkg_api=$(JunestCmd "wget -qO - http://london.kapeli.com/feeds/zzz/user_contributed/build/index.json | jq -r '.docsets.${pkg}'" 'namespace')
 
                 [ "${pkg_api}" = 'null' ] && echo "${pkg} not found !" && continue
 
@@ -950,7 +950,7 @@ function UpdateZealPkg {
 
                     # Download docset
                     JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
-                    [ "${pkg_url}" ] && JunestCmd "curl -L '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
+                    [ "${pkg_url}" ] && JunestCmd "wget --show-progress --progress=bar:force -qO - '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                     # Generate icons
                     JunestCmd "echo '${pkg_api}' | jq -r '.icon' | base64 -d > '${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset/icon.png'" 'namespace'
