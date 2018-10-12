@@ -253,9 +253,12 @@ function InstallJunest {
     # Create chroot junest directory
     Cmd "mkdir -p '${JunestAppPath_chroot}'" 1
 
+    Output "Downloading ${JunestAppName} chroot"
+    Cmd "wget --progress=bar:force -O - https://s3-eu-west-1.amazonaws.com/junest-repo/junest/junest-x86_64.tar.gz | tar xz -C '${JunestAppPath_chroot}'" 1
+
     # Init Junest
-    Output "Installing ${JunestAppName} chroot"
-    JunestCmd '' 'namespace'
+    #Output "Initializing ${JunestAppName} chroot"
+    #JunestCmd '' 'namespace'
 
     # Upgrade chroot packages (kill parent for avoid hang after pacman upgrade !)
     Output "Updating ${JunestAppName} chroot packages"
