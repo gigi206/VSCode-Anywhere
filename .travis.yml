@@ -59,7 +59,7 @@ script:
   - /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf -l
   - yes | /tmp/VSCode-Anywhere/Tools/install.sh -c /tmp/VSCode-Anywhere/Conf/VSCode-Anywhere.conf -a /tmp/VSCode-Anywhere/Conf/User.conf -d
 after_script:
-  - test $(echo $(egrep -i 'error has occured' /tmp/VSCode-Anywhere/Logs/*) | wc -l) = 0
+  - test $(echo $(egrep -i 'error has occurred' /tmp/VSCode-Anywhere/Logs/*) | wc -l) = 0
 deploy:
 #  - provider: releases
 #    #body: my message

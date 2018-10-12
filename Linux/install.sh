@@ -146,8 +146,8 @@ function Cmd {
         else
             tput setaf 1
             tput bold
-            >&2 echo -e "\\nError : an error has occured (not critical)\\n"
-            echo -e "\\nError : an error has occured (not critical)\\n" >> "${Log}"
+            >&2 echo -e "\\nError : an error has occurred (not critical)\\n"
+            echo -e "\\nError : an error has occurred (not critical)\\n" >> "${Log}"
             tput sgr0
         fi
     fi
@@ -181,7 +181,7 @@ EOF
         else
             tput setaf 1
             tput bold
-            echo -e "\\nError : an error has occured (not critical)\\n" 2>&1 | tee -a "${Log}"
+            echo -e "\\nError : an error has occurred (not critical)\\n" 2>&1 | tee -a "${Log}"
             tput sgr0
         fi
     fi
