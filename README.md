@@ -267,15 +267,15 @@ The configuration file is devided in two main parts :
 - extensions :
   - **enabled** _type bool_ : enable or disable the extension
   - **cmd_pre** _type array_ : run powershell command
-  - **junest_cmd_pre** _type array_ : run shell Junest command
+  - **junest_cmd_pre** _type array containing objects_ : run shell Junest command
   - **junest_pkg** _type array_ : install Junest packages
   - **vsc_pkg** _type array_ : install VSCode plugins
   - **vsc_settings** _type object_ : add VSCode settings
   - **vsc_keyboard** _type array containing objects_ : add VScode keyboard shortcuts
-  - **junest_cmd_post** _type array_ : run shell Junest command
+  - **junest_cmd_post** _type array containing objects_ : run shell Junest command
   - **cmd_post** _type array_ : run powershell command
   - **junest_cmd_update** _type array_ : run shell Junest command (executed only with update command)
-  - **cmd_update** _type array_ : run powershell command (executed only with update command)
+  - **cmd_update** _type array containing objects_ : run powershell command (executed only with update command)
   - **zeal_pkg** _type array containing objects_ : name used for the docset (see <https://github.com/Kapeli/feeds> or <https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets>)
   - **junest_env** _type object_ : environment use for run shell Junest command  (use also for run terminal mintty)
   - **vsc_env** _type object_ : environment use for run PowerShell command (use also for launch VSCode)

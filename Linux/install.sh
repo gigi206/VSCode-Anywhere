@@ -516,10 +516,12 @@ function InstallConfig {
             done
 
             # Call JunestCmd function if junest_cmd_pre is defined
-            [ $(GetConfig ".extensions.\"${item}\".junest_cmd_pre | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".junest_cmd_pre[]" | while read -r cmd
+            for id in $(seq 0 $(($(GetConfig ".extensions.\"${item}\".junest_cmd_pre | length") - 1)))
             do
-                Output "RUN Junest command : ${cmd}"
-                JunestCmd "${cmd}" 'proot'
+                cmd=$(GetConfig ".extensions.\"${item}\".junest_cmd_pre[${id}].cmd")
+                chroot=$(GetConfig ".extensions.\"${item}\".junest_cmd_pre[${id}].chroot")
+                Output "RUN Junest command : ${cmd} (${chroot})"
+                JunestCmd "${cmd}" "${chroot}"
             done
 
             # Call InstallJunestPkg function if junest_pkg is defined
@@ -545,10 +547,13 @@ function InstallConfig {
             done
 
             # Call JunestCmd function if junest_cmd_post is defined
-            [ $(GetConfig ".extensions.\"${item}\".junest_cmd_post | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".junest_cmd_post[]" | while read -r cmd
+
+            for id in $(seq 0 $(($(GetConfig ".extensions.\"${item}\".junest_cmd_post | length") - 1)))
             do
-                Output "RUN Junest command : ${cmd}"
-                JunestCmd "${cmd}" 'proot'
+                cmd=$(GetConfig ".extensions.\"${item}\".junest_cmd_post[${id}].cmd")
+                chroot=$(GetConfig ".extensions.\"${item}\".junest_cmd_post[${id}].chroot")
+                Output "RUN Junest command : ${cmd} (${chroot})"
+                JunestCmd "${cmd}" "${chroot}"
             done
         fi
     done
@@ -991,10 +996,12 @@ function Update {
             done
 
             # Call JunestCmd function if junest_cmd_update is defined
-            [ $(GetConfig ".extensions.\"${item}\".junest_cmd_update | length") -gt 0 ] && GetConfig ".extensions.\"${item}\".junest_cmd_update[]" | while read -r cmd
+            for id in $(seq 0 $(($(GetConfig ".extensions.\"${item}\".junest_cmd_update | length") - 1)))
             do
-                Output "RUN Junest command : ${cmd}"
-                JunestCmd "${cmd}" 'proot'
+                cmd=$(GetConfig ".extensions.\"${item}\".junest_cmd_update[${id}].cmd")
+                chroot=$(GetConfig ".extensions.\"${item}\".junest_cmd_update[${id}].chroot")
+                Output "RUN Junest command : ${cmd} (${chroot})"
+                JunestCmd "${cmd}" "${chroot}"
             done
 
             # Call InstallZealPkg function if zeal_pkg is defined
