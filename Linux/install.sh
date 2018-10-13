@@ -284,7 +284,7 @@ EOF
 
 # Install a package inside chroot
 function InstallJunestPkg {
-    Output "Install Junest packages : ${*}"
+    Output "Installing Junest packages : ${*}"
     JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Sy --noconfirm --needed --force ${*}" 'namespace' 1
 }
 
