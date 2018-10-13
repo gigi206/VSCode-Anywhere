@@ -181,7 +181,8 @@ EOF
         else
             tput setaf 1
             tput bold
-            echo -e "\\nError : an error has occurred (not critical)\\n" 2>&1 | tee -a "${Log}"
+            >&2 echo -e "\\nError : an error has occurred (not critical)\\n"
+            echo -e "\\nError : an error has occurred (not critical)\\n" >> "${Log}"
             tput sgr0
         fi
     fi
