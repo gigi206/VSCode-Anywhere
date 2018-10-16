@@ -19,7 +19,7 @@
         - [2.3.3. Update](#233-update)
         - [2.3.4. Link](#234-link)
     - [2.4. Linux configuration file](#24-linux-configuration-file)
-    - [2.5. Information](#25-information)
+    - [2.5. Informations](#25-informations)
 - [3. Windows](#3-windows)
     - [3.1. Installation](#31-installation)
         - [3.1.1. Installation parameters](#311-installation-parameters)
@@ -261,21 +261,27 @@ The configuration file is devided in two main parts :
     - **url** _type string_ : proxy url
     - **login** _type string_ : login for the proxy
     - **password** _type string_ : password for the proxy
-  - **junest_terminal_opts** _type string_ : optionsuse by Junest when youstart the terminal
+  - **junest_terminal_opts** _type string_ : options use by Junest when you start the terminal
   - **zeal_enabled** _type bool_ : enable or disable Zeal (for install and download documentation)
-  - **zeal_url** _type string_ : url to download Zeal from a specific url (keep null value to download the latest version)
+  - **zeal_url** _type string_ : specific url to download Zeal (keep to null value to download the latest version)
 - extensions :
   - **enabled** _type bool_ : enable or disable the extension
   - **cmd_pre** _type array_ : run powershell command
-  - **junest_cmd_pre** _type array containing objects_ : run shell Junest command
+  - **junest_cmd_pre** _type array containing objects_ : run shell Junest command. Each objects must in the array must have two keys :
+    - **cmd** : the command to run
+    - **chroot** : only [proot](https://github.com/fsquillace/junest#proot-based) or [namespace](https://github.com/fsquillace/junest#linux-namespaces-based) can be used
   - **junest_pkg** _type array_ : install Junest packages
   - **vsc_pkg** _type array_ : install VSCode plugins
   - **vsc_settings** _type object_ : add VSCode settings
-  - **vsc_keyboard** _type array containing objects_ : add VScode keyboard shortcuts
+  - **vsc_keyboard** _type array containing objects_ : add VScode keyboard shortcuts (objets must follow [these examples of keyboard rules](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-rules))
   - **junest_cmd_post** _type array containing objects_ : run shell Junest command
   - **cmd_post** _type array_ : run powershell command
-  - **junest_cmd_update** _type array_ : run shell Junest command (executed only with update command)
-  - **cmd_update** _type array containing objects_ : run powershell command (executed only with update command)
+  - **junest_cmd_update** _type array containing objects_ : run shell Junest command (executed only with update command). Each objects must in the array must have two keys :
+    - **cmd** : the command to run
+    - **chroot** : only [proot](https://github.com/fsquillace/junest#proot-based) or [namespace](https://github.com/fsquillace/junest#linux-namespaces-based) can be used
+  - **cmd_update** _type array_ : run powershell command (executed only with update command). Each objects must in the array must have two keys :
+    - **cmd** : the command to run
+    - **chroot** : only [proot](https://github.com/fsquillace/junest#proot-based) or [namespace](https://github.com/fsquillace/junest#linux-namespaces-based) can be used
   - **zeal_pkg** _type array containing objects_ : name used for the docset (see <https://github.com/Kapeli/feeds> or <https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets>)
   - **junest_env** _type object_ : environment use for run shell Junest command  (use also for run terminal mintty)
   - **vsc_env** _type object_ : environment use for run PowerShell command (use also for launch VSCode)
@@ -285,7 +291,7 @@ You can use **null** value to disable one of these functions.
 Installation execution order if enabled (not **null**) :
 _**cmd_pre**_ > _**junest_cmd_pre**_ > _**junest_pkg**_ > _**vsc_pkg**_ > _**vsc_settings**_ > _**vsc_keyboard**_ > _**zeal_pkg**_ > _**junest_cmd_post**_ > _**cmd_post**_
 
-### 2.5. Information
+### 2.5. Informations
 
 On Linux version, press **alt** key for show / hide the menu bar.
 
@@ -480,7 +486,7 @@ The configuration file is devided in two main parts :
   - **msys2_pkg** _type array_ : install MSYS2 packages
   - **vsc_pkg** _type array_ : install VSCode plugins
   - **vsc_settings** _type object_ : add VSCode settings
-  - **vsc_keyboard** _type array containing objects_ : add VScode keyboard shortcuts
+  - **vsc_keyboard** _type array containing objects_ : add VScode keyboard shortcuts (objets must follow [these examples of keyboard rules](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-rules)
   - **msys2_cmd_post** _type array_ : run shell MSYS2 command
   - **cmd_post** _type array_ : run powershell command
   - **msys2_cmd_update** _type array_ : run shell MSYS2 command (executed only with update command)
