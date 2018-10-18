@@ -1217,14 +1217,14 @@ function UpdateZeal {
         Expand-Archive -Path "${ZealAppPath}\${ZealAppName}.zip" -DestinationPath "$ZealAppPath"
 
         # Move extracted files to $ZealAppPath_install
-        Get-ChildItem "${ZealAppPath_install}" -Recurse | Where-Object { $_.FullName -notlike "*\" + (Get-Item "$ZealAppPath_docsets").BaseName + "\*" } | Remove-Item -Recurse -Exclude (Get-Item "$ZealAppPath_docsets").BaseName
+        Get-ChildItem "${ZealAppPath_install}" -Exclude docsets,zeal.ini | Remove-Item -Recurse -Force
         Move-Item -Force -Path "${ZealAppPath}\zeal-portable*\*" -Destination "$ZealAppPath_install"
 
         # Remove downloading file archive
         Remove-Item -Recurse -Path "${ZealAppPath}\${ZealAppName}.zip", "${ZealAppPath}\zeal-portable*"
 
         # Install C runtime libraries dependancies
-        foreach ($dll in 'vcruntime140.dll', 'msvcp140.dll'){
+        foreach ($dll in 'vcruntime140.dll', 'msvcp140.dll') {
             if (!(Test-Path -Path ((New-Object -ComObject Shell.Application).Namespace(0x29).Self.Path + "$dll")) -and !(Test-Path -Path "${ZealAppPath_install}\$dll")) {
                 Output "Installing dll => ${ZealAppPath_install}\$dll"
                 Invoke-WebRequest -Uri "https://github.com/gigi206/VSCode-Anywhere/raw/master/Windows/dll/$dll" -OutFile "${ZealAppPath_install}\$dll"
