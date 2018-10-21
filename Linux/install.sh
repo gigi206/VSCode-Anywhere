@@ -926,7 +926,7 @@ function UpdateZealPkg {
                     Cmd "rm -fr ${ZealAppPath_docsets}/${pkg}.docset" 1
 
                     # Download docset
-                    JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${ZealAppPath}/tmp" 'namespace' 1
+                    JunestCmd "rm -fr ${JunestExternalPath}${ZealAppPath}/tmp && mkdir -p ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace' 1
                     [ "${pkg_url}" ] && JunestCmd "wget --show-progress --progress=bar:force -qO - '${pkg_url}' | tar xz --no-same-owner -C '${JunestExternalPath}${ZealAppPath}/tmp' && mv ${JunestExternalPath}${ZealAppPath}/tmp/* ${JunestExternalPath}${ZealAppPath_docsets}/${pkg}.docset && rm -fr ${JunestExternalPath}${ZealAppPath}/tmp" 'namespace'
 
                     # Generate icons
