@@ -812,15 +812,18 @@ function MakeScripts {
     MakeScriptLink
 }
 
-
 # Update to the last config
 function UpdateVSCodeAnywhere {
     if [ "${VSCodeAnywhereUpdate:-0}" -eq 1 ]
     then
-        # Make sure all is already installed before updating
-        InstallConfig
-
+        # Copy the new install script file
         Cmd "cp -a ${ToolsDir}/install-update.sh ${ToolsDir}/install.sh"
+
+        # Make sure that all is already installed before updating
+        InstallJunest
+        InstallVSCode
+        InstallZeal
+        InstallConfig
     else
         InstallAppHeader "Updating ${ProgramName}"
 
@@ -976,11 +979,7 @@ function UpdateZealPkg {
 }
 
 # Update VSCode and Third-Party
-function Update {
-    UpdateVSCodeAnywhere
-    UpdateJunest
-    UpdateVSCode
-
+function UpdateConfig {
     # For all settings extensions from config file
     for item in $(GetConfig '.extensions | keys_unsorted[]')
     do
@@ -1004,7 +1003,7 @@ function Update {
                 JunestCmd "${cmd}" "${chroot}"
             done
 
-            # Call InstallZealPkg function if zeal_pkg is defined
+            # Call UpdateZealPkg function if zeal_pkg is defined
             [ $(GetConfig ".extensions.\"${item}\".zeal_pkg | length") -gt 0 ] && UpdateZealPkg $(GetConfig ".extensions.\"${item}\".zeal_pkg | join(\" \")")
         fi
     done
@@ -1156,9 +1155,11 @@ Init
 if [ "${update}" = 1 ]
 then
     TestInternet
-    Update
-    InstallAppHeader "Relink ${ZealAppName}"
-    MakeScriptZeal
+    UpdateVSCodeAnywhere
+    UpdateJunest
+    UpdateVSCode
+    UpdateConfig
+    MakeScripts
 elif [ "${fonts}" = 1 ]
 then
     InstallFonts

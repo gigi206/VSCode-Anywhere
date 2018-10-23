@@ -1038,20 +1038,14 @@ function MakeScripts {
 }
 
 # Update VSCode and Third-Party
-function Update {
-    UpdateVscodeAnywhere
-    Update7zip
-    UpdateMSYS2
-    UpdateVSCode
-    UpdateZeal
-
+function UpdateConfig {
     # For all settings extensions from config file
     foreach ($item in $config.extensions.psobject.properties.name) {
         # Define settings only if extension is enabled
         if ($config.extensions.$item.enabled -eq $true) {
             InstallAppHeader "Update $item in progress"
 
-            # Call Cmd function if msys2_cmd_update is defined
+            # Call MSYS2Cmd function if msys2_cmd_update is defined
             if ($config.extensions.$item.msys2_cmd_update.Length -gt 0) { MSYS2Cmd $config.extensions.$item.msys2_cmd_update }
 
             # Call Cmd function if cmd_update is defined
@@ -1131,10 +1125,14 @@ function UpdateVSCode {
 # Update VSCode-Anywhere
 function UpdateVscodeAnywhere {
     if ((split-path $MyInvocation.PSCommandPath -Leaf) -eq "install-update.ps1") {
-        # Make sure all is already installed before updating
-        InstallConfig
-
+        # Copy the new install script file
         Copy-Item "${ToolsDir}/install-update.ps1" -Destination "${ToolsDir}\install.ps1" -Force
+
+        # Make sure that all is already installed before updating
+        InstallMSYS2
+        InstallVSCode
+        InstallZeal
+        InstallConfig
     }
     else {
         InstallAppHeader "Updating $ProgramName"
@@ -1494,7 +1492,13 @@ Init
 
 if ($update) {
     TestInternet
-    Update
+    UpdateVscodeAnywhere
+    Update7zip
+    UpdateMSYS2
+    UpdateVSCode
+    UpdateZeal
+    UpdateConfig
+    MakeScripts
 }
 elseif ($fonts) {
     InstallFonts
