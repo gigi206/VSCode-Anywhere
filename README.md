@@ -31,35 +31,38 @@
         - [3.3.3. Update](#333-update)
         - [3.3.4. Link](#334-link)
     - [3.4. Windows configuration file](#34-windows-configuration-file)
-- [4. Preconfigured extensions (from configuration file)](#4-preconfigured-extensions-from-configuration-file)
-    - [4.1. zeal](#41-zeal)
-    - [4.2. minimal](#42-minimal)
-    - [4.3. telemetry](#43-telemetry)
-    - [4.4. general](#44-general)
-    - [4.5. git](#45-git)
-    - [4.6. theme](#46-theme)
-    - [4.7. VSC-fonts](#47-vsc-fonts)
-    - [4.8. tmux-gigix](#48-tmux-gigix)
-    - [4.9. vim-gigix](#49-vim-gigix)
-    - [4.10. python](#410-python)
-    - [4.11. ruby](#411-ruby)
-    - [4.12. perl](#412-perl)
-    - [4.13. C/C++](#413-cc)
-    - [4.14. C](#414-c)
-    - [4.15. shell](#415-shell)
-    - [4.16. go](#416-go)
-    - [4.17. java](#417-java)
-    - [4.18. php](#418-php)
-    - [4.19. javascript](#419-javascript)
-    - [4.20. html](#420-html)
-    - [4.21. powershell](#421-powershell)
-    - [4.22. docker](#422-docker)
-    - [4.23. ansible](#423-ansible)
-    - [4.24. puppet](#424-puppet)
-    - [4.25. saltstack](#425-saltstack)
-    - [4.26. chef](#426-chef)
-    - [4.27. markdown](#427-markdown)
-    - [4.28. restructuredtext](#428-restructuredtext)
+- [4. Known issues](#4-known-issues)
+    - [4.1. Menu bar](#41-menu-bar)
+    - [4.2. Debugger](#42-debugger)
+- [5. Preconfigured extensions (from configuration file)](#5-preconfigured-extensions-from-configuration-file)
+    - [5.1. zeal](#51-zeal)
+    - [5.2. minimal](#52-minimal)
+    - [5.3. telemetry](#53-telemetry)
+    - [5.4. general](#54-general)
+    - [5.5. git](#55-git)
+    - [5.6. theme](#56-theme)
+    - [5.7. VSC-fonts](#57-vsc-fonts)
+    - [5.8. tmux-gigix](#58-tmux-gigix)
+    - [5.9. vim-gigix](#59-vim-gigix)
+    - [5.10. python](#510-python)
+    - [5.11. ruby](#511-ruby)
+    - [5.12. perl](#512-perl)
+    - [5.13. C/C++](#513-cc)
+    - [5.14. C](#514-c)
+    - [5.15. shell](#515-shell)
+    - [5.16. go](#516-go)
+    - [5.17. java](#517-java)
+    - [5.18. php](#518-php)
+    - [5.19. javascript](#519-javascript)
+    - [5.20. html](#520-html)
+    - [5.21. powershell](#521-powershell)
+    - [5.22. docker](#522-docker)
+    - [5.23. ansible](#523-ansible)
+    - [5.24. puppet](#524-puppet)
+    - [5.25. saltstack](#525-saltstack)
+    - [5.26. chef](#526-chef)
+    - [5.27. markdown](#527-markdown)
+    - [5.28. restructuredtext](#528-restructuredtext)
 
 <!-- /TOC -->
 
@@ -500,15 +503,43 @@ You can use **null** value to disable one of these functions.
 Installation execution order if enabled  (not **null**) :
 _**cmd_pre**_ > _**msys2_cmd_pre**_ > _**msys2_pkg**_ > _**vsc_pkg**_ > _**vsc_settings**_ > _**vsc_keyboard**_ > _**zeal_pkg**_ > _**msys2_cmd_post**_ > _**cmd_post**_
 
-## 4. Preconfigured extensions (from configuration file)
+## 4. Known issues
 
-### 4.1. zeal
+### 4.1. Menu bar
+
+Menu bar is voluntary hidden, for show it press **Alt** key.
+
+### 4.2. Debugger
+
+**Only for Windows :** you must add `"cwd": "'${workspaceFolder}'"` in your _launch.json_ file.
+
+Example :
+
+``` json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "'${workspaceFolder}'",
+        }
+    ]
+}
+```
+
+## 5. Preconfigured extensions (from configuration file)
+
+### 5.1. zeal
 
 **Note :** [Dash](https://marketplace.visualstudio.com/items?itemName=deerawan.vscode-dash) extension will be automatically installed if _zeal_enabled_ settings is set to _true_.
 
 ![Dash](https://raw.githubusercontent.com/deerawan/vscode-dash/master/images/vscode-dash.gif)
 
-### 4.2. minimal
+### 5.2. minimal
 
 **minimal** is the minimal for running VSCode-Anywhere
 
@@ -516,11 +547,11 @@ _**cmd_pre**_ > _**msys2_cmd_pre**_ > _**msys2_pkg**_ > _**vsc_pkg**_ > _**vsc_s
 
 **NOTE :** for compatibility reasons we use [official git](https://git-scm.com/download/win). MSYS2 git package seems to have issue with some VSCode extensions
 
-### 4.3. telemetry
+### 5.3. telemetry
 
 Enable this section for disable telemetry.
 
-### 4.4. general
+### 5.4. general
 
 Add some VSCode extensions :
 
@@ -558,7 +589,7 @@ Add some VSCode extensions :
 
 These extensions add some features to VSCode and it's recommended to keep enabled this section.
 
-### 4.5. git
+### 5.5. git
 
 Add extensions for Git :
 
@@ -574,7 +605,7 @@ Add extensions for Git :
 
 ![Ungit](https://raw.githubusercontent.com/Hirse/vscode-ungit/master/screenshots/ungit.gif)
 
-### 4.6. theme
+### 5.6. theme
 
 Add icons pack and themes :
 
@@ -596,22 +627,22 @@ Add icons pack and themes :
 
 **Warning** : press _ALT_ key for show the menu bar.
 
-### 4.7. VSC-fonts
+### 5.7. VSC-fonts
 
 Install and configure ligatures [Fira Code](https://github.com/tonsky/FiraCode) fonts in VSCode.
 
-### 4.8. tmux-gigix
+### 5.8. tmux-gigix
 
 Configure [mintty](https://mintty.github.io/) console with [tmux-gigix](https://github.com/gigi206/tmux-gigix).
 
 Screenshot with tmux-gigix + vim-gigix enabled :
 ![tmux-gigix](https://github.com/gigi206/tmux-gigix/raw/master/screenshots/demo.png)
 
-### 4.9. vim-gigix
+### 5.9. vim-gigix
 
 Install and configure [vim-gigix](https://github.com/gigi206/vim-gigix).
 
-### 4.10. python
+### 5.10. python
 
 Configure environment for [Python2/3](https://www.python.org) languages.
 
@@ -626,7 +657,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/py
 
 ![Visual Studio IntelliCode](https://go.microsoft.com/fwlink/?linkid=2006041)
 
-### 4.11. ruby
+### 5.11. ruby
 
 Configure environment for [ruby](https://www.ruby-lang.org) language.
 
@@ -639,7 +670,7 @@ VSCode extensions :
 
 Please see [this issue](https://github.com/castwide/vscode-solargraph/issues/55) if completion doesn't work.
 
-### 4.12. perl
+### 5.12. perl
 
 Configure environment for [Perl](https://www.perl.org) language.
 
@@ -650,7 +681,7 @@ VSCode extensions :
 
 ![Perl Debug](https://github.com/raix/vscode-perl-debug/raw/master/images/vscode-perl-debugger.gif)
 
-### 4.13. C/C++
+### 5.13. C/C++
 
 Configure environment for [C/C++](https://isocpp.org) language.
 
@@ -701,7 +732,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cp
 }
 ```
 
-### 4.14. C#
+### 5.14. C#
 
 Configure environment for C# language.
 
@@ -715,7 +746,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cs
 
 **NOTE :** For Linux only
 
-### 4.15. shell
+### 5.15. shell
 
 Configure environment for shell language.
 
@@ -723,7 +754,7 @@ VSCode extensions :
 
 - [shellcheck](https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck)
 
-### 4.16. go
+### 5.16. go
 
 Configure environment for [Go](https://golang.org) language.
 
@@ -737,7 +768,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/go
 
 ![Go](https://i.giphy.com/xTiTndDHV3GeIy6aNa.gif)
 
-### 4.17. java
+### 5.17. java
 
 Configure environment for [Java](https://www.java.com) language.
 
@@ -749,7 +780,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ja
 
 ![Java Extension Pack](https://raw.githubusercontent.com/Microsoft/vscode-java-pack/master/vscode-java.gif)
 
-### 4.18. php
+### 5.18. php
 
 Configure environment for [PHP](https://secure.php.net) language.
 
@@ -764,7 +795,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ph
 
 ![PHP Debug](https://github.com/felixfbecker/vscode-php-debug/raw/master/images/demo.gif)
 
-### 4.19. javascript
+### 5.19. javascript
 
 Configure environment for [Javascript](https://developer.mozilla.org/docs/Web/JavaScript) language.
 
@@ -778,7 +809,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ja
 
 **NOTE :** you need to configure _ESLint_ first !
 
-### 4.20. html
+### 5.20. html
 
 Configure environment for [HTML](https://www.w3.org/html/) / [CSS](https://www.w3.org/Style/CSS/) language.
 
@@ -804,7 +835,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cs
 
 ![Auto Rename Tag](https://github.com/formulahendry/vscode-auto-rename-tag/raw/master/images/usage.gif)
 
-### 4.21. powershell
+### 5.21. powershell
 
 Configure environment for [PowerShell](https://docs.microsoft.com/en-us/powershell/) language.
 
@@ -812,7 +843,7 @@ VSCode extensions :
 
 - [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)
 
-### 4.22. docker
+### 5.22. docker
 
 Configure environment for [Docker](https://www.docker.com) language.
 
@@ -822,7 +853,7 @@ VSCode extensions :
 
 ![Docker](https://github.com/microsoft/vscode-docker/raw/master/images/generateFiles.gif)
 
-### 4.23. ansible
+### 5.23. ansible
 
 Configure environment for [Ansible](https://www.ansible.com) language.
 
@@ -830,7 +861,7 @@ VSCode extensions :
 
 - [language-Ansible](https://marketplace.visualstudio.com/items?itemName=haaaad.ansible)
 
-### 4.24. puppet
+### 5.24. puppet
 
 Configure environment for [Puppet](https://puppet.com) language.
 
@@ -844,7 +875,7 @@ VSCode extensions for Linux :
 
 ![Puppet](https://raw.githubusercontent.com/jpogran/puppet-vscode/master/docs/assets/language_server.gif)
 
-### 4.25. saltstack
+### 5.25. saltstack
 
 Configure environment for [SaltStack](https://saltstack.com) language.
 
@@ -854,7 +885,7 @@ VSCode extensions :
 
 ![SaltStack](https://raw.githubusercontent.com/korekontrol/vscode-saltstack/master/example.png)
 
-### 4.26. chef
+### 5.26. chef
 
 Configure environment for [Chef](https://www.chef.io/chef/) language.
 
@@ -864,7 +895,7 @@ VSCode extensions :
 
 ![Chef](https://github.com/pendrica/vscode-chef/raw/master/images/vscode-chef-install.gif)
 
-### 4.27. markdown
+### 5.27. markdown
 
 Configure environment for [markdown](https://daringfireball.net/projects/markdown/) language.
 
@@ -878,7 +909,7 @@ VSCode extensions :
 
 ![Markdown TOC](https://github.com/AlanWalk/Markdown-TOC/raw/master/img/insert-toc.gif)
 
-### 4.28. restructuredtext
+### 5.28. restructuredtext
 
 Configure environment for [reStructuredText](http://docutils.sourceforge.net/rst.html) language.
 
