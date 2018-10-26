@@ -968,7 +968,7 @@ function MakeScriptZeal {
 function MakeScriptInstall {
     Output "Make install script file ${ToolsDir}\Install"
 
-    $source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
+    $source = "${ToolsDir}\install.ps1"
     $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '"'
     $icon = ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,13')
     Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\Install" -cwd "$ToolsDir" -arguments "$arguments" -description "Install $ProgramName" -icon "$icon"
@@ -978,7 +978,7 @@ function MakeScriptInstall {
 function MakeScriptUpdate {
     Output "Make update script file $ToolsDir\Update"
 
-    $source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
+    $source = "${ToolsDir}\install.ps1"
     $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -update'
     $icon = ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,46')
     Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\Update" -cwd "$ToolsDir" -arguments "$arguments" -description "Update $ProgramName" -icon "$icon"
@@ -988,7 +988,7 @@ function MakeScriptUpdate {
 function MakeScriptInstallFonts {
     Output "Make install font script file ${ToolsDir}\InstallFonts"
 
-    $source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
+    $source = "${ToolsDir}\install.ps1"
     $arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + "$source" + '" -fonts'
     $icon = (New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,74'
     Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\InstallFonts" -cwd "$ToolsDir" -arguments "$arguments" -description "Install fonts for $ProgramName" -icon "$icon"
@@ -996,7 +996,7 @@ function MakeScriptInstallFonts {
 
 # Link shortcuts to new path
 function MakeScriptLink {
-    #$source = "${ToolsDir}\" + (Get-Item $PSCommandPath).Name
+    #$source = "${ToolsDir}\install.ps1"
     #$arguments = '-NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + $source + '" -link'
     #$icon = ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\SHELL32.dll,146')
     #Shortcut -source ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + "\WindowsPowerShell\v1.0\powershell.exe") -target "${ToolsDir}\Link" -cwd "$ToolsDir" -arguments "$arguments" -description "Link $ProgramName shortcuts" -icon "$icon"
@@ -1022,7 +1022,7 @@ function MakeScriptLink {
 
     # Write code to script
     "@echo off" | Out-File -Encoding ascii -Append "$ScriptFile"
-    ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\WindowsPowerShell\v1.0\powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -File "' + (Get-Item $PSCommandPath).Name + '" -link') | Out-File -Encoding ascii -Append "$ScriptFile"
+    ((New-Object -ComObject Shell.Application).Namespace(0x25).Self.Path + '\WindowsPowerShell\v1.0\powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -File install.ps1 -link') | Out-File -Encoding ascii -Append "$ScriptFile"
 }
 
 # Create VSCode / MSYS2 scripts
