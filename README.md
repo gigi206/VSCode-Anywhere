@@ -753,6 +753,9 @@ Configure environment for shell language.
 VSCode extensions :
 
 - [shellcheck](https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck)
+- [Bash Debug](https://marketplace.visualstudio.com/items?itemName=rogalmic.bash-debug)
+
+![Bash Debug](https://raw.githubusercontent.com/rogalmic/vscode-bash-debug/gif/images/bash-debug-samp-watch-advanced.gif)
 
 ### 5.16. go
 
