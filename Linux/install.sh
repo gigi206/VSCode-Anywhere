@@ -82,11 +82,12 @@ function Params {
 function usage {
     echo "${ProgramName} usage :"
     echo "    -h | --help   : print this help"
-    echo "    -c | --config : configuration file path"
+    echo "    -c | --config : general configuration file path"
+    echo "    -a | --user_conf : user configuration file path"
     echo "    -p | --path   : installation directory path"
     echo "    -u | --update : update all components to the latest version"
     echo "    -f | --fonts  : reinstall fonts (if you change computer for example)"
-    echo "    -l | --link   : needed if you change computer or change the install diirectory"
+    echo "    -l | --link   : needed if you change computer or change the install directory"
     echo "    -d | --delete : delete chroot directory"
     exit 0
 }
