@@ -609,6 +609,7 @@ Categories=Utility;Application;
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
     JunestCmd "mkdir -p /external" 'namespace' 1
     Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b /:/external -b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
+    Cmd "test -d ~/.local/share/applications && cp '${InstallDir}/${ProgramName}.desktop' ~/.local/share/applications" 0
 }
 
 # Create start script for run Junest console
@@ -667,6 +668,7 @@ Categories=Utility;Application;
     Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
     Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
     Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
+    Cmd "test -d ~/.local/share/applications && cp '${InstallDir}/Terminal.desktop' ~/.local/share/applications/${ProgramName}-Terminal.desktop" 0
 }
 
 # Create script for Zeal
@@ -716,6 +718,7 @@ Categories=Utility;Application;
         Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
         Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
         Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
+        Cmd "test -d ~/.local/share/applications && cp '${InstallDir}/Documentation.desktop' ~/.local/share/applications/${ProgramName}-Documentation.desktop" 0
     fi
 }
 
@@ -735,6 +738,7 @@ function MakeScriptInstall {
     " > "${ToolsDir}/Install.desktop"
 
     Cmd "chmod +x '${ToolsDir}/Install.desktop'" 1
+    Cmd "test -d ~/.local/share/applications && cp '${ToolsDir}/Install.desktop' ~/.local/share/applications/${ProgramName}-Install.desktop" 0
 }
 
 # Create script for updates
@@ -753,6 +757,7 @@ function MakeScriptUpdate {
     " > "${ToolsDir}/Update.desktop"
 
     Cmd "chmod +x '${ToolsDir}/Update.desktop'" 1
+    Cmd "test -d ~/.local/share/applications && cp '${ToolsDir}/Update.desktop' ~/.local/share/applications/${ProgramName}-Update.desktop" 0
 }
 
 # Install fonts
@@ -771,6 +776,7 @@ function MakeScriptInstallFonts {
     " > "${ToolsDir}/InstallFonts.desktop"
 
     Cmd "chmod +x '${ToolsDir}/InstallFonts.desktop'" 1
+    Cmd "test -d ~/.local/share/applications && cp '${ToolsDir}/InstallFonts.desktop' ~/.local/share/applications/${ProgramName}-InstallFonts.desktop" 0
 }
 
 # Link shortcuts to new path
