@@ -642,7 +642,7 @@ function MakeScriptJunest {
 
     # Create shortcut
     echo "[Desktop Entry]
-Name=Terminal
+Name=${ProgramName} - Terminal
 Comment=Run ${JunestAppName} console
 Exec='${ScriptFile}'
 Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/512x512/apps/utilities-terminal.png
@@ -703,7 +703,7 @@ function MakeScriptZeal {
 
         # Create shortcut
         echo "[Desktop Entry]
-Name=Documentation
+Name=${ProgramName} - Documentation
 Comment=Run ${ZealAppName}
 Exec='${ScriptFile}'
 Icon=${JunestAppPath_chroot}/usr/share/icons/hicolor/128x128/apps/zeal.png
@@ -728,7 +728,7 @@ function MakeScriptInstall {
 
     # Create shortcut
     echo "[Desktop Entry]
-    Name=Install
+    Name=${ProgramName} - Install new components
     Comment=Install new section in ${ProgramName} like Python, Ruby, PHP...
     Exec='${ToolsDir}/install.sh'
     Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/actions/system-run.png
@@ -747,7 +747,7 @@ function MakeScriptUpdate {
 
     # Create shortcut
     echo "[Desktop Entry]
-    Name=Update
+    Name=${ProgramName} - Update
     Comment=Update all components with the last version
     Exec='${ToolsDir}/install.sh' --update
     Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/apps/system-software-update.png
@@ -766,7 +766,7 @@ function MakeScriptInstallFonts {
 
     # Create shortcut
     echo "[Desktop Entry]
-    Name=InstallFonts
+    Name=${ProgramName} - Reinstall fonts
     Comment=Reinstall fonts needed by ${ProgramName}
     Exec='${ToolsDir}/install.sh' --fonts
     Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/apps/preferences-desktop-font.png
