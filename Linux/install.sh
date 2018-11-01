@@ -607,7 +607,8 @@ Categories=Utility;Application;
     local VSCAppPath_install=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_install} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
-    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
+    JunestCmd "mkdir -p /external" 'namespace' 1
+    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b /:/external -b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
 }
 
 # Create start script for run Junest console
@@ -657,6 +658,7 @@ Categories=Utility;Application;
     # Bookmark real HOME directory
     Cmd "echo 'file://${Home_real} HOME' > \"${JunestAppPath_home}/.gtk-bookmarks\""
     Cmd "echo 'file://${JunestExternalPath} VSCode-Anywhere' >> \"${JunestAppPath_home}/.gtk-bookmarks\""
+    Cmd "echo 'file:/// EXTERNAL' >> \"${JunestAppPath_home}/.gtk-bookmarks\""
 
     # Define terminal settings
     junest_terminal_opts="$(eval echo $(GetConfig '.base.junest_terminal_opts'))"
