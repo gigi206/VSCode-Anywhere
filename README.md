@@ -814,6 +814,10 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ja
 
 ![ESLint](https://code.visualstudio.com/assets/docs/languages/javascript/eslint_warning.png)
 
+- [Node.js Modules Intellisense](https://marketplace.visualstudio.com/items?itemName=leizongmin.node-module-intellisense)
+
+![Node.js Modules Intellisense](https://github.com/leizongmin/vscode-node-module-intellisense/raw/master/images/auto_complete.gif)
+
 **NOTE :** you need to configure _ESLint_ first !
 
 ### 5.20. html
