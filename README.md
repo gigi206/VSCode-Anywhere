@@ -826,6 +826,7 @@ VSCode extensions :
 - [Highlight Matching Tag](https://marketplace.visualstudio.com/items?itemName=vincaslt.highlight-matching-tag)
 - [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
 - [Autoprefixer](https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-autoprefixer)
+- [Beautify](https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/css)
 
