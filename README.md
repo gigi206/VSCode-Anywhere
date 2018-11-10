@@ -825,6 +825,7 @@ VSCode extensions :
 - [W3C Validation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)
 - [Highlight Matching Tag](https://marketplace.visualstudio.com/items?itemName=vincaslt.highlight-matching-tag)
 - [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+- [Autoprefixer](https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-autoprefixer)
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/css)
 
@@ -837,6 +838,8 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cs
 ![Highlight Matching Tag](https://i.imgbox.com/DUXLFvW7.gif)
 
 ![Auto Rename Tag](https://github.com/formulahendry/vscode-auto-rename-tag/raw/master/images/usage.gif)
+
+![Autoprefixer](https://cloud.githubusercontent.com/assets/7034281/16823311/da82a3c6-496b-11e6-8d95-0bebbf0b9607.gif)
 
 ### 5.21. powershell
 
