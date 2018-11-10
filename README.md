@@ -605,6 +605,10 @@ Add extensions for Git :
 
 ![Ungit](https://raw.githubusercontent.com/Hirse/vscode-ungit/master/screenshots/ungit.gif)
 
+- [Git Indicators](https://marketplace.visualstudio.com/items?itemName=lamartire.git-indicators)
+
+![Git Indicators](https://raw.githubusercontent.com/lamartire/vscode-git-indicators/master/preview/added.png)
+
 ### 5.6. theme
 
 Add icons pack and themes :
