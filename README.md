@@ -587,6 +587,8 @@ Add some VSCode extensions :
 
 ![GitKraken Glo](https://user-images.githubusercontent.com/899916/37066976-01877280-2165-11e8-87ff-d6b04e1d9ca5.png)
 
+![Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent)
+
 These extensions add some features to VSCode and it's recommended to keep enabled this section.
 
 ### 5.5. git
