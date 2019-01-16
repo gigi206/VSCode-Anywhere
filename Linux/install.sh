@@ -609,7 +609,7 @@ Categories=Utility;Application;
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
     JunestCmd "mkdir -p /external" 'namespace' 1
     Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b /:/external -b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
-    Cmd "test -d ~/.local/share/applications && cp '${InstallDir}/${ProgramName}.desktop' ~/.local/share/applications" 0
+    Cmd "(test -d ~/.local/share/applications || mkdir -p ~/.local/share/applications) && cp '${InstallDir}/${ProgramName}.desktop' ~/.local/share/applications" 0
 }
 
 # Create start script for run Junest console
