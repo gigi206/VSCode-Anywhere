@@ -190,6 +190,7 @@ EOF
 
 # First function called
 function Init {
+    # Check required binaries
     for bin in wget tput tar realpath
     do
         # Check if $bin is installed
@@ -203,7 +204,7 @@ function Init {
     # Rename previous log file to logfile.old
     [ -f "${Log}" ] && Cmd "mv '${Log}' '${Log}.old'"
 
-    # Create FontsDir / ToolsDir / ConfDir / Logdir
+    # Create FontsDir / ToolsDir / ConfDir / LogDir
     mkdir -p "${LogDir}" # Don't merge this line with the bottom line (we need log dir before use Cmd function)
     Cmd "mkdir -p '${FontsDir}' '${ToolsDir}' '${ConfDir}'" 1
 
