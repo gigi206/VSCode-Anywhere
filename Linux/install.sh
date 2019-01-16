@@ -283,6 +283,19 @@ EOF
     Cmd "rm -fr '${JunestAppPath_install}' && mv '${JunestAppPath_install}_tmp' '${JunestAppPath_install}'" 1
 }
 
+# Check syntax for config files
+function CheckConfigFiles {
+    # Check config files
+    for config in "${ProgramConfig}" "${ProgramConfigUser}" "${VSCAppPath_user_data}/User/keybindings.json" "${VSCAppPath_user_data}/User/settings.json"
+    do
+        if [ -r "${config}" ]
+        then
+            Output "Check config file ${config} (note that comments are not allowed)"
+            JunestCmd "jq -r '' '${JunestExternalPath}${config}' >/dev/null" 'namespace' 1
+        fi
+    done
+}
+
 # Install a package inside chroot
 function InstallJunestPkg {
     Output "Installing Junest packages : ${*}"
@@ -1163,6 +1176,7 @@ Init
 
 if [ "${update}" = 1 ]
 then
+    CheckConfigFiles
     TestInternet
     UpdateVSCodeAnywhere
     UpdateJunest
@@ -1174,6 +1188,7 @@ then
     InstallFonts
 elif [ "${link}" = 1 ]
 then
+    CheckConfigFiles
     MakeScripts
 elif [ "${delete}" = 1 ]
 then
@@ -1181,6 +1196,7 @@ then
 else
     TestInternet
     InstallJunest
+    CheckConfigFiles
     InstallVSCode
     InstallZeal
     InstallConfig
