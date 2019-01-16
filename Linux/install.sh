@@ -118,14 +118,13 @@ function Output {
 # Output errors to console
 function OutputErrror {
     message="${1}"
-    exit="${2}"
 
     tput setaf 1
     tput bold
     >&2 echo -e "\\nError : ${message}\\n"
     echo -e "\\nError : ${message}\\n" >> "${Log}"
     tput sgr0
-    Finish "${exit:-1}"
+    Finish 1
 }
 
 # Run shell Command
