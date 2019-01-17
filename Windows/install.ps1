@@ -185,10 +185,9 @@ function InstallVSCode {
 
     # Define last tag version for download VSCode
     Set-Location "${MSYS2AppPath_install}\usr\bin"
-    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f1"
+    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | sort -t '/' -k 3 -V | tail -1 | cut -f1"
     $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d'/'"
     $VSCUrl = "https://az764295.vo.msecnd.net/stable/${VSCSha}/VSCode-win32-x64-${VSCTag}.zip"
-
     # Create install directories
     Output "Create $VSCAppPath_install, $VSCAppPath_extensions and $VSCAppPath_user_data directories"
     New-Item -ItemType Directory -Force -Path "$VSCAppPath_install", "$VSCAppPath_extensions", "$VSCAppPath_user_data" | Out-Null
@@ -369,16 +368,24 @@ function InstallMSYS2 {
 
     # Need to login for init MSYS2 env
     Output "Initializing $MSYS2AppName" | Tee-Object -a "`"$log`""
-    #Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | Tee-Object -a "`"$log`""
-    $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''"
+    # Start-Process -Wait -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''" | Tee-Object -a "`"$log`""
+    # $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${MSYS2AppPath_install}\msys2_shell.cmd" -ArgumentList "''"
+    # $process = new-object System.Diagnostics.Process
+    # $process.StartInfo.Filename = "${MSYS2AppPath_install}\msys2_shell.cmd"
+    # $process.StartInfo.Arguments = "''"
+    # $process.StartInfo.CreateNoWindow = $true
+    # $process.StartInfo.RedirectStandardOutput = $true
+    # $process.StartInfo.UseShellExecute = $false
+    # $process.start()
+    # $process.WaitForExit()
 
     # Exit if failed
-    if ($process.ExitCode -eq 1 ) { OutputErrror "command failed => $cmd" -exit $true }
-
+    # if ($process.ExitCode -eq 1 ) { OutputErrror "command failed => $cmd" -exit $true }
 
     # Upgrade MSYS2
     $update_cmd = 'pacman -Syu --noconfirm'
-    MSYS2Cmd @("$update_cmd", "$update_cmd; kill -9 -1") -exit $true
+    MSYS2Cmd @("pacman-key --init; kill -9 -1", "pacman-key --populate msys2; kill -9 -1", "pacman-key --refresh-keys; kill -9 -1", "$update_cmd; kill -9 -1", "$update_cmd; kill -9 -1") -exit $true
+    # MSYS2Cmd @("pacman-key --init", "pacman-key --populate msys2", "$update_cmd; kill -9 -1", "$update_cmd; kill -9 -1") -exit $true
 
     Output "$MSYS2AppName is sucessfully installed"
 }
@@ -1079,7 +1086,7 @@ function UpdateVSCode {
 
     # Define last tag version for download VSCode
     Set-Location "${MSYS2AppPath_install}\usr\bin"
-    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f1"
+    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | sort -t '/' -k 3 -V | tail -1 | cut -f1"
     $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d'/'"
     $VSCUrl = "https://az764295.vo.msecnd.net/stable/${VSCSha}/VSCode-win32-x64-${VSCTag}.zip"
 
