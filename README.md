@@ -9,60 +9,60 @@
 
 - [1. What is VSCode-Anywhere ?](#1-what-is-vscode-anywhere-)
 - [2. Linux](#2-linux)
-    - [2.1. Installation](#21-installation)
-        - [2.1.1. Installation parameters](#211-installation-parameters)
-        - [2.1.2. Installation process](#212-installation-process)
-    - [2.2. Vars](#22-vars)
-    - [2.3. Tools directory](#23-tools-directory)
-        - [2.3.1. Install](#231-install)
-        - [2.3.2. InstallFonts](#232-installfonts)
-        - [2.3.3. Update](#233-update)
-        - [2.3.4. Link](#234-link)
-    - [2.4. Linux configuration file](#24-linux-configuration-file)
-    - [2.5. Informations](#25-informations)
+  - [2.1. Installation](#21-installation)
+    - [2.1.1. Installation parameters](#211-installation-parameters)
+    - [2.1.2. Installation process](#212-installation-process)
+  - [2.2. Vars](#22-vars)
+  - [2.3. Tools directory](#23-tools-directory)
+    - [2.3.1. Install](#231-install)
+    - [2.3.2. InstallFonts](#232-installfonts)
+    - [2.3.3. Update](#233-update)
+    - [2.3.4. Link](#234-link)
+  - [2.4. Linux configuration file](#24-linux-configuration-file)
+  - [2.5. Informations](#25-informations)
 - [3. Windows](#3-windows)
-    - [3.1. Installation](#31-installation)
-        - [3.1.1. Installation parameters](#311-installation-parameters)
-        - [3.1.2. Installation process](#312-installation-process)
-    - [3.2. Vars](#32-vars)
-    - [3.3. Tools directory](#33-tools-directory)
-        - [3.3.1. Install](#331-install)
-        - [3.3.2. InstallFonts](#332-installfonts)
-        - [3.3.3. Update](#333-update)
-        - [3.3.4. Link](#334-link)
-    - [3.4. Windows configuration file](#34-windows-configuration-file)
+  - [3.1. Installation](#31-installation)
+    - [3.1.1. Installation parameters](#311-installation-parameters)
+    - [3.1.2. Installation process](#312-installation-process)
+  - [3.2. Vars](#32-vars)
+  - [3.3. Tools directory](#33-tools-directory)
+    - [3.3.1. Install](#331-install)
+    - [3.3.2. InstallFonts](#332-installfonts)
+    - [3.3.3. Update](#333-update)
+    - [3.3.4. Link](#334-link)
+  - [3.4. Windows configuration file](#34-windows-configuration-file)
 - [4. Known issues](#4-known-issues)
-    - [4.1. Menu bar](#41-menu-bar)
-    - [4.2. Debugger](#42-debugger)
+  - [4.1. Menu bar](#41-menu-bar)
+  - [4.2. Debugger](#42-debugger)
 - [5. Preconfigured extensions (from configuration file)](#5-preconfigured-extensions-from-configuration-file)
-    - [5.1. zeal](#51-zeal)
-    - [5.2. minimal](#52-minimal)
-    - [5.3. telemetry](#53-telemetry)
-    - [5.4. general](#54-general)
-    - [5.5. git](#55-git)
-    - [5.6. theme](#56-theme)
-    - [5.7. VSC-fonts](#57-vsc-fonts)
-    - [5.8. tmux-gigix](#58-tmux-gigix)
-    - [5.9. vim-gigix](#59-vim-gigix)
-    - [5.10. python](#510-python)
-    - [5.11. ruby](#511-ruby)
-    - [5.12. perl](#512-perl)
-    - [5.13. C/C++](#513-cc)
-    - [5.14. C](#514-c)
-    - [5.15. shell](#515-shell)
-    - [5.16. go](#516-go)
-    - [5.17. java](#517-java)
-    - [5.18. php](#518-php)
-    - [5.19. javascript](#519-javascript)
-    - [5.20. html](#520-html)
-    - [5.21. powershell](#521-powershell)
-    - [5.22. docker](#522-docker)
-    - [5.23. ansible](#523-ansible)
-    - [5.24. puppet](#524-puppet)
-    - [5.25. saltstack](#525-saltstack)
-    - [5.26. chef](#526-chef)
-    - [5.27. markdown](#527-markdown)
-    - [5.28. restructuredtext](#528-restructuredtext)
+  - [5.1. zeal](#51-zeal)
+  - [5.2. minimal](#52-minimal)
+  - [5.3. telemetry](#53-telemetry)
+  - [5.4. general](#54-general)
+  - [5.5. git](#55-git)
+  - [5.6. theme](#56-theme)
+  - [5.7. VSC-fonts](#57-vsc-fonts)
+  - [5.8. tmux-gigix](#58-tmux-gigix)
+  - [5.9. vim-gigix](#59-vim-gigix)
+  - [5.10. python](#510-python)
+  - [5.11. ruby](#511-ruby)
+  - [5.12. perl](#512-perl)
+  - [5.13. C/C++](#513-cc)
+  - [5.14. C](#514-c)
+  - [5.15. shell](#515-shell)
+  - [5.16. go](#516-go)
+  - [5.17. java](#517-java)
+  - [5.18. php](#518-php)
+  - [5.19. javascript](#519-javascript)
+  - [5.20. html](#520-html)
+  - [5.21. powershell](#521-powershell)
+  - [5.22. docker](#522-docker)
+  - [5.23. ansible](#523-ansible)
+  - [5.24. puppet](#524-puppet)
+  - [5.25. saltstack](#525-saltstack)
+  - [5.26. chef](#526-chef)
+  - [5.27. markdown](#527-markdown)
+  - [5.28. restructuredtext](#528-restructuredtext)
 
 <!-- /TOC -->
 
@@ -183,36 +183,37 @@ In directory Tools, run _**Install**_ for install new components from Conf/User.
 Don't edit the main configuration file Conf/VSCode-Anywhere.conf because it will be overwritten by a future update. You must configure your settings in Conf/User.conf file instead. This file is in json format and it overrides settings present in Conf/VSCode-Anywhere.conf file.
 
 For example for install Python, override it within the **extensions** section by set **enabled** to **true**. Example :
+
 ```json
 {
 "base": {
-	"zeal_enabled": true
+  "zeal_enabled": true
 },
 "extensions": {
-	"minimal": {
-		"enabled": true
-	},
-	"general": {
-		"enabled": true
-	},
-	"git": {
-		"enabled": true
-	},
-	"theme": {
-		"enabled": true
-	},
-	"VSC-fonts": {
-		"enabled": true
-	},
-	"tmux-gigix": {
-		"enabled": true
-	},
-	"vim-gigix": {
-		"enabled": true
-	},
-	"python": {
-		"enabled": true
-	}
+  "minimal": {
+    "enabled": true
+  },
+  "general": {
+    "enabled": true
+  },
+  "git": {
+    "enabled": true
+  },
+  "theme": {
+    "enabled": true
+  },
+  "VSC-fonts": {
+    "enabled": true
+  },
+  "tmux-gigix": {
+    "enabled": true
+  },
+  "vim-gigix": {
+    "enabled": true
+  },
+  "python": {
+    "enabled": true
+  }
 }
 }
 ```
@@ -395,36 +396,37 @@ In directory Tools, run _**Install**_ for install new components from Conf\User.
 Don't edit the main configuration file Conf\VSCode-Anywhere.conf because it will be overwritten by a future update. You must configure your settings in Conf\User.conf file instead. This file is in json format and it overrides settings present in Conf\VSCode-Anywhere.conf file.
 
 For example for install Python, override it within the **extensions** section by set **enabled** to **true**. Example :
+
 ```json
 {
 "base": {
-	"zeal_enabled": true
+  "zeal_enabled": true
 },
 "extensions": {
-	"minimal": {
-		"enabled": true
-	},
-	"general": {
-		"enabled": true
-	},
-	"git": {
-		"enabled": true
-	},
-	"theme": {
-		"enabled": true
-	},
-	"VSC-fonts": {
-		"enabled": true
-	},
-	"tmux-gigix": {
-		"enabled": true
-	},
-	"vim-gigix": {
-		"enabled": true
-	},
-	"python": {
-		"enabled": true
-	}
+  "minimal": {
+    "enabled": true
+  },
+  "general": {
+    "enabled": true
+  },
+  "git": {
+    "enabled": true
+  },
+  "theme": {
+    "enabled": true
+  },
+  "VSC-fonts": {
+    "enabled": true
+  },
+  "tmux-gigix": {
+    "enabled": true
+  },
+  "vim-gigix": {
+    "enabled": true
+  },
+  "python": {
+    "enabled": true
+  }
 }
 }
 ```
@@ -587,7 +589,7 @@ Add some VSCode extensions :
 
 ![GitKraken Glo](https://user-images.githubusercontent.com/899916/37066976-01877280-2165-11e8-87ff-d6b04e1d9ca5.png)
 
-![Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent)
+- [Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent)
 
 These extensions add some features to VSCode and it's recommended to keep enabled this section.
 
@@ -601,7 +603,7 @@ Add extensions for Git :
 
 - [GitLens — Git supercharged](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
-![GitLens — Git supercharged](https://raw.githubusercontent.com/eamodio/vscode-gitlens/master/images/gitlens-preview.gif)
+![GitLens — Git supercharged](https://raw.githubusercontent.com/eamodio/vscode-gitlens/master/images/docs/view-repositories.png)
 
 - [Ungit](https://marketplace.visualstudio.com/items?itemName=Hirse.vscode-ungit)
 
@@ -787,7 +789,9 @@ VSCode extensions :
 
 Please read these [instructions](https://code.visualstudio.com/docs/languages/java)
 
-![Java Extension Pack](https://raw.githubusercontent.com/Microsoft/vscode-java-pack/master/vscode-java.gif)
+![Language Support for Java(TM) by Red Hat](https://raw.githubusercontent.com/redhat-developer/vscode-java/master/images/vscode-java.0.0.1.gif)
+
+![Java Test Runner](https://github.com/Microsoft/vscode-java-test/raw/master/demo/demo.gif)
 
 ### 5.18. php
 
@@ -935,4 +939,4 @@ VSCode extensions :
 
 - [reStructuredText](https://marketplace.visualstudio.com/items?itemName=lextudio.restructuredtext)
 
-![reStructuredText](https://github.com/vscode-restructuredtext/vscode-restructuredtext/raw/master/images/vscode.png)
+![reStructuredText](https://github.com/vscode-restructuredtext/vscode-restructuredtext/raw/master/images/main.gif)
