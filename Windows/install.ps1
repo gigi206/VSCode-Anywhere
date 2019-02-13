@@ -467,7 +467,13 @@ function InstallVSCPkg([string[]]$pkgs) {
     foreach ($pkg in $pkgs) {
         output "Installing VSCode extension : $pkg" | Tee-Object -a "`"$log`""
         #Start-Process -Wait -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg" | Tee-Object -a "`"$log`""
-        $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg"
+
+        if ($update) {
+            $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg --force"
+        }
+        else {
+            $process = Start-Process -Wait -PassThru -NoNewWindow -FilePath "${VSCAppPath_install}\bin\Code.cmd" -ArgumentList "--user-data-dir `"$VSCAppPath_user_data`" --extensions-dir `"$VSCAppPath_extensions`" --install-extension $pkg"
+        }
 
         # Warn if failed
         if ($process.ExitCode -eq 1 ) { OutputErrror "command failed => $cmd" -exit $false }

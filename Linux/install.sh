@@ -416,8 +416,14 @@ function InstallVSCPkg {
 
     for pkg in ${pkgs}
     do
-        Output "Installing VSCode extension : ${pkg}"
-        JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}'" 'proot'
+        if [ "${update}" = 1 ]
+        then
+            Output "Updating VSCode extension : ${pkg}"
+            JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}' --force" 'proot'           
+        else
+            Output "Installing VSCode extension : ${pkg}"
+            JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}'" 'proot'
+        fi
     done
 }
 
