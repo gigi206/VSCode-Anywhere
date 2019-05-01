@@ -1,6 +1,6 @@
 language: bash
 sudo: true
-dist: trusty
+dist: xenial
 addons:
   apt:
 #    update: true
