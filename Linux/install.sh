@@ -611,7 +611,7 @@ function MakeScriptVSC {
     echo "[Desktop Entry]
 Name=${ProgramName}
 Comment=Run ${ProgramName}
-Exec='${ScriptFile}'
+Exec=${ScriptFile}
 Icon=${VSCAppPath_install}/resources/app/resources/linux/code.png
 Terminal=false
 Type=Application
@@ -663,8 +663,8 @@ function MakeScriptJunest {
     echo "[Desktop Entry]
 Name=${ProgramName} - Terminal
 Comment=Run ${JunestAppName} console
-Exec='${ScriptFile}'
-Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/512x512/apps/utilities-terminal.png
+Exec=${ScriptFile}
+Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/512x512/legacy/utilities-terminal.png
 Terminal=true
 Type=Application
 Categories=Utility;Application;
@@ -724,7 +724,7 @@ function MakeScriptZeal {
         echo "[Desktop Entry]
 Name=${ProgramName} - Documentation
 Comment=Run ${ZealAppName}
-Exec='${ScriptFile}'
+Exec=${ScriptFile}
 Icon=${JunestAppPath_chroot}/usr/share/icons/hicolor/128x128/apps/zeal.png
 Terminal=false
 Type=Application
@@ -749,7 +749,7 @@ function MakeScriptInstall {
     echo "[Desktop Entry]
     Name=${ProgramName} - Install new components
     Comment=Install new section in ${ProgramName} like Python, Ruby, PHP...
-    Exec='${ToolsDir}/install.sh'
+    Exec=${ToolsDir}/install.sh
     Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/actions/system-run.png
     Terminal=true
     Type=Application
@@ -768,7 +768,7 @@ function MakeScriptUpdate {
     echo "[Desktop Entry]
     Name=${ProgramName} - Update
     Comment=Update all components with the last version
-    Exec='${ToolsDir}/install.sh' --update
+    Exec=${ToolsDir}/install.sh --update
     Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/apps/system-software-update.png
     Terminal=true
     Type=Application
@@ -787,7 +787,7 @@ function MakeScriptInstallFonts {
     echo "[Desktop Entry]
     Name=${ProgramName} - Reinstall fonts
     Comment=Reinstall fonts needed by ${ProgramName}
-    Exec='${ToolsDir}/install.sh' --fonts
+    Exec=${ToolsDir}/install.sh --fonts
     Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/apps/preferences-desktop-font.png
     Terminal=true
     Type=Application
