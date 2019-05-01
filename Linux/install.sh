@@ -750,7 +750,7 @@ function MakeScriptInstall {
     Name=${ProgramName} - Install new components
     Comment=Install new section in ${ProgramName} like Python, Ruby, PHP...
     Exec=${ToolsDir}/install.sh
-    Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/actions/system-run.png
+    Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/legacy/system-run.png
     Terminal=true
     Type=Application
     Categories=Utility;Application;
@@ -769,7 +769,7 @@ function MakeScriptUpdate {
     Name=${ProgramName} - Update
     Comment=Update all components with the last version
     Exec=${ToolsDir}/install.sh --update
-    Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/apps/system-software-update.png
+    Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/legacy/system-software-update.png
     Terminal=true
     Type=Application
     Categories=Utility;Application;
@@ -788,7 +788,7 @@ function MakeScriptInstallFonts {
     Name=${ProgramName} - Reinstall fonts
     Comment=Reinstall fonts needed by ${ProgramName}
     Exec=${ToolsDir}/install.sh --fonts
-    Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/apps/preferences-desktop-font.png
+    Icon=${JunestAppPath_chroot}/usr/share/icons/Adwaita/256x256/legacy/preferences-desktop-font.png
     Terminal=true
     Type=Application
     Categories=Utility;Application;
