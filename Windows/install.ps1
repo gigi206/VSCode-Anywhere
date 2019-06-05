@@ -185,8 +185,8 @@ function InstallVSCode {
 
     # Define last tag version for download VSCode
     Set-Location "${MSYS2AppPath_install}\usr\bin"
-    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | sort -t '/' -k 3 -V | tail -1 | cut -f1"
-    $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d'/'"
+    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | egrep -v '1.999.0$' | tail -1 | cut -f1"
+    $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | egrep -v '1.999.0$' | tail -1 | cut -f3 -d'/'"
     $VSCUrl = "https://az764295.vo.msecnd.net/stable/${VSCSha}/VSCode-win32-x64-${VSCTag}.zip"
     # Create install directories
     Output "Create $VSCAppPath_install, $VSCAppPath_extensions and $VSCAppPath_user_data directories"
@@ -1092,8 +1092,8 @@ function UpdateVSCode {
 
     # Define last tag version for download VSCode
     Set-Location "${MSYS2AppPath_install}\usr\bin"
-    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | sort -t '/' -k 3 -V | tail -1 | cut -f1"
-    $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d'/'"
+    $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | egrep -v '1.999.0$' | tail -1 | cut -f1"
+    $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | egrep -v '1.999.0$' | tail -1 | cut -f3 -d'/'"
     $VSCUrl = "https://az764295.vo.msecnd.net/stable/${VSCSha}/VSCode-win32-x64-${VSCTag}.zip"
 
     # Install new version of VSCode

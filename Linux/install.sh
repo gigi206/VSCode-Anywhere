@@ -322,7 +322,7 @@ function InstallVSCode {
     InstallJunestPkg gtk3 nss libxkbfile libxtst libxss gconf alsa-lib gsfonts git gnome-keyring
 
     # Define last tag version for download VSCode
-    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 'namespace' 1)
+    VSCTag=$(JunestCmd "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | egrep -v '1.999.0$' | tail -1 | cut -f3 -d '/'" 'namespace' 1)
     VSCUrl="https://vscode-update.azurewebsites.net/${VSCTag}/linux-x64/stable"
 
     # Create install directories
@@ -903,7 +903,7 @@ function UpdateVSCode {
     fi
 
     # Define last tag version for download VSCode
-    VSCTag=$(JunestCmd "git ls-remote --tags https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/'" 'namespace' 1)
+    VSCTag=$(JunestCmd "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\\.[0-9]+\\.[0-9]+$' | egrep -v '1.999.0$' | tail -1 | cut -f3 -d '/'" 'namespace' 1)
     VSCUrl="https://vscode-update.azurewebsites.net/${VSCTag}/linux-x64/stable"
 
     if [ "${VSCPkg}" != "${VSCTag}" ]
