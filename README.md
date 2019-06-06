@@ -33,7 +33,7 @@
   - [3.4. Windows configuration file](#34-windows-configuration-file)
 - [4. Known issues](#4-known-issues)
   - [4.1. Menu bar](#41-menu-bar)
-  - [4.2. Configure your timezone](#42-configure-your-timezone)
+  - [4.2. Configure your time zone](#42-configure-your-time-zone)
   - [4.3. Debugger](#43-debugger)
 - [5. Preconfigured extensions (from configuration file)](#5-preconfigured-extensions-from-configuration-file)
   - [5.1. zeal](#51-zeal)
