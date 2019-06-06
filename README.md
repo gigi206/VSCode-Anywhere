@@ -33,7 +33,8 @@
   - [3.4. Windows configuration file](#34-windows-configuration-file)
 - [4. Known issues](#4-known-issues)
   - [4.1. Menu bar](#41-menu-bar)
-  - [4.2. Debugger](#42-debugger)
+  - [4.2. Configure your timezone](#42-configure-your-timezone)
+  - [4.3. Debugger](#43-debugger)
 - [5. Preconfigured extensions (from configuration file)](#5-preconfigured-extensions-from-configuration-file)
   - [5.1. zeal](#51-zeal)
   - [5.2. minimal](#52-minimal)
@@ -511,13 +512,22 @@ _**cmd_pre**_ > _**msys2_cmd_pre**_ > _**msys2_pkg**_ > _**vsc_pkg**_ > _**vsc_s
 
 Menu bar is voluntary hidden, for show it press **Alt** key.
 
-### 4.2. Debugger
+### 4.2 Configure your time zone
+
+By defaut time zone is set to **UTC**.
+To set to your timezone, create a link to your zone. Example for France below:
+
+```bash
+ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+```
+
+### 4.3. Debugger
 
 **Only for Windows :** you must add `"cwd": "'${workspaceFolder}'"` in your _launch.json_ file.
 
 Example :
 
-``` json
+```json
 {
     "version": "0.2.0",
     "configurations": [
