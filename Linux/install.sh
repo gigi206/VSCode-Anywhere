@@ -264,7 +264,7 @@ function InstallJunest {
 
     # Upgrade chroot packages (kill parent for avoid hang after pacman upgrade !)
     Output "Updating ${JunestAppName} chroot packages"
-    update='pacman -Sy --noconfirm --needed --force archlinux-keyring; pacman --init; pacman-key --populate archlinux;yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
+    update='pacman -Sy --noconfirm --needed --overwrite='*' archlinux-keyring; pacman --init; pacman-key --populate archlinux;yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
     JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u /bin/bash -l -- 2>/dev/null << EOF
 ${update}
 EOF
@@ -299,7 +299,7 @@ function CheckConfigFiles {
 # Install a package inside chroot
 function InstallJunestPkg {
     Output "Installing Junest packages : ${*}"
-    JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Sy --noconfirm --needed --force ${*}" 'namespace' 1
+    JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Sy --noconfirm --needed --overwrite='*' ${*}" 'namespace' 1
 }
 
 # Test Internet connection

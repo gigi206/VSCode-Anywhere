@@ -459,7 +459,7 @@ function InstallZeal {
 function InstallMSYS2Pkg([string[]]$pkg) {
     $pkg = $pkg -join ' '
     Output "Installing MSYS2 packages : $pkg"
-    MSYS2Cmd @("pacman -Qk $pkg 2>/dev/null || pacman --noconfirm --force --needed -Sy $pkg") -exit $true
+    MSYS2Cmd @("pacman -Qk $pkg 2>/dev/null || pacman --noconfirm --overwrite='*' --needed -Sy $pkg") -exit $true
 }
 
 # Install VSCode plugins
