@@ -299,7 +299,7 @@ function CheckConfigFiles {
 # Install a package inside chroot
 function InstallJunestPkg {
     Output "Installing Junest packages : ${*}"
-    JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Sy --noconfirm --needed --overwrite='*' ${*}" 'namespace' 1
+    JunestCmd "pacman -Qk ${*} 2>/dev/null || pacman -Syu --noconfirm --needed --overwrite='*' ${*}" 'namespace' 1
 }
 
 # Test Internet connection
