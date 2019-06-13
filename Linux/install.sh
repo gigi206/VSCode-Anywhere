@@ -911,7 +911,7 @@ function UpdateVSCode {
         Output "Updating ${VSCAppName} from version ${VSCPkg} to ${VSCTag}"
 
         # Download latest VSCode zip file
-        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && wget --show-progress --progress=bar:force -qO '${VSCAppName}.tar.gz' '${VSCUrl}' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && rm -fr VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
+        JunestCmd "cd '${JunestExternalPath}${VSCAppPath}' && wget --show-progress --progress=bar:force -qO '${VSCAppName}.tar.gz' '${VSCUrl}' && tar --no-same-owner -xzf '${VSCAppName}.tar.gz' && test -d VSCode-linux-x64 && rm -fr '${JunestExternalPath}${VSCAppPath_install}' && mv VSCode-linux-x64 '${JunestExternalPath}${VSCAppPath_install}' && rm '${VSCAppName}.tar.gz'" 'namespace' 1
     else
         Output "VSCode is already to the latest version ${VSCPkg}"
     fi

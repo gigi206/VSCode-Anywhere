@@ -188,6 +188,7 @@ function InstallVSCode {
     $VSCSha = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+' | egrep -v '1.999.0$' | tail -1 | cut -f1"
     $VSCTag = ./env.exe CHERE_INVOKING=1 /usr/bin/bash --login -c "git ls-remote --tags --sort=version:refname https://github.com/Microsoft/vscode.git | egrep 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | egrep -v '1.999.0$' | tail -1 | cut -f3 -d'/'"
     $VSCUrl = "https://az764295.vo.msecnd.net/stable/${VSCSha}/VSCode-win32-x64-${VSCTag}.zip"
+
     # Create install directories
     Output "Create $VSCAppPath_install, $VSCAppPath_extensions and $VSCAppPath_user_data directories"
     New-Item -ItemType Directory -Force -Path "$VSCAppPath_install", "$VSCAppPath_extensions", "$VSCAppPath_user_data" | Out-Null
