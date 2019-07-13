@@ -45,25 +45,26 @@
   - [5.7. VSC-fonts](#57-vsc-fonts)
   - [5.8. tmux-gigix](#58-tmux-gigix)
   - [5.9. vim-gigix](#59-vim-gigix)
-  - [5.10. python](#510-python)
-  - [5.11. ruby](#511-ruby)
-  - [5.12. perl](#512-perl)
-  - [5.13. C/C++](#513-cc)
-  - [5.14. C](#514-c)
-  - [5.15. shell](#515-shell)
-  - [5.16. go](#516-go)
-  - [5.17. java](#517-java)
-  - [5.18. php](#518-php)
-  - [5.19. javascript](#519-javascript)
-  - [5.20. html](#520-html)
-  - [5.21. powershell](#521-powershell)
-  - [5.22. docker](#522-docker)
-  - [5.23. ansible](#523-ansible)
-  - [5.24. puppet](#524-puppet)
-  - [5.25. saltstack](#525-saltstack)
-  - [5.26. chef](#526-chef)
-  - [5.27. markdown](#527-markdown)
-  - [5.28. restructuredtext](#528-restructuredtext)
+  - [5.10. remote](#510-remote)
+  - [5.11. python](#510-python)
+  - [5.12. ruby](#511-ruby)
+  - [5.13. perl](#512-perl)
+  - [5.14. C/C++](#513-cc)
+  - [5.15. C](#514-c)
+  - [5.16. shell](#515-shell)
+  - [5.17. go](#516-go)
+  - [5.18. java](#517-java)
+  - [5.19. php](#518-php)
+  - [5.20. javascript](#519-javascript)
+  - [5.21. html](#520-html)
+  - [5.22. powershell](#521-powershell)
+  - [5.23. docker](#522-docker)
+  - [5.24. ansible](#523-ansible)
+  - [5.25. puppet](#524-puppet)
+  - [5.26. saltstack](#525-saltstack)
+  - [5.27. chef](#526-chef)
+  - [5.28. markdown](#527-markdown)
+  - [5.29. restructuredtext](#528-restructuredtext)
 
 <!-- /TOC -->
 
@@ -660,7 +661,25 @@ Screenshot with tmux-gigix + vim-gigix enabled :
 
 Install and configure [vim-gigix](https://github.com/gigi206/vim-gigix).
 
-### 5.10. python
+### 5.10. remote
+
+Open any folder in a container, on a remote machine (SSH), or in the Windows Subsystem for Linux (WSL)
+
+The extension [Visual Studio Code Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) contains the following extensions :
+
+- [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+
+![Remote - SSH](https://microsoft.github.io/vscode-remote-release/images/ssh-readme.gif)
+
+- [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+![Remote - Containers](https://microsoft.github.io/vscode-remote-release/images/remote-containers-readme.gif)
+
+- [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
+
+![Remote - WSL](https://microsoft.github.io/vscode-remote-release/images/wsl-readme.gif)
+
+### 5.11. python
 
 Configure environment for [Python2/3](https://www.python.org) languages.
 
@@ -675,7 +694,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/py
 
 ![Visual Studio IntelliCode](https://go.microsoft.com/fwlink/?linkid=2006041)
 
-### 5.11. ruby
+### 5.12. ruby
 
 Configure environment for [ruby](https://www.ruby-lang.org) language.
 
@@ -688,7 +707,7 @@ VSCode extensions :
 
 Please see [this issue](https://github.com/castwide/vscode-solargraph/issues/55) if completion doesn't work.
 
-### 5.12. perl
+### 5.13. perl
 
 Configure environment for [Perl](https://www.perl.org) language.
 
@@ -699,7 +718,7 @@ VSCode extensions :
 
 ![Perl Debug](https://github.com/raix/vscode-perl-debug/raw/master/images/vscode-perl-debugger.gif)
 
-### 5.13. C/C++
+### 5.14. C/C++
 
 Configure environment for [C/C++](https://isocpp.org) language.
 
@@ -750,7 +769,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cp
 }
 ```
 
-### 5.14. C#
+### 5.15. C#
 
 Configure environment for C# language.
 
@@ -764,7 +783,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cs
 
 **NOTE :** For Linux only
 
-### 5.15. shell
+### 5.16. shell
 
 Configure environment for shell language.
 
@@ -775,7 +794,7 @@ VSCode extensions :
 
 ![Bash Debug](https://raw.githubusercontent.com/rogalmic/vscode-bash-debug/gif/images/bash-debug-samp-watch-advanced.gif)
 
-### 5.16. go
+### 5.17. go
 
 Configure environment for [Go](https://golang.org) language.
 
@@ -789,7 +808,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/go
 
 ![Go](https://i.giphy.com/xTiTndDHV3GeIy6aNa.gif)
 
-### 5.17. java
+### 5.18. java
 
 Configure environment for [Java](https://www.java.com) language.
 
@@ -803,7 +822,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ja
 
 ![Java Test Runner](https://github.com/Microsoft/vscode-java-test/raw/master/demo/demo.gif)
 
-### 5.18. php
+### 5.19. php
 
 Configure environment for [PHP](https://secure.php.net) language.
 
@@ -818,7 +837,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ph
 
 ![PHP Debug](https://github.com/felixfbecker/vscode-php-debug/raw/master/images/demo.gif)
 
-### 5.19. javascript
+### 5.20. javascript
 
 Configure environment for [Javascript](https://developer.mozilla.org/docs/Web/JavaScript) language.
 
@@ -836,7 +855,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/ja
 
 **NOTE :** you need to configure _ESLint_ first !
 
-### 5.20. html
+### 5.21. html
 
 Configure environment for [HTML](https://www.w3.org/html/) / [CSS](https://www.w3.org/Style/CSS/) language.
 
@@ -867,7 +886,7 @@ Please read these [instructions](https://code.visualstudio.com/docs/languages/cs
 
 ![Autoprefixer](https://cloud.githubusercontent.com/assets/7034281/16823311/da82a3c6-496b-11e6-8d95-0bebbf0b9607.gif)
 
-### 5.21. powershell
+### 5.22. powershell
 
 Configure environment for [PowerShell](https://docs.microsoft.com/en-us/powershell/) language.
 
@@ -875,7 +894,7 @@ VSCode extensions :
 
 - [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)
 
-### 5.22. docker
+### 5.23. docker
 
 Configure environment for [Docker](https://www.docker.com) language.
 
@@ -885,7 +904,7 @@ VSCode extensions :
 
 ![Docker](https://github.com/microsoft/vscode-docker/raw/master/images/generateFiles.gif)
 
-### 5.23. ansible
+### 5.24. ansible
 
 Configure environment for [Ansible](https://www.ansible.com) language.
 
@@ -893,7 +912,7 @@ VSCode extensions :
 
 - [language-Ansible](https://marketplace.visualstudio.com/items?itemName=haaaad.ansible)
 
-### 5.24. puppet
+### 5.25. puppet
 
 Configure environment for [Puppet](https://puppet.com) language.
 
@@ -907,7 +926,7 @@ VSCode extensions for Linux :
 
 ![Puppet](https://raw.githubusercontent.com/jpogran/puppet-vscode/master/docs/assets/language_server.gif)
 
-### 5.25. saltstack
+### 5.26. saltstack
 
 Configure environment for [SaltStack](https://saltstack.com) language.
 
@@ -917,7 +936,7 @@ VSCode extensions :
 
 ![SaltStack](https://raw.githubusercontent.com/korekontrol/vscode-saltstack/master/example.png)
 
-### 5.26. chef
+### 5.27. chef
 
 Configure environment for [Chef](https://www.chef.io/chef/) language.
 
@@ -927,7 +946,7 @@ VSCode extensions :
 
 ![Chef](https://github.com/pendrica/vscode-chef/raw/master/images/vscode-chef-install.gif)
 
-### 5.27. markdown
+### 5.28. markdown
 
 Configure environment for [markdown](https://daringfireball.net/projects/markdown/) language.
 
@@ -941,7 +960,7 @@ VSCode extensions :
 
 ![Markdown TOC](https://github.com/AlanWalk/Markdown-TOC/raw/master/img/insert-toc.gif)
 
-### 5.28. restructuredtext
+### 5.29. restructuredtext
 
 Configure environment for [reStructuredText](http://docutils.sourceforge.net/rst.html) language.
 
