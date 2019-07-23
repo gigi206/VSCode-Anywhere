@@ -600,6 +600,10 @@ Add some VSCode extensions :
 
 ![GitKraken Glo](https://user-images.githubusercontent.com/899916/37066976-01877280-2165-11e8-87ff-d6b04e1d9ca5.png)
 
+- [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
+
+![Todo Tree](https://raw.githubusercontent.com/Gruntfuggly/todo-tree/master/resources/screenshot.png)
+
 - [Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent)
 
 These extensions add some features to VSCode and it's recommended to keep enabled this section.
@@ -669,15 +673,15 @@ The extension [Visual Studio Code Remote Development Extension Pack](https://mar
 
 - [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
 
-![Remote - SSH](https://microsoft.github.io/vscode-remote-release/images/ssh-readme.gif)
+![Remote - SSH](https://github.com/microsoft/vscode-remote-release/blob/master/docs/images/ssh-readme.gif?raw=true)
 
 - [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-![Remote - Containers](https://microsoft.github.io/vscode-remote-release/images/remote-containers-readme.gif)
+![Remote - Containers](https://github.com/microsoft/vscode-remote-release/blob/master/docs/images/remote-containers-readme.gif?raw=true)
 
 - [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
 
-![Remote - WSL](https://microsoft.github.io/vscode-remote-release/images/wsl-readme.gif)
+![Remote - WSL](https://github.com/microsoft/vscode-remote-release/blob/master/docs/images/wsl-readme.gif?raw=true)
 
 ### 5.11. python
 
@@ -685,14 +689,16 @@ Configure environment for [Python2/3](https://www.python.org) languages.
 
 VSCode Extensions :
 
+- [Pyright](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright)
 - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-- [Visual Studio IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
-
-Please read these [instructions](https://code.visualstudio.com/docs/languages/python)
 
 ![Python](https://raw.githubusercontent.com/microsoft/vscode-python/master/images/general.gif)
 
+- [Visual Studio IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+
 ![Visual Studio IntelliCode](https://go.microsoft.com/fwlink/?linkid=2006041)
+
+Please read these [instructions](https://code.visualstudio.com/docs/languages/python)
 
 ### 5.12. ruby
 
@@ -703,7 +709,7 @@ VSCode extensions :
 - [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)
 - [Ruby Solargraph](https://marketplace.visualstudio.com/items?itemName=castwide.solargraph)
 
-![Ruby Solargraph](https://github.com/castwide/vscode-solargraph/raw/master/vscode-solargraph-0.16.0.gif)
+![Ruby Solargraph](https://github.com/castwide/vscode-solargraph/raw/master/vscode-solargraph-0.34.1.gif)
 
 Please see [this issue](https://github.com/castwide/vscode-solargraph/issues/55) if completion doesn't work.
 
@@ -726,9 +732,9 @@ VSCode extensions :
 
 - [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 
-Please read these [instructions](https://code.visualstudio.com/docs/languages/cpp).
-
 ![C/C++](https://code.visualstudio.com/assets/docs/languages/cpp/cpp-hero.png)
+
+Please read these [instructions](https://code.visualstudio.com/docs/languages/cpp).
 
 **NOTE :** There is an issue with this extension on Windows (not Linux). This problem is resolved in the configuration file within function _cmd_post_ that copy file _msvc.64.linux.json_ to _msvc.64.intel.json_ in bin directory of this extension plugin. If this extension is updated you need to launch [Install](#331-install) or copy manually the file !
 
@@ -829,13 +835,14 @@ Configure environment for [PHP](https://secure.php.net) language.
 VSCode extensions :
 
 - [PHP IntelliSense](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-intellisense)
-- [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)
-
-Please read these [instructions](https://code.visualstudio.com/docs/languages/php)
 
 ![PHP IntelliSense](https://github.com/felixfbecker/vscode-php-intellisense/raw/master/images/completion.gif)
 
+- [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)
+
 ![PHP Debug](https://github.com/felixfbecker/vscode-php-debug/raw/master/images/demo.gif)
+
+Please read these [instructions](https://code.visualstudio.com/docs/languages/php)
 
 ### 5.20. javascript
 
@@ -902,7 +909,7 @@ VSCode extensions :
 
 - [Docker](https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker)
 
-![Docker](https://github.com/microsoft/vscode-docker/raw/master/images/generateFiles.gif)
+![Docker](https://github.com/microsoft/vscode-docker/raw/master/resources/readme/generateFiles.gif)
 
 ### 5.24. ansible
 
