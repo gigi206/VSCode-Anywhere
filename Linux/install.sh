@@ -162,12 +162,12 @@ function JunestCmd {
     echo -e "\\n\\n>>> ${cmd} (JunestCmd) <<<" &>> "${Log}"
 if [ "$type" = 'proot' ]
 then
-    chroot_type='-f'
+    chroot_type='p'
 else
-    chroot_type='-u'
+    chroot_type='n'
 fi
 
-    HOME="${Home_chroot}" JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" ${chroot_type} -p "-b ${JunestAppPath_home}:${Home_chroot} -b /:/${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
+    HOME="${Home_chroot}" JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" ${chroot_type} -b "-b ${JunestAppPath_home}:${Home_chroot} -b /:${JunestExternalPath}" /bin/bash -l << EOF 2>&1 | tee -a "${Log}"
 ${cmd}
 EOF
 
@@ -264,19 +264,24 @@ function InstallJunest {
 
     # Upgrade chroot packages (kill parent for avoid hang after pacman upgrade !)
     Output "Updating ${JunestAppName} chroot packages"
-    update='pacman -Sy --noconfirm --needed --overwrite='*' archlinux-keyring; pacman --init; pacman-key --populate archlinux;yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
-    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -u /bin/bash -l -- 2>/dev/null << EOF
+
+    # locale is buggy...
+    JunestCmd '> /etc/locale.gen' 'namespace'
+    JunestCmd 'locale-gen' 'namespace'
+
+    update='pacman -Sy --noconfirm --needed --overwrite='*' archlinux-keyring sed; pacman --init; pacman-key --populate archlinux;yes y | LC_ALL=C pacman -Syu; kill -9 $((${$} - 1)) 2>/dev/null'
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" n /bin/bash -l -- 2>/dev/null << EOF
 ${update}
 EOF
 
     # Generation locale (buggy with Proot)
-    JunestCmd 'sed -i "s@^#\(${LANG}.*\)@\1@g" /etc/locale.gen' 'namespace'
-    JunestCmd 'locale-gen' 'namespace'
+    # JunestCmd 'sed -i "s@^#\(${LANG}.*\)@\1@g" /etc/locale.gen' 'namespace'
+    # JunestCmd 'locale-gen' 'namespace'
     # Workaround with Proot
-    #Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
+    # Cmd "I18NPATH='${JunestAppPath_chroot}/usr/share/i18n' localedef -i $(echo ${LANG} | cut -d '.' -f 1) -c -f $(echo ${LANG} | cut -d '.' -f 2) -A '${JunestAppPath_chroot}/usr/share/locale/locale.alias' --prefix='${JunestAppPath_chroot}' '${LANG}'"
 
     # Install requirements
-    InstallJunestPkg git curl wget tar jq unzip adwaita-icon-theme
+    InstallJunestPkg git curl wget tar gzip jq unzip adwaita-icon-theme
 
     # Reinstall junest bin from github for be to be able to git pull
     JunestCmd "git clone https://github.com/fsquillace/junest.git '${JunestExternalPath}${JunestAppPath_install}_tmp' --depth 1" 'namespace' 1
@@ -419,10 +424,10 @@ function InstallVSCPkg {
         if [ "${update}" = 1 ]
         then
             Output "Updating VSCode extension : ${pkg}"
-            JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}' --force" 'proot'           
+            JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}' --force" 'namespace'
         else
             Output "Installing VSCode extension : ${pkg}"
-            JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}'" 'proot'
+            JunestCmd "'${JunestExternalPath}${VSCAppPath_install}/bin/code' --user-data-dir '${JunestExternalPath}${VSCAppPath_user_data}' --extensions-dir '${JunestExternalPath}${VSCAppPath_extensions}' --install-extension '${pkg}'" 'namespace'
         fi
     done
 }
@@ -627,7 +632,7 @@ Categories=Utility;Application;
     local VSCAppPath_user_data=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_user_data} | sed "s@${InstallDir}\(.*\)@\1@g"))
     local VSCAppPath_extensions=$(echo ${JunestExternalPath}$(echo ${VSCAppPath_extensions} | sed "s@${InstallDir}\(.*\)@\1@g"))
     JunestCmd "mkdir -p /external" 'namespace' 1
-    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b /:/external -b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
+    Cmd "echo '\"${JunestAppPath_bin}\" n -b \"-b /:/external -b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" -- mkdir -p /run/user/$(id -u) \&\& \"${VSCAppPath_install}/bin/code\" --user-data-dir \"${VSCAppPath_user_data}\" --extensions-dir \"${VSCAppPath_extensions}\" \"\${@}\"' >> '${ScriptFile}'" 1
     Cmd "(test -d ~/.local/share/applications || mkdir -p ~/.local/share/applications) && cp '${InstallDir}/${ProgramName}.desktop' ~/.local/share/applications" 0
 }
 
@@ -686,7 +691,7 @@ Categories=Utility;Application;
     # Write script for run terminal
     Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
     Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
-    Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
+    Cmd "echo '\"${JunestAppPath_bin}\" n -b \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${junest_terminal_opts}' >> '${ScriptFile}'" 1
     Cmd "test -d ~/.local/share/applications && cp '${InstallDir}/Terminal.desktop' ~/.local/share/applications/${ProgramName}-Terminal.desktop" 0
 }
 
@@ -736,7 +741,7 @@ Categories=Utility;Application;
         # Write script for run Zeal
         Cmd "echo 'export JUNEST_HOME=\"${JunestAppPath_chroot}\"' >> '${ScriptFile}'" 1
         Cmd "echo 'export HOME=\"${Home_chroot}\"' >> '${ScriptFile}'" 1
-        Cmd "echo '\"${JunestAppPath_bin}\" -u -p \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
+        Cmd "echo '\"${JunestAppPath_bin}\" n -b \"-b ${Home_real}:${Home_real} -b ${JunestAppPath_home}:${Home_chroot} -b ${ZealAppPath_docsets}:${Home_chroot}/.local/share/Zeal/Zeal/docsets -b ${InstallDir}:${JunestExternalPath}\" ${ZealAppName,,}' >> '${ScriptFile}'" 1
         Cmd "test -d ~/.local/share/applications && cp '${InstallDir}/Documentation.desktop' ~/.local/share/applications/${ProgramName}-Documentation.desktop" 0
     fi
 }
@@ -1053,7 +1058,7 @@ function InstallFonts {
 # Uninstall Junest chroot
 function UninstallJunest {
     InstallAppHeader "Deleting ${JunestAppPath_chroot}"
-    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" -d
+    JUNEST_HOME="${JunestAppPath_chroot}" "${JunestAppPath_bin}" s "-d"
 }
 
 # Installation is finished

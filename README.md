@@ -1,9 +1,21 @@
 # VSCode-Anywhere
 
+You can continue to use this version but version V1 (this actual version) will soon be deprecated and it will be replaced by the V2 version (beta version).
+
+To install the V2 beta version (actually Windows only), please [read the documentation](https://vscode-anywhere.readthedocs.io/en/v2/).
+
+Run from **PowerShell**:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V2/VSCode-Anywhere.ps1 -OutFile $env:TMP\VSCode-Anywhere.ps1; & $env:TMP\VSCode-Anywhere.ps1 -Gitenv V2 -InstallDir <InstallDir>
+```
+
+Replace `<InstallDir>` by your installation directory.
+
 | OS      | Build status                                                                                                                                                                          |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Linux   | [![Build Status Linux](https://travis-ci.org/gigi206/VSCode-Anywhere.svg?branch=V1)](https://travis-ci.org/gigi206/VSCode-Anywhere/branches)                                               |
-| Windows | [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/gigi206/VSCode-Anywhere?branch=V1&svg=true)](https://ci.appveyor.com/project/gigi206/vscode-anywhere/history?branch=master) |
+| Windows | [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/gigi206/VSCode-Anywhere?branch=V1&svg=true)](https://ci.appveyor.com/project/gigi206/vscode-anywhere/history?branch=V1) |
 
 <!-- TOC -->
 
@@ -68,15 +80,6 @@
 
 <!-- /TOC -->
 
-Version V1 will be deprecated and will be replaced by version V2 (beta version).
-
-To install V2 (Widows only):
-
-```powershell
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V2/VSCode-Anywhere.ps1 -OutFile $env:TMP\VSCode-Anywhere.ps1
-& $env:TMP\VSCode-Anywhere.ps1 -Gitenv V2 -InstallDir <InstallDir>
-```
-
 ## 1. What is VSCode-Anywhere ?
 
 VSCode-Anywhere is based on [VSCode](https://code.visualstudio.com), a cross-platform software for development with :
@@ -135,7 +138,7 @@ There are 3 user configuration files available :
 Install with bash (paste the following line inside your terminal) :
 
 ```bash
-mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/install.sh -O /tmp/VSCode-Anywhere/VSCode-Anywhere.sh && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/VSCode-Anywhere.conf -O /tmp/VSCode-Anywhere/VSCode-Anywhere.conf && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Linux/User_recommended.conf -O /tmp/VSCode-Anywhere/User.conf && cd /tmp/VSCode-Anywhere && chmod +x VSCode-Anywhere.sh && ./VSCode-Anywhere.sh --path /MyPATH && cd - && rm -fr /tmp/VSCode-Anywhere
+mkdir -p /tmp/VSCode-Anywhere && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V1/Linux/install.sh -O /tmp/VSCode-Anywhere/VSCode-Anywhere.sh && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V1/Linux/VSCode-Anywhere.conf -O /tmp/VSCode-Anywhere/VSCode-Anywhere.conf && wget -q https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V1/Linux/User_recommended.conf -O /tmp/VSCode-Anywhere/User.conf && cd /tmp/VSCode-Anywhere && chmod +x VSCode-Anywhere.sh && ./VSCode-Anywhere.sh --path /MyPATH && cd - && rm -fr /tmp/VSCode-Anywhere
 ```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/UMqVXpt5qZE/0.jpg)](https://www.youtube.com/watch?v=UMqVXpt5qZE)
@@ -346,7 +349,7 @@ There are 3 configuration files available :
 Install with **powershell.exe** :
 
 ```bat
-powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/VSCode-Anywhere.conf -OutFile VSCode-Anywhere.conf; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/User_recommended.conf -OutFile User.conf; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/master/Windows/install.ps1 -OutFile install.ps1"; powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File install.ps1 -path "C:\MyPATH"; Remove-Item -Force install.ps1, VSCode-Anywhere.conf, User.conf
+powershell -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V1/Windows/VSCode-Anywhere.conf -OutFile VSCode-Anywhere.conf; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V1/Windows/User_recommended.conf -OutFile User.conf; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V1/Windows/install.ps1 -OutFile install.ps1"; powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File install.ps1 -path "C:\MyPATH"; Remove-Item -Force install.ps1, VSCode-Anywhere.conf, User.conf
 ```
 
 [![VSCode-Anywhere installation](https://img.youtube.com/vi/A4HhkL78OVQ/0.jpg)](https://www.youtube.com/watch?v=A4HhkL78OVQ)
