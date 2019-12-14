@@ -1124,7 +1124,7 @@ elif [ "${TRAVIS_BRANCH}" ]
 then
     branch="${TRAVIS_BRANCH}"
 else
-    branch='master'
+    branch='V1'
 fi
 
 export ProgramConfigUrl="https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Linux/VSCode-Anywhere.conf"

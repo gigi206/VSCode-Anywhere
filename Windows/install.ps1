@@ -445,7 +445,7 @@ function InstallZeal {
         foreach ($dll in 'vcruntime140.dll', 'msvcp140.dll'){
             if (!(Test-Path -Path ((New-Object -ComObject Shell.Application).Namespace(0x29).Self.Path + "$dll")) -and !(Test-Path -Path "${ZealAppPath_install}\$dll")) {
                 Output "Installing dll => ${ZealAppPath_install}\$dll"
-                Invoke-WebRequest -Uri "https://github.com/gigi206/VSCode-Anywhere/raw/master/Windows/dll/$dll" -OutFile "${ZealAppPath_install}\$dll"
+                Invoke-WebRequest -Uri "https://github.com/gigi206/VSCode-Anywhere/raw/${branch}/Windows/dll/$dll" -OutFile "${ZealAppPath_install}\$dll"
             }
         }
 
@@ -1239,7 +1239,7 @@ function UpdateZeal {
         foreach ($dll in 'vcruntime140.dll', 'msvcp140.dll') {
             if (!(Test-Path -Path ((New-Object -ComObject Shell.Application).Namespace(0x29).Self.Path + "$dll")) -and !(Test-Path -Path "${ZealAppPath_install}\$dll")) {
                 Output "Installing dll => ${ZealAppPath_install}\$dll"
-                Invoke-WebRequest -Uri "https://github.com/gigi206/VSCode-Anywhere/raw/master/Windows/dll/$dll" -OutFile "${ZealAppPath_install}\$dll"
+                Invoke-WebRequest -Uri "https://github.com/gigi206/VSCode-Anywhere/raw/${branch}/Windows/dll/$dll" -OutFile "${ZealAppPath_install}\$dll"
             }
         }
 
@@ -1455,7 +1455,7 @@ elseif (${Env:APPVEYOR_REPO_BRANCH} -ne $null) {
     $branch = ${Env:APPVEYOR_REPO_BRANCH}
 }
 else {
-    $branch = 'master'
+    $branch = 'V1'
 }
 
 $ProgramConfigUrl = "https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${branch}/Windows/VSCode-Anywhere.conf"

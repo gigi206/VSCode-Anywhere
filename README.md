@@ -2,8 +2,8 @@
 
 | OS      | Build status                                                                                                                                                                          |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux   | [![Build Status Linux](https://travis-ci.org/gigi206/VSCode-Anywhere.svg?branch=master)](https://travis-ci.org/gigi206/VSCode-Anywhere/branches)                                               |
-| Windows | [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/gigi206/VSCode-Anywhere?branch=master&svg=true)](https://ci.appveyor.com/project/gigi206/vscode-anywhere/history?branch=master) |
+| Linux   | [![Build Status Linux](https://travis-ci.org/gigi206/VSCode-Anywhere.svg?branch=V1)](https://travis-ci.org/gigi206/VSCode-Anywhere/branches)                                               |
+| Windows | [![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/gigi206/VSCode-Anywhere?branch=V1&svg=true)](https://ci.appveyor.com/project/gigi206/vscode-anywhere/history?branch=master) |
 
 <!-- TOC -->
 
@@ -67,6 +67,15 @@
   - [5.29. restructuredtext](#528-restructuredtext)
 
 <!-- /TOC -->
+
+Version V1 will be deprecated and will be replaced by version V2 (beta version).
+
+To install V2 (Widows only):
+
+```powershell
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V2/VSCode-Anywhere.ps1 -OutFile $env:TMP\VSCode-Anywhere.ps1
+& $env:TMP\VSCode-Anywhere.ps1 -Gitenv V2 -InstallDir <InstallDir>
+```
 
 ## 1. What is VSCode-Anywhere ?
 
