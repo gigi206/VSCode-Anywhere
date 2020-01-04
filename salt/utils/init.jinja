@@ -1,0 +1,120 @@
+{%- macro init(conf, action='install', func=['env', 'extensions', 'settings', 'keybindings', 'docset', 'cmd', 'chocolatey', 'msys2', 'scoop'], include=[]) %}
+  {%- if conf.enabled or action == 'uninstall' %}
+    {%- set _include = [] %}
+
+    {#-
+    {%- for f in exclude_func %}
+      {%- if f in func %}
+        {%- do func.remove(f) %}
+      {%- endif %}
+    {%- endfor %}
+    #}
+
+    {%- if salt['grains.get']('kernel') != 'Windows' %}
+      {%- for f in ['scoop', 'chocolatey', 'msys2'] %}
+        do func.remove(f)
+      {%- endfor %}
+    {%- endif %}
+
+    {%- if 'env' in func %}
+      {%- from 'salt/utils/macro.jinja' import env with context %}
+    {%- endif %}
+
+    {%- if 'scoop' in func %}
+      {%- from 'salt/core/scoop/map.jinja' import scoop_pkg with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/scoop/install') %}
+    {%- endif %}
+
+    {%- if 'chocolatey' in func %}
+      {%- from 'salt/core/chocolatey/map.jinja' import chocolatey_pkg with context %}
+      {%- do _include.append('salt/core/chocolatey/install') %}
+    {%- endif %}
+
+    {%- if 'msys2' in func %}
+      {%- from 'salt/core/msys2/map.jinja' import msys2_pkg with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/msys2/install') %}
+    {%- endif %}
+
+    {%- if 'extensions' in func %}
+      {%- from 'salt/core/vscode/map.jinja' import extensions with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/vscode/install') %}
+    {%- endif %}
+
+    {%- if 'settings' in func %}
+      {%- if action == 'uninstall' %}
+        {%- from 'salt/core/vscode/map.jinja' import settings_remove as settings with context %}
+      {%- else %}
+        {%- from 'salt/core/vscode/map.jinja' import settings with context %}
+      {%- endif %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/vscode/install') %}
+    {%- endif %}
+
+    {%- if 'keybindings' in func %}
+      {%- from 'salt/core/vscode/map.jinja' import keybindings with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/vscode/install') %}
+    {%- endif %}
+
+    {%- if 'docset' in func %}
+      {%- from 'salt/core/zeal/map.jinja' import docset with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/zeal/install') %}
+    {%- endif %}
+
+    {%- if 'cmd' in func %}
+      {%- from 'salt/utils/macro.jinja' import cmd with context %}
+    {%- endif %}
+
+{%- do _include.extend(include) %}
+
+{%- if _include | length > 0 %}
+include:
+{%- for inc in _include | unique %}
+  - {{ inc }}
+{%- endfor %}
+{%- endif %}
+
+    {%- if 'env' in func %}
+      {{ env(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'scoop' in func %}
+      {{ scoop_pkg(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'chocolatey' in func %}
+      {{ chocolatey_pkg(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'msys2' in func %}
+      {{ msys2_pkg(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'extensions' in func %}
+      {{ extensions(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'settings' in func %}
+      {{ settings(conf) }}
+    {%- endif %}
+
+    {%- if 'keybindings' in func %}
+      {{ keybindings(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'docset' in func %}
+      {{ docset(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'cmd' in func %}
+      {%- if action == 'install' or action == 'update' %}
+        {{ cmd(conf) }}
+      {%- endif %}
+    {%- endif %}
+
+  {%- endif %}
+{%- endmacro %}

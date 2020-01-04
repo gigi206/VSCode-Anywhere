@@ -1,0 +1,82 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      Zignd.html-css-class-completion:
+        enabled: True
+        version: null
+      pranaygp.vscode-css-peek:
+        enabled: True
+        version: null
+      bradgashler.htmltagwrap:
+        enabled: True
+        version: null
+      Umoxfo.vscode-w3cvalidation:
+        enabled: True
+        version: null
+      vincaslt.highlight-matching-tag:
+        enabled: True
+        version: null
+      formulahendry.auto-rename-tag:
+        enabled: True
+        version: null
+      mrmlnc.vscode-autoprefixer:
+        enabled: True
+        version: null
+      esbenp.prettier-vscode:
+        enabled: True
+        version: null
+        settings:
+          '[html]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[css]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[scss]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[less]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+      naumovs.color-highlight:
+        enabled: True
+        version: null
+      ecmel.vscode-html-css:
+        enabled: True
+        version: null
+      smelukov.vscode-csstree:
+        enabled: True
+        version: null
+      # stylelint.vscode-stylelint:
+      #   enabled: True
+      #   version: null
+      # codemooseus.vscode-devtools-for-chrome:
+      #   enabled: True
+      #   version: null
+      # auchenberg.vscode-browser-preview:
+      #   enabled: True
+      #   version: null
+  zeal:
+    docsets:
+      CSS:
+        enabled: True
+        version: null
+      HTML:
+        enabled: True
+        version: null
+      Emmet:
+        enabled: True
+        version: null
+      Sass:
+        enabled: True
+        version: null
+      Less:
+        enabled: True
+        version: null
+Windows:
+  scoop:
+    pkgs:
+      openjdk:
+        enabled: True
+        version: null
+  vscode:
+    extensions:
+      Umoxfo.vscode-w3cvalidation:
+        vscode-w3cvalidation.javaHome: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current') }}

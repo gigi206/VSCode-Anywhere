@@ -1,0 +1,20 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      ms-vscode.PowerShell:
+        enabled: True
+        version: null
+    settings:
+      dash.languageIdToDocsetMap.powershell:
+        - posh
+  zeal:
+    docsets:
+      Powershell:
+        enabled: True
+        version: null
+{#-
+Windows:
+  env:
+    PSModulePath: ${env:ProgramFiles}\WindowsPowerShell\Modules;${env:SystemRoot}\system32\WindowsPowerShell\v1.0\Modules
+#}

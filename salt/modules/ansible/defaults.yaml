@@ -1,0 +1,48 @@
+default:
+  enabled: False
+  pip:
+    opts:
+      global: {}
+      install:
+        upgrade: False
+      update:
+        upgrade: True
+      uninstall: {}
+    pkgs: {}
+  vscode:
+    extensions:
+      vscoss.vscode-ansible:
+        enabled: True
+        version: null
+  zeal:
+    docsets:
+      Ansible:
+        enabled: True
+        version: null
+      Jinja:
+        enabled: True
+        version: null
+# Windows:
+#   vscode:
+#     extensions:
+#       haaaad.ansible:
+#         enabled: True
+#         version: null
+Linux:
+  # vscode:
+  #   extensions:
+  #     vscoss.vscode-ansible:
+  #       enabled: True
+  #       version: null
+  pip:
+    opts:
+      global:
+        bin_env: "FIXME: put the right linux path here"
+    pkgs:
+      ansible: # not compatible with Windows
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}

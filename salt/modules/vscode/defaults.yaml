@@ -1,0 +1,90 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      xaver.theme-ysgrifennwr:
+        enabled: True
+        version: null
+      yogipatel.solarized-light-no-bold:
+        enabled: True
+        version: null
+      zhuangtongfa.Material-theme:
+        enabled: True
+        version: null
+        settings:
+          workbench.colorTheme: One Dark Pro
+      vscode-icons-team.vscode-icons:
+        enabled: True
+        version: null
+        settings:
+          workbench.iconTheme: vscode-icons
+          vsicons.dontShowNewVersionMessage: True
+      alefragnani.Bookmarks:
+        enabled: True
+        version: null
+        keybindings:
+          - key: alt+l
+            command: bookmarks.toggle
+            when: editorTextFocus
+      alefragnani.project-manager:
+        enabled: True
+        version: null
+        # settings:
+        #   projectManager.projectsLocation: xxx
+      christian-kohler.path-intellisense:
+        enabled: True
+        version: null
+      CoenraadS.bracket-pair-colorizer:
+        enabled: True
+        version: null
+      formulahendry.code-runner:
+        enabled: True
+        version: null
+        settings:
+          code-runner.respectShebang: False
+      spmeesseman.vscode-taskexplorer:
+        enabled: True
+        version: null
+      spywhere.guides:
+        enabled: True
+        version: null
+        settings:
+          editor.renderIndentGuides: False
+      ybaumes.highlight-trailing-white-spaces:
+        enabled: True
+        version: null
+      Rubymaniac.vscode-paste-and-indent:
+        enabled: True
+        version: null
+      Gruntfuggly.todo-tree:
+        enabled: True
+        version: null
+        settings:
+          todo-tree.highlights.customHighlight:
+            TODO:
+              icon: check
+              fontWeight: 90
+              foreground: white
+              background: magenta
+              opacity: 5
+              iconColour: pink
+            FIXME:
+              icon: alert
+              fontWeight: 900
+              foreground: white
+              background: yellow
+              opacity: 50
+              iconColour: yellow
+      axosoft.gitkraken-glo:
+        enabled: True
+        version: null
+    settings:
+      window.titleBarStyle: custom
+      window.menuBarVisibility: toggle
+      workbench.colorCustomizations:
+        '[Ysgrifennwr]':
+          statusBar.background: '#edece8'
+          statusBar.foreground: '#42424280'
+        '[One Dark Pro]':
+          editor.selectionHighlightBackground: '#ffffff10'
+          editor.selectionHighlightBorder: '#ffffff10'

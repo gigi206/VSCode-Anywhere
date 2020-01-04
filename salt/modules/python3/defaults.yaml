@@ -1,0 +1,208 @@
+{%- if salt['grains.get']('kernel') == 'Windows' %}
+  {%- set path = [salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts')] %}
+  {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+    {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current')) %}
+    {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Library', 'mingw-w64', 'bin')) %}
+    {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Library', 'usr', 'bin')) %}
+    {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Library', 'bin')) %}
+    {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Library', 'Scripts')) %}
+    {%- set pythonPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'python.exe') %}
+    {%- set blackPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'black.exe') %}
+    {%- set poetryPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'poetry.exe') %}
+    {%- set flake8Path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'flake8.exe') %}
+    {%- set nosetestPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'nosetests.exe') %}
+    {%- set pytestPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'pytest.exe') %}
+    {%- set pipenvPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'pipenv.exe') %}
+    {%- set pipPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'pip.exe') %}
+  {%- else %}
+    {%- set pythonPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'python.exe') %}
+    {%- set blackPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'black.exe') %}
+    {%- set poetryPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'poetry.exe') %}
+    {%- set flake8Path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'flake8.exe') %}
+    {%- set nosetestPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'nosetests.exe') %}
+    {%- set pytestPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pytest.exe') %}
+    {%- set pipenvPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pipenv.exe') %}
+    {%- set pipPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pip.exe') %}
+  {%- endif %}
+{%- endif %}
+default:
+  enabled: False
+  anaconda: False
+  pip:
+    opts:
+      global: {}
+      install:
+        upgrade: False
+      update:
+        upgrade: True
+      uninstall: {}
+    pkgs:
+      # pip:
+      #   enabled: True
+      #   version: null
+      rope:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      flake8:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      black:
+        enabled: True
+        version: '>= 19.10b0' # FIXME: black only exists on beta version and states.pip.installed ignore beta version. Change it to null when black will be a final release
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      ptvsd:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      nose:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      pytest:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      pytest-xdist:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      poetry:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      pipenv:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+      jupyterlab:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+    {%- endif %}
+  vscode:
+    extensions:
+      ms-python.python:
+        enabled: True
+        version: null
+      VisualStudioExptTeam.vscodeintellicode:
+        enabled: True
+        version: null
+        settings:
+          python.jediEnabled: False
+      ms-pyright.pyright:
+        enabled: True
+        version: null
+        settings:
+          pyright.disableLanguageServices: True
+      # tushortz.python-extended-snippets:
+      #   enabled: True
+      #   version: null
+      kevinrose.vsc-python-indent:
+        enabled: True
+        version: null
+      littlefoxteam.vscode-python-test-adapter:
+        enabled: True
+        version: null
+        settings:
+          python.testing.pytestEnabled: True
+          # pythonTestExplorer.testFramework: pytest
+    settings:
+      code-runner.executorMap.python: $pythonPath -u $fullFileName
+      python.linting.pylintEnabled: False
+      python.linting.flake8Enabled: True
+      python.linting.flake8Args:
+        - --max-line-length=88 # Black format with a maximum of 88 caracters per line
+      python.linting.enabled: True
+      python.autoComplete.addBrackets: True
+      python.formatting.provider: black
+      # python.disableInstallationCheck: True
+      # '[python]':
+      #   editor.formatOnSave: True
+      # python.analysis.disabled:
+      #   - undefined-variable
+      #   - unresolved-import
+      dash.languageIdToDocsetMap.python:
+        - python3
+        - django
+        - twisted
+        - sphinx
+        - flask
+        - tornado
+        - sqlalchemy
+        - numpy
+        - scipy
+        - salt
+        - pandas
+        - matplotlib
+        - cvp
+  zeal:
+    docsets:
+      Python_3:
+        version: null
+        enabled: True
+      PEPs:
+        enabled: True
+        version: null
+Windows:
+  scoop:
+    pkgs:
+      ctags:
+        enabled: True
+        version: null
+    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+      anaconda3:
+        enabled: True
+        version: null
+    {%- endif %}
+  vscode:
+    settings:
+      python.pythonPath: {{ pythonPath }}
+      python.formatting.blackPath: {{ blackPath }}
+      python.poetryPath: {{ poetryPath }}
+      python.pipenvPath: {{ pipenvPath }}
+      python.linting.flake8Path: {{ flake8Path }}
+      python.testing.nosetestPath: {{ nosetestPath }}
+      python.testing.pytestPath: {{ pytestPath }}
+      python.workspaceSymbols.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ctags', 'current', 'ctags.exe') }}
+    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+      python.condaPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'conda.exe') }}
+    {%- endif %}
+  pip:
+    opts:
+      global:
+        bin_env: {{ pipPath }}
+  env:
+    PATH: {{ path | join(';') }}

@@ -1,0 +1,33 @@
+default:
+  enabled: False
+  gem:
+    opts:
+      global: {}
+      install:
+        rdoc: True
+        ri: True
+      update:
+        rdoc: True
+        ri: True
+      uninstall: {}
+    pkgs:
+      puppet-lint:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+  zeal:
+    docsets:
+      Puppet:
+        enabled: True
+        version: null
+Windows:
+  # env:
+  #   GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
+  #   GEM_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
+  #   PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin') }}
+  gem:
+    opts:
+      global:
+        gem_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin', 'gem.cmd') }}

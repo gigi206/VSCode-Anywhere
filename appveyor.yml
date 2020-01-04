@@ -1,41 +1,103 @@
-
 platform: x64
-
 #branches:
 #  only:
 #    - master
 #    - dev
-
 only_commits:
   files:
-    - Windows/*.conf
-    - Windows/*.ps1
+    - salt/*
     - appveyor.yml
-
 environment:
   VSCode_Anywhere_CI: true
-
 clone_depth: 20
-
 install:
-  - ps: Windows\install.ps1 -conf Windows\VSCode-Anywhere.conf -user_conf Windows\User_minimal.conf -path C:\
-  - ps: if ("${Env:APPVEYOR_REPO_TAG_NAME}") { C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-${Env:APPVEYOR_REPO_TAG_NAME}-Win64-minimal.zip C:\VSCode-Anywhere }
-  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\User_recommended.conf" -Destination "C:\VSCode-Anywhere\Conf\User.conf"
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf
-  - ps: if ("${Env:APPVEYOR_REPO_TAG_NAME}") { C:\VSCode-Anywhere\Third-Party\7-zip\install\7za.exe a -mmt C:\projects\vscode-anywhere\VSCode-Anywhere-${Env:APPVEYOR_REPO_TAG_NAME}-Win64-recommended.zip C:\VSCode-Anywhere }
-  - ps: Copy-Item "C:\projects\vscode-anywhere\Windows\User_full.conf" -Destination "C:\VSCode-Anywhere\Conf\User.conf"
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf -update
-  - ps: C:\VSCode-Anywhere\Tools\install.ps1 -conf C:\VSCode-Anywhere\Conf\VSCode-Anywhere.conf -user_conf C:\VSCode-Anywhere\Conf\User.conf -link
-  - ps: if (Get-Content C:\VSCode-Anywhere\Logs\* | Select-String -Pattern 'error has occurred') { exit 1 }
-  - ps: Set-Location "C:\projects\vscode-anywhere"
+  - ps: |
+      # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -Profile windows_admin
+      .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH}
+      (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+      # gci env:* | sort-object name
+      # $env:path -split ";" | Sort-Object
+      # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/install sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
+      # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/update sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
+      # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/uninstall sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
 
-artifacts:
-  - path: VSCode-*.zip
-    name: VSCode-Anywhere-Win64
+      C:\VSCode-Anywhere\tools\install.ps1
+      C:\VSCode-Anywhere\tools\update.ps1
+      C:\VSCode-Anywhere\tools\link.ps1
 
+      # FIXME: need to backup and restore env
+      # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
+      # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -profile windows_admin
+      # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+      # C:\VSCode-Anywhere\tools\install.ps1
+      # C:\VSCode-Anywhere\tools\update.ps1
+      # C:\VSCode-Anywhere\tools\link.ps1
+
+      # FIXME: need to backup and restore env
+      # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
+      # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -profile windows_portable
+      # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+      # C:\VSCode-Anywhere\tools\install.ps1
+      # C:\VSCode-Anywhere\tools\update.ps1
+      # C:\VSCode-Anywhere\tools\link.ps1
+
+  # - ps: Invoke-WebRequest -Uri https://download.sysinternals.com/files/PSTools.zip -OutFile C:\PSTools.zip
+  # - ps: Expand-Archive -Path C:\PSTools.zip -DestinationPath C:\PSTools
+  # - ps: C:\PSTools\PsExec64.exe -accepteula -nobanner -w (Get-Location).Path -l powershell ".\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} | Out-File -FilePath C:\VSCode-Anywhere.log"
+  # - ps: Get-Content -path "C:\VSCode-Anywhere.log" -Raw
+
+  # - ps: |
+  #     $InstallDir = "C:\VSCode-Anywhere"
+  #     $login = "VSCode-Anywhere"
+  #     $password = ConvertTo-SecureString (([char[]]([char]33..[char]95) + ([char[]]([char]97..[char]126)) + 0..9 | sort {Get-Random})[0..32] -join '') -AsPlainText -Force
+  #     $credential = New-Object System.Management.Automation.PSCredential "$login", $password
+  #     Write-Host "/=============================================================" -ForegroundColor Red
+  #     Write-Host "|"                                                              -ForegroundColor Red
+  #     Write-Host "| Create user $login"                                           -ForegroundColor Red
+  #     Write-Host "|"                                                              -ForegroundColor Red
+  #     Write-Host "\=============================================================" -ForegroundColor Red
+  #     New-LocalUser -Name "$login" -Password $password  | Out-Null
+  # - ps: |
+  #     Write-Host "/=============================================================" -ForegroundColor Red
+  #     Write-Host "|"                                                              -ForegroundColor Red
+  #     Write-Host "| Install minimal (windows_user)"                               -ForegroundColor Red
+  #     Write-Host "|"                                                              -ForegroundColor Red
+  #     Write-Host "\=============================================================" -ForegroundColor Red
+  #     $run = Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `".\VSCode-Anywhere.ps1 -gitenv $env:APPVEYOR_REPO_BRANCH -profile windows_user -InstallDir $InstallDir`"" -Credential $credential -PassThru -NoNewWindow -Wait
+  # - ps: |
+  #     Write-Host "/=============================================================" -ForegroundColor Red
+  #     Write-Host "|"                                                              -ForegroundColor Red
+  #     Write-Host "| Install all modules (windows_user)"                           -ForegroundColor Red
+  #     Write-Host "|"                                                              -ForegroundColor Red
+  #     Write-Host "\=============================================================" -ForegroundColor Red
+  #     (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  #     Start-Process -FilePath "$InstallDir\tools\install.ps1" -Credential $credential -PassThru -NoNewWindow -Wait
+  # - ps: |
+  #     $pinfo = New-Object System.Diagnostics.ProcessStartInfo
+  #     $pinfo.UserName = "$login"
+  #     $pinfo.Password = $password
+  #     $pinfo.FileName = "powershell"
+  #     $pinfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -File .\VSCode-Anywhere.ps1 -gitenv $env:APPVEYOR_REPO_BRANCH -profile windows_user -InstallDir $InstallDir"
+  #     $pinfo.RedirectStandardError = $true
+  #     $pinfo.RedirectStandardOutput = $true
+  #     $pinfo.CreateNoWindow = $true
+  #     $pinfo.UseShellExecute = $false
+  #     $pinfo.WorkingDirectory = $PWD.Path
+  #     $p = New-Object System.Diagnostics.Process
+  #     $p.StartInfo = $pinfo
+  #     $p.Start() | Out-Null
+  #     $p.WaitForExit()
+  #     $stdout = $p.StandardOutput.ReadToEnd()
+  #     $stderr = $p.StandardError.ReadToEnd()
+  #     Write-Host "stdout => $stdout"
+  #     Write-Host "stderr => $stderr"
+  #     Write-Host "exit code => " $p.ExitCode
+
+# artifacts:
+#   - path: VSCode-*.zip
+#     name: VSCode-Anywhere-Win64
 #https://www.appveyor.com/docs/deployment/github/
-deploy:
+# deploy:
 #  - provider: GitHub
 #    name: branch
 #    #release: $(APPVEYOR_REPO_TAG_NAME)
@@ -49,25 +111,22 @@ deploy:
 #    force_update: true
 #    on:
 #      branch: dev
-
-  - provider: GitHub
-    name: tag
-    #release: $(APPVEYOR_REPO_TAG_NAME)
-    description: |
-      1st packaged version of VSCode-Anywhere.
-    auth_token:
-      secure: ld6PNFxh5Mp4/xa7/Kud00ABN8flWZUjGzeIhlmEqVETRi4kC7ZRdpaTOUcAE4Fi # your encrypted token from GitHub
-    artifact: VSCode-Anywhere-Win64
-    draft: true
-    prerelease: false
-    force_update: true
-    on:
-      appveyor_repo_tag: true        # deploy on tag push only
-
+#  - provider: GitHub
+#    name: tag
+#    #release: $(APPVEYOR_REPO_TAG_NAME)
+#    # description: |
+#    #   1st packaged version of VSCode-Anywhere.
+#    auth_token:
+#      secure: ld6PNFxh5Mp4/xa7/Kud00ABN8flWZUjGzeIhlmEqVETRi4kC7ZRdpaTOUcAE4Fi # your encrypted token from GitHub
+#    artifact: VSCode-Anywhere-Win64
+#    draft: true
+#    prerelease: false
+#    force_update: true
+#    on:
+#      appveyor_repo_tag: true        # deploy on tag push only
 #skip_commits:
 #  files:
 #    - '*.md'
 #    - Linux/*
 #    - Screenshots/*
-
 build: off

@@ -1,0 +1,10 @@
+default:
+  enabled: True
+Windows:
+  env:
+    PATH: ${env:SystemRoot};${env:SystemRoot}\System32;${env:SystemRoot}\System32\Wbem;${env:SystemRoot}\System32\WindowsPowerShell\v1.0
+    {#-
+    PSModulePath: ${env:ProgramFiles}\WindowsPowerShell\Modules;${env:SystemRoot}\system32\WindowsPowerShell\v1.0\Modules
+    PATH: $env:Path
+    PATH: {{ salt['reg.read_value']('HKEY_LOCAL_MACHINE', 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path')['vdata'] | json }}
+    #}

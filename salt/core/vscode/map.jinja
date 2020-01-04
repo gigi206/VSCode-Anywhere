@@ -1,0 +1,127 @@
+{%- import_yaml 'salt/core/vscode/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/vscode/installmap.yaml' as installmap %}
+
+
+{%- set vscode = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:vscode_core', {})
+  )
+) %}
+
+
+{%- macro extensions(conf, action='install') %}
+  {%- if action == 'install' %}
+    {%- set func = 'vscode.extension_installed' %}
+  {%- elif action == 'update' %}
+    {%- set func = 'vscode.extension_latest' %}
+  {%- elif action == 'uninstall' %}
+    {%- set func = 'vscode.extension_removed' %}
+  {%- else %}
+    {{ raise('{} is not valid action for the vscode extension macro. Valid actions are install, update and uninstall'.format(action)) }}
+  {%- endif %}
+
+{%- for ext, ext_attr in conf.get('vscode', {}).get('extensions', {}).items() %}
+{%- if ext_attr.get('enabled', True) %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':extension:{}'.format(ext) }}:
+  {{ func }}:
+    - name: {{ ext }}
+    - dir: {{ vscode.extensions_dir }}
+    - path: {{ vscode.path }}
+  {%- if action in ['install', 'update'] and ext_attr.get('version', None) %}
+    - version: {{ ext_attr.version | string }}
+  {%- endif %}
+    # - require:
+    #   - sls: salt/utils/sync
+    {%- if sls != 'salt/core/vscode/install' %}
+    - require:
+      - sls: salt/core/vscode/install
+    {%- endif %}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
+
+
+{%- macro settings(conf) %}
+  {%- set settings = conf.get('vscode', {}).get('settings', {}) %}
+
+  {%- for ext_attr in conf.get('vscode', {}).get('extensions', {}).values() %}
+    {%- if ext_attr.get('enabled', True) and ext_attr.get('settings', False) %}
+      {%- do settings.update(ext_attr.get('settings')) %}
+    {%- endif %}
+  {%- endfor %}
+
+{%- for setting_key, setting_val in settings.items() %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':settings:{}'.format(setting_key) }}:
+  vscode.settings_updated:
+    - name: {{ setting_key | json }}
+    - value: {{ setting_val | json }}
+    - path: {{ vscode.settings_path }}
+    - indent: {{ vscode.settings_indentation }}
+    # - require:
+    #   - sls: salt/utils/sync
+    {%- if sls != 'salt/core/vscode/install' %}
+    - require:
+      - sls: salt/core/vscode/install
+    {%- endif %}
+{%- endfor %}
+{%- endmacro %}
+
+
+{%- macro settings_remove(conf) %}
+  {%- set settings = conf.get('vscode', {}).get('settings', {}) %}
+
+  {%- for ext_attr in conf.get('vscode', {}).get('extensions', {}).values() %}
+    {%- if ext_attr.get('enabled', True) and ext_attr.get('settings', False) %}
+      {%- do settings.update(ext_attr.get('settings')) %}
+    {%- endif %}
+  {%- endfor %}
+
+{%- for setting in settings.keys() %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':settings:{}'.format(setting) }}:
+  vscode.settings_removed:
+    - name: {{ setting | json }}
+    - path: {{ vscode.settings_path }}
+    - indent: {{ vscode.settings_indentation }}
+    # - require:
+    #   - sls: salt/utils/sync
+    {%- if sls != 'salt/core/vscode/install' %}
+    - require:
+      - sls: salt/core/vscode/install
+    {%- endif %}
+{%- endfor %}
+{%- endmacro %}
+
+
+{%- macro keybindings(conf, action='install') %}
+  {%- if action == 'install' or action == 'update' %}
+    {%- set func = 'vscode.keybindings_updated' %}
+  {%- elif action == 'uninstall' %}
+    {%- set func = 'vscode.keybindings_removed' %}
+  {%- else %}
+    {{ raise('{} is not valid action for the vscode keybindings macro. Valid actions are install, update and uninstall'.format(action)) }}
+  {%- endif %}
+
+  {%- set keys = conf.get('vscode', {}).get('keybindings', []) %}
+
+{%- for ext_attr in conf.get('vscode', {}).get('extensions', {}).values() %}
+  {%- if ext_attr.get('enabled', True) and ext_attr.get('keybindings', False) %}
+    {%- do keys.extend(ext_attr.get('keybindings')) %}
+  {%- endif %}
+{%- endfor %}
+
+{%- for key in keys %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':keybindings:{}'.format(loop.index) }}:
+  {{ func }}:
+    - name: {{ key['key'] | json }}
+    - path: {{ vscode.keybindings_path }}
+    - command: {{ key['command'] | json }}
+    - when: {{ key.get('when') | json }}
+    - indent: {{ vscode.settings_indentation }}
+    # - require:
+    #   - sls: salt/utils/sync
+    {%- if sls != 'salt/core/vscode/install' %}
+    - require:
+      - sls: salt/core/vscode/install
+    {%- endif %}
+{%- endfor %}
+{%- endmacro %}

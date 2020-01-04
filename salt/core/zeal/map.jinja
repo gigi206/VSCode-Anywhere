@@ -1,0 +1,36 @@
+{%- import_yaml 'salt/core/zeal/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/zeal/installmap.yaml' as installmap %}
+
+
+{%- set zeal = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:zeal_core', {})
+  )
+) %}
+
+
+{%- macro docset(conf, action='install') %}
+{%- if action == 'install' %}
+    {%- set func = 'zeal.docset_installed' %}
+{%- elif action == 'update' %}
+    {%- set func = 'zeal.docset_latest' %}
+{%- elif action == 'uninstall' %}
+    {%- set func = 'zeal.docset_removed' %}
+{%- else %}
+    {{ raise('{} is not valid action for the zeal docset macro. Valid actions are install, update and uninstall'.format(action)) }}
+{%- endif %}
+
+{%- for docset, docset_attr in conf.get('zeal', {}).get('docsets', {}).items() %}
+{%- if docset_attr.get('enabled', True) %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':docset:{}'.format(docset) }}:
+  {{ func }}:
+    - name: {{ docset }}
+    # - require:
+    #   - sls: salt/utils/sync
+    {%- if sls != 'salt/core/zeal/install' %}
+    - require:
+      - sls: salt/core/zeal/install
+    {%- endif %}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}

@@ -1,0 +1,8 @@
+default:
+  enabled: False
+Windows:
+  enabled: True
+  env:
+    ChocolateyInstall: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey') }}
+    ChocolateyToolsLocation: {{ salt['grains.get']('vscode-anywhere:apps:path') }}
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey', 'bin') }}

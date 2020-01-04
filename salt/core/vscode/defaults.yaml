@@ -1,0 +1,57 @@
+{%- if grains['kernel'] == 'Windows' %}
+  {%- set locale_path = salt['cmd.run']('Write-Output ${env:APPDATA}\\Code\\User\\locale.json', python_shell=False, shell='powershell') %}
+{%- else %}
+  {%- set locale_path = salt['cmd.run']('echo $HOME/.config/Code/User/locale.json', python_shell=False) %}
+{%- endif %}
+
+{%- set locale = salt['grains.get']("locale_info:defaultlanguage", "en_EN") %}
+
+# Cf https://code.visualstudio.com/docs/getstarted/locales
+{%- if locale[-2:].lower() in ['fr', 'es', 'de', 'it', 'ja', 'ru', 'hu', 'ko', 'bg', 'tr'] %}
+  {%- set locale_extension = 'ms-ceintl.vscode-language-pack-{}'.format(locale[-2:].lower()) %}
+  {%- set vsc_locale = locale[-2:].lower() %}
+{%- elif locale.lower() == 'pt_br' %}
+  {%- set locale_extension = 'ms-ceintl.vscode-language-pack-pt-BR' %}
+  {%- set vsc_locale = locale %}
+{%- elif locale.lower() == 'zh_cn' %}
+  {%- set locale_extension = 'ms-ceintl.vscode-language-pack-zh-hans' %}
+  {%- set vsc_locale = locale %}
+{%- elif locale.lower() == 'zh_tw' %}
+  {%- set locale_extension = 'ms-ceintl.vscode-language-pack-zh-hant' %}
+  {%- set vsc_locale = locale %}
+{%- else %}
+  {%- set vsc_locale = 'en' %}
+{%- endif %}
+
+
+default:
+  enabled: True
+  settings_indentation: 4
+  locale_path: {{ locale_path }}
+  locale: {{ vsc_locale }}
+  vscode:
+    settings:
+      extensions.autoUpdate: False
+      telemetry.enableCrashReporter: False
+      telemetry.enableTelemetry: False
+      # breadcrumbs.enabled: False
+    {%- if locale_extension is defined %}
+    extensions:
+      {{ locale_extension }}:
+        enabled: True
+        version: null
+    {%- endif %}
+      hbenl.vscode-test-explorer: # Required by other extensions that depend on it
+        enabled: True
+        version: null
+Windows:
+  locale_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'locale.json') }}
+  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'code.cmd') }}
+  extensions_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}
+  keybindings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'keybindings.json') }}
+  settings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'settings.json') }}
+  scoop:
+    pkgs:
+      vscode:
+        enabled: True
+        version: null

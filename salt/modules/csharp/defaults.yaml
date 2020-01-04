@@ -1,0 +1,43 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      ms-vscode.csharp:
+        enabled: True
+        version: null
+      wghats.vscode-nxunit-test-adapter:
+        enabled: True
+        version: null
+      # Leopotam.csharpfixformat:
+      #   enabled: True
+      #   version: null
+      # jchannon.csharpextensions:
+      #   enabled: True
+      #   version: null
+  zeal:
+    docsets:
+      NET_Framework:
+        enabled: True
+        version: null
+Windows:
+  env:
+    DOTNET_ROOT: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'dotnet-sdk', 'current') }}
+    {%- if salt['file.access'](path=salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'dotnet-sdk', 'current', 'sdk'), mode='f') %}
+    MSBuildSDKsPath: {{ salt['file.find'](salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'dotnet-sdk', 'current', 'sdk'), maxdepth=1, type='d', name='^[0-9]+.[0-9]+.[0-9]+')[0] | path_join('Sdks') }}
+    {%- endif %}
+  vscode:
+    extensions:
+      wghats.vscode-nxunit-test-adapter:
+        settings:
+          nxunitExplorer.nunit: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nunit-console', 'current', 'nunit3-console.exe') }}
+  scoop:
+    pkgs:
+      scriptcs:
+        enabled: True
+        version: null
+      dotnet-sdk:
+        enabled: True
+        version: null
+      nunit-console:
+        enabled: True
+        version: null

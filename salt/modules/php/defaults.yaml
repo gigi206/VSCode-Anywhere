@@ -1,0 +1,107 @@
+default:
+  enabled: False
+  extensions:
+    - openssl
+  composer:
+    opts:
+      global: {}
+      install: {}
+      update: {}
+    pkgs:
+      squizlabs/php_codesniffer:
+        enabled: True
+        version: '@stable'
+      phpunit/phpunit:
+        enabled: True
+        version: '@stable'
+        # friendsofphp/php-cs-fixer:
+      #   enabled: True
+      #   version: '@stable'
+  vscode:
+    extensions:
+      bmewburn.vscode-intelephense-client:
+        enabled: True
+        version: null
+        settings:
+          php.suggest.basic: False
+          "[php]":
+            editor.defaultFormatter: bmewburn.vscode-intelephense-client
+      MehediDracula.php-namespace-resolver:
+        enabled: True
+        version: null
+      felixfbecker.php-debug:
+        enabled: True
+        version: null
+      brapifra.phpserver:
+        enabled: True
+        version: null
+      junstyle.php-cs-fixer:
+        enabled: True
+        version: null
+      ikappas.phpcs:
+        enabled: True
+        version: null
+      ecodes.vscode-phpmd:
+        enabled: True
+        version: null
+      recca0120.vscode-phpunit:
+        enabled: True
+        version: null
+      # felixfbecker.php-intellisense:
+      #   enabled: True
+      #   version: null
+      #   settings:
+      #     php.suggest.basic: False
+  zeal:
+    docsets:
+      PHP:
+        enabled: True
+        version: null
+Windows:
+  extension_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli', 'conf.d') }}
+  vscode:
+    settings:
+      php.validate.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'php.exe') }}
+    extensions:
+      brapifra.phpserver:
+        settings:
+          phpserver.phpPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'php.exe') }}
+      junstyle.php-cs-fixer:
+        settings:
+          php-cs-fixer.executablePathWindows: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', 'bin', 'php-cs-fixer.bat') }}
+      ikappas.phpcs:
+        settings:
+          phpcs.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', 'bin', 'phpcs.bat') }}
+      recca0120.vscode-phpunit:
+        settings:
+          phpunit.php: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'php.exe') }}
+          phpunit.phpunit: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', 'bin', 'phpunit.bat') }}
+      # felixfbecker.php-intellisense:
+      #   settings:
+      #     php.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php-net', 'current', 'php.exe') }}
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'composer', 'current', 'home', 'vendor', 'bin') }}
+    COMPOSER_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'home') }}
+    PHP_INI_SCAN_DIR: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli', 'conf.d') }}
+  composer:
+    json: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'composer.json') }}
+    opts:
+      global:
+        php: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'php.exe') }}
+        composer: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'composer', 'current', 'composer.phar') }}
+        composer_home: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'home') }}
+        env:
+          - PHP_INI_SCAN_DIR: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli', 'conf.d') }}
+      install: {}
+      update: {}
+  scoop:
+    pkgs:
+      php:
+        enabled: True
+        version: null
+      php-xdebug:
+        enabled: True
+        version: null
+      composer:
+        enabled: True
+        version: null

@@ -1,0 +1,9 @@
+{%- import_yaml 'salt/core/git/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/git/installmap.yaml' as installmap %}
+
+
+{%- set git = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:git_core', {})
+  )
+) %}

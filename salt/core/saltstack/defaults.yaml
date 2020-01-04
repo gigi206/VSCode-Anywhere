@@ -1,0 +1,27 @@
+default:
+  enabled: True
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:saltstack:path') }}
+  config_path: {{ salt['grains.get']('vscode-anywhere:saltstack:minion_path') | path_join('VSCode-Anywhere.conf') }}
+  config:
+    id: VSCode-Anywhere
+    file_client: local
+    fileserver_backend:
+      - roots
+      - git
+    top_file_merging_strategy: same
+    gitfs_provider: pygit2
+    gitfs_remotes:
+      - https://github.com/gigi206/VSCode-Anywhere.git
+        # - base: salt
+    config_dir: {{ salt['grains.get']('vscode-anywhere:saltstack:config_path') }}
+    log_file: {{ salt['grains.get']('vscode-anywhere:saltstack:path') | path_join('var', 'log', 'salt', 'minion') }}
+    root_dir: {{ salt['grains.get']('vscode-anywhere:saltstack:path') }}
+    file_root: {{ salt['grains.get']('vscode-anywhere:saltstack:roots_path') }}
+    pillar_root: {{ salt['grains.get']('vscode-anywhere:saltstack:pillar_path') }}
+    gitfs_saltenv_blacklist:
+      - V1
+      - v1.*
+Windows:
+  config:
+    gitfs_provider: gitpython

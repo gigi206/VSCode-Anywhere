@@ -1,0 +1,17 @@
+default:
+  enabled: False
+Windows:
+  enabled: True
+  env:
+    PATH: {{ '{};{}'.format(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'mingw64', 'bin'), salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'mingw32', 'bin')) }}
+    MSYSTEM: MINGW64
+  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current') }}
+  shell_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'bash.exe') }}
+  terminal_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'mingw64.exe') }}
+  shell_args: -lc
+  upgrade: True
+  scoop:
+    pkgs:
+      msys2:
+        enabled: True
+        version: null

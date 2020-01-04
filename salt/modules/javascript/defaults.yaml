@@ -1,0 +1,97 @@
+default:
+  enabled: False
+  npm:
+    opts:
+      global: {}
+      install: {}
+      update: {}
+      uninstall: {}
+    pkgs:
+      eslint:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+    mocha:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+  vscode:
+    extensions:
+      VisualStudioExptTeam.vscodeintellicode:
+        enabled: True
+        version: null
+      dbaeumer.vscode-eslint:
+        enabled: True
+        version: null
+        settings:
+          eslint.alwaysShowStatus: True
+      esbenp.prettier-vscode:
+        enabled: True
+        version: null
+        settings:
+          '[javascript]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[javascriptreact]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[typescript]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[typescriptreact]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+          '[vue]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+      eg2.vscode-npm-script:
+        enabled: True
+        version: null
+      xabikos.JavaScriptSnippets:
+        enabled: True
+        version: null
+      leizongmin.node-module-intellisense:
+        enabled: True
+        version: null
+      christian-kohler.npm-intellisense:
+        enabled: True
+        version: null
+      christian-kohler.path-intellisense:
+        enabled: True
+        version: null
+      msjsdiag.debugger-for-chrome:
+        enabled: True
+        version: null
+      wix.vscode-import-cost:
+        enabled: True
+        version: null
+      hbenl.vscode-mocha-test-adapter:
+        enabled: True
+        version: null
+  zeal:
+    docsets:
+      JavaScript:
+        enabled: True
+        version: null
+      NodeJS:
+        enabled: True
+        version: null
+      # jQuery:
+      #   enabled: True
+      #   version: null
+      # jQuery_Mobile:
+      #   enabled: True
+      #   version: null
+      # jQuery_UI:
+      #   enabled: True
+      #   version: null
+Windows:
+  npm_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current', 'npm.cmd') }}
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current', 'bin') }}
+  scoop:
+    pkgs:
+      nodejs:
+        enabled: True
+        version: null

@@ -1,0 +1,20 @@
+{}
+# windows_admin:
+#   config_path: {{ salt['grains.get']('vscode-anywhere:saltstack:minion_path') }}\VSCode-Anywhere.conf
+#   config:
+#     gitfs_provider: gitpython
+#   pkgs:
+#     saltminion:
+#       version: null
+#       enabled: True
+# windows_user:
+#   config_path: {{ salt['grains.get']('vscode-anywhere:saltstack:minion_path') }}\VSCode-Anywhere.conf
+#   config:
+#     gitfs_provider: gitpython
+#     config_dir: {{ '{}\\conf'.format(salt['grains.get']('vscode-anywhere:saltstack:path')) }}
+#     cachedir: {{ '{}\\var\\cache\\salt\\minion'.format(salt['grains.get']('vscode-anywhere:saltstack:path')) }}
+#     log_file: {{ '{}\\var\\log\\salt\\minion'.format(salt['grains.get']('vscode-anywhere:saltstack:path')) }}
+#     file_roots:
+#       base:
+#         - {{ '{}\\srv\\salt'.format(salt['grains.get']('vscode-anywhere:saltstack:path')) }}
+#     # extension_modules: {{ '{}\\var\\cache\\salt\\minion\\extmods'.format(salt['grains.get']('vscode-anywhere:saltstack:path')) }}

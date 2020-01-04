@@ -1,0 +1,42 @@
+{%- import_yaml 'salt/core/msys2/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/msys2/installmap.yaml' as installmap %}
+
+
+{%- set msys2 = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:msys2_core', {})
+  )
+) %}
+
+
+{%- macro msys2_pkg(conf, action='install') %}
+{%- if action == 'install' %}
+  {%- set func = 'msys2.pkg_installed' %}
+{%- elif action == 'update' %}
+  {%- set func = 'msys2.pkg_latest' %}
+{%- elif action == 'uninstall' %}
+  {%- set func = 'msys2.pkg_removed' %}
+{%- else %}
+  {{ raise('{} is not valid action for the pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
+{%- endif %}
+
+{%- for pkg, pkg_attr in conf.get('msys2', {}).get('pkgs', {}).items() %}
+{%- if pkg_attr.get('enabled') %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
+  {{ func }}:
+    - name: {{ pkg }}
+  {%- if action in ['install', 'update'] and pkg_attr.get('version') %}
+    - version: {{ pkg_attr.version | string }}
+    - refresh: True
+  {%- endif %}
+    - shell_path: {{ msys2.shell_path }}
+    - shell_args: {{ msys2.shell_args }}
+    # - require:
+    #   - sls: salt/utils/sync
+  {%- if sls != 'salt/core/msys2/install' %}
+    - require:
+      - sls: salt/core/msys2/install
+  {%- endif %}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}

@@ -1,0 +1,9 @@
+{%- import_yaml 'salt/modules/python3/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/modules/python3/installmap.yaml' as installmap %}
+
+
+{%- set python3 = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:python3', {})
+  )
+) %}

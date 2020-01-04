@@ -1,0 +1,12 @@
+default:
+  enabled: False
+  fonts:
+    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Bold.ttf
+    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Light.ttf
+    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Medium.ttf
+    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Regular.ttf
+    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Retina.ttf
+  vscode:
+    settings:
+      editor.fontLigatures: True
+      editor.fontFamily: Fira Code

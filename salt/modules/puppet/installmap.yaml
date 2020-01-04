@@ -1,0 +1,23 @@
+windows_admin:
+  chocolatey:
+    pkgs:
+      pdk:
+        enabled: True
+        version: null
+  vscode:
+    extensions:
+      jpogran.puppet-vscode:
+        enabled: True
+        version: null
+windows_user:
+  vscode:
+    extensions:
+      bitzl.vscode-puppet:
+        enabled: True
+        version: null
+windows_portable:
+  vscode:
+    extensions:
+      bitzl.vscode-puppet:
+        enabled: True
+        version: null

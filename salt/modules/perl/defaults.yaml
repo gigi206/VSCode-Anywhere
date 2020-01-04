@@ -1,0 +1,64 @@
+default:
+  enabled: False
+  cpan:
+    opts:
+      global: {}
+      install: {}
+      update: {}
+      # uninstall: {}
+    pkgs:
+      Perl::Tidy:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          # uninstall: {}
+      Perl::Critic:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          # uninstall: {}
+  vscode:
+    extensions:
+      cfgweb.vscode-perl:
+        enabled: True
+        version: null
+      d9705996.perl-toolbox:
+        enabled: True
+        version: null
+      mortenhenriksen.perl-debug:
+        enabled: True
+        version: null
+  zeal:
+    docsets:
+      Perl:
+        enabled: True
+        version: null
+Windows:
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'c', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'site', 'bin') }}
+  vscode:
+    extensions:
+      cfgweb.vscode-perl:
+        settings:
+          perl.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ctags', 'current', 'ctags.exe') }}
+          perl.perltidy: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'bin', 'perltidy.bat') }}
+      d9705996.perl-toolbox:
+        settings:
+          perl-toolbox.syntax.path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'bin') }}
+          perl-toolbox.lint.exec: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'site', 'bin', 'perlcritic.bat') }}
+  cpan:
+    opts:
+      global:
+        bin_env: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'bin', 'cpan.bat') }}
+  scoop:
+    pkgs:
+      perl:
+        enabled: True
+        version: null
+      ctags:
+        enabled: True
+        version: null

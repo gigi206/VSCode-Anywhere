@@ -1,0 +1,5 @@
+windows_portable:
+  terminal_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'msys2.exe') }}
+  env:
+    PATH: {{ '{}'.format(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin')) }}
+    MSYSTEM: MSYS

@@ -1,0 +1,63 @@
+default:
+  enabled: False
+  vscode:
+    settings:
+      dash.languageIdToDocsetMap.c:
+        - c
+    extensions:
+      ms-vscode.cpptools:
+        enabled: True
+        version: null
+        settings:
+          C_Cpp.default.cStandard: c11
+          C_Cpp.default.cppStandard: c++17
+      jbenden.c-cpp-flylint:
+        enabled: True
+        version: null
+        settings:
+          c-cpp-flylint.flexelint.enable: False
+          c-cpp-flylint.cppcheck.enable: False
+          c-cpp-flylint.clang.enable: True
+      matepek.vscode-catch2-test-adapter:
+        enabled: True
+        version: null
+  zeal:
+    docsets:
+      C:
+        enabled: True
+        version: null
+      C++:
+        enabled: True
+        version: null
+Windows:
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'gdb', 'current', 'bin') }}
+  msys2:
+    pkgs:
+      mingw-w64-x86_64-clang:
+        enabled: True
+        version: null
+      mingw-w64-x86_64-gdb:
+        enabled: True
+        version: null
+  vscode:
+    settings:
+      code-runner.executorMap.c: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang.exe') }} $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe
+      code-runner.executorMap.cpp: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang++.exe') }} $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe
+    extensions:
+      ms-vscode.cpptools:
+        settings:
+          C_Cpp.default.compilerPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang.exe') }}
+      jbenden.c-cpp-flylint:
+        settings:
+          c-cpp-flylint.clang.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang.exe') }}
+  # scoop:
+  #   pkgs:
+  #     gcc:
+  #       enabled: True
+  #       version: null
+  # chocolatey:
+  #   pkgs:
+  #     mingw:
+  #       enabled: True
+  #       version: null

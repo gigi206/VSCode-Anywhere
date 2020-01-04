@@ -1,0 +1,15 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      ms-azuretools.vscode-docker:
+        enabled: True
+        version: null
+    settings:
+      dash.languageIdToDocsetMap.dockerfile:
+        - docker
+  zeal:
+    docsets:
+      Docker:
+        enabled: True
+        version: null

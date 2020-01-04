@@ -1,0 +1,29 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      yzhang.markdown-all-in-one:
+        enabled: True
+        version: null
+      esbenp.prettier-vscode:
+        enabled: True
+        version: null
+        settings:
+          '[markdown]':
+            editor.defaultFormatter: esbenp.prettier-vscode
+      # DavidAnson.vscode-markdownlint:
+      #   enabled: True
+      #   version: null
+      # mdickin.markdown-shortcuts:
+      #   enabled: True
+      #   version: null
+      # AlanWalk.markdown-toc:
+      #   enabled: True
+      #   version: null
+      #   settings:
+      #     markdown-toc.depthFrom: 2
+  zeal:
+    docsets:
+      Markdown:
+        enabled: True
+        version: null

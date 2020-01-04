@@ -1,0 +1,6 @@
+windows_admin:
+  chocolatey:
+    pkgs:
+      docker-desktop:
+        enabled: True
+        version: null

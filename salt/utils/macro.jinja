@@ -1,0 +1,108 @@
+{%- macro cmd(conf) %}
+  {%- for cmd, cmd_attr in conf.get('cmds', {}).items() %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(cmd) }}:
+  cmd.run:
+    {%- for cmd_key, cmd_val in cmd_attr.items %}
+    - {{ cmd_key }}: {{ cmd_val }}
+    {%- endfor %}
+  {%- endfor %}
+{%- endmacro %}
+
+
+{%- macro env(conf, action='install') %}
+  {%- if salt['grains.get']('kernel') == 'Windows' %}
+    {%- set VAR_PATH = 'Path' %}
+    {%- set SEP_PATH = ';' %}
+  {%- else %}
+    {%- set VAR_PATH = 'PATH' %}
+    {%- set SEP_PATH = ':' %}
+  {%- endif %}
+
+  {%- set ENV_PATH = salt['environ.item'](VAR_PATH).get(VAR_PATH, '').split(SEP_PATH) | unique %}
+
+  {%- if not salt['file.access'](salt['grains.get']('vscode-anywhere:tools:env'), mode='f') %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':create:env' }}:
+  file.touch:
+    - name: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
+    - makedirs: True
+  {%- endif %}
+
+  {%- for env, env_attr in conf.get('env', {}).items() %}
+    {%- if action in ['install', 'update'] %}
+      {%- if env_attr %}
+        {%- if env.upper() == 'PATH' %}
+          {%- if env_attr not in ENV_PATH %}
+            {%- do salt['environ.setval'](VAR_PATH, '{}{}{}'.format(env_attr, SEP_PATH, ENV_PATH | join(SEP_PATH))) %}
+{#
+{{ salt['vscode_anywhere.get_id'](sls) + ':env:PATH' }}:
+  environ.setenv:
+    - name: {{ VAR_PATH }}
+    - value: {{ '{}{}{}'.format(env_attr, SEP_PATH, ENV_PATH | join(SEP_PATH)) }}
+    - update_minion: True
+    - permanent: False
+#}
+          {%- endif %}
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere:env:PATH' }}:
+  vscode_anywhere.append_path_env:
+    - name: {{ env_attr }}
+
+        {%- else %}
+
+{%- do salt['environ.setval'](env, env_attr) %}
+{#-
+{{ salt['vscode_anywhere.get_id'](sls) + ':env:{}'.format(env) }}:
+  environ.setenv:
+    - name: {{ env }}
+    - value: {{ env_attr }}
+    - update_minion: True
+    - permanent: False
+#}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere:env:{}'.format(env) }}:
+  file.replace:
+    - name: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
+    - append_if_not_found: True
+    - backup: False
+          {%- if salt['grains.get']('kernel') == 'Windows' %}
+    - pattern: ^\$env\:{{ env }}\=.*
+    - repl: $env:{{ env }}={{ env_attr | json }}
+          {%- else %}
+    - pattern: ^{{ env }}\=;*
+    - repl: {{ env }}={{ env_attr | json }}
+          {%- endif %}
+
+        {%- endif %}
+      {%- endif %}
+    {%- elif action == 'uninstall' %}
+      {%- if env.upper() == 'PATH' %}
+        {%- if env_attr %}
+          {%- if env_attr in ENV_PATH %}
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere:env:PATH' }}:
+  vscode_anywhere.remove_path_env:
+    - name: {{ env_attr }}
+
+          {%- endif %}
+        {%- endif %}
+      {%- else %}
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere:env:{}'.format(env) }}:
+  file.line:
+    - name: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
+    - create: True
+    - backup: False
+    - mode: delete
+        {%- if salt['grains.get']('kernel') == 'Windows' %}
+    - content: $env:{{ env }}=.*
+        {%- else %}
+    - content: {{ env }}=.*
+        {%- endif %}
+
+      {%- endif %}
+    {%- else %}
+      {{ raise('{} is not valid action for the env macro. Valid actions are install, update or uninstall'.format(action)) }}
+    {%- endif %}
+  {%- endfor %}
+{%- endmacro %}

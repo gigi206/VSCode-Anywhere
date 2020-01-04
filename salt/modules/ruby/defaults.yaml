@@ -1,0 +1,182 @@
+default:
+  enabled: False
+  rails: False
+  gem:
+    opts:
+      global: {}
+      install:
+        rdoc: True
+        ri: True
+      update:
+        rdoc: True
+        ri: True
+      uninstall: {}
+    pkgs:
+      rdoc:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      fastri:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      pkg-config:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      nokogiri:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rubygems-update:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      ruby-debug-ide:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rcodetools:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      reek:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      fasterer:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      debride:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      ruby-lint:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      solargraph:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+    {%- if salt['pillar.get']('vscode-anywhere:ruby:rails', False) %}
+      haml_lint:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+    {%- endif %}
+  vscode:
+    extensions:
+      rebornix.Ruby:
+        enabled: True
+        version: null
+      castwide.solargraph:
+        enabled: True
+        version: null
+        settings:
+          ruby.lint:
+            reek: True
+            rubocop: False
+            ruby: True
+            fasterer: True
+            debride: True
+            ruby-lint: True
+          ruby.codeCompletion: False
+          ruby.format: False
+          ruby.intellisense: False
+          solargraph.autoformat: True
+          solargraph.hover: True
+          solargraph.completion: True
+          solargraph.diagnostics: True
+          solargraph.formatting: True
+      connorshea.vscode-ruby-test-adapter:
+        enabled: True
+        version: null
+      kaiwood.endwise:
+        enabled: True
+        version: null
+    {%- if salt['pillar.get']('vscode-anywhere:ruby:rails', False) %}
+      bung87.rails:
+        enabled: True
+        version: null
+      shanehofstetter.rails-i18n:
+        enabled: True
+        version: null
+      aki77.rails-routes:
+        enabled: True
+        version: null
+      vortizhe.simple-ruby-erb:
+        enabled: True
+        version: null
+      karunamurti.haml:
+        enabled: True
+        version: null
+      aki77.haml-lint:
+        enabled: True
+        version: null
+      jemmyw.rails-fast-nav:
+        enabled: True
+        version: null
+    {%- endif %}
+  zeal:
+    docsets:
+      Ruby:
+        enabled: True
+        version: null
+      Ruby_2:
+        enabled: True
+        version: null
+Windows:
+  env:
+    GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
+    GEM_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin') }}
+  gem:
+    opts:
+      global:
+        gem_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin', 'gem.cmd') }}
+  scoop:
+    pkgs:
+      ruby:
+        enabled: True
+        version: null
+  vscode:
+    extensions:
+      rebornix.Ruby:
+        settings:
+          ruby.interpreter.commandPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin', 'gem.cmd') }}
+      castwide.solargraph:
+        settings:
+          solargraph.commandPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin', 'solargraph.bat') }}
+    {%- if salt['pillar.get']('vscode-anywhere:ruby:rails', False) %}
+      aki77.haml-lint:
+        settings:
+          hamlLint.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin', 'haml-lint.bat') }}
+    {%- endif %}

@@ -1,0 +1,36 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      ms-vscode-remote.remote-ssh:
+        enabled: True
+        version: null
+      # ms-vsonline.vsonline:
+      #   enabled: True
+      #   version: null
+Windows:
+  vscode:
+    extensions:
+      ms-vscode-remote.remote-ssh:
+        settings:
+          remote.SSH.path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'git', 'usr', 'bin', 'ssh.exe') }}
+# Note git include the ssh binary that is required for the plugin ms-vscode-remote.remote-ssh
+# windows_admin:
+#   vscode:
+#     extensions:
+#       ms-vscode-remote.remote-containers:
+#         enabled: False
+#         version: null
+#       ms-vscode-remote.remote-wsl:
+#         enabled: False
+#         version: null
+#   pkgs:
+#     scoop:
+#       docker-cli:
+#         enabled: False
+#         version: null
+# Linux:
+#   pkgs:
+#     openssh:
+#       enabled: True
+#       version: null

@@ -1,0 +1,24 @@
+/* This line is theme specific - it includes the base theme CSS */
+/* @import 'theme.css'; */
+
+/*
+There is no default color for the theme
+This workaround may be removed when it will be fixed
+*/
+body {
+    background-color: #fff;
+  }
+
+code.file span {
+    /* color: rgb(62, 112, 206); */
+    font-style: italic;
+}
+
+div.youtube {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    height: auto;
+}

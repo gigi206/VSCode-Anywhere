@@ -1,0 +1,27 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      # donjayamanne.githistory:
+      #   enabled: True
+      #   version: null
+      mhutchie.git-graph:
+        enabled: True
+        version: null
+      eamodio.gitlens:
+        enabled: True
+        version: null
+        settings:
+          gitlens.defaultGravatarsStyle: retro
+      Hirse.vscode-ungit:
+        enabled: True
+        version: null
+        settings:
+          ungit.showButton: True
+          ungit.showInActiveColumn: True
+      lamartire.git-indicators:
+        enabled: True
+        version: null
+      # mhutchie.git-graph:
+      #   enabled: True
+      #   version: null

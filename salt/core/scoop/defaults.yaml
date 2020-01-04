@@ -1,0 +1,14 @@
+default:
+  enabled: False
+Windows:
+  # FIXME: scoop.cmd must change to scoop.ps1
+  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'scoop.cmd') }}
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims') }}
+    SCOOP: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop') }}
+  upgrade: True
+  enabled: True
+  buckets:
+    - extras
+    - java
+    - versions

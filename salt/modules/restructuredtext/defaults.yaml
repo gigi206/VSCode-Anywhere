@@ -1,0 +1,49 @@
+default:
+  enabled: False
+  pip:
+    opts:
+      global: {}
+      install:
+        upgrade: False
+      update:
+        upgrade: True
+      uninstall: {}
+    pkgs:
+      docutils:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      sphinx:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      sphinx-autobuild:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      doc8:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+  vscode:
+    extensions:
+      lextudio.restructuredtext:
+        enabled: True
+        version: null
+Windows:
+  pip:
+    opts:
+      global:
+        bin_env: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pip.exe') }}

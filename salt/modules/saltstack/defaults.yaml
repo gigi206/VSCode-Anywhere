@@ -1,0 +1,18 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      korekontrol.saltstack:
+        enabled: True
+        version: null
+        settings:
+          dash.languageIdToDocsetMap.sls:
+            - salt
+  zeal:
+    docsets:
+      SaltStack:
+        enabled: True
+        version: null
+      Jinja:
+        enabled: True
+        version: null

@@ -1,0 +1,45 @@
+{%- import_yaml 'salt/core/scoop/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/scoop/installmap.yaml' as installmap %}
+
+
+{%- set scoop = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:scoop_core', {})
+  )
+) %}
+
+
+{%- macro scoop_pkg(conf, action='install') %}
+
+{%- if action == 'install' %}
+  {%- set func = 'scoop.pkg_installed' %}
+{%- elif action == 'update' %}
+  {%- set func = 'scoop.pkg_latest' %}
+{%- elif action == 'uninstall' %}
+  {%- set func = 'scoop.pkg_removed' %}
+{%- else %}
+  {{ raise('{} is not valid action for the scoop_pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
+{%- endif %}
+
+{%- for pkg, pkg_attr in conf.get('scoop', {}).get('pkgs', {}).items() %}
+{%- if pkg_attr.get('enabled') %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
+  {{ func }}:
+    - name: {{ pkg }}
+    - path: {{ scoop.path }}
+  {%- if action in ['install', 'uninstall'] and pkg_attr.get('version') %}
+    - version: {{ pkg_attr.version | string }}
+  {%- elif action == 'update' and not pkg_attr.get('version') %}
+    - force: True
+  {%- elif action == 'uninstall' %}
+    - purge: True
+  {%- endif %}
+    # - require:
+    #   - sls: salt/utils/sync
+  {%- if sls != 'salt/core/scoop/install' %}
+    - require:
+      - sls: salt/core/scoop/install
+  {%- endif %}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}

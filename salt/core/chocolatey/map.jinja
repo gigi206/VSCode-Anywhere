@@ -1,0 +1,41 @@
+{%- import_yaml 'salt/core/chocolatey/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/chocolatey/installmap.yaml' as installmap %}
+
+
+{%- set chocolatey = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:chocolatey_core', {})
+  )
+) %}
+
+
+{%- macro chocolatey_pkg(conf, action='install') %}
+
+{%- if action == 'install' %}
+    {%- set func = 'chocolatey.installed' %}
+{%- elif action == 'update' %}
+    {%- set func = 'chocolatey.upgraded' %}
+{%- elif action == 'uninstall' %}
+    {%- set func = 'chocolatey.uninstalled' %}
+{%- else %}
+    {{ raise('{} is not valid action for the pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
+{%- endif %}
+
+{%- for pkg, pkg_attr in conf.get('chocolatey', {}).get('pkgs', {}).items() %}
+{%- if pkg_attr.get('enabled') %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
+  {{ func }}:
+    - name: {{ pkg }}
+  {%- if action in ['install', 'update'] and pkg_attr.get('version') %}
+    - version: {{ pkg_attr.version | string }}
+  {%- endif %}
+  {%- if action in ['install', 'update'] and pkg_attr.get('package_args') %}
+    - package_args: {{ pkg_attr.package_args }}
+  {%- endif %}
+  {%- if sls != 'salt/core/chocolatey/install' %}
+    - require:
+      - sls: salt/core/chocolatey/install
+  {%- endif %}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}

@@ -1,0 +1,18 @@
+default:
+  enabled: True
+  vscode:
+    extensions:
+      deerawan.vscode-dash:
+        enabled: True
+        version: null
+Windows:
+  scoop:
+    pkgs:
+      zeal:
+        enabled: True
+        version: null
+      vcredist2019-portable:
+        enabled: True
+        version: null
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vcredist2019-portable', 'current', 'System64') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vcredist2019-portable', 'current', 'System') }}

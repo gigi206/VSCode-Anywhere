@@ -1,0 +1,9 @@
+{%- import_yaml 'salt/modules/markdown/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/modules/markdown/installmap.yaml' as installmap %}
+
+
+{%- set markdown = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:markdown', {})
+  )
+) %}

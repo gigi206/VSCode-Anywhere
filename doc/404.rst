@@ -1,0 +1,6 @@
+==============
+Page not found
+==============
+
+.. image:: _static/img/http_404.jpg
+    :alt: Page not found

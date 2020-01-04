@@ -1,0 +1,121 @@
+{%- if salt['grains.get']('kernel') == 'Windows' %}
+  {%- set path = [salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current', 'bin'), salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'maven', 'current', 'bin')] %}
+  {%- if salt['pillar.get']('vscode-anywhere:java:quarkus', False) %}
+    {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'graalvm', 'current', 'bin')) %}
+  {%- endif %}
+{%- endif %}
+default:
+  enabled: False
+  spring_boot: False
+  quarkus: False
+  jetty: False
+  tomcat: False
+  vscode:
+    extensions:
+      vscjava.vscode-java-pack: # Needed to keep the java overview page
+        enabled: True
+        version: null
+      redhat.java:
+        enabled: True
+        version: null
+      vscjava.vscode-java-debug:
+        enabled: True
+        version: null
+      vscjava.vscode-java-test:
+        enabled: True
+        version: null
+      vscjava.vscode-maven:
+        enabled: True
+        version: null
+      vscjava.vscode-java-dependency:
+        enabled: True
+        version: null
+      VisualStudioExptTeam.vscodeintellicode:
+        enabled: True
+        version: null
+      shengchen.vscode-checkstyle:
+        enabled: True
+        version: null
+      redhat.vscode-xml: # To validate java pom.xml
+        enabled: True
+        version: null
+      # chuckjonas.apex-pmd:
+      #   enabled: True
+      #   version: null
+    {%- if salt['pillar.get']('vscode-anywhere:java:spring_boot', False) %}
+      pivotal.vscode-spring-boot:
+        enabled: True
+        version: null
+      vscjava.vscode-spring-initializr:
+        enabled: True
+        version: null
+      vscjava.vscode-spring-boot-dashboard:
+        enabled: True
+        version: null
+    {%- endif %}
+    {%- if salt['pillar.get']('vscode-anywhere:java:quarkus', False) %}
+      redhat.vscode-quarkus:
+        enabled: True
+        version: null
+    {%- endif %}
+    {%- if salt['pillar.get']('vscode-anywhere:java:jetty', False) %}
+      SummerSun.vscode-jetty:
+        enabled: True
+        version: null
+    {%- endif %}
+    {%- if salt['pillar.get']('vscode-anywhere:java:tomcat', False) %}
+      adashen.vscode-tomcat:
+        enabled: True
+        version: null
+    {%- endif %}
+  zeal:
+    docsets:
+      Java_SE12:
+        enabled: True
+        version: null
+Windows:
+  vscode:
+    extensions:
+      redhat.java:
+        settings:
+          java.home: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current') }}
+      redhat.vscode-xml:
+        settings:
+          xml.java.home: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current') }}
+  env:
+    PATH: {{ path | join(';') }}
+    JAVA_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current') }}
+    JDK_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current') }}
+  {%- if salt['pillar.get']('vscode-anywhere:java:tomcat', False) %}
+    CATALINA_BASE: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'tomcat', 'current') }}
+    CATALINA_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'tomcat', 'current') }}
+  {%- endif %}
+{%- if salt['pillar.get']('vscode-anywhere:java:jetty', False) %}
+    # JETTY_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey', 'lib', 'jetty', 'tools', 'jetty') }} #FIXME: manage the target (ie jetty-distribution-9.4.20.v20190813) dynamically...
+  chocolatey:
+    pkgs:
+      jetty:
+        enabled: True
+        version: null
+{%- endif %}
+  scoop:
+    pkgs:
+      openjdk:
+        enabled: True
+        version: null
+      maven:
+        enabled: True
+        version: null
+      gradle:
+        enabled: True
+        version: null
+    {%- if salt['pillar.get']('vscode-anywhere:java:tomcat', False) %}
+      tomcat:
+        enabled: True
+        version: null
+    {%- endif %}
+    {%- if salt['pillar.get']('vscode-anywhere:java:quarkus', False) %}
+      graalvm:
+        enabled: True
+        version: null
+    {%- endif %}
