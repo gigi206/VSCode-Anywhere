@@ -1,0 +1,7 @@
+{%- import_yaml 'salt/modules/custom/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/modules/custom/installmap.yaml' as installmap %}
+
+
+{%- set custom = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['pillar.get']('vscode-anywhere:custom', {})
+) %}

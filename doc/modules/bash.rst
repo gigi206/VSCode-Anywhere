@@ -1,7 +1,7 @@
 .. _module_bash:
 
 =========
-Bash / SH
+Bash / Sh
 =========
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/8/82/Gnu-bash-logo.svg

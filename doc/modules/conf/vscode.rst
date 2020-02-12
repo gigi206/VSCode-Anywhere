@@ -6,6 +6,8 @@ vscode
 
 Allow to manage `vscode <https://code.visualstudio.com>`_.
 
+.. _module_conf_vscode_extensions:
+
 extensions
 ##########
 
@@ -54,6 +56,8 @@ Example to install ``python3`` extensions:
     This is just an example and the extension ``alefragnani.Bookmarks`` is not
     set in the ``python3`` module.
 
+.. _module_conf_vscode_settings:
+
 settings
 ########
 
@@ -91,6 +95,8 @@ Simple example with ``python3``:
 
     Note that custom grains are set in the
     ``<install_dir>/conf/saltstack/conf/grains`` file.
+
+.. _module_conf_vscode_keybindings:
 
 keybindings
 ###########

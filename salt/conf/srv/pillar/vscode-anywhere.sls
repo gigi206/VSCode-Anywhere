@@ -1,4 +1,6 @@
 vscode-anywhere:
+  custom:
+    enabled: False
   ansible:
     enabled: False
   bash:
