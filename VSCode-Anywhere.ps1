@@ -42,7 +42,7 @@ function OutputErrror([string]$msg, [bool]$newline=$true, [bool]$exit=$true, [in
 
 function Init() {
     Header "VSCode-Anywhere"
-    Output "Environment         : ${Gitenv}"
+    Output "Environment          : ${Gitenv}"
     # Output "Saltstack version   : ${SaltVersion}"
     Output "Installation profile : ${Profile}"
     Output "Installation dir     : ${InstallDir}"
