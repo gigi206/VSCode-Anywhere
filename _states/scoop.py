@@ -280,7 +280,6 @@ def buckets_uptodate(
             ret["result"] = None
         else:
             cmd = __salt__["scoop.bucket_latest"](
-                name,
                 force=force,
                 globally=globally,
                 independent=independent,
