@@ -4,7 +4,7 @@
 Param(
     [string]$Gitenv = "master",
     [string]$InstallDir = "C:\VSCode-Anywhere",
-    [string]$SaltVersion = "2019.2.2",
+    [string]$SaltVersion = "3000",
     [string]$Profile = "windows_user"
 )
 
@@ -142,7 +142,7 @@ function InstallSaltstack {
     Header "Saltstack"
     try {
         # Download Saltstack
-        Output "Downloading Saltstack"
+        Output "Downloading Saltstack ${SaltVersion}"
         Invoke-WebRequest -Uri https://repo.saltstack.com/windows/Salt-Minion-${SaltVersion}-Py3-AMD64-Setup.exe -OutFile "${Apps}\saltstack.exe"
 
         # Create salt directory
@@ -153,7 +153,7 @@ function InstallSaltstack {
 
         # syncing saltstack with my custom git repo
         Output "Syncing saltstack with custom patches"
-        Set-Location ${SaltstackDir}\bin\Lib\site-packages
+        Set-Location ${SaltstackDir}\bin\Lib\site-packages\salt-*
         Rename-Item -Path salt -NewName salt.orig
         & git init .
         & git config core.sparsecheckout true
@@ -162,11 +162,11 @@ function InstallSaltstack {
         Add-Content -Path ".gitignore" -Value "!salt"
         & git remote add origin https://github.com/gigi206/salt.git
         if (${env:VSCode_Anywhere_CI}) {
-            & git pull --quiet --depth=1 origin vsc${SaltVersion}
+            & git pull --quiet --depth=100 origin vsc${SaltVersion}
             & git checkout --quiet vsc${SaltVersion}
         }
         else {
-            & git pull --depth=1 origin vsc${SaltVersion}
+            & git pull --depth=100 origin vsc${SaltVersion}
             & git checkout vsc${SaltVersion}
         }
         & git branch -d master
