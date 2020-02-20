@@ -85,6 +85,12 @@ default:
           update: {}
           uninstall: {}
     {%- if salt['pillar.get']('vscode-anywhere:ruby:rails', False) %}
+      rails:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
       haml_lint:
         enabled: True
         opts:
@@ -148,7 +154,7 @@ default:
   zeal:
     docsets:
       Ruby:
-        enabled: True
+        enabled: False
         version: null
       Ruby_2:
         enabled: True

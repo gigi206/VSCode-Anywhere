@@ -287,6 +287,7 @@ If ``rails`` is set to ``True`` then the following packages will also be
 installed:
 
 - `haml_lint <https://rubygems.org/gems/haml_lint>`_
+- `rails <https://rubygems.org/gems/rails>`_
 
 .. code-block:: yaml
 
@@ -320,6 +321,8 @@ installed:
                     enabled: True
                 haml_lint:
                     enabled: True
+                rails:
+                    enabled: True
 
 You can use advanced gem options:
 
@@ -341,9 +344,9 @@ You can use advanced gem options:
             pkgs:
                 solargraph:
                     enabled: True
-                    version: '0.38.0'
                     opts:
-                        install: {}
+                        install:
+                            version: '0.38.0'
                         update: {}
                         uninstall: {}
 
