@@ -37,9 +37,9 @@ vscode-anywhere:
     enabled: False
   puppet:
     enabled: False
-    anaconda: False
   python2:
     enabled: False
+    anaconda: False
   python3:
     enabled: False
     anaconda: False
