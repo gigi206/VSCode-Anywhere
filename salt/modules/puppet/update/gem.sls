@@ -23,13 +23,14 @@ include:
 
   {%- for pkg, pkg_attr in puppet.gem.pkgs.items() %}
     {%- if pkg_attr.get('enabled' and pkg in updates) %}
-      {%- do options.update(pkg_attr.opts.get('update')) %}
+      {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+      {%- do options_tmp.update(pkg_attr.opts.get('update')) %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
   gem.installed:
     - name: {{ pkg }}
-  {%- for opt, opt_attr in options.items() %}
+    {%- for opt, opt_attr in options_tmp.items() %}
     - {{ opt }}: {{ opt_attr }}
-  {%- endfor %}
+    {%- endfor %}
     - require:
       - sls: salt/modules/ruby/install
     {%- endif %}

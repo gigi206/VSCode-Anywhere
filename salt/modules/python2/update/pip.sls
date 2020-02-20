@@ -10,7 +10,8 @@ include:
 
   {%- for pkg, pkg_attr in python2.pip.pkgs.items() %}
     {%- if pkg_attr.get('enabled') %}
-      {%- do options.update(pkg_attr.opts.get('update')) %}
+      {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+      {%- do options_tmp.update(pkg_attr.opts.get('update')) %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
   pip.installed:
     {%- if pkg_attr.get('version') %}
@@ -19,9 +20,9 @@ include:
     {%- else %}
     - name: {{ pkg }}
     {%- endif %}
-  {%- for opt, opt_attr in options.items() %}
+    {%- for opt, opt_attr in options_tmp.items() %}
     - {{ opt }}: {{ opt_attr }}
-  {%- endfor %}
+    {%- endfor %}
     - require:
       - sls: salt/modules/python2/install
     {%- endif %}

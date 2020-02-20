@@ -9,11 +9,12 @@ include:
 {%- do options.update(javascript.npm.opts.uninstall) %}
 
 {%- for pkg, pkg_attr in javascript.npm.pkgs.items() %}
-  {%- do options.update(pkg_attr.opts.uninstall) %}
+  {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+  {%- do options_tmp.update(pkg_attr.opts.uninstall) %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
   npm.removed:
     - name: {{ pkg }}
-  {%- for opt, opt_attr in options.items() %}
+  {%- for opt, opt_attr in options_tmp.items() %}
     - {{ opt }}: {{ opt_attr }}
   {%- endfor %}
     - require:

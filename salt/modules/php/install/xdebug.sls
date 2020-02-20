@@ -13,6 +13,22 @@ include:
     - repl: 'zend_extension={{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php-xdebug', 'current', 'php_xdebug.dll') | json }}'
     - backup: False
     - require:
-        - sls: salt/modules/php/install
-        - scoop: php-xdebug
+      - sls: salt/modules/php/install
+      - scoop: php-xdebug
+
+
+{#-
+{{ salt['vscode_anywhere.get_id'](sls) + ':xdebug-fix' }}:
+  cmd.run: # FIXME: implement scoop.reset instead
+    - names:
+      - scoop uninstall php-xdebug
+      - scoop install php-xdebug
+    - require:
+      - sls: salt/modules/php/install
+      - scoop: php-xdebug
+    - unless:
+      - if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}' -PathType Leaf)) { exit 1 }
+      - fun: file.file_exists
+        path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}
+#}
 {%- endif %}

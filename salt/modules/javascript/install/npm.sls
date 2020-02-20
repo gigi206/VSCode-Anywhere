@@ -33,7 +33,8 @@ include:
 
   {%- for pkg, pkg_attr in javascript.npm.pkgs.items() %}
     {%- if pkg_attr.get('enabled') %}
-      {%- do options.update(pkg_attr.opts.install) %}
+      {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+      {%- do options_tmp.update(pkg_attr.opts.install) %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
   npm.installed:
     {%- if pkg_attr.get('version') %}
@@ -41,9 +42,9 @@ include:
     {%- else %}
     - name: {{ pkg }}
     {%- endif %}
-  {%- for opt, opt_attr in options.items() %}
+    {%- for opt, opt_attr in options_tmp.items() %}
     - {{ opt }}: {{ opt_attr }}
-  {%- endfor %}
+    {%- endfor %}
     - require:
       - sls: salt/modules/javascript/install
     {%- endif %}
