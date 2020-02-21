@@ -15,7 +15,8 @@ install:
   - ps: |
       # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -Profile windows_admin
       .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH}
-      Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${env:APPVEYOR_REPO_BRANCH}/salt/conf/tests/windows/vscode-anywhere.sls -OutFile "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+      Copy-Item "C:\projects\vscode-anywhere\salt\conf\tests\windows\vscode-anywhere.sls" -Destination "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+      # Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${env:APPVEYOR_REPO_BRANCH}/salt/conf/tests/windows/vscode-anywhere.sls -OutFile "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
       # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
       # gci env:* | sort-object name
       # $env:path -split ";" | Sort-Object
