@@ -5,7 +5,7 @@ platform: x64
 #    - dev
 only_commits:
   files:
-    - salt/*
+    - salt/**/*
     - appveyor.yml
     - VSCode-Anywhere.ps1
 environment:
