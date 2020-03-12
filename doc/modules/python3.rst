@@ -67,7 +67,7 @@ settings:
 .. code-block:: powershell
 
     cd <path_to_your_project>
-    . C:\VSCode-Anywhere\tools\env.ps1
+    . <installation_directory>\tools\env.ps1
     .\<env>\bin\activate
     VSCode-Anywhere .
 
@@ -93,7 +93,7 @@ settings:
 .. code-block:: powershell
 
     cd <path_to_your_project>
-    . C:\VSCode-Anywhere\tools\env.ps1
+    . <installation_directory>\tools\env.ps1
     pipenv shell
     VSCode-Anywhere .
 
@@ -221,8 +221,8 @@ corrects Python indentation in Visual Studio Code.
 tushortz.python-extended-snippets
 *********************************
 
-`Python Extended <https://marketplace.visualstudio.com/items?itemName=tushortz.python-extended-snippets>`
-_ is a vscode snippet that makes it easy to write codes in python by providing
+`Python Extended <https://marketplace.visualstudio.com/items?itemName=tushortz.python-extended-snippets>`_
+is a vscode snippet that makes it easy to write codes in python by providing
 completion options along with all arguments.
 
 .. image:: https://raw.githubusercontent.com/tushortz/vscode-Python-Extended/master/images/preview.gif
@@ -231,7 +231,7 @@ completion options along with all arguments.
 littlefoxteam.vscode-python-test-adapter
 ****************************************
 
-This `extension <littlefoxteam.vscode-python-test-adapter>`__ allows you to run
+This `extension <littlefoxteam.vscode-python-test-adapter>`_ allows you to run
 your Python `Unittest <https://docs.python.org/3/library/unittest.html#module-unittest>`_
 or `Pytest <https://docs.pytest.org/en/latest/>`__.
 
@@ -314,7 +314,7 @@ If the profile is set to ``windows_admin`` or ``windows_user``:
         "code-runner.executorMap.python": "$pythonPath -u $fullFileName"
     }
 
-If ``anaconda is set to ``True``, the followings settings will change:.
+If ``anaconda`` is set to ``True``, the followings settings will change:
 
 .. code-block:: json
 

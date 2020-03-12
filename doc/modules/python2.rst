@@ -27,7 +27,7 @@ have good environment.
     Assuming you have installed in the default directory ``C:\VSCode-Anywhere``.
 
     Note that in the following examples ``VSCode-Anywhere`` can also be replaced
-    by ``C:\VSCode-Anywhere\tools\vscode.ps1``.
+    by ``<installation_directory>\tools\vscode.ps1``.
 
 Use case VSCode settings
 ************************
@@ -65,7 +65,7 @@ settings:
 .. code-block:: powershell
 
     cd <path_to_your_project>
-    . C:\VSCode-Anywhere\tools\env.ps1
+    . <installation_directory>\tools\env.ps1
     .\<env>\bin\activate
     VSCode-Anywhere .
 
@@ -214,8 +214,8 @@ corrects Python indentation in Visual Studio Code.
 tushortz.python-extended-snippets
 *********************************
 
-`Python Extended <https://marketplace.visualstudio.com/items?itemName=tushortz.python-extended-snippets>`
-_ is a vscode snippet that makes it easy to write codes in python by providing
+`Python Extended <https://marketplace.visualstudio.com/items?itemName=tushortz.python-extended-snippets>`_
+is a vscode snippet that makes it easy to write codes in python by providing
 completion options along with all arguments.
 
 .. image:: https://raw.githubusercontent.com/tushortz/vscode-Python-Extended/master/images/preview.gif
@@ -288,7 +288,7 @@ If the profile is set to ``windows_admin`` or ``windows_user``:
         "code-runner.executorMap.python": "$pythonPath -u $fullFileName"
     }
 
-If ``anaconda is set to ``True``, the followings settings will change:.
+If ``anaconda`` is set to ``True``, the followings settings will change:
 
 .. code-block:: json
 
