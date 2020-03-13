@@ -1,11 +1,16 @@
 default:
   enabled: False
   fonts:
-    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Bold.ttf
-    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Light.ttf
-    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Medium.ttf
-    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Regular.ttf
-    - https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Retina.ttf
+    FiraCode:
+      provider: git
+      url: https://github.com/tonsky/FiraCode.git
+      files:
+        - distr/ttf/FiraCode-Bold.ttf
+        - distr/ttf/FiraCode-Light.ttf
+        - distr/ttf/FiraCode-Medium.ttf
+        - distr/ttf/FiraCode-Regular.ttf
+        - distr/ttf/FiraCode-Retina.ttf
+        - distr/ttf/FiraCode-SemiBold.ttf
   vscode:
     settings:
       editor.fontLigatures: True

@@ -1,9 +1,9 @@
 {%- import_yaml 'salt/core/vscode/defaults.yaml' as defaults %}
-{%- import_yaml 'salt/core/vscode/installmap.yaml' as installmap %}
+{%- import_yaml 'salt/core/vscode/profilemap.yaml' as profilemap %}
 
 
 {%- set vscode = salt['grains.filter_by'](defaults, grain='kernel', base='default',
-  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
     merge=salt['pillar.get']('vscode-anywhere:vscode_core', {})
   )
 ) %}
@@ -27,7 +27,7 @@
     - name: {{ ext }}
     - dir: {{ vscode.extensions_dir }}
     - path: {{ vscode.path }}
-  {%- if action in ['install', 'update'] and ext_attr.get('version', None) %}
+  {%- if action in ['install', 'update'] and ext_attr.get('version') %}
     - version: {{ ext_attr.version | string }}
   {%- endif %}
     # - require:
@@ -93,7 +93,7 @@
 
 
 {%- macro keybindings(conf, action='install') %}
-  {%- if action == 'install' or action == 'update' %}
+  {%- if action in ['install', 'update'] %}
     {%- set func = 'vscode.keybindings_updated' %}
   {%- elif action == 'uninstall' %}
     {%- set func = 'vscode.keybindings_removed' %}

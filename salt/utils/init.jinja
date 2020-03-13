@@ -1,4 +1,4 @@
-{%- macro init(conf, action='install', func=['env', 'extensions', 'settings', 'keybindings', 'docset', 'cmd', 'chocolatey', 'msys2', 'scoop'], include=[]) %}
+{%- macro init(conf, action='install', func=['env', 'extensions', 'settings', 'keybindings', 'docset', 'cmd', 'chocolatey', 'msys2', 'scoop', 'nix', 'brew'], include=[]) %}
   {%- if conf.enabled or action == 'uninstall' %}
     {%- set _include = [] %}
 
@@ -10,14 +10,30 @@
     {%- endfor %}
     #}
 
-    {%- if salt['grains.get']('kernel') != 'Windows' %}
-      {%- for f in ['scoop', 'chocolatey', 'msys2'] %}
-        do func.remove(f)
+    {%- if salt['grains.get']('kernel') == 'Windows' %}
+      {%- for f in ['nix', 'brew'] | intersect(func) %}
+        {%- do func.remove(f) %}
+      {%- endfor %}
+    {%- else %}
+      {%- for f in ['scoop', 'chocolatey', 'msys2'] | intersect(func) %}
+        {%- do func.remove(f) %}
       {%- endfor %}
     {%- endif %}
 
     {%- if 'env' in func %}
       {%- from 'salt/utils/macro.jinja' import env with context %}
+    {%- endif %}
+
+    {%- if 'nix' in func %}
+      {%- from 'salt/core/nix/map.jinja' import nix_pkg with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/nix/install') %}
+    {%- endif %}
+
+    {%- if 'brew' in func %}
+      {%- from 'salt/core/brew/map.jinja' import brew_pkg with context %}
+      {#- {%- do _include.append('salt/utils/sync') %} #}
+      {%- do _include.append('salt/core/brew/install') %}
     {%- endif %}
 
     {%- if 'scoop' in func %}
@@ -80,6 +96,14 @@ include:
 
     {%- if 'env' in func %}
       {{ env(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'nix' in func %}
+      {{ nix_pkg(conf, action=action) }}
+    {%- endif %}
+
+    {%- if 'brew' in func %}
+      {{ brew_pkg(conf, action=action) }}
     {%- endif %}
 
     {%- if 'scoop' in func %}

@@ -6,21 +6,7 @@ default:
       install: {}
       update: {}
       # uninstall: {}
-    pkgs:
-      Perl::Tidy:
-        enabled: True
-        version: null
-        opts:
-          install: {}
-          update: {}
-          # uninstall: {}
-      Perl::Critic:
-        enabled: True
-        version: null
-        opts:
-          install: {}
-          update: {}
-          # uninstall: {}
+    pkgs: {}
   vscode:
     extensions:
       cfgweb.vscode-perl:
@@ -36,7 +22,6 @@ default:
     docsets:
       Perl:
         enabled: True
-        version: null
 Windows:
   env:
     PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'c', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'site', 'bin') }}
@@ -54,11 +39,62 @@ Windows:
     opts:
       global:
         bin_env: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'perl', 'current', 'perl', 'bin', 'cpan.bat') }}
+    pkgs:
+      Perl::Tidy:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          # uninstall: {}
+      Perl::Critic:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          # uninstall: {}
   scoop:
     pkgs:
       perl:
         enabled: True
-        version: null
       ctags:
         enabled: True
-        version: null
+Linux:
+  vscode:
+    extensions:
+      cfgweb.vscode-perl:
+        settings:
+          # perl.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'ctags') }}
+          # perl.perltidy: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'perltidy') }}
+          perl.ctagsPath: /home/linuxbrew/.linuxbrew/bin/ctags
+          perl.perltidy: /home/linuxbrew/.linuxbrew/bin/perltidy
+      d9705996.perl-toolbox:
+        settings:
+          perl-toolbox.syntax.path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin') }}
+          perl-toolbox.lint.exec: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'perlcritic') }}
+  cpan:
+    opts:
+      global:
+        # bin_env: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'cpan') }}
+        bin_env: /home/linuxbrew/.linuxbrew/bin/cpan
+  brew:
+    pkgs:
+      # make and gcc packages are required by perl
+      # because when the installation of perl, it runs "cpan -i XML::Parser"
+      # and XML::Parser and requires make and gcc packages
+      make:
+        enabled: True
+      gcc:
+        enabled: True
+      perl:
+        enabled: True
+      perltidy:
+        enabled: True
+      ctags:
+        enabled: True
+  nix:
+    pkgs:
+      perl528Packages.PerlCritic:
+        enabled: True
+        attr: nixpkgs.perl528Packages.PerlCritic

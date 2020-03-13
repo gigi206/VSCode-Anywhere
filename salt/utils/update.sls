@@ -1,7 +1,11 @@
 include:
+    # Install
     - salt/core
-    - salt/modules
+    # - salt/modules
     - salt/utils/tools
+    # Update
+    - salt/core/nix/update
+    - salt/core/brew/update
     - salt/core/chocolatey/update
     # - salt/core/git/update # FIXME: try to update git on Windows before to enable
     - salt/core/msys2/update
@@ -9,10 +13,12 @@ include:
     - salt/core/scoop/update
     - salt/core/vscode/update
     - salt/core/zeal/update
+    - salt/core/misc/update
     - salt/modules/ansible/update
     - salt/modules/bash/update
     - salt/modules/c_cpp/update
     - salt/modules/csharp/update
+    - salt/modules/deepcode/update
     - salt/modules/docker/update
     - salt/modules/fonts/update
     - salt/modules/git/update

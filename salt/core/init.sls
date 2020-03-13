@@ -1,5 +1,7 @@
 include:
     - salt/core/env
+    - salt/core/nix
+    - salt/core/brew
     - salt/core/scoop
     - salt/core/chocolatey
     - salt/core/msys2
@@ -8,3 +10,4 @@ include:
     - salt/core/saltstack
     - salt/core/git
     - salt/core/terminal
+    - salt/core/misc

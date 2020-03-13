@@ -12,7 +12,6 @@ default:
     docsets:
       Powershell:
         enabled: True
-        version: null
 Windows:
 {#-
   env:
@@ -22,6 +21,8 @@ Windows:
     pkgs:
       pwsh:
         enabled: True
+      # pester:
+      #   enabled: True
   vscode:
     extensions:
       ms-vscode.PowerShell:
@@ -32,3 +33,33 @@ Windows:
               versionName: Windows PowerShell
             - exePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'pwsh', 'current', 'pwsh.exe') }}
               versionName: Scoop PowerShell
+          terminal.integrated.shell.windows: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'pwsh', 'current', 'pwsh.exe') }}
+Linux:
+  nix:
+    pkgs:
+      powershell:
+        enabled: True
+        attr: nixpkgs.powershell
+  vscode:
+    extensions:
+      ms-vscode.PowerShell:
+        settings:
+          powershell.powerShellDefaultVersion: Nix PowerShell
+          powershell.powerShellAdditionalExePaths:
+            - exePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'pwsh') }}
+              versionName: Nix PowerShell
+Macos:
+  # vscode:
+  #   extensions:
+  #     ms-vscode.PowerShell:
+  #       settings:
+  #         powershell.powerShellDefaultVersion: Brew PowerShell
+  #         powershell.powerShellAdditionalExePaths:
+  #           - exePath: FIXME
+  #             versionName: Brew PowerShell
+  brew:
+    pkgs:
+      homebrew/cask/powershell:
+        enabled: True
+      homebrew/cask/pester:
+        enabled: True

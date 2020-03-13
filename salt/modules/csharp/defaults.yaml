@@ -2,7 +2,7 @@ default:
   enabled: False
   vscode:
     extensions:
-      ms-vscode.csharp:
+      ms-dotnettools.csharp:
         enabled: True
         version: null
       wghats.vscode-nxunit-test-adapter:
@@ -18,7 +18,6 @@ default:
     docsets:
       NET_Framework:
         enabled: True
-        version: null
 Windows:
   env:
     DOTNET_ROOT: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'dotnet-sdk', 'current') }}
@@ -34,10 +33,45 @@ Windows:
     pkgs:
       scriptcs:
         enabled: True
-        version: null
       dotnet-sdk:
         enabled: True
-        version: null
       nunit-console:
         enabled: True
-        version: null
+Linux:
+  nix:
+    pkgs:
+      NUnit.Console:
+        enabled: True
+        attr: nixpkgs.dotnetPackages.NUnitConsole
+      dotnet-sdk:
+        enabled: True
+        attr: nixpkgs.dotnet-sdk_3
+      # mono:
+      #   enabled: True
+      #   attr: nixpkgs.mono
+  vscode:
+    extensions:
+      wghats.vscode-nxunit-test-adapter:
+        settings:
+          nxunitExplorer.nunit: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'nunit3-console') }}
+Macos:
+  brew:
+    pkgs:
+      scriptcs:
+        enabled: True
+  nix:
+    pkgs:
+      NUnit.Console:
+        enabled: True
+        attr: nixpkgs.dotnetPackages.NUnitConsole
+      dotnet-sdk:
+        enabled: True
+        attr: nixpkgs.dotnet-sdk_3
+      # mono:
+      #   enabled: True
+      #   attr: nixpkgs.mono
+  vscode:
+    extensions:
+      wghats.vscode-nxunit-test-adapter:
+        settings:
+          nxunitExplorer.nunit: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'nunit3-console') }}

@@ -12,6 +12,60 @@ default:
         ri: True
       uninstall: {}
     pkgs:
+      asdf:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      minitest:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rubyfmt:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rufo:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rspec:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rspec-core:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rvm:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      standard:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      yard:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
       rdoc:
         enabled: True
         opts:
@@ -43,6 +97,12 @@ default:
           update: {}
           uninstall: {}
       ruby-debug-ide:
+        enabled: True
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      debase:
         enabled: True
         opts:
           install: {}
@@ -155,10 +215,8 @@ default:
     docsets:
       Ruby:
         enabled: False
-        version: null
       Ruby_2:
         enabled: True
-        version: null
 Windows:
   env:
     GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
@@ -172,7 +230,6 @@ Windows:
     pkgs:
       ruby:
         enabled: True
-        version: null
   vscode:
     extensions:
       rebornix.Ruby:
@@ -186,3 +243,123 @@ Windows:
         settings:
           hamlLint.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin', 'haml-lint.bat') }}
     {%- endif %}
+Linux:
+  env:
+    GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'ruby') }}
+    GET_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'ruby') }}
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'ruby', 'bin') }}
+  gem:
+    opts:
+      global:
+        gem_bin: /home/linuxbrew/.linuxbrew/bin/gem
+    # pkgs:
+    #   nokogiri:
+    #     enabled: False
+    #   solargraph:
+    #     enabled: False
+{#-
+  brew_gem:
+    asdf:
+      enabled: True
+      version: null
+    debase:
+      enabled: True
+      version: null
+    debride:
+      enabled: True
+      version: null
+    fasterer:
+      enabled: True
+      version: null
+    fastri:
+      enabled: True
+      version: null
+    minitest:
+      enabled: True
+      version: null
+    pkg-config:
+      enabled: True
+      version: null
+    rdoc:
+      enabled: True
+      version: null
+    reek:
+      enabled: True
+      version: null
+    rubocop:
+      enabled: True
+      version: null
+    ruby-debug-ide:
+      enabled: True
+      version: null
+    ruby-lint:
+      enabled: True
+      version: null
+    rubyfmt:
+      enabled: True
+      version: null
+    rufo:
+      enabled: True
+      version: null
+    rspec:
+      enabled: True
+      version: null
+    rspec-core:
+      enabled: True
+      version: null
+    rvm:
+      enabled: True
+      version: null
+    solargraph:
+      enabled: True
+      version: null
+    standard:
+      enabled: True
+      version: null
+    yard:
+      enabled: True
+      version: null
+  {%- if salt['pillar.get']('vscode-anywhere:ruby:rails', False) %}
+    rails:
+      enabled: True
+      version: null
+    haml_lint:
+      enabled: True
+      version: null
+  {%- endif %}
+#}
+  brew:
+    pkgs:
+      ruby:
+        enabled: True
+      # brew-gem: # allow to use => brew gem install solargraph and have solargraph in /home/linuxbrew/.linuxbrew/bin/solargraph
+      #   enabled: True
+      # rbenv:
+      #   enabled: True
+      make:
+        enabled: True
+      gcc:
+        enabled: True
+      zlib:
+        enabled: True
+  vscode:
+    extensions:
+      rebornix.Ruby:
+        settings:
+          ruby.interpreter.commandPath: /home/linuxbrew/.linuxbrew/bin/gem
+      castwide.solargraph:
+        settings:
+          solargraph.commandPath: /home/linuxbrew/.linuxbrew/bin/solargraph
+    {%- if salt['pillar.get']('vscode-anywhere:ruby:rails', False) %}
+      aki77.haml-lint:
+        settings:
+          hamlLint.executablePath: /home/linuxbrew/.linuxbrew/bin/haml-lint
+    {%- endif %}
+  # nix:
+  #   pkgs:
+  #     ruby2.6.6-nokogiri:
+  #       enabled: True
+  #       attr: nixpkgs.rubyPackages.nokogiri
+  #     solargraph:
+  #       enabled: True
+  #       attr: nixpkgs.solargraph

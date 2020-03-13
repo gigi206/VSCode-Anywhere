@@ -2,4 +2,7 @@
 {%- from 'salt/modules/php/map.jinja' import php with context %}
 
 
-{{ init(php, action='install', include=['salt/modules/php/install/extensions', 'salt/modules/php/install/composer', 'salt/modules/php/install/xdebug']) }}
+{{ init(php, action='install', include=['salt/modules/php/install/extensions',
+                                        'salt/modules/php/install/composer',
+                                        'salt/modules/php/install/xdebug',
+                                        'salt/modules/php/install/pecl']) }}

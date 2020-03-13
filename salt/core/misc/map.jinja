@@ -1,0 +1,9 @@
+{%- import_yaml 'salt/core/misc/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/misc/profilemap.yaml' as profilemap %}
+
+
+{%- set misc = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:misc_core', {})
+  )
+) %}

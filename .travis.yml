@@ -1,0 +1,64 @@
+language: shell
+#sudo: true
+os: linux
+dist: bionic
+addons:
+  apt:
+    update: true
+    packages:
+      - bash
+#branches:
+#  only:
+#    - master
+#    - dev
+env:
+  global:
+    #- DISPLAY=:99.0
+    - LANG=fr_FR.UTF-8
+    - LC_ALL=fr_FR.UTF-8
+    - VSCode_Anywhere_CI=1
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+git:
+  depth: 20
+install:
+  - unset GEM_PATH
+  - unset GEM_HOME
+  - unset GOROOT
+  - unset GOPATH
+  - unset JAVA_HOME
+  - unset JRUBY_OPTS
+  - unset MERB_ENV
+  - unset MY_RUBY_HOME
+  - unset NVM_DIR
+  - unset PYENV_ROOT
+  - unset RACK_ENV
+  - unset RAILS_ENV
+  - unset rvm_bin_path
+  - unset rvm_path
+  - unset rvm_prefix
+#before_script:
+  #- mkdir -p /tmp/{Linux,Windows}
+  #- Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+script:
+  # Simulate a minimal installation without git curl gcc ruby etc to test brew
+  - sudo rm -fr /usr/local/*
+  - sudo apt-get --assume-yes purge gcc clang cmake make git ruby curl # test with a minimal installation to ensure brew works properly
+  - test -d ~/bin || mkdir ~/bin
+  # - wget https://github.com/gigi206/VSCode-Anywhere/releases/download/master/curl-linux-x86_64 -O ~/bin/curl
+  - cp bin/linux/curl-linux-x86_64 ~/bin/curl
+  - chmod +x ~/bin/curl
+  - export PATH=~/bin:$PATH
+  - curl -Lk https://curl.haxx.se/ca/cacert.pem > ~/cacert.pem
+  - export SSL_CERT_FILE=~/cacert.pem
+  # - cd "${TRAVIS_BUILD_DIR}"
+  # - ./VSCode-Anywhere.sh --gitenv ${TRAVIS_BRANCH} --profile linux_user --saltversion=dev
+  # - ./VSCode-Anywhere.sh --gitenv ${TRAVIS_BRANCH} --profile linux_user --saltopts 'pillar=\'{"vscode-anywhere":{"linux":{"install_desktop_files": true}}}\''
+  - ./VSCode-Anywhere.sh --gitenv ${TRAVIS_BRANCH} --profile linux_user
+  # - /home/travis/VSCode-Anywhere/apps/vscode-anywhere/bin/vscode-anywhere-chroot /home/travis/VSCode-Anywhere/apps/nixpkgs/nix /home/travis/VSCode-Anywhere/apps/linuxbrew bash -c ". /home/travis/VSCode-Anywhere/tools/env.sh; xxx"
+  - cp salt/conf/tests/linux/vscode-anywhere.sls ~/VSCode-Anywhere/conf/saltstack/pillar/vscode-anywhere.sls
+  # By default if there is no output for 10min, travis returns failed. Increate the value to 40min
+  - travis_wait 40 ~/VSCode-Anywhere/tools/install.sh
+  - ~/VSCode-Anywhere/tools/update.sh
+  - ~/VSCode-Anywhere/tools/link.sh
+  - mv ~/VSCode-Anywhere ~/VSCode-Anywhere-new
+  - ~/VSCode-Anywhere-new/tools/link.sh

@@ -1,4 +1,4 @@
 base:
   '*':
-    - vscode-Anywhere
+    - vscode-anywhere
     - saltstack

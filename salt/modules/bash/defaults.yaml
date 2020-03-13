@@ -12,13 +12,10 @@ default:
     docsets:
       Bash:
         enabled: True
-        version: null
       # Zsh:
       #   enabled: True
-      #   version: null
       Linux_Man_Pages:
         enabled: True
-        version: null
 Windows:
   vscode:
     extensions:
@@ -29,4 +26,14 @@ Windows:
     pkgs:
       shellcheck:
         enabled: True
-        version: null
+Linux:
+  vscode:
+    extensions:
+      timonwong.shellcheck:
+        settings:
+          # shellcheck.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'shellcheck') }}
+          shellcheck.executablePath: /home/linuxbrew/.linuxbrew/bin/shellcheck
+  brew:
+    pkgs:
+      shellcheck:
+        enabled: True

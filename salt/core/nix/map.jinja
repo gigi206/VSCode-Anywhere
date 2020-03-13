@@ -1,0 +1,60 @@
+{%- import_yaml 'salt/core/nix/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/nix/profilemap.yaml' as profilemap %}
+
+
+{%- set nix = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:nix_core', {})
+  )
+) %}
+
+
+{%- macro nix_pkg(conf, action='install') %}
+  {%- set options = conf.get('nix', {}).get('opts', {}).get('global', {}) %}
+
+  {%- if action == 'install' %}
+    {%- set func = 'nix.pkg_installed' %}
+    {%- do options.update(conf.get('nix', {}).get('opts', {}).get('install', {})) %}
+  {%- elif action == 'update' %}
+    {%- set func = 'nix.pkg_latest' %}
+    {%- do options.update(conf.get('nix', {}).get('opts', {}).get('update', {})) %}
+  {%- elif action == 'uninstall' %}
+    {%- set func = 'nix.pkg_removed' %}
+    {%- do options.update(conf.get('nix', {}).get('opts', {}).get('uninstall', {})) %}
+  {%- else %}
+    {{ raise('{} is not valid action for the nix_pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
+  {%- endif %}
+  {%- for pkg, pkg_attr in conf.get('nix', {}).get('pkgs', {}).items() %}
+    {%- if pkg_attr.get('enabled') %}
+      {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+      {%- do options_tmp.update(pkg_attr.get('opts', {}).get('global', {})) %}
+      {%- if action == 'install' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('install', {})) %}
+      {%- elif action == 'update' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('update', {})) %}
+      {%- elif action == 'uninstall' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('uninstall', {})) %}
+      {%- endif %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
+  {{ func }}:
+      {%- if action == 'install' %}
+    - name: {{ pkg_attr.get('attr', pkg) }}
+        {%- if pkg_attr.get('attr') %}
+    - attributes: True
+        {%- endif %}
+      {%- else %}
+    - name: {{ pkg }}
+      {%- endif %}
+      {%- for opt, opt_attr in options_tmp.items() %}
+        {%- if sls != 'salt/core/nix/install' and opt == 'require' %}
+        {%- do opt_attr.append({'sls': 'salt/core/nix/install'}) %}
+        {%- endif %}
+    - {{ opt }}: {{ opt_attr }}
+      {%- endfor %}
+      {%- if sls != 'salt/core/nix/install' and 'require' not in options_tmp %}
+    - require:
+      - sls: salt/core/nix/install
+      {%- endif %}
+    {%- endif %}
+  {%- endfor %}
+{%- endmacro %}

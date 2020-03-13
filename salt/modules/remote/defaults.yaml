@@ -28,9 +28,15 @@ Windows:
 #     scoop:
 #       docker-cli:
 #         enabled: False
-#         version: null
-# Linux:
-#   pkgs:
-#     openssh:
-#       enabled: True
-#       version: null
+Linux:
+  nix:
+    pkgs:
+      openssh:
+        enabled: True
+        attr: nixpkgs.openssh
+  vscode:
+    extensions:
+      ms-vscode-remote.remote-ssh:
+        settings:
+          # remote.SSH.path: /home/linuxbrew/.linuxbrew/bin/ssh
+          remote.SSH.path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'ssh') }}

@@ -2,4 +2,4 @@
 {%- from 'salt/modules/python3/map.jinja' import python3 with context %}
 
 
-{{ init(python3, action='install', include=['salt/modules/python3/install/pip']) }}
+{{ init(python3, action='install', include=['salt/modules/python3/install/anaconda', 'salt/modules/python3/install/pip']) }}

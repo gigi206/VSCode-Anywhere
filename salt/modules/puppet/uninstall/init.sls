@@ -2,4 +2,5 @@
 {%- from 'salt/modules/puppet/map.jinja' import puppet with context %}
 
 
-{{ init(puppet, action='uninstall', include=['salt/modules/puppet/uninstall/gem']) }}
+{#- {{ init(puppet, action='uninstall', include=['salt/modules/puppet/uninstall/gem']) }} #}
+{{ init(puppet, action='uninstall') }}

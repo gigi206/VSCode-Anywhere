@@ -94,23 +94,37 @@ default:
         version: null
 Windows:
   go_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'go.ps1') }}
+  env:
+    GOROOT: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'go', 'current') }}
+    GOPATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'go') }}
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'go', 'bin') }}
   vscode:
     extensions:
       ms-vscode.go:
         settings:
           go.goroot: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'go', 'current') }}
           go.gopath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'go') }}
-  env:
-    GOROOT: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'go', 'current') }}
-    GOPATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'go') }}
-    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'go', 'bin') }}
   scoop:
     pkgs:
       go:
         enabled: True
-        version: null
   msys2:
     pkgs:
       mingw-w64-x86_64-gcc:
         enabled: True
-        version: null
+Linux:
+  # go_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'go') }}
+  go_bin: /home/linuxbrew/.linuxbrew/bin/go
+  env:
+    GOROOT: /home/linuxbrew/.linuxbrew/opt/go/libexec
+    GOPATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'go') }}
+  vscode:
+    extensions:
+      ms-vscode.go:
+        settings:
+          go.goroot: /home/linuxbrew/.linuxbrew/opt/go/libexec
+          go.gopath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'go') }}
+  brew:
+    pkgs:
+      go:
+        enabled: True

@@ -12,4 +12,21 @@ default:
     docsets:
       Docker:
         enabled: True
-        version: null
+Linux:
+  nix:
+    pkgs:
+      docker:
+        enabled: True
+        attr: nixpkgs.docker
+      docker-compose:
+        enabled: True
+        attr: nixpkgs.docker-compose
+Macos:
+  brew:
+    pkgs:
+      homebrew/cask/docker:
+        enabled: True
+      hombrew/cask/virtualbox:
+        enabled: True
+      docker-compose:
+        enabled: True

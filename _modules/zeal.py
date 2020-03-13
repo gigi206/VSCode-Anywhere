@@ -10,6 +10,7 @@ import salt.utils.http
 import salt.exceptions
 import os
 import base64
+import pathlib
 
 
 def __virtual__():
@@ -74,6 +75,18 @@ def _get_docsets_path():
             "zeal",
             "docsets",
         )
+    else:
+        return os.path.join(
+            __salt__["grains.get"]("vscode-anywhere:apps:path"),
+            "vscode-anywhere",
+            "home",
+            ".local",
+            "share",
+            "Zeal",
+            "Zeal",
+            "docsets",
+        )
+
         # Note: reg module return path line Unix path with slash (not backslash)
         # path = __salt__["reg.read_value"](
         #     "HKEY_CURRENT_USER", key="Software\\Zeal\\Zeal\\docsets", vname="path"
@@ -433,7 +446,8 @@ def docset_install(docset):
 
     if os.path.exists(tmp_dir):
         salt.utils.files.rm_rf(tmp_dir)
-    os.mkdir(tmp_dir)
+    # os.mkdir(tmp_dir)
+    pathlib.Path(tmp_dir).mkdir(parents=True, exist_ok=True)
     __salt__["archive.extract"](src, tmp_dir)
     tmp_docset = dict(
         enumerate(

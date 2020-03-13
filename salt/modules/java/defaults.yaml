@@ -3,6 +3,8 @@
   {%- if salt['pillar.get']('vscode-anywhere:java:quarkus', False) %}
     {%- do path.append(salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'graalvm', 'current', 'bin')) %}
   {%- endif %}
+{%- else %}
+  {%- set path = ['/home/linuxbrew/.linuxbrew/opt/openjdk/bin'] %}
 {%- endif %}
 default:
   enabled: False
@@ -18,6 +20,8 @@ default:
       redhat.java:
         enabled: True
         version: null
+        settings:
+          java.semanticHighlighting.enabled: true
       vscjava.vscode-java-debug:
         enabled: True
         version: null
@@ -70,9 +74,8 @@ default:
     {%- endif %}
   zeal:
     docsets:
-      Java_SE12:
+      Java_SE14:
         enabled: True
-        version: null
 Windows:
   vscode:
     extensions:
@@ -91,31 +94,87 @@ Windows:
     CATALINA_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'tomcat', 'current') }}
   {%- endif %}
 {%- if salt['pillar.get']('vscode-anywhere:java:jetty', False) %}
-    # JETTY_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey', 'lib', 'jetty', 'tools', 'jetty') }} #FIXME: manage the target (ie jetty-distribution-9.4.20.v20190813) dynamically...
+    JETTY_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey', 'lib', 'jetty', 'tools', 'jetty') }} #FIXME: manage the target (ie jetty-distribution-9.4.20.v20190813) dynamically...
   chocolatey:
     pkgs:
       jetty:
         enabled: True
-        version: null
 {%- endif %}
   scoop:
     pkgs:
       openjdk:
         enabled: True
-        version: null
       maven:
         enabled: True
-        version: null
       gradle:
         enabled: True
-        version: null
     {%- if salt['pillar.get']('vscode-anywhere:java:tomcat', False) %}
       tomcat:
         enabled: True
-        version: null
     {%- endif %}
     {%- if salt['pillar.get']('vscode-anywhere:java:quarkus', False) %}
       graalvm:
         enabled: True
-        version: null
     {%- endif %}
+Linux:
+  env:
+    PATH: {{ path | join(':') }}
+    # JAVA_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'opt', 'openjdk', 'libexec') }}
+    JAVA_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+    JDK_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+  {%- if salt['pillar.get']('vscode-anywhere:java:tomcat', False) %}
+    CATALINA_BASE: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
+    CATALINA_HOME: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
+  {%- endif %}
+  {%- if salt['pillar.get']('vscode-anywhere:java:jetty', False) %}
+    JETTY_HOME: /home/linuxbrew/.linuxbrew/opt/jetty/libexec
+  {%- endif %}
+  vscode:
+    extensions:
+      redhat.java:
+        settings:
+          # java.home: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'opt', 'openjdk', 'libexec') }}
+          java.home: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+      redhat.vscode-xml:
+        settings:
+          # xml.java.home: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'opt', 'openjdk', 'libexec') }}
+          xml.java.home: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+  brew:
+    pkgs:
+      openjdk:
+        enabled: True
+      maven:
+        enabled: True
+      maven-completion:
+        enabled: True
+      maven-shell:
+        enabled: True
+      gradle:
+        enabled: True
+      gradle-completion:
+        enabled: True
+{%- if salt['pillar.get']('vscode-anywhere:java:jetty', False) %}
+      jetty:
+        enabled: True
+{%- endif %}
+{%- if salt['pillar.get']('vscode-anywhere:java:tomcat', False) %}
+      tomcat:
+        enabled: True
+{%- endif %}
+{#-
+{%- if salt['pillar.get']('vscode-anywhere:java:tomee', False) %}
+      tomee-plume:
+        enabled: True
+{%- endif %}
+{%- if salt['pillar.get']('vscode-anywhere:java:wildfly', False) %}
+      wildfly-as:
+        enabled: True
+{%- endif %}
+#}
+{%- if salt['pillar.get']('vscode-anywhere:java:quarkus', False) %}
+  nix:
+    pkgs:
+      graalvm11-ee:
+        enabled: True
+        attr: nixpkgs.graalvm11-ee
+{%- endif %}

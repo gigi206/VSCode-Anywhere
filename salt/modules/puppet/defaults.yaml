@@ -1,33 +1,62 @@
 default:
   enabled: False
-  gem:
-    opts:
-      global: {}
-      install:
-        rdoc: True
-        ri: True
-      update:
-        rdoc: True
-        ri: True
-      uninstall: {}
-    pkgs:
-      puppet-lint:
+  # gem:
+  #   opts:
+  #     global: {}
+  #     install:
+  #       rdoc: True
+  #       ri: True
+  #     update:
+  #       rdoc: True
+  #       ri: True
+  #     uninstall: {}
+  vscode:
+    extensions:
+      puppet.puppet-vscode:
         enabled: True
-        opts:
-          install: {}
-          update: {}
-          uninstall: {}
+        version: null
   zeal:
     docsets:
       Puppet:
         enabled: True
-        version: null
-Windows:
-  # env:
-  #   GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
-  #   GEM_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
-  #   PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin') }}
-  gem:
-    opts:
-      global:
-        gem_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin', 'gem.cmd') }}
+# Windows:
+#   # env:
+#   #   GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
+#   #   GEM_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems') }}
+#   #   PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'gems', 'bin') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin') }}
+#   gem:
+#     opts:
+#       global:
+#         gem_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ruby', 'current', 'bin', 'gem.cmd') }}
+# Linux:
+#   env:
+#     GEM_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'ruby') }}
+#     GET_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'ruby') }}
+#   gem:
+#     opts:
+#       global:
+#         gem_bin: /home/linuxbrew/.linuxbrew/bin/gem
+#     pkgs:
+#       puppet:
+#         enabled: True
+#         opts:
+#           install: {}
+#           update: {}
+#           uninstall: {}
+#       puppet-lint:
+#         enabled: True
+#         opts:
+#           install: {}
+#           update: {}
+#           uninstall: {}
+#   # nix:
+#   #   pkgs:
+#   #     puppet-lint:
+#   #       enabled: True
+#   #       attr: nixpkgs.puppet-lint
+Macos:
+  brew:
+    pkgs:
+      # Cf https://puppet.com/docs/pdk/1.x/pdk_install.html#install-osx
+      homebrew/cask/puppetlabs/puppet/pdk:
+        enabled: True

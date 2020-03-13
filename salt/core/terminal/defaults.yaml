@@ -1,14 +1,39 @@
-{%- if grains['kernel'] == 'Windows' %}
-  {%- set config_path = salt['cmd.run']('Write-Output ${env:APPDATA}\\terminus\\config.yaml', python_shell=False, shell='powershell') %}
-{%- endif %}
-
 default:
   enabled: True
 Windows:
+  config_path: {{ salt['environ.get']('APPDATA') | path_join('terminus', 'config.yaml') }}
+  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'terminus', 'current', 'Terminus.exe') }}
   scoop:
     pkgs:
       terminus:
         enabled: True
-        version: null
-  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'terminus', 'current', 'Terminus.exe') }}
-  config_path: {{ config_path }}
+Linux:
+  config_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.config', 'terminus', 'config.yaml') }}
+  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'opt', 'terminus', 'terminus') }}
+  nix:
+    pkgs:
+      # terminus:
+      #   enabled: True
+      #   attr: nixpkgs.terminus
+      zsh:
+        enabled: True
+        attr: nixpkgs.zsh
+  brew:
+    pkgs:
+      terminus:
+        enabled: True
+  #     # make: # needed by perl that is a requirement to zsh (zsh => perl => make)
+  #     #   enabled: True
+  #     zsh:
+  #       enabled: True
+  #     # tmux:
+  #     #   enabled: True
+  #     # xclip:
+  #     #   enabled: True
+Macos:
+  brew:
+    pkgs:
+      homebrew/cask/terminus:
+        enabled: True
+      zsh:
+        enabled: True

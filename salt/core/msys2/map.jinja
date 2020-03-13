@@ -1,42 +1,59 @@
 {%- import_yaml 'salt/core/msys2/defaults.yaml' as defaults %}
-{%- import_yaml 'salt/core/msys2/installmap.yaml' as installmap %}
+{%- import_yaml 'salt/core/msys2/profilemap.yaml' as profilemap %}
 
 
 {%- set msys2 = salt['grains.filter_by'](defaults, grain='kernel', base='default',
-  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
     merge=salt['pillar.get']('vscode-anywhere:msys2_core', {})
   )
 ) %}
 
 
 {%- macro msys2_pkg(conf, action='install') %}
-{%- if action == 'install' %}
-  {%- set func = 'msys2.pkg_installed' %}
-{%- elif action == 'update' %}
-  {%- set func = 'msys2.pkg_latest' %}
-{%- elif action == 'uninstall' %}
-  {%- set func = 'msys2.pkg_removed' %}
-{%- else %}
-  {{ raise('{} is not valid action for the pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
-{%- endif %}
+  {%- set options = conf.get('msys2', {}).get('opts', {}).get('global', {}) %}
 
-{%- for pkg, pkg_attr in conf.get('msys2', {}).get('pkgs', {}).items() %}
-{%- if pkg_attr.get('enabled') %}
+  {%- if action == 'install' %}
+    {%- set func = 'msys2.pkg_installed' %}
+    {%- do options.update(conf.get('msys2', {}).get('opts', {}).get('install', {})) %}
+  {%- elif action == 'update' %}
+    {%- set func = 'msys2.pkg_latest' %}
+    {%- do options.update(conf.get('msys2', {}).get('opts', {}).get('update', {})) %}
+  {%- elif action == 'uninstall' %}
+    {%- set func = 'msys2.pkg_removed' %}
+    {%- do options.update(conf.get('msys2', {}).get('opts', {}).get('uninstall', {})) %}
+  {%- else %}
+    {{ raise('{} is not valid action for the msys2_pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
+  {%- endif %}
+
+  {%- for pkg, pkg_attr in conf.get('msys2', {}).get('pkgs', {}).items() %}
+    {%- if pkg_attr.get('enabled') %}
+      {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+      {%- do options_tmp.update(pkg_attr.get('opts', {}).get('global', {})) %}
+      {%- if action == 'install' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('install', {})) %}
+      {%- elif action == 'update' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('update', {})) %}
+      {%- elif action == 'uninstall' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('uninstall', {})) %}
+      {%- endif %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
   {{ func }}:
     - name: {{ pkg }}
-  {%- if action in ['install', 'update'] and pkg_attr.get('version') %}
-    - version: {{ pkg_attr.version | string }}
+      {%- if action in ['install', 'update'] %}
     - refresh: True
-  {%- endif %}
+      {%- endif %}
     - shell_path: {{ msys2.shell_path }}
     - shell_args: {{ msys2.shell_args }}
-    # - require:
-    #   - sls: salt/utils/sync
-  {%- if sls != 'salt/core/msys2/install' %}
+      {%- for opt, opt_attr in options_tmp.items() %}
+        {%- if sls != 'salt/core/msys2/install' and opt == 'require' %}
+        {%- do opt_attr.append({'sls': 'salt/core/msys2/install'}) %}
+        {%- endif %}
+    - {{ opt }}: {{ opt_attr }}
+      {%- endfor %}
+      {%- if sls != 'salt/core/msys2/install' and 'require' not in options_tmp %}
     - require:
       - sls: salt/core/msys2/install
-  {%- endif %}
-{%- endif %}
-{%- endfor %}
+      {%- endif %}
+    {%- endif %}
+  {%- endfor %}
 {%- endmacro %}

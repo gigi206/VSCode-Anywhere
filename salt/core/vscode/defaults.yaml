@@ -1,10 +1,4 @@
-{%- if grains['kernel'] == 'Windows' %}
-  {%- set locale_path = salt['cmd.run']('Write-Output ${env:APPDATA}\\Code\\User\\locale.json', python_shell=False, shell='powershell') %}
-{%- else %}
-  {%- set locale_path = salt['cmd.run']('echo $HOME/.config/Code/User/locale.json', python_shell=False) %}
-{%- endif %}
-
-{%- set locale = salt['grains.get']("locale_info:defaultlanguage", "en_EN") %}
+{%- set locale = salt['grains.get']('locale_info:defaultlanguage', 'en_US') %}
 
 # Cf https://code.visualstudio.com/docs/getstarted/locales
 {%- if locale[-2:].lower() in ['fr', 'es', 'de', 'it', 'ja', 'ru', 'hu', 'ko', 'bg', 'tr'] %}
@@ -12,22 +6,50 @@
   {%- set vsc_locale = locale[-2:].lower() %}
 {%- elif locale.lower() == 'pt_br' %}
   {%- set locale_extension = 'ms-ceintl.vscode-language-pack-pt-BR' %}
-  {%- set vsc_locale = locale %}
+  {%- set vsc_locale = 'pt-br' %}
 {%- elif locale.lower() == 'zh_cn' %}
   {%- set locale_extension = 'ms-ceintl.vscode-language-pack-zh-hans' %}
-  {%- set vsc_locale = locale %}
+  {%- set vsc_locale = 'zh-cn' %}
 {%- elif locale.lower() == 'zh_tw' %}
   {%- set locale_extension = 'ms-ceintl.vscode-language-pack-zh-hant' %}
-  {%- set vsc_locale = locale %}
+  {%- set vsc_locale = 'zh-tw' %}
+{%- elif locale.lower() == 'en_gb' %}
+  {%- set locale_extension = 'ms-ceintl.vscode-language-pack-en-gb' %}
+  {%- set vsc_locale = 'en-gb' %}
 {%- else %}
   {%- set vsc_locale = 'en' %}
 {%- endif %}
 
+{%- if grains['kernel'] == 'Windows' %}
+  {%- if salt['pillar.get']('vscode-anywhere:vscode_core:vscodium', True) %}
+    {%- set vscode_path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscodium', 'current', 'bin', 'codium.cmd') %}
+    {%- set vscode_icon = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscodium', 'current', 'VSCodium.exe,0') %}
+    {%- set vscode_pkg_install = "vscodium" %}
+    {%- set vscode_pkg_uninstall = "vscode" %}
+  {%- else %}
+    {%- set vscode_path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'bin', 'code.cmd') %}
+    {%- set vscode_icon = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe,0') %}
+    {%- set vscode_pkg_install = "vscode" %}
+    {%- set vscode_pkg_uninstall = "vscodium" %}
+  {%- endif %}
+{%- else %}
+  {%- set vscode_icon = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'share', 'pixmaps', 'code.png') %}
+  {%- if salt['pillar.get']('vscode-anywhere:vscode_core:vscodium', True) %}
+    {%- set vscode_path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin','codium') %}
+    {%- set vscode_pkg_install = "vscodium" %}
+    {%- set vscode_pkg_uninstall = "vscode" %}
+  {%- else %}
+    {%- set vscode_path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin','code') %}
+    {%- set vscode_pkg_install = "vscode" %}
+    {%- set vscode_pkg_uninstall = "vscodium" %}
+  {%- endif %}
+{%- endif %}
 
 default:
   enabled: True
+  codium: False
+  vscode_pkg_uninstall: {{ vscode_pkg_uninstall }}
   settings_indentation: 4
-  locale_path: {{ locale_path }}
   locale: {{ vsc_locale }}
   vscode:
     settings:
@@ -46,12 +68,43 @@ default:
         version: null
 Windows:
   locale_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'locale.json') }}
-  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'code.cmd') }}
+  path: {{ vscode_path }}
+  icon: {{ vscode_icon }}
   extensions_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}
   keybindings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'keybindings.json') }}
   settings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'settings.json') }}
   scoop:
     pkgs:
-      vscode:
+      {{ vscode_pkg_install }}:
+        enabled: True
+Linux:
+  vscode:
+    extensions:
+      bbenoist.Nix:
         enabled: True
         version: null
+      arrterian.nix-env-selector:
+        enabled: True
+        version: null
+  path: {{ vscode_path }}
+  icon: {{ vscode_icon }}
+  locale_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode', 'user', 'User', 'locale.json') }}
+  extensions_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode', 'extensions') }}
+  user_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode', 'user') }}
+  keybindings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode', 'user', 'keybindings.json') }}
+  settings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode', 'user', 'User', 'settings.json') }}
+  nix:
+    pkgs:
+      {{ vscode_pkg_install }}:
+        enabled: True
+        attr: nixpkgs.{{ vscode_pkg_install }}
+        opts:
+          install:
+            channel: nixpkgs=https://github.com/NixOS/nixpkgs/archive/master.tar.gz
+          update:
+            channel: nixpkgs=https://github.com/NixOS/nixpkgs/archive/master.tar.gz
+  # brew:
+  #   pkgs:
+  #     # required in install/link.sls
+  #     jq:
+  #       enabled: True

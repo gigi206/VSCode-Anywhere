@@ -14,4 +14,3 @@ Windows:
     pkgs:
       msys2:
         enabled: True
-        version: null

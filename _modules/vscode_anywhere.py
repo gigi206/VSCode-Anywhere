@@ -220,3 +220,18 @@ def remove_path_env(val):
         raise salt.exceptions.SaltInvocationError(
             "File {} does not exist".format(env_file)
         )
+
+
+def cleanup():
+    if salt.utils.platform.is_windows():
+        raise salt.exceptions.SaltInvocationError("Not yet available on Windows")
+    else:
+        nix = __salt__["nix.collect_garbage"]()
+        brew = __salt__["cmd.run"]("/home/linuxbrew/.linuxbrew/bin/brew cleanup -s")
+        if brew == "":
+            brew = "Nothing to cleanup"
+        return {
+            "brew": brew.splitlines(),
+            "nix": nix,
+        }
+        # return "Nix:\n{}\n\nBrew:\n{}".format("\n".join(nix), brew)

@@ -20,12 +20,14 @@
 
   {%- set ENV_PATH = salt['environ.item'](VAR_PATH).get(VAR_PATH, '').split(SEP_PATH) | unique %}
 
-  {%- if not salt['file.access'](salt['grains.get']('vscode-anywhere:tools:env'), mode='f') %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':create:env' }}:
   file.touch:
     - name: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
     - makedirs: True
-  {%- endif %}
+    - unless:
+      - fun: file.access
+        path: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
+        mode: f
 
   {%- for env, env_attr in conf.get('env', {}).items() %}
     {%- if action in ['install', 'update'] %}
@@ -69,8 +71,8 @@
     - pattern: ^\$env\:{{ env }}\=.*
     - repl: $env:{{ env }}={{ env_attr | json }}
           {%- else %}
-    - pattern: ^{{ env }}\=;*
-    - repl: {{ env }}={{ env_attr | json }}
+    - pattern: ^export {{ env }}\=.*
+    - repl: export {{ env }}={{ env_attr | json }}
           {%- endif %}
 
         {%- endif %}
@@ -80,6 +82,7 @@
         {%- if env_attr %}
           {%- if env_attr in ENV_PATH %}
 
+
 {{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere:env:PATH' }}:
   vscode_anywhere.remove_path_env:
     - name: {{ env_attr }}
@@ -87,6 +90,7 @@
           {%- endif %}
         {%- endif %}
       {%- else %}
+
 
 {{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere:env:{}'.format(env) }}:
   file.line:

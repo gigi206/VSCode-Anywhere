@@ -57,26 +57,30 @@ default:
     docsets:
       CSS:
         enabled: True
-        version: null
       HTML:
         enabled: True
-        version: null
       Emmet:
         enabled: True
-        version: null
       Sass:
         enabled: True
-        version: null
       Less:
         enabled: True
-        version: null
 Windows:
   scoop:
     pkgs:
       openjdk:
         enabled: True
-        version: null
   vscode:
     extensions:
       Umoxfo.vscode-w3cvalidation:
         vscode-w3cvalidation.javaHome: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'openjdk', 'current') }}
+Linux:
+  brew:
+    pkgs:
+      openjdk:
+        enabled: True
+  vscode:
+    extensions:
+      Umoxfo.vscode-w3cvalidation:
+        # vscode-w3cvalidation.javaHome: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'opt', 'openjdk', 'libexec') }}
+        vscode-w3cvalidation.javaHome: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec

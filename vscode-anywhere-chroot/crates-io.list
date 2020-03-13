@@ -1,0 +1,16 @@
+bitflags-1.0.4
+cc-1.0.29
+cfg-if-0.1.6
+fuchsia-cprng-0.1.1
+libc-0.2.48
+nix-0.13.0
+rand-0.4.6
+rand_core-0.3.1
+rand_core-0.4.0
+rdrand-0.4.0
+remove_dir_all-0.5.1
+tempdir-0.3.7
+void-1.0.2
+winapi-0.3.6
+winapi-i686-pc-windows-gnu-0.4.0
+winapi-x86_64-pc-windows-gnu-0.4.0

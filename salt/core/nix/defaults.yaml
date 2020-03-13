@@ -1,0 +1,15 @@
+default:
+  enabled: False
+Linux:
+  enabled: True
+  upgrade: True
+  env:
+    # PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin') }}
+    # NIX_PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-defexpr', 'channels') }}
+    # NIX_PROFILES: /nix/var/nix/profiles/default {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile') }}
+    XDG_CONFIG_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('nixpkgs', 'conf') }}
+    NIXPKGS_ALLOW_UNFREE: 1
+    NIXPKGS_ALLOW_INSECURE: 1
+    NIX_PAGER: null
+    # NIX_SSL_CERT_FILE: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'etc', 'ssl', 'certs', 'ca-bundle.crt') }}
+    # MANPATH: "{{ '{}:{}'.format(salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'share', 'man'), salt['environ.get']('MANPATH')).split(':') | unique | list | join(':') }}"

@@ -6,7 +6,7 @@ include:
   - salt/modules/php/install
 
 
-  {%- for extension in php.extensions %}
+{%- for extension in php.extensions %}
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(extension) }}:
   file.managed:
     - name: {{ php.extension_dir | path_join('{}.ini'.format(extension)) }}
@@ -15,5 +15,6 @@ include:
         extension={{ extension }}
     - require:
       - sls: salt/modules/php/install
-  {%- endfor %}
+{%- endfor %}
+
 {%- endif %}

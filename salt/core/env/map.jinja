@@ -1,9 +1,9 @@
 {%- import_yaml 'salt/core/env/defaults.yaml' as defaults %}
-{%- import_yaml 'salt/core/env/installmap.yaml' as installmap %}
+{%- import_yaml 'salt/core/env/profilemap.yaml' as profilemap %}
 
 
 {%- set env = salt['grains.filter_by'](defaults, grain='kernel', base='default',
-  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:install_type',
-    merge=salt['pillar.get']('vscode-anywhere:env', {})
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:install_type',
+    merge=salt['pillar.get']('vscode-anywhere:env_core', {})
   )
 ) %}

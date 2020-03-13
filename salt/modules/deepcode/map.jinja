@@ -1,0 +1,9 @@
+{%- import_yaml 'salt/modules/deepcode/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/modules/deepcode/profilemap.yaml' as profilemap %}
+
+
+{%- set deepcode = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:deepcode', {})
+  )
+) %}

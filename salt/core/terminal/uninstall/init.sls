@@ -1,4 +1,4 @@
 {%- from 'salt/utils/init.jinja' import init with context %}
-{%- from 'salt/core/scoop/map.jinja' import scoop with context %}
+{%- from 'salt/core/terminal/map.jinja' import terminal with context %}
 
-{{ init(scoop, action='uninstall') }}
+{{ init(terminal, action='uninstall', include=['salt/core/terminal/uninstall/terminus', 'salt/core/terminal/uninstall/link']) }}

@@ -1,0 +1,47 @@
+{%- from 'salt/modules/python3/map.jinja' import python3 with context %}
+windows_admin:
+  scoop:
+    pkgs:
+      python27:
+        enabled: True
+windows_user:
+  scoop:
+    pkgs:
+      python27:
+        enabled: True
+windows_portable:
+  pip:
+    opts:
+      global:
+        bin_env: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'pip2') }}
+    pkgs:
+      jupyterlab:
+        enabled: False
+  vscode:
+    extensions:
+      VisualStudioExptTeam.vscodeintellicode:
+        enabled: False
+  {%- if not python3.enabled %}
+    settings:
+      python.jediEnabled: True
+      python.pythonPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'python2') }}
+      python.formatting.autopep8Path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'autopep8') }}
+      python.poetryPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'poetry') }}
+      python.pipenvPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'pipenv') }}
+      python.linting.flake8Path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'flake8') }}
+      python.testing.nosetestPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'nose') }}
+      python.testing.pytestPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'pytest') }}
+      # python.workspaceSymbols.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'ctags') }}
+  {%- endif %}
+  msys2:
+    pkgs:
+      python2:
+        enabled: True
+      python2-pip:
+        enabled: True
+      # ctags:
+      #   enabled: True
+      gcc:
+        enabled: True
+      libcrypt-devel:
+        enabled: True

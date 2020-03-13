@@ -1,0 +1,58 @@
+{%- import_yaml 'salt/core/brew/defaults.yaml' as defaults %}
+{%- import_yaml 'salt/core/brew/profilemap.yaml' as profilemap %}
+
+
+{%- set brew = salt['grains.filter_by'](defaults, grain='kernel', base='default',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
+    merge=salt['pillar.get']('vscode-anywhere:brew_core', {})
+  )
+) %}
+
+
+{%- macro brew_pkg(conf, action='install') %}
+  {%- set options = conf.get('brew', {}).get('opts', {}).get('global', {}) %}
+
+  {%- if action == 'install' %}
+    {%- set func = 'pkg.installed' %}
+    {%- do options.update(conf.get('brew', {}).get('opts', {}).get('install', {})) %}
+  {%- elif action == 'update' %}
+    {%- set func = 'pkg.latest' %}
+    {%- do options.update(conf.get('brew', {}).get('opts', {}).get('update', {})) %}
+  {%- elif action == 'uninstall' %}
+    {%- set func = 'pkg.removed' %}
+    {%- do options.update(conf.get('brew', {}).get('opts', {}).get('uninstall', {})) %}
+  {%- else %}
+    {{ raise('{} is not valid action for the brew_pkg macro. Valid actions are install, update or uninstall'.format(action)) }}
+  {%- endif %}
+
+  {%- for pkg, pkg_attr in conf.get('brew', {}).get('pkgs', {}).items() %}
+    {%- if pkg_attr.get('enabled') %}
+      {%- set options_tmp = salt['defaults.deepcopy'](options) %}
+      {%- do options_tmp.update(pkg_attr.get('opts', {}).get('global', {})) %}
+      {%- if action == 'install' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('install', {})) %}
+      {%- elif action == 'update' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('update', {})) %}
+      {%- elif action == 'uninstall' %}
+        {%- do options_tmp.update(pkg_attr.get('opts', {}).get('uninstall', {})) %}
+      {%- endif %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
+  {{ func }}:
+    - name: {{ pkg }}
+    - refresh: True
+    - provider: mac_brew_pkg
+    # - require:
+    #   - sls: salt/utils/sync
+      {%- for opt, opt_attr in options_tmp.items() %}
+        {%- if sls != 'salt/core/brew/install' and opt == 'require' %}
+        {%- do opt_attr.append({'sls': 'salt/core/brew/install'}) %}
+        {%- endif %}
+    - {{ opt }}: {{ opt_attr }}
+      {%- endfor %}
+      {%- if sls != 'salt/core/brew/install' and 'require' not in options_tmp %}
+    - require:
+      - sls: salt/core/brew/install
+      {%- endif %}
+    {%- endif %}
+  {%- endfor %}
+{%- endmacro %}

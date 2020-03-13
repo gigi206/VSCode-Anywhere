@@ -1,9 +1,9 @@
 {%- import_yaml 'salt/modules/fonts/defaults.yaml' as defaults %}
-{%- import_yaml 'salt/modules/fonts/installmap.yaml' as installmap %}
+{%- import_yaml 'salt/modules/fonts/profilemap.yaml' as profilemap %}
 
 
 {%- set fonts = salt['grains.filter_by'](defaults, grain='kernel', base='default',
-  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
     merge=salt['pillar.get']('vscode-anywhere:fonts', {})
   )
 ) %}

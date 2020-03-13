@@ -14,7 +14,7 @@ default:
           install: {}
           update: {}
           uninstall: {}
-    mocha:
+      mocha:
         enabled: True
         version: null
         opts:
@@ -73,25 +73,30 @@ default:
     docsets:
       JavaScript:
         enabled: True
-        version: null
       NodeJS:
         enabled: True
-        version: null
       # jQuery:
       #   enabled: True
-      #   version: null
       # jQuery_Mobile:
       #   enabled: True
-      #   version: null
       # jQuery_UI:
       #   enabled: True
-      #   version: null
 Windows:
   npm_bin: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current', 'npm.cmd') }}
   env:
     PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current', 'bin') }}
+  npm:
+    opts:
+      global:
+        env:
+          - PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'nodejs', 'current', 'bin') }}
   scoop:
     pkgs:
       nodejs:
         enabled: True
-        version: null
+Linux:
+  npm_bin: /home/linuxbrew/.linuxbrew/bin/npm
+  brew:
+    pkgs:
+      node:
+        enabled: True

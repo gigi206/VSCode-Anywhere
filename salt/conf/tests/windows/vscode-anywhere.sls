@@ -1,13 +1,18 @@
 vscode-anywhere:
   custom:
     enabled: False
+  vscode_core:
+    vscodium: True
   ansible:
     enabled: False
   bash:
     enabled: False
   c_cpp:
     enabled: False
+    llvm: False
   csharp:
+    enabled: False
+  deepcode:
     enabled: False
   docker:
     enabled: False
@@ -34,7 +39,7 @@ vscode-anywhere:
   php:
     enabled: False
   powershell:
-    enabled: False
+    enabled: True
   puppet:
     enabled: False
   python2:

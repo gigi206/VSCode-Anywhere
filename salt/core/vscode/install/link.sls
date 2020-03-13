@@ -36,7 +36,82 @@ include:
     - arguments: -noprofile -executionpolicy bypass -file {{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('vscode.ps1') }}
     # - working_dir: {{ salt['cmd.run']("$([Environment]::GetFolderPath('Desktop'))", shell='powershell') }}
     - description: VSCode-Anywhere
-    - icon_location: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }},0
+    - icon_location: {{ vscode.icon }}
     - require:
       - sls: salt/core/vscode/install
+
+{%- else %}
+
+include:
+  - salt/core/vscode/install
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':icon' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'icons', 'code.png') }}
+    - source: {{ vscode.icon }}
+    - makedirs: True
+    - mode: 644
+    - backup: False
+    - require:
+      - sls: salt/core/vscode/install
+
+
+{%- if salt['pillar.get']('vscode-anywhere:linux:install_desktop_files', False) %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':shortcut:user' }}:
+  file.managed:
+    - name: {{ salt['user.info'](salt['grains.get']('username'))['home'] | path_join('.local', 'share','applications', 'VSCode-Anywhere.desktop') }}
+    - mode: 755
+    - makedirs: True
+    - backup: False
+    - contents: |
+        [Desktop Entry]
+        Type=Application
+        Exec={{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('vscode.sh') }}
+        Terminal=false
+        Name=VSCode-Anywhere
+        Categories=Utility;TextEditor;Development;IDE;
+        Icon={{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'icons', 'code.png') }}
+        Comment=Code Editing. Redefined.
+        GenericName=Text Editor
+        MimeType=text/plain;inode/directory;
+        StartupNotify=true
+        StartupWMClass=Code
+        Actions=new-empty-window;
+        Keywords=vscode;
+
+        [Desktop Action new-empty-window]
+        Name=New Empty Window
+        Exec={{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('vscode.sh') }} --new-window %F
+        Icon={{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'icons', 'code.png') }}
+{%- endif %}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':shortcut' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:path') | path_join('VSCode-Anywhere.desktop') }}
+    # - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'shortcuts', 'VSCode-Anywhere.desktop') }}
+    - mode: 755
+    # - makedirs: True
+    - backup: False
+    - contents: |
+        [Desktop Entry]
+        Type=Application
+        Exec={{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('vscode.sh') }}
+        Terminal=false
+        Name=VSCode-Anywhere
+        Categories=Utility;TextEditor;Development;IDE;
+        Icon={{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'icons', 'code.png') }}
+        Comment=Code Editing. Redefined.
+        GenericName=Text Editor
+        MimeType=text/plain;inode/directory;
+        StartupNotify=true
+        StartupWMClass=Code
+        Actions=new-empty-window;
+        Keywords=vscode;
+
+        [Desktop Action new-empty-window]
+        Name=New Empty Window
+        Exec={{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('vscode.sh') }} --new-window %F
+        Icon={{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'icons', 'code.png') }}
 {%- endif %}

@@ -47,3 +47,8 @@ Windows:
     opts:
       global:
         bin_env: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pip.exe') }}
+Linux:
+  pip:
+    opts:
+      global:
+        bin_env: /home/linuxbrew/.linuxbrew/bin/pip3

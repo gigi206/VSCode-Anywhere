@@ -10,9 +10,18 @@ Windows:
     pkgs:
       zeal:
         enabled: True
-        version: null
       vcredist2019-portable:
         enabled: True
-        version: null
   env:
     PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vcredist2019-portable', 'current', 'System64') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vcredist2019-portable', 'current', 'System') }}
+Linux:
+  nix:
+    pkgs:
+      zeal:
+        enabled: True
+        attr: nixpkgs.zeal
+        opts:
+          install:
+            channel: nixpkgs=https://github.com/NixOS/nixpkgs/archive/master.tar.gz
+          update:
+            channel: nixpkgs=https://github.com/NixOS/nixpkgs/archive/master.tar.gz

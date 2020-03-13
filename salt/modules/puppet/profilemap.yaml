@@ -1,0 +1,23 @@
+windows_admin:
+  chocolatey:
+    pkgs:
+      pdk:
+        enabled: True
+# windows_user:
+#   gem:
+#     pkgs:
+#       puppet-lint:
+#         enabled: True
+#         opts:
+#           install: {}
+#           update: {}
+#           uninstall: {}
+# windows_portable:
+#   gem:
+#     pkgs:
+#       puppet-lint:
+#         enabled: True
+#         opts:
+#           install: {}
+#           update: {}
+#           uninstall: {}

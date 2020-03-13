@@ -29,8 +29,8 @@ function Output([string]$msg, [bool]$newline=$true, [string]$fgcolor='Cyan', [bo
 
 # Output errors to console
 function OutputErrror([string]$msg, [bool]$newline=$true, [bool]$exit=$true, [int]$exit_code=1) {
-    if (${exit}) { ${message} = "A critical error has occurred : ${msg}" }
-    else { ${message} = "An error has occurred (not critical) : ${msg}" }
+    if (${exit}) { ${message} = "A critical error has occurred: ${msg}" }
+    else { ${message} = "An error has occurred (not critical): ${msg}" }
 
     if (${newline}) { Write-Host "${message}" -ForegroundColor Red }
     else { Write-Host -nonewline "${message}" -ForegroundColor Red }
@@ -90,7 +90,7 @@ function 7zipExtract ([string]$source, [string]$target, [string]$delete=$true) {
         }
     }
     catch {
-        OutputErrror "failed to extract : $_"
+        OutputErrror "failed to extract: $_"
     }
 }
 
@@ -110,7 +110,7 @@ function InstallScoop {
         ReloadPathEnv
     }
     catch {
-        OutputErrror "failed to install Scoop : $_"
+        OutputErrror "failed to install Scoop: $_"
     }
 }
 
@@ -208,7 +208,7 @@ function InstallSaltstack {
         }
     }
     catch {
-        OutputErrror "failed to install Saltstack : $_"
+        OutputErrror "failed to install Saltstack: $_"
     }
 }
 

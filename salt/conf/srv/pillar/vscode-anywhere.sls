@@ -1,13 +1,21 @@
 vscode-anywhere:
+  config:
+    linux:
+      install_desktop_files: False
   custom:
     enabled: False
+  vscode_core:
+    vscodium: False
   ansible:
     enabled: False
   bash:
     enabled: False
   c_cpp:
     enabled: False
+    llvm: False
   csharp:
+    enabled: False
+  deepcode:
     enabled: False
   docker:
     enabled: False

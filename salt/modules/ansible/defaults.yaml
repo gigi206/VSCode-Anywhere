@@ -1,14 +1,14 @@
 default:
   enabled: False
-  pip:
-    opts:
-      global: {}
-      install:
-        upgrade: False
-      update:
-        upgrade: True
-      uninstall: {}
-    pkgs: {}
+  # pip:
+  #   opts:
+  #     global: {}
+  #     install:
+  #       upgrade: False
+  #     update:
+  #       upgrade: True
+  #     uninstall: {}
+  #   pkgs: {}
   vscode:
     extensions:
       vscoss.vscode-ansible:
@@ -18,10 +18,8 @@ default:
     docsets:
       Ansible:
         enabled: True
-        version: null
       Jinja:
         enabled: True
-        version: null
 # Windows:
 #   vscode:
 #     extensions:
@@ -29,20 +27,19 @@ default:
 #         enabled: True
 #         version: null
 Linux:
-  # vscode:
-  #   extensions:
-  #     vscoss.vscode-ansible:
+  brew:
+    pkgs:
+      ansible:
+        enabled: True
+  # pip:
+  #   opts:
+  #     global:
+  #       bin_env: /home/linuxbrew/.linuxbrew/bin/pip3
+  #   pkgs:
+  #     ansible: # not compatible with Windows
   #       enabled: True
   #       version: null
-  pip:
-    opts:
-      global:
-        bin_env: "FIXME: put the right linux path here"
-    pkgs:
-      ansible: # not compatible with Windows
-        enabled: True
-        version: null
-        opts:
-          install: {}
-          update: {}
-          uninstall: {}
+  #       opts:
+  #         install: {}
+  #         update: {}
+  #         uninstall: {}

@@ -1,7 +1,12 @@
 default:
   enabled: False
-  extensions:
-    - openssl
+  extensions: []
+  pecl:
+    opts:
+      global: {}
+      install: {}
+      update: {}
+    pkgs: {}
   composer:
     opts:
       global: {}
@@ -14,9 +19,9 @@ default:
       phpunit/phpunit:
         enabled: True
         version: '@stable'
-        # friendsofphp/php-cs-fixer:
-      #   enabled: True
-      #   version: '@stable'
+      friendsofphp/php-cs-fixer:
+        enabled: True
+        version: '@stable'
   vscode:
     extensions:
       bmewburn.vscode-intelephense-client:
@@ -56,8 +61,13 @@ default:
     docsets:
       PHP:
         enabled: True
-        version: null
 Windows:
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'composer', 'current', 'home', 'vendor', 'bin') }}
+    COMPOSER_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'home') }}
+    PHP_INI_SCAN_DIR: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli', 'conf.d') }}
+  extensions:
+    - openssl
   extension_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli', 'conf.d') }}
   vscode:
     settings:
@@ -79,10 +89,6 @@ Windows:
       # felixfbecker.php-intellisense:
       #   settings:
       #     php.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php-net', 'current', 'php.exe') }}
-  env:
-    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'composer', 'current', 'home', 'vendor', 'bin') }}
-    COMPOSER_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'home') }}
-    PHP_INI_SCAN_DIR: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli') }};{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'php', 'current', 'cli', 'conf.d') }}
   composer:
     json: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'composer.json') }}
     opts:
@@ -98,10 +104,99 @@ Windows:
     pkgs:
       php:
         enabled: True
-        version: null
       php-xdebug:
         enabled: True
-        version: null
+        opts:
+          install:
+            # Must be installed after php else the file scoop\persist\php\cli\conf.d\xdebug.ini is not created
+            require:
+              - scoop: php
+          update:
+            require:
+              - scoop: php
       composer:
         enabled: True
         version: null
+Linux:
+  # php-config --extension-dir
+  # extension_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'lib', 'php', 'extensions') }}
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'home', 'vendor', 'bin') }}
+    COMPOSER_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'home') }}
+    # PHP_INI_SCAN_DIR: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'etc', 'php.d') }}
+  composer:
+    json: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'install', 'composer.json') }}
+    opts:
+      global:
+        # php: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'php') }}
+        # composer: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'composer') }}
+        composer: /home/linuxbrew/.linuxbrew/bin/composer
+        composer_home: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'home') }}
+        # env:
+        #   # see php-config --ini-dir
+        #   - PHP_INI_SCAN_DIR: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'etc', 'php.d') }}
+      install: {}
+      update: {}
+  vscode:
+    settings:
+      # php.validate.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'php') }}
+      php.validate.executablePath: /home/linuxbrew/.linuxbrew/bin/php
+    extensions:
+      brapifra.phpserver:
+        settings:
+          # phpserver.phpPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'php') }}
+          phpserver.phpPath: /home/linuxbrew/.linuxbrew/bin/php
+      junstyle.php-cs-fixer:
+        settings:
+          php-cs-fixer.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'install', 'vendor', 'bin', 'php-cs-fixer') }}
+      ikappas.phpcs:
+        settings:
+          phpcs.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'install', 'vendor', 'bin', 'phpcs') }}
+      recca0120.vscode-phpunit:
+        settings:
+          # phpunit.php: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'php') }}
+          phpunit.php: /home/linuxbrew/.linuxbrew/bin/php
+          phpunit.phpunit: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'php', 'composer', 'install', 'vendor', 'bin', 'phpunit') }}
+      # felixfbecker.php-intellisense:
+      #   settings:
+      #     php.executablePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'php') }}
+      #     # php.executablePath: /home/linuxbrew/.linuxbrew/bin/php
+  brew:
+    pkgs:
+      # php installs the perl package but
+      # make and gcc packages are required by perl
+      # because when the installation of perl, it runs "cpan -i XML::Parser"
+      # and XML::Parser and requires make and gcc packages
+      make:
+        enabled: True
+      gcc:
+        enabled: True
+      # perl:
+      #   enabled: True
+      php:
+        enabled: True
+        opts:
+          install:
+            require:
+              - pkg: make
+              - pkg: gcc
+      composer:
+        enabled: True
+  pecl:
+    pkgs:
+      xdebug:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+  # nix:
+  #   pkgs:
+  #     php:
+  #       enabled: True
+  #       attr: nixpkgs.php
+  #     php-xdebug:
+  #       enabled: True
+  #     php-composer:
+  #       enabled: True

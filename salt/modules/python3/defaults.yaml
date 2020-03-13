@@ -24,13 +24,37 @@
     {%- set pipenvPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pipenv.exe') %}
     {%- set pipPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python', 'current', 'Scripts', 'pip.exe') %}
   {%- endif %}
+{%- else %}
+  {%- set path = [salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'python3', 'bin')] %}
+  {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+    {%- do path.append('/home/linuxbrew/.linuxbrew/opt/anaconda3/bin') %}
+    {%- set pythonPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/python3' %}
+    {%- set blackPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/black' %}
+    {%- set poetryPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/poetry' %}
+    {%- set flake8Path = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/flake8' %}
+    {%- set nosetestPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/nosetests' %}
+    {%- set pytestPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/pytest' %}
+    {%- set pipenvPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/pipenv' %}
+    {%- set pipPath = '/home/linuxbrew/.linuxbrew/opt/anaconda3/bin/pip' %}
+  {%- else %}
+    {%- set pythonPath = '/home/linuxbrew/.linuxbrew/bin/python3' %}
+    {%- set blackPath = '/home/linuxbrew/.linuxbrew/bin/black' %}
+    {%- set poetryPath = '/home/linuxbrew/.linuxbrew/bin/black' %}
+    {%- set flake8Path = '/home/linuxbrew/.linuxbrew/bin/flake8' %}
+    {%- set nosetestPath = '/home/linuxbrew/.linuxbrew/bin/nosetests' %}
+    {%- set pytestPath = '/home/linuxbrew/.linuxbrew/bin/pytest' %}
+    {%- set pipenvPath = '/home/linuxbrew/.linuxbrew/bin/pipenv' %}
+    {%- set pipPath = '/home/linuxbrew/.linuxbrew/bin/pip3' %}
+  {%- endif %}
 {%- endif %}
 default:
   enabled: False
   anaconda: False
+  anaconda_update: False
   pip:
     opts:
-      global: {}
+      global:
+        bin_env: {{ pipPath }}
       install:
         upgrade: False
       update:
@@ -56,7 +80,9 @@ default:
           uninstall: {}
       black:
         enabled: True
-        version: '>= 19.10b0' # FIXME: black only exists on beta version and states.pip.installed ignore beta version. Change it to null when black will be a final release
+        # FIXME: black only exists on beta version and states.pip.installed ignore beta versions
+        # Change it to null when black will be in a final release
+        version: '>= 19.10b0'
         opts:
           install: {}
           update: {}
@@ -103,15 +129,6 @@ default:
           install: {}
           update: {}
           uninstall: {}
-    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
-      jupyterlab:
-        enabled: True
-        version: null
-        opts:
-          install: {}
-          update: {}
-          uninstall: {}
-    {%- endif %}
   vscode:
     extensions:
       ms-python.python:
@@ -168,27 +185,6 @@ default:
         - pandas
         - matplotlib
         - cvp
-  zeal:
-    docsets:
-      Python_3:
-        version: null
-        enabled: True
-      PEPs:
-        enabled: True
-        version: null
-Windows:
-  scoop:
-    pkgs:
-      ctags:
-        enabled: True
-        version: null
-    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
-      anaconda3:
-        enabled: True
-        version: null
-    {%- endif %}
-  vscode:
-    settings:
       python.pythonPath: {{ pythonPath }}
       python.formatting.blackPath: {{ blackPath }}
       python.poetryPath: {{ poetryPath }}
@@ -196,13 +192,53 @@ Windows:
       python.linting.flake8Path: {{ flake8Path }}
       python.testing.nosetestPath: {{ nosetestPath }}
       python.testing.pytestPath: {{ pytestPath }}
+  zeal:
+    docsets:
+      Python_3:
+        enabled: True
+      PEPs:
+        enabled: True
+Windows:
+  env:
+    PATH: {{ path | join(';') }}
+  scoop:
+    pkgs:
+      ctags:
+        enabled: True
+    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+      anaconda3:
+        enabled: True
+    {%- endif %}
+  vscode:
+    settings:
       python.workspaceSymbols.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ctags', 'current', 'ctags.exe') }}
     {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
       python.condaPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'conda.exe') }}
     {%- endif %}
+Linux:
+  env:
+    PATH: {{ path | join(':') | json }}
+  {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
   pip:
     opts:
       global:
-        bin_env: {{ pipPath }}
-  env:
-    PATH: {{ path | join(';') }}
+        env_vars:
+          PYTHONPATH: ''
+        target: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'python3') }}
+  {%- endif %}
+  brew:
+    pkgs:
+      python:
+        enabled: True
+      ctags:
+        enabled: True
+    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+      anaconda3:
+        enabled: True
+    {%- endif %}
+  vscode:
+    settings:
+      python.workspaceSymbols.ctagsPath: /home/linuxbrew/.linuxbrew/bin/ctags
+    {%- if salt['pillar.get']('vscode-anywhere:python3:anaconda', False) %}
+      python.condaPath: /home/linuxbrew/.linuxbrew/opt/anaconda3/conda
+    {%- endif %}

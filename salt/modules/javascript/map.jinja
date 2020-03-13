@@ -1,9 +1,9 @@
 {%- import_yaml 'salt/modules/javascript/defaults.yaml' as defaults %}
-{%- import_yaml 'salt/modules/javascript/installmap.yaml' as installmap %}
+{%- import_yaml 'salt/modules/javascript/profilemap.yaml' as profilemap %}
 
 
 {%- set javascript = salt['grains.filter_by'](defaults, grain='kernel', base='default',
-  merge=salt['grains.filter_by'](installmap, grain='vscode-anywhere:profile',
+  merge=salt['grains.filter_by'](profilemap, grain='vscode-anywhere:profile',
     merge=salt['pillar.get']('vscode-anywhere:javascript', {})
   )
 ) %}

@@ -10,7 +10,6 @@ default:
       - roots
       - git
     top_file_merging_strategy: same
-    gitfs_provider: pygit2
     gitfs_remotes:
       - https://github.com/gigi206/VSCode-Anywhere.git
         # - base: salt
@@ -22,6 +21,5 @@ default:
     gitfs_saltenv_blacklist:
       - V1
       - v1.*
-Windows:
-  config:
     gitfs_provider: gitpython
+    # gitfs_provider: pygit2

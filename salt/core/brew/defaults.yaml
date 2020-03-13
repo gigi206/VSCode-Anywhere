@@ -1,0 +1,14 @@
+default:
+  enabled: False
+Linux:
+  enabled: True
+  upgrade: True
+  env:
+    # Required if git or curl are not present in /usr/bin:/bin:/usr/sbin:/sbin
+    HOMEBREW_NO_ENV_FILTERING: 1
+    # PATH: "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
+    # HOMEBREW_PREFIX: /home/linuxbrew/.linuxbrew
+    # HOMEBREW_CELLAR: /home/linuxbrew/.linuxbrew/Cellar
+    # HOMEBREW_REPOSITORY: /home/linuxbrew/.linuxbrew/Homebrew
+    # # MANPATH: "/home/linuxbrew/.linuxbrew/share/man:{{ salt['environ.get']('MANPATH') }}"
+    # # INFOPATH: "/home/linuxbrew/.linuxbrew/share/info:{{ salt['environ.get']('INFOPATH') }}"

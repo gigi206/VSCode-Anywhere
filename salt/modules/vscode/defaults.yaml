@@ -5,7 +5,7 @@ default:
       xaver.theme-ysgrifennwr:
         enabled: True
         version: null
-      yogipatel.solarized-light-no-bold:
+      ginfuru.ginfuru-better-solarized-dark-theme:
         enabled: True
         version: null
       zhuangtongfa.Material-theme:

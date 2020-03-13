@@ -1,4 +1,3 @@
-Write-Host ""                                                               -ForegroundColor Green
 Write-Host "/=============================================================" -ForegroundColor Green
 Write-Host "|"                                                              -ForegroundColor Green
 Write-Host "| Installation in progress, please wait, it could take a while" -ForegroundColor Green

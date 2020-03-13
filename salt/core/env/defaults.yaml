@@ -5,6 +5,11 @@ Windows:
     PATH: ${env:SystemRoot};${env:SystemRoot}\System32;${env:SystemRoot}\System32\Wbem;${env:SystemRoot}\System32\WindowsPowerShell\v1.0;${env:SystemRoot}\System32\OpenSSH
     {#-
     PSModulePath: ${env:ProgramFiles}\WindowsPowerShell\Modules;${env:SystemRoot}\system32\WindowsPowerShell\v1.0\Modules
-    PATH: $env:Path
+    PATH: "${env:Path}"
     PATH: {{ salt['reg.read_value']('HKEY_LOCAL_MACHINE', 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path')['vdata'] | json }}
     #}
+Linux:
+  env:
+    PATH: ${PATH}
+    USER: VSCode-Anywhere
+    HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home') }}

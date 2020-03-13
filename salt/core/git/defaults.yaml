@@ -5,10 +5,22 @@ Windows:
     pkgs:
       git:
         enabled: True
-        version: null
       git-lfs:
         enabled: True
-        version: null
   env:
     GIT_INSTALL_ROOT: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'git', 'current') }}
     GIT_SSH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'git', 'current', 'usr', 'bin', 'ssh.exe') }}
+  vscode:
+    settings:
+      git.path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'git', 'current', 'bin', 'git') }}
+Linux:
+  vscode:
+    settings:
+      # git.path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'git') }}
+      git.path: /home/linuxbrew/.linuxbrew/bin/git
+  brew:
+    pkgs:
+      git:
+        enabled: True
+      git-lfs:
+        enabled: True

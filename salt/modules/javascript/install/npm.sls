@@ -6,6 +6,8 @@ include:
   - salt/modules/javascript/install
 
 
+{%- if grains['kernel'] == 'Windows' %}
+
 # Needed by the windows_portable profile
 {{ salt['vscode_anywhere.get_id'](sls) + ':prefix' }}:
   file.replace:
@@ -26,6 +28,8 @@ include:
     - backup: False
     - require:
       - sls: salt/modules/javascript/install
+
+{%- endif %}
 
 
   {%- set options = javascript.npm.opts.global %}

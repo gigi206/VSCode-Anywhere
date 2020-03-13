@@ -1,5 +1,5 @@
 {%- import_yaml 'salt/modules/custom/defaults.yaml' as defaults %}
-{%- import_yaml 'salt/modules/custom/installmap.yaml' as installmap %}
+{%- import_yaml 'salt/modules/custom/profilemap.yaml' as profilemap %}
 
 
 {%- set custom = salt['grains.filter_by'](defaults, grain='kernel', base='default',

@@ -1,0 +1,12 @@
+default:
+  enabled: True
+# Windows:
+#   scoop:
+#     pkgs:
+#       jq:
+#         enabled: True
+Linux:
+  brew:
+    pkgs:
+      jq:
+        enabled: True

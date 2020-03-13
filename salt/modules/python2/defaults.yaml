@@ -25,13 +25,37 @@
     {%- set pipenvPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python27', 'current', 'Scripts', 'pipenv.exe') %}
     {%- set pipPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'python27', 'current', 'Scripts', 'pip.exe') %}
   {%- endif %}
+{%- else %}
+  {%- set path = [salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'bin')] %}
+  {%- if salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
+    {%- do path.append('/home/linuxbrew/.linuxbrew/opt/anaconda2/bin') %}
+    {%- set pythonPath = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/python2' %}
+    {%- set autopep8Path = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/autopep8' %}
+    {%- set poetryPath = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/poetry' %}
+    {%- set flake8Path = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/flake8' %}
+    {%- set nosetestPath = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/nosetests' %}
+    {%- set pytestPath = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/pytest' %}
+    {%- set pipenvPath = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/pipenv' %}
+    {%- set pipPath = '/home/linuxbrew/.linuxbrew/opt/anaconda2/bin/pip' %}
+  {%- else %}
+    {%- set pythonPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'python2') %}
+    {%- set autopep8Path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'autopep8') %}
+    {%- set poetryPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'poetry') %}
+    {%- set flake8Path = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'flake8') %}
+    {%- set nosetestPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'nosetests') %}
+    {%- set pytestPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'bin', 'pytest') %}
+    {%- set pipenvPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'bin', 'pipenv') %}
+    {%- set pipPath = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'pip2') %}
+  {%- endif %}
 {%- endif %}
 default:
   enabled: False
   anaconda: False
+  anaconda_update: False
   pip:
     opts:
-      global: {}
+      global:
+        bin_env: {{ pipPath }}
       install:
         upgrade: False
       update:
@@ -104,15 +128,6 @@ default:
           install: {}
           update: {}
           uninstall: {}
-    {%- if salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
-      jupyterlab:
-        enabled: True
-        version: null
-        opts:
-          install: {}
-          update: {}
-          uninstall: {}
-    {%- endif %}
   vscode:
     extensions:
       ms-python.python:
@@ -151,18 +166,19 @@ default:
       # python.analysis.disabled:
       #   - undefined-variable
       #   - unresolved-import
-  zeal:
-    docsets:
-      Python_2:
-        enabled: True
-        version: null
-      PEPs:
-        enabled: True
-        version: null
-Windows:
-  {%- if not python3.enabled %}
-  vscode:
-    settings:
+      dash.languageIdToDocsetMap.python:
+        - django
+        - twisted
+        - sphinx
+        - flask
+        - tornado
+        - sqlalchemy
+        - numpy
+        - scipy
+        - salt
+        - pandas
+        - matplotlib
+        - cvp
       python.pythonPath: {{ pythonPath }}
       python.formatting.autopep8Path: {{ autopep8Path }}
       python.formatting.provider: autopep8
@@ -171,24 +187,100 @@ Windows:
       python.linting.flake8Path: {{ flake8Path }}
       python.testing.nosetestPath: {{ nosetestPath }}
       python.testing.pytestPath: {{ pytestPath }}
-      python.workspaceSymbols.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ctags', 'current', 'ctags.exe') }}
-    {%- if not salt['pillar.get']('vscode-anywhere:python3:anaconda', False) and salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
-      python.condaPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda3', 'current', 'Scripts', 'conda.exe') }}
-    {%- endif %}
-  {%- endif %}
-  pip:
-    opts:
-      global:
-        bin_env: {{ pipPath }}
+  zeal:
+    docsets:
+      Python_2:
+        enabled: True
+      PEPs:
+        enabled: True
+Windows:
   env:
     PATH: {{ path | join(';') }}
+  {%- if not python3.enabled %}
+  vscode:
+    settings:
+      python.workspaceSymbols.ctagsPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'ctags', 'current', 'ctags.exe') }}
+    {%- if not salt['pillar.get']('vscode-anywhere:python3:anaconda', False) and salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
+      python.condaPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'anaconda2', 'current', 'Scripts', 'conda.exe') }}
+    {%- endif %}
+  {%- endif %}
   scoop:
     pkgs:
       ctags:
         enabled: True
-        version: null
     {%- if salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
       anaconda2:
         enabled: True
-        version: null
     {%- endif %}
+Linux:
+  env:
+    PATH: {{ path | join(':') | json }}
+  {%- if not python3.enabled %}
+  vscode:
+    settings:
+      python.workspaceSymbols.ctagsPath: /home/linuxbrew/.linuxbrew/bin/ctags
+    {%- if not salt['pillar.get']('vscode-anywhere:python3:anaconda', False) and salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
+      python.condaPath: /home/linuxbrew/.linuxbrew/opt/anaconda2/conda
+    {%- endif %}
+  {%- endif %}
+    PYTHONPATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'python2.7', 'site-packages') }}
+  pip:
+    {%- if salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
+    opts:
+      global:
+        env_vars:
+          PYTHONPATH: ''
+    {%- endif %}
+    pkgs:
+      setuptools:
+        enabled: True
+        version: null
+        opts:
+          install: {}
+          update: {}
+          uninstall: {}
+      rope:
+        enabled: False
+      flake8:
+        enabled: False
+      autopep8:
+        enabled: False
+      nose:
+        enabled: False
+      peotry:
+        enabled: False
+  brew:
+    pkgs:
+      ctags:
+        enabled: True
+    {%- if salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
+      anaconda2:
+        enabled: True
+    {%- endif %}
+  nix:
+    pkgs:
+      python:
+        enabled: True
+        attr: nixpkgs.python27Full
+      python2.7-pip:
+        enabled: True
+        attr: nixpkgs.python27Packages.pip
+    {#-
+    {%- if not salt['pillar.get']('vscode-anywhere:python2:anaconda', False) %}
+      python2.7-rope:
+        enabled: True
+        attr: nixpkgs.python27Packages.rope
+      python2.7-flake8:
+        enabled: True
+        attr: nixpkgs.python27Packages.flake8
+      python2.7-autopep8:
+        enabled: True
+        attr: nixpkgs.python27Packages.autopep8
+      python2.7-nose:
+        enabled: True
+        attr: nixpkgs.python27Packages.nose
+      python2.7-poetry:
+        enabled: True
+        attr: nixpkgs.python27Packages.poetry
+    {%- endif %}
+    #}

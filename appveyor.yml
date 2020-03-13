@@ -16,40 +16,49 @@ environment:
   VSCode_Anywhere_CI: true
 clone_depth: 20
 install:
-  - ps: |
-      # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -Profile windows_admin
-      .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH}
-      Copy-Item "C:\projects\vscode-anywhere\salt\conf\tests\windows\vscode-anywhere.sls" -Destination "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
-      # Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${env:APPVEYOR_REPO_BRANCH}/salt/conf/tests/windows/vscode-anywhere.sls -OutFile "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
-      # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
-      # gci env:* | sort-object name
-      # $env:path -split ";" | Sort-Object
-      # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/install sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
-      # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/update sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
-      # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/uninstall sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
+  # Note: ps failed on stderr but not cmd
+  - ps: .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH}
+  - ps: Copy-Item "C:\projects\vscode-anywhere\salt\conf\tests\windows\vscode-anywhere.sls" -Destination "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  - cmd: powershell C:\VSCode-Anywhere\tools\install.ps1
+  - cmd: powershell C:\VSCode-Anywhere\tools\update.ps1
+  - cmd: powershell C:\VSCode-Anywhere\tools\link.ps1
+  - ps: Set-Location C:\
+  - ps: Rename-Item C:\VSCode-Anywhere C:\VSCode-Anywhere-new
+  - cmd: powershell C:\VSCode-Anywhere-new\tools\link.ps1
+  # - ps: |
+  #     # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -Profile windows_admin
+  #     .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH}
+  #     Copy-Item "C:\projects\vscode-anywhere\salt\conf\tests\windows\vscode-anywhere.sls" -Destination "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  #     # Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/${env:APPVEYOR_REPO_BRANCH}/salt/conf/tests/windows/vscode-anywhere.sls -OutFile "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  #     # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  #     # gci env:* | sort-object name
+  #     # $env:path -split ";" | Sort-Object
+  #     # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/install sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
+  #     # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/update sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
+  #     # C:\VSCode-Anywhere\tools\vscode-anywhere.ps1 state.apply salt/modules/python3/uninstall sync_mods=all saltenv=${env:APPVEYOR_REPO_BRANCH} --retcode-passthrough --state-verbose=False
 
-      C:\VSCode-Anywhere\tools\install.ps1
-      C:\VSCode-Anywhere\tools\update.ps1
-      C:\VSCode-Anywhere\tools\link.ps1
-      Set-Location C:\
-      Rename-Item C:\VSCode-Anywhere C:\VSCode-Anywhere-new
-      C:\VSCode-Anywhere-new\tools\link.ps1
+  #     C:\VSCode-Anywhere\tools\install.ps1
+  #     C:\VSCode-Anywhere\tools\update.ps1
+  #     C:\VSCode-Anywhere\tools\link.ps1
+  #     Set-Location C:\
+  #     Rename-Item C:\VSCode-Anywhere C:\VSCode-Anywhere-new
+  #     C:\VSCode-Anywhere-new\tools\link.ps1
 
-      # FIXME: need to backup and restore env
-      # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
-      # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -profile windows_admin
-      # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
-      # C:\VSCode-Anywhere\tools\install.ps1
-      # C:\VSCode-Anywhere\tools\update.ps1
-      # C:\VSCode-Anywhere\tools\link.ps1
+  #     # FIXME: need to backup and restore env
+  #     # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
+  #     # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -profile windows_admin
+  #     # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  #     # C:\VSCode-Anywhere\tools\install.ps1
+  #     # C:\VSCode-Anywhere\tools\update.ps1
+  #     # C:\VSCode-Anywhere\tools\link.ps1
 
-      # FIXME: need to backup and restore env
-      # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
-      # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -profile windows_portable
-      # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
-      # C:\VSCode-Anywhere\tools\install.ps1
-      # C:\VSCode-Anywhere\tools\update.ps1
-      # C:\VSCode-Anywhere\tools\link.ps1
+  #     # FIXME: need to backup and restore env
+  #     # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
+  #     # .\VSCode-Anywhere.ps1 -gitenv ${env:APPVEYOR_REPO_BRANCH} -profile windows_portable
+  #     # (Get-Content -path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls" -Raw) -replace 'enabled: False','enabled: True' | Set-Content -Path "C:\VSCode-Anywhere\conf\saltstack\pillar\vscode-anywhere.sls"
+  #     # C:\VSCode-Anywhere\tools\install.ps1
+  #     # C:\VSCode-Anywhere\tools\update.ps1
+  #     # C:\VSCode-Anywhere\tools\link.ps1
 
   # - ps: Invoke-WebRequest -Uri https://download.sysinternals.com/files/PSTools.zip -OutFile C:\PSTools.zip
   # - ps: Expand-Archive -Path C:\PSTools.zip -DestinationPath C:\PSTools

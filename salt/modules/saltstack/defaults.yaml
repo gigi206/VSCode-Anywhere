@@ -8,11 +8,12 @@ default:
         settings:
           dash.languageIdToDocsetMap.sls:
             - salt
+      # warpnet.salt-lint:
+      #   enabled: True
+      #   version: null
   zeal:
     docsets:
       SaltStack:
         enabled: True
-        version: null
       Jinja:
         enabled: True
-        version: null

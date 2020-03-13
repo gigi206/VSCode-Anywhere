@@ -7,25 +7,128 @@ include:
   - salt/core/terminal/install
 
 
-{{ salt['vscode_anywhere.get_id'](sls) + ':terminus:shortcut' }}:
-  file.shortcut:
-    - name: {{ salt['grains.get']('vscode-anywhere:path') | path_join('Terminal.lnk') }}
-    - target: {{ salt['cmd.run']("powershell (Get-Command -ErrorAction 'SilentlyContinue' powershell).Path") }}
-    - arguments: -noprofile -executionpolicy bypass -file {{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('terminal.ps1') }}
-    # - working_dir: {{ salt['cmd.run']("$([Environment]::GetFolderPath('Desktop'))", shell='powershell') }}
-    - description: Terminal
-    - icon_location: {{ terminal.path }},0
-    - require:
-      - sls: salt/core/terminal/install
+{%- if salt['grains.get']('kernel') == 'Linux' %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':formula' }}:
+  file.managed:
+    - name: /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/terminus.rb
+    - source: salt://salt/core/terminal/files/terminus.rb
+    - backup: False
+    - require_in:
+      - pkg: terminus
+{%- endif %}
 
 
 {{ salt['vscode_anywhere.get_id'](sls) + ':terminus:config.yaml' }}:
   file.managed:
     - name: {{ terminal.config_path }}
-    - source: salt://salt/core/terminal/template/terminus.yaml
+    - source: salt://salt/core/terminal/templates/terminus.yaml
     - template: jinja
     - makedirs: True
     - backup: False
-    - defaults:
-      terminal: {{ terminal | json }}
+
+
+{%- if salt['grains.get']('kernel') != 'Windows' %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:zshrc' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.zshrc') }}
+    - source: salt://salt/core/terminal/files/zshrc
+    - makedirs: True
+    - mode: 644
+    - backup: False
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:oh-my-zsh' }}:
+  git.cloned:
+    - name: https://github.com/robbyrussell/oh-my-zsh.git
+    - target: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.oh-my-zsh') }}
+    - branch: master
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:vscode-anywhere.zsh-theme' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.oh-my-zsh', 'custom', 'themes', 'vscode-anywhere.zsh-theme') }}
+    - source: salt://salt/core/terminal/files/vscode-anywhere.zsh-theme
+    - mode: 644
+    - backup: False
+    - require:
+      - id: {{ salt['vscode_anywhere.get_id'](sls) + ':zsh:oh-my-zsh' }}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:custom:vscode-anywhere' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.oh-my-zsh', 'custom', 'vscode-anywhere.zsh') }}
+    - source: salt://salt/core/terminal/files/vscode-anywhere.zsh
+    - mode: 644
+    - backup: False
+    - require:
+      - id: {{ salt['vscode_anywhere.get_id'](sls) + ':zsh:oh-my-zsh' }}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:fast-syntax-highlighting' }}:
+  git.cloned:
+    - name: https://github.com/zdharma/fast-syntax-highlighting.git
+    - target: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.oh-my-zsh', 'custom', 'plugins', 'fast-syntax-highlighting') }}
+    - branch: master
+    - require:
+      - id: {{ salt['vscode_anywhere.get_id'](sls) + ':zsh:oh-my-zsh' }}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + 'zsh:zsh-autosuggestions' }}:
+  git.cloned:
+    - name: https://github.com/zsh-users/zsh-autosuggestions.git
+    - target: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.oh-my-zsh', 'custom', 'plugins', 'zsh-autosuggestions') }}
+    - branch: master
+    - require:
+      - id: {{ salt['vscode_anywhere.get_id'](sls) + ':zsh:oh-my-zsh' }}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:fast-syntax-highlighting:theme:vscode-anywhere' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.fsh', 'vscode-anywhere.ini') }}
+    - source: salt://salt/core/terminal/files/vscode-anywhere.ini
+    - makedirs: True
+    - mode: 644
+    - backup: False
+    - require:
+      - id: {{ salt['vscode_anywhere.get_id'](sls) + ':zsh:fast-syntax-highlighting' }}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':zsh:fast-syntax-highlighting:theme:vscode-anywhere:apply' }}:
+  cmd.wait:
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.nix-profile', 'bin', 'zsh') }} -c ". ~/.zshrc && fast-theme HOME:vscode-anywhere"
+    - env:
+      - HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home') }}
+    - watch:
+      - file: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.fsh', 'vscode-anywhere.ini') }}
+    - require:
+      - nix: nixpkgs.zsh
+
+
+{#-
+{{ salt['vscode_anywhere.get_id'](sls) + ':fonts:powerline' }}:
+  git.cloned:
+    - name: https://github.com/powerline/fonts.git
+    - target: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'fonts', 'powerline') }}
+    - branch: master
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':fonts:powerline:RobotoMono' }}:
+  cmd.run:
+    - names:
+      - mkdir -p {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'share', 'fonts') }}
+      - cp {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'fonts', 'powerline', 'RobotoMono', '*ttf') }} {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'share', 'fonts') }}
+      - fc-cache -f {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'share', 'fonts') }}
+    - onchanges:
+      - id: {{ salt['vscode_anywhere.get_id'](sls) + ':fonts:powerline' }}
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':tmux.conf' }}:
+  file.managed:
+    # - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'etc', 'tmux.conf') }}
+    - name: /homelinuxbrew/.linuxbrew/etc/tmux.conf
+    - source: salt://salt/core/terminal/templates/tmux.conf
+    - mode: 644
+    - backup: False
+#}
+{%- endif %}
 {%- endif %}

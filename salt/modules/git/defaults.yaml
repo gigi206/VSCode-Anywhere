@@ -32,4 +32,8 @@ Windows:
   scoop:
     pkgs:
       nodejs: # required for credentials-helper => VSCode-Anywhere/apps/vscode/extensions/hirse.vscode-ungit-x.x.x/node_modules/ungit/bin/credentials-helper
+Linux:
+  brew:
+    pkgs:
+      node: # required for credentials-helper => VSCode-Anywhere/apps/vscode/extensions/hirse.vscode-ungit-x.x.x/node_modules/ungit/bin/credentials-helper
         enabled: True

@@ -1,5 +1,6 @@
 default:
   enabled: False
+  llvm: False
   vscode:
     settings:
       dash.languageIdToDocsetMap.c:
@@ -30,16 +31,13 @@ default:
         enabled: True
         version: null
 Windows:
-  env:
-    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'gdb', 'current', 'bin') }}
+{%- if salt['pillar.get']('vscode-anywhere:c_cpp:llvm', False) %}
   msys2:
     pkgs:
       mingw-w64-x86_64-clang:
         enabled: True
-        version: null
-      mingw-w64-x86_64-gdb:
+      mingw-w64-x86_64-lldb:
         enabled: True
-        version: null
   vscode:
     settings:
       code-runner.executorMap.c: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang.exe') }} $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe
@@ -51,13 +49,96 @@ Windows:
       jbenden.c-cpp-flylint:
         settings:
           c-cpp-flylint.clang.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang.exe') }}
-  # scoop:
-  #   pkgs:
-  #     gcc:
-  #       enabled: True
-  #       version: null
-  # chocolatey:
-  #   pkgs:
-  #     mingw:
-  #       enabled: True
-  #       version: null
+{%- else %}
+  msys2:
+    pkgs:
+      mingw-w64-x86_64-gcc:
+        enabled: True
+      mingw-w64-x86_64-gdb:
+        enabled: True
+      mingw-w64-x86_64-cppcheck:
+        enabled: True
+      # make:
+      #   enabled: True
+      # cmake:
+      #   enabled: True
+      # autoconf:
+      #   enabled: True
+      # automake:
+      #   enabled: True
+  vscode:
+    settings:
+      code-runner.executorMap.c: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'gcc.exe') }} $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe
+      code-runner.executorMap.cpp: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'g++.exe') }} $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe
+    extensions:
+      ms-vscode.cpptools:
+        settings:
+          C_Cpp.default.compilerPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'gcc.exe') }}
+      jbenden.c-cpp-flylint:
+        settings:
+          c-cpp-flylint.clang.enable: False
+          c-cpp-flylint.cppcheck.enable: True
+          c-cpp-flylint.cppcheck.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'cppcheck.exe') }}
+{%- endif %}
+Linux:
+  # env:
+  #   LDFLAGS: "-L/home/linuxbrew/.linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"
+  brew:
+    pkgs:
+      # make:
+      #   enabled: True
+      # cmake:
+      #   enabled: True
+      # autoconf:
+      #   enabled: True
+      # automake:
+      #   enabled: True
+{%- if salt['pillar.get']('vscode-anywhere:c_cpp:llvm', False) %}
+      llvm:
+        enabled: True
+        # options:
+        #   - --with-toolchain
+        #   - --with-clang
+{%- else %}
+      gcc:
+        enabled: True
+      gdb:
+        enabled: True
+      cppcheck:
+        enabled: True
+{%- endif %}
+{%- if salt['pillar.get']('vscode-anywhere:c_cpp:llvm', False) %}
+  vscode:
+    settings:
+      # code-runner.executorMap.c: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'clang') }} $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+      # code-runner.executorMap.cpp: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'clang++') }} $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+      code-runner.executorMap.c: /home/linuxbrew/.linuxbrew/bin/clang $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+      code-runner.executorMap.cpp: /home/linuxbrew/.linuxbrew/bin/clang++ $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+    extensions:
+      ms-vscode.cpptools:
+        settings:
+          # C_Cpp.default.compilerPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'clang') }}
+          C_Cpp.default.compilerPath: /home/linuxbrew/.linuxbrew/bin/clang
+      jbenden.c-cpp-flylint:
+        settings:
+          # c-cpp-flylint.clang.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'clang') }}
+          c-cpp-flylint.clang.executable: /home/linuxbrew/.linuxbrew/bin/clang
+{%- else %}
+  vscode:
+    settings:
+      # code-runner.executorMap.c: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'gcc') }} $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+      # code-runner.executorMap.cpp: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'g++') }} $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+      code-runner.executorMap.c: /home/linuxbrew/.linuxbrew/bin/gcc $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+      code-runner.executorMap.cpp: /home/linuxbrew/.linuxbrew/bin/g++ $fileName -o $fileNameWithoutExt && $fileNameWithoutExt
+    extensions:
+      ms-vscode.cpptools:
+        settings:
+          # C_Cpp.default.compilerPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'gcc') }}
+          C_Cpp.default.compilerPath: /home/linuxbrew/.linuxbrew/bin/gcc
+      jbenden.c-cpp-flylint:
+        settings:
+          c-cpp-flylint.clang.enable: False
+          c-cpp-flylint.cppcheck.enable: True
+          # c-cpp-flylint.cppcheck.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'cppcheck') }}
+          c-cpp-flylint.cppcheck.executable: /home/linuxbrew/.linuxbrew/bin/cppcheck
+{%- endif %}

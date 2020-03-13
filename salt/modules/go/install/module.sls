@@ -1,20 +1,20 @@
 {%- from 'salt/modules/go/map.jinja' import go with context %}
 
-
+{%- if go.enabled %}
 include:
   - salt/modules/go/install
 
 
-{%- if go.enabled %}
   {%- for pkg, pkg_attr in go.modules.items() %}
     {%- if pkg_attr.get('enabled') %}
+
 {{ salt['vscode_anywhere.get_id'](sls) + ':{}'.format(pkg) }}:
   cmd.run:
-    {%- if pkg_attr.get('version') %}
+      {%- if pkg_attr.get('version') %}
     - name: {{ go.go_bin }} get {{ pkg }}@{{ pkg_attr.get('version') }}
-    {%- else %}
+      {%- else %}
     - name: {{ go.go_bin }} get {{ pkg }}
-    {%- endif %}
+      {%- endif %}
     - require:
       - sls: salt/modules/go/install
       {%- if grains.get('kernel') == 'Windows' %}
@@ -28,8 +28,8 @@ include:
       - test {{ salt['file.directory_exists'](salt['environ.get']('GOPATH') | path_join('src', pkg)) }} = True
       {%- endif %}
     - env:
-      - GOROOT: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'go', 'current') }}
-      - GOPATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'go') }}
+      - GOROOT: {{ go.env.GOROOT }}
+      - GOPATH: {{ go.env.GOPATH }}
     {%- endif %}
   {%- endfor %}
 {%- endif %}
