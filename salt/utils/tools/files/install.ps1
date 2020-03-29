@@ -29,4 +29,4 @@ $exit = $?
 
 if (!(${env:VSCode_Anywhere_CI})) { Pause }
 
-exit $?
+exit ${exit}

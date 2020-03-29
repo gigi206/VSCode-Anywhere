@@ -19,4 +19,4 @@ else {
 $exit = $?
 {%- endif %}
 
-exit $exit
+exit ${exit}
