@@ -1,0 +1,14 @@
+{%- if grains['kernel'] == 'Windows' %}
+  {%- set config_path = salt['cmd.run']('Write-Output ${env:APPDATA}\\terminus\\config.yaml', python_shell=False, shell='powershell') %}
+{%- endif %}
+
+default:
+  enabled: True
+Windows:
+  scoop:
+    pkgs:
+      terminus:
+        enabled: True
+        version: null
+  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'terminus', 'current', 'Terminus.exe') }}
+  config_path: {{ config_path }}

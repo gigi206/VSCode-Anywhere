@@ -7,3 +7,4 @@ include:
     - salt/core/zeal
     - salt/core/saltstack
     - salt/core/git
+    - salt/core/terminal

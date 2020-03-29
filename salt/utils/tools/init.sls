@@ -38,3 +38,12 @@
     - template: jinja
     - makedirs: True
     - backup: False
+
+
+{{ salt['vscode_anywhere.get_id'](sls) + ':terminal' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('terminal.ps1') }}
+    - source: salt://salt/utils/tools/files/terminal.ps1
+    - template: jinja
+    - makedirs: True
+    - backup: False
