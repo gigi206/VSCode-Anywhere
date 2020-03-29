@@ -106,7 +106,6 @@ function InstallScoop {
     Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name SCOOP -Value "${Apps}\scoop"
     try {
         Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-        scoop update
         ReloadPathEnv
     }
     catch {
@@ -132,6 +131,8 @@ function InstallGit {
     Output "Installing git"
     try {
         scoop install git
+        # scoop update need git
+        scoop update
     }
     catch {
         OutputErrror "failed to install git : $_"
