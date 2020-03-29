@@ -114,7 +114,7 @@ function InstallScoop {
     }
 }
 
-# Install Install 7-zip
+# Install 7-zip
 function Install7zip {
     Header "7-Zip"
     Output "Installing 7-Zip"
@@ -126,7 +126,7 @@ function Install7zip {
     }
 }
 
-# Install Install 7-zip
+# Install Git
 function InstallGit {
     Header "Git"
     Output "Installing git"
