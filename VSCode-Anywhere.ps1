@@ -5,7 +5,8 @@ Param(
     [string]$Gitenv = "master",
     [string]$InstallDir = "C:\VSCode-Anywhere",
     [string]$SaltVersion = "3000",
-    [string]$Profile = "windows_user"
+    [string]$Profile = "windows_user",
+    [string]$SaltOpts = ""
 )
 
 # Output header
@@ -46,6 +47,7 @@ function Init() {
     Output "Saltstack version    : ${SaltVersion}"
     Output "Installation profile : ${Profile}"
     Output "Installation dir     : ${InstallDir}"
+    Output "Saltstack options    : ${SaltOpts}"
 
     if (Test-Path "${InstallDir}" -PathType Container) {
         OutputErrror "Installation directory ${InstallDir} already exists !"
@@ -237,7 +239,7 @@ function InstallVSCodeAnywhere {
     & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:pillar_path' "${SaltstackPillarDir}"
 
     Output "Installing VSCode-Anywhere"
-    & salt-call.bat --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --state-verbose=False state.apply saltenv=${Gitenv} sync_mods=all
+    & salt-call.bat --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --state-verbose=False state.apply saltenv=${Gitenv} sync_mods=all ${SaltOpts}
 }
 
 # function BackupEnv {
