@@ -57,7 +57,7 @@ else {
 Write-Host "* Updating VSCode-Anywhere" -ForegroundColor Cyan
 Set-Location "${PSScriptRoot}"
 . "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:tools:env')) }}"
-& .\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False state.apply salt/utils/update saltenv={{ saltenv }} sync_mods=all
+& .\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False state.apply salt/utils/update saltenv={{ saltenv }} sync_mods=all --force-color
 $exit = $?
 
 if (!(${env:VSCode_Anywhere_CI})) { Pause }
