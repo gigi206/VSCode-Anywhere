@@ -239,7 +239,7 @@ function InstallVSCodeAnywhere {
     & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:pillar_path' "${SaltstackPillarDir}"
 
     Output "Installing VSCode-Anywhere"
-    & salt-call.bat --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --state-verbose=False state.apply saltenv=${Gitenv} sync_mods=all ${SaltOpts}
+    & salt-call.bat --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --state-verbose=False state.apply saltenv=${Gitenv} sync_mods=all ${SaltOpts} --force-color
 }
 
 # function BackupEnv {
