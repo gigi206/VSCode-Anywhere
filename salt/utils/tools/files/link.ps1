@@ -1,3 +1,10 @@
+# Output actions to console
+function Output([string]$msg, [bool]$newline=$true, [string]$fgcolor='Cyan', [bool]$star=$true) {
+    if (${star}) { Write-Host "* " -nonewline -ForegroundColor Green }
+    if (${newline}) { Write-Host "${msg}" -ForegroundColor ${fgcolor} }
+    else { Write-Host -nonewline "${msg}" -ForegroundColor ${fgcolor} }
+}
+
 Write-Host ""                                                               -ForegroundColor Green
 Write-Host "/=============================================================" -ForegroundColor Green
 Write-Host "|"                                                              -ForegroundColor Green
@@ -49,18 +56,38 @@ Add-Content -Path "${config_file}" -Value "  - ${root_dir}"
 
 # & .\vscode-anywhere.ps1 --log-file="$log_file" state.single file.serialize "$config_file" formatter=yaml merge_if_exists=True dataset="{'fileserver_backend': ['roots'], 'file_root': null, 'file_roots': {'salt': ['$root_dir']} }"
 
-Write-Host "* Compute new Saltstack grains" -ForegroundColor Cyan
+Write-Host "* Reconfigure scoop" -ForegroundColor Cyan
 & scoop reset *
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:apps:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:apps:path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:tools:path" (Resolve-Path "${PSScriptRoot}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:tools:env" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:tools:env')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:config:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:config:path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:config_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:config_path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:minion_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:minion_path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:roots_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:roots_path')) }}").Path
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:pillar_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:pillar_path')) }}").Path
+
+Output "Installing grains => vscode-anywhere:path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:apps:path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:apps:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:apps:path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:tools:path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:tools:path" (Resolve-Path "${PSScriptRoot}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:tools:env"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:tools:env" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:tools:env')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:config:path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:config:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:config:path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:saltstack:path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:saltstack:config_path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:config_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:config_path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:saltstack:minion_path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:minion_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:minion_path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:saltstack:roots_path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:roots_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:roots_path')) }}").Path --force-color
+
+Output "Installing grains => vscode-anywhere:saltstack:pillar_path"
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:saltstack:pillar_path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:pillar_path')) }}").Path --force-color
 
 Copy-Item -Path "${config_dir_offline}\grains" -Destination "${config_dir}\grains" -Force
 
