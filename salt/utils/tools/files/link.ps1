@@ -65,7 +65,7 @@ Write-Host "* Compute new Saltstack grains" -ForegroundColor Cyan
 Copy-Item -Path "${config_dir_offline}\grains" -Destination "${config_dir}\grains" -Force
 
 Write-Host "* Check the current installation (offline)" -ForegroundColor Cyan
-& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" --retcode-passthrough --state-verbose=False state.apply pillar='{"vscode-anywhere": {"offline": True}}' sync_mods=all saltenv={{ saltenv }} --force-color
+& "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" --retcode-passthrough --state-verbose=False state.apply pillar='{"vscode-anywhere": {"offline": True}}' sync_mods=all saltenv={{ saltenv }} $Args --force-color
 $exit = $?
 
 if (!(${env:VSCode_Anywhere_CI})) { Pause }
