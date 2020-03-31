@@ -35,8 +35,8 @@ default:
       telemetry.enableCrashReporter: False
       telemetry.enableTelemetry: False
       # breadcrumbs.enabled: False
-    {%- if locale_extension is defined %}
     extensions:
+    {%- if locale_extension is defined %}
       {{ locale_extension }}:
         enabled: True
         version: null
