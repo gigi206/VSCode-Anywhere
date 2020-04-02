@@ -8,6 +8,8 @@ only_commits:
     - salt/**/*
     - appveyor.yml
     - VSCode-Anywhere.ps1
+    - _modules
+    - _states
 environment:
   VSCode_Anywhere_CI: true
 clone_depth: 20
