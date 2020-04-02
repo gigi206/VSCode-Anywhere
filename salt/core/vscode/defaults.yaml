@@ -48,7 +48,7 @@ Windows:
   locale_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'locale.json') }}
   path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'code.cmd') }}
   extensions_dir: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}
-  keybindings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'keybindings.json') }}
+  keybindings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'keybindings.json') }}
   settings_path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user', 'User', 'settings.json') }}
   scoop:
     pkgs:
