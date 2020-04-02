@@ -1,11 +1,11 @@
 {%- from 'salt/core/vscode/map.jinja' import vscode with context %}
 
 
+{%- if vscode.enabled %}
 include:
   - salt/core/vscode/install
 
 
-{%- if vscode.enabled %}
 {{ salt['vscode_anywhere.get_id'](sls) }}:
   file.managed:
     - name: {{ vscode.locale_path }}

@@ -1,12 +1,12 @@
 {%- from 'salt/core/msys2/map.jinja' import msys2 with context %}
 
 
+{%- if msys2.enabled %}
 include:
   # - salt/utils/sync
   - salt/core/msys2/install
 
 
-{%- if msys2.enabled %}
 {{ salt['vscode_anywhere.get_id'](sls) }}:
   msys2.pkg_uptodate:
     - name: Update all packages
