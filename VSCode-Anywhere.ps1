@@ -119,26 +119,19 @@ function InstallScoop {
 function Install7zip {
     Header "7-Zip"
     Output "Installing 7-Zip"
-    try {
-        scoop install 7zip
-    }
-    catch {
-        OutputErrror "failed to install 7-Zip : $_"
-    }
+    scoop install 7zip
+    if ("$LASTEXITCODE" -ne 0) { OutputErrror "failed to install 7zip" }
 }
 
 # Install Git
 function InstallGit {
     Header "Git"
     Output "Installing git"
-    try {
-        scoop install git
-        # scoop update need git
-        scoop update
-    }
-    catch {
-        OutputErrror "failed to install git : $_"
-    }
+    scoop install git
+    if ("$LASTEXITCODE" -ne 0) { OutputErrror "failed to install git" }
+    # scoop update need git
+    scoop update
+    if ("$LASTEXITCODE" -ne 0) { OutputErrror "failed to update scoop" }
 }
 
 # Install Saltstack
