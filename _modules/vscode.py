@@ -8,6 +8,7 @@ import salt.utils.files
 import salt.utils.json
 import salt.exceptions
 import pathlib
+import commentjson
 import re
 import os
 
@@ -158,6 +159,39 @@ def _write_settings(path, settings, indent=4):
             raise salt.exceptions.CommandExecutionError(
                 "Unable to write settings to {} => {}".format(path, e)
             )
+
+
+def _decode_json_file(path=None, ignore_comments=True):
+    """
+    Read all settings from VSCode.
+
+    Args
+
+        path (str):
+            path of the settings file
+
+        ignore_comments (bool):
+            json doesn't support comments. Remove all comments from file for avoid errors when parsing json
+
+    Returns
+
+        dict:
+            dict of settings
+    """
+    path = _settings_path(path)
+
+    try:
+        if os.path.isfile(path):
+            if ignore_comments:
+                return commentjson.load(salt.utils.files.fopen(path))
+            else:
+                return salt.utils.json.load(salt.utils.files.fopen(path))
+        else:
+            return {}
+    except Exception:
+        raise salt.exceptions.CommandExecutionError(
+            "{} is not a valid json file".format(path)
+        )
 
 
 def extensions_installed(dir=None, path="code"):
@@ -388,53 +422,6 @@ def extension_uninstall(extension, dir=None, path="code"):
     return ret
 
 
-def keybindings_get_all(path=None, ignore_comments=True):
-    """
-    Read all keybindings from VSCode.
-
-    Args
-
-        path (str):
-            path of the keybindings file
-
-        ignore_comments (bool):
-            json doesn't support comments. Remove all comments from file for avoid errors when parsing json
-
-    Returns
-
-        list:
-            list of keybindings
-
-    CLI Example:
-
-    .. code-block:: bash
-
-        salt '*' vscode.keybindings_get_all
-        salt '*' vscode.keybindings_get_all path=<keybindings path> ignore_comments=<bool>
-    """
-    path = _keybindings_path(path)
-
-    if os.path.isfile(path):
-        lines = []
-        with salt.utils.files.fopen(path) as _f:
-            for line in _f.readlines():
-                if ignore_comments:
-                    match = re.search("^[^/]*", line)
-                    if match:
-                        lines.append(match.group(0).strip())
-                else:
-                    lines.append(line)
-    else:
-        return []
-
-    try:
-        return salt.utils.json.loads("\n".join(lines))
-    except Exception:
-        raise salt.exceptions.CommandExecutionError(
-            "{} is not a valid json file".format(path)
-        )
-
-
 def is_keybindings_set(key, when=None, path=None, ignore_comments=True):
     """
     Check if the keybinding is defined
@@ -462,7 +449,7 @@ def is_keybindings_set(key, when=None, path=None, ignore_comments=True):
         salt '*' vscode.is_keybindings_set
         salt '*' vscode.is_keybindings_set path=<keybindings path> ignore_comments=<bool>
     """
-    for keybindings in keybindings_get_all(path, ignore_comments=ignore_comments):
+    for keybindings in _decode_json_file(path, ignore_comments=ignore_comments):
         if keybindings.get("key") == key:
             if when is not None and when != keybindings.get("when"):
                 return False
@@ -498,7 +485,7 @@ def keybindings_get(key, when=None, path=None, ignore_comments=True):
         salt '*' vscode.is_keybindings_get
         salt '*' vscode.is_keybindings_get path=<keybindings path> ignore_comments=<bool>
     """
-    for keybindings in keybindings_get_all(path, ignore_comments=ignore_comments):
+    for keybindings in _decode_json_file(path, ignore_comments=ignore_comments):
         if keybindings.get("key") == key:
             if (when is not None and keybindings.get("when") == when) or when is None:
                 return keybindings
@@ -534,7 +521,7 @@ def keybindings_remove(key, when=None, path=None, ignore_comments=True, indent=4
     """
     path = _keybindings_path(path)
     keys = []
-    for keybindings in keybindings_get_all(path, ignore_comments=ignore_comments):
+    for keybindings in _decode_json_file(path, ignore_comments=ignore_comments):
         if keybindings.get("key") == key:
             if not (
                 (when is not None and keybindings.get("when") == when) or when is None
@@ -577,7 +564,7 @@ def keybindings_set(key, command, when=None, path=None, ignore_comments=True, in
     path = _keybindings_path(path)
     found = False
     keys = []
-    for keybindings in keybindings_get_all(path, ignore_comments=ignore_comments):
+    for keybindings in _decode_json_file(path, ignore_comments=ignore_comments):
         if keybindings.get("key") == key:
             if (when is not None and keybindings.get("when") == when) or when is None:
                 keys.append({"key": key, "command": command, "when": when})
@@ -592,53 +579,6 @@ def keybindings_set(key, command, when=None, path=None, ignore_comments=True, in
 
     _write_settings(path, keys, indent=indent)
     return True
-
-
-def settings_get_all(path=None, ignore_comments=True):
-    """
-    Read all settings from VSCode.
-
-    Args
-
-        path (str):
-            path of the settings file
-
-        ignore_comments (bool):
-            json doesn't support comments. Remove all comments from file for avoid errors when parsing json
-
-    Returns
-
-        dict:
-            dict of settings
-
-    CLI Example:
-
-    .. code-block:: bash
-
-        salt '*' vscode.settings_get_all
-        salt '*' vscode.settings_get_all path=<settings path> ignore_comments=<bool>
-    """
-    path = _settings_path(path)
-
-    if os.path.isfile(path):
-        lines = []
-        with salt.utils.files.fopen(path) as _f:
-            for line in _f.readlines():
-                if ignore_comments:
-                    match = re.search("^[^/]*", line)
-                    if match:
-                        lines.append(match.group(0).strip())
-                else:
-                    lines.append(line)
-    else:
-        return {}
-
-    try:
-        return salt.utils.json.loads("\n".join(lines))
-    except Exception:
-        raise salt.exceptions.CommandExecutionError(
-            "{} is not a valid json file".format(path)
-        )
 
 
 def settings_get(key, path=None, ignore_comments=True):
@@ -669,7 +609,7 @@ def settings_get(key, path=None, ignore_comments=True):
         salt '*' vscode.settings_get key=<settings key> path=<settings path> ignore_comments=<bool>
     """
     path = _settings_path(path)
-    settings = settings_get_all(path=path, ignore_comments=ignore_comments)
+    settings = _decode_json_file(path=path, ignore_comments=ignore_comments)
     if isinstance(settings, dict):
         return settings.get(key, None)
     else:
@@ -707,7 +647,7 @@ def settings_remove(key, path=None, remove_comments=True, indent=4):
         salt '*' vscode.settings_remove key=<settings key> path=<settings path> ignore_comments=<bool>
     """
     path = _settings_path(path)
-    settings = settings_get_all(path=path, ignore_comments=remove_comments)
+    settings = _decode_json_file(path=path, ignore_comments=remove_comments)
 
     if settings.get(key, None) is None:
         return True
@@ -752,7 +692,7 @@ def settings_set(key, value, path=None, remove_comments=True, indent=4):
         salt '*' vscode.settings_set <settings key> value=<settings value> path=<settings path>
     """
     path = _settings_path(path)
-    settings = settings_get_all(path=path, ignore_comments=remove_comments)
+    settings = _decode_json_file(path=path, ignore_comments=remove_comments)
     settings[key] = value
     _write_settings(path, settings, indent=indent)
     return True

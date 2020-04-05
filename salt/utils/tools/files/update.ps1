@@ -75,6 +75,11 @@ if ($saltCurrentVersion -ne $saltTargetVersion) {
         RunCmd -Cmd git.exe -ArgumentList "checkout vsc${saltTargetVersion}"
     }
     RunCmd -Cmd git.exe -ArgumentList "branch -d master"
+
+    # Install requirements
+    Output "Install Saltstack requirements"
+    if (${env:VSCode_Anywhere_CI}) { RunCmd -Cmd "{{ salt['grains.get']('vscode-anywhere:saltstack:path') | path_join('bin', 'python.exe') }}" -ArgumentList "-m pip --quiet install commentjson" }
+    else { RunCmd -Cmd "{{ salt['grains.get']('vscode-anywhere:saltstack:path') | path_join('bin', 'python.exe') }}" -ArgumentList "-m pip install commentjson" }
 }
 else {
     Output "Syncing Saltstack ${saltCurrentVersion} to the latest VSCode-Anywhere updates (fork)"
@@ -83,6 +88,11 @@ else {
     RunCmd -Cmd git.exe -ArgumentList "reset --hard HEAD"
     if (${env:VSCode_Anywhere_CI}) { RunCmd -Cmd git.exe -ArgumentList "pull --quiet --ff-only origin vsc${saltTargetVersion}" }
     else { RunCmd -Cmd git.exe -ArgumentList "pull --ff-only origin vsc${saltTargetVersion}" }
+
+    # Upgrade required modules
+    Output "Update Saltstack requirements"
+    if (${env:VSCode_Anywhere_CI}) { RunCmd -Cmd "{{ salt['grains.get']('vscode-anywhere:saltstack:path') | path_join('bin', 'python.exe') }}" -ArgumentList "-m pip --quiet install --upgrade commentjson" }
+    else { RunCmd -Cmd "{{ salt['grains.get']('vscode-anywhere:saltstack:path') | path_join('bin', 'python.exe') }}" -ArgumentList "-m pip install --upgrade commentjson" }
 }
 
 Output "Updating VSCode-Anywhere"

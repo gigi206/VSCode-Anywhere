@@ -94,7 +94,6 @@ function 7zipExtract ([string]$source, [string]$target, [string]$delete=$true) {
     }
 }
 
-
 # Reload Path environment
 function ReloadPathEnv {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -171,12 +170,21 @@ function InstallSaltstack {
         Output "Configuring Saltstack"
         Copy-Item "${SaltstackDir}\conf" -Destination "${SaltstackConfDir}" -Recurse
         # Add ${SaltstackDir} to the PATH
-        $OldPath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name Path).Path
-        # Set PATH
-        if (!((${OldPath}).split(';').Contains(${SaltstackDir}))) {
-            Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value ("${SaltstackDir};" + "${OldPath};")
-        }
-        ReloadPathEnv
+        # $OldPath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name Path).Path
+        # # Set PATH
+        # if (!((${OldPath}).split(';').Contains(${SaltstackDir}))) {
+        #     Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value ("${SaltstackDir};" + "${OldPath};")
+        # }
+        # ReloadPathEnv
+
+        $env:Path = "${SaltstackDir};${env:Path}"
+
+        # Install Python modules requirements
+        Output "Installation of python modules required by VScode-Anywhere"
+        if (${env:VSCode_Anywhere_CI}) { & "${SaltstackDir}\bin\python.exe" -m pip --quiet install commentjson }
+        else { & "${SaltstackDir}\bin\python.exe" -m pip install commentjson }
+        if ("$LASTEXITCODE" -ne 0) { OutputErrror "failed to install commentjson pip module" }
+
         # Create minion.d configuration directory
         New-Item -ItemType Directory -Force -Path "${SaltstackConfDirMinion}" | Out-Null
         # Create srv\pillar configuration directory
