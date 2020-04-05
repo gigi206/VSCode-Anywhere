@@ -23,8 +23,8 @@ if (!($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Admini
 Write-Host "* Updating VSCode-Anywhere from branch {{ saltenv }}" -ForegroundColor Cyan
 Write-Host "* Updating saltstack pillar file" -ForegroundColor Cyan
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/{{ saltenv }}/salt/conf/srv/pillar/saltstack.sls -OutFile "{{ salt['grains.get']('vscode-anywhere:saltstack:pillar_path')}}\saltstack.sls"
-# $saltCurrentVersion = & ("{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}" + '\bin\python.exe') -c "import salt.version;print('.'.join(str(v) for v in salt.version.__version_info__[0:2]))"
-$saltCurrentVersion = & ("{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}" + '\bin\python.exe') -c "import salt.version;print(salt.version.__version_info__[0])"
+# $saltCurrentVersion = & ("{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}" + '\bin\python.exe') -c "import salt.version;print(salt.version.__version_info__[0])"
+$saltCurrentVersion = & ("{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}" + '\bin\python.exe') -c "import salt.version;print('.'.join(str(v) for v in salt.version.__version_info__[0:2]))"
 $saltTargetVersion = (& "${PSScriptRoot}\vscode-anywhere.ps1" pillar.get saltstack:version --out json | ConvertFrom-Json).local
 if ($saltCurrentVersion -ne $saltTargetVersion) {
     Write-Host "* Updating Saltsatck ${saltCurrentVersion} => ${saltTargetVersion}" -ForegroundColor Cyan

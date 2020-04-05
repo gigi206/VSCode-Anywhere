@@ -4,7 +4,7 @@
 Param(
     [string]$Gitenv = "master",
     [string]$InstallDir = "C:\VSCode-Anywhere",
-    [string]$SaltVersion = "3000",
+    [string]$SaltVersion = "3000.1",
     [string]$Profile = "windows_user",
     [string]$SaltOpts = ""
 )
