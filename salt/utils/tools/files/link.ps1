@@ -24,8 +24,8 @@ ${env:SCOOP} = (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath']
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if (!($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
     Write-Host "You must execute this script with the administrator rights"
-    $run = Start-Process -NoNewWindow -PassThru -Wait powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
-    $exit = $run.ExitCode
+    $process = Start-Process -PassThru -Wait powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb "RunAs"
+    $exit = ${process}.ExitCode
 }
 {%- endif %}
 
@@ -58,6 +58,7 @@ Add-Content -Path "${config_file}" -Value "  - ${root_dir}"
 
 Write-Host "* Reconfigure scoop" -ForegroundColor Cyan
 & scoop reset *
+& scoop update
 
 Output "Installing grains => vscode-anywhere:path"
 & "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:path')) }}").Path --force-color
@@ -93,7 +94,7 @@ Copy-Item -Path "${config_dir_offline}\grains" -Destination "${config_dir}\grain
 
 Write-Host "* Check the current installation (offline)" -ForegroundColor Cyan
 & "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" --retcode-passthrough --state-verbose=False state.apply pillar='{"vscode-anywhere": {"offline": True}}' sync_mods=all saltenv={{ saltenv }} $Args --force-color
-$exit = $?
+$exit = ${LASTEXITCODE}
 
 if (!(${env:VSCode_Anywhere_CI})) { Pause }
 
