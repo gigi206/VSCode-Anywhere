@@ -369,7 +369,8 @@ def pkg_installed_versions(pkg):
             versions of the application
     """
     versions = os.listdir(_pkg_path(pkg))
-    versions.remove("current")
+    if "current" in versions:
+        versions.remove("current")
     return versions
 
 
