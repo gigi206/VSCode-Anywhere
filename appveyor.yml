@@ -29,6 +29,9 @@ install:
       C:\VSCode-Anywhere\tools\install.ps1
       C:\VSCode-Anywhere\tools\update.ps1
       C:\VSCode-Anywhere\tools\link.ps1
+      Set-Location C:\
+      Rename-Item C:\VSCode-Anywhere C:\VSCode-Anywhere-new
+      C:\VSCode-Anywhere-new\tools\link.ps1
 
       # FIXME: need to backup and restore env
       # Remove-Item -Path "C:\VSCode-Anywhere" -Recurse
