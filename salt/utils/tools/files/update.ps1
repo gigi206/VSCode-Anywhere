@@ -98,8 +98,8 @@ else {
 Output "Updating VSCode-Anywhere"
 Set-Location "${PSScriptRoot}"
 . "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:tools:env')) }}"
-# RunCmd -Cmd ".\vscode-anywhere.ps1" -ArgumentList "--retcode-passthrough --state-verbose=False --force-color state.apply salt/utils/update saltenv={{ saltenv }} sync_mods=all $Args"
-& .\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False --force-color state.apply salt/utils/update saltenv={{ saltenv }} sync_mods=all $Args
+# RunCmd -Cmd ".\vscode-anywhere.ps1" -ArgumentList "--retcode-passthrough --state-verbose=False state.apply salt/utils/update saltenv={{ saltenv }} sync_mods=all $Args"
+& .\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False state.apply salt/utils/update saltenv={{ saltenv }} sync_mods=all $Args
 $exit = ${LASTEXITCODE}
 
 if (!(${env:VSCode_Anywhere_CI})) { Pause }

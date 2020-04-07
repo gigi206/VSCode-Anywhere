@@ -13,7 +13,7 @@ Set-Location "${PSScriptRoot}"
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if ($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     . "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:tools:env')) }}"
-    .\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False --force-color state.apply saltenv={{ saltenv }} sync_mods=all $Args
+    .\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False state.apply saltenv={{ saltenv }} sync_mods=all $Args
     $exit = $?
 }
 else {
@@ -23,7 +23,7 @@ else {
 }
 {%- else %}
 . "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:tools:env')) }}"
-.\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False --force-color state.apply saltenv={{ saltenv }} sync_mods=all $Args
+.\vscode-anywhere.ps1 --retcode-passthrough --state-verbose=False state.apply saltenv={{ saltenv }} sync_mods=all $Args
 $exit = $?
 {%- endif %}
 

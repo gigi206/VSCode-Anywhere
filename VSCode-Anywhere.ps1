@@ -217,30 +217,30 @@ function InstallVSCodeAnywhere {
     Output "Installing Satlstack grains"
     # Set Saltstack grains
     Output "Installing grains => vscode-anywhere:profile"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:profile' "${Profile}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:profile' "${Profile}"
     Output "Installing grains => vscode-anywhere:path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:path' "${InstallDir}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:path' "${InstallDir}"
     Output "Installing grains => vscode-anywhere:apps:path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:apps:path' "${Apps}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:apps:path' "${Apps}"
     Output "Installing grains => vscode-anywhere:tools:path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:tools:path' "${InstallDir}\tools"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:tools:path' "${InstallDir}\tools"
     Output "Installing grains => vscode-anywhere:tools:env"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:tools:env' "${InstallDir}\tools\env.ps1"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:tools:env' "${InstallDir}\tools\env.ps1"
     Output "Installing grains => vscode-anywhere:config:path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:config:path' "${ConfDir}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:config:path' "${ConfDir}"
     Output "Installing grains => vscode-anywhere:saltstack:path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:saltstack:path' "${SaltstackDir}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:path' "${SaltstackDir}"
     Output "Installing grains => vscode-anywhere:saltstack:config_path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:saltstack:config_path' "${SaltstackConfDir}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:config_path' "${SaltstackConfDir}"
     Output "Installing grains => vscode-anywhere:saltstack:minion_path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:saltstack:minion_path' "${SaltstackConfDirMinion}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:minion_path' "${SaltstackConfDirMinion}"
     Output "Installing grains => vscode-anywhere:saltstack:roots_path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:saltstack:roots_path' "${SaltstackRootsDir}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:roots_path' "${SaltstackRootsDir}"
     Output "Installing grains => vscode-anywhere:saltstack:pillar_path"
-    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --force-color grains.set 'vscode-anywhere:saltstack:pillar_path' "${SaltstackPillarDir}"
+    & salt-call --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" grains.set 'vscode-anywhere:saltstack:pillar_path' "${SaltstackPillarDir}"
 
     Output "Installing VSCode-Anywhere"
-    & salt-call.bat --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --state-verbose=False --force-color state.apply saltenv=${Gitenv} sync_mods=all ${SaltOpts}
+    & salt-call.bat --config-dir="${SaltstackConfDir}" --file-root="${SaltstackRootsDir}" --pillar-root="${SaltstackPillarDir}" --cachedir="${SaltstackDir}\var\cache\salt\minion" --log-file="${SaltstackDir}\var\log\salt\minion" --id="VSCode-Anywhere" --state-verbose=False state.apply saltenv=${Gitenv} sync_mods=all ${SaltOpts}
 }
 
 # function BackupEnv {
