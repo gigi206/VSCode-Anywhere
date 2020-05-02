@@ -6,7 +6,7 @@ windows_admin:
         version: null
   vscode:
     extensions:
-      jpogran.puppet-vscode:
+      puppet.puppet-vscode:
         enabled: True
         version: null
 windows_user:
