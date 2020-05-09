@@ -13,8 +13,22 @@ default:
       Powershell:
         enabled: True
         version: null
-{#-
 Windows:
+{#-
   env:
     PSModulePath: ${env:ProgramFiles}\WindowsPowerShell\Modules;${env:SystemRoot}\system32\WindowsPowerShell\v1.0\Modules
 #}
+  scoop:
+    pkgs:
+      pwsh:
+        enabled: True
+  vscode:
+    extensions:
+      ms-vscode.PowerShell:
+        settings:
+          powershell.powerShellDefaultVersion: Windows powershell
+          powershell.powerShellAdditionalExePaths:
+            - exePath: ${env:SystemRoot}\system32\WindowsPowerShell\v1.0\powershell.exe
+              versionName: Windows powershell
+            - exePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'pwsh', 'current', 'pwsh.exe') }}
+              versionName: Scoop powershell
