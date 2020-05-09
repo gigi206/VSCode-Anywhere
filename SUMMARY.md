@@ -1,0 +1,60 @@
+# Table of contents
+
+* [Introduction](README.md)
+
+## Installation <a id="install"></a>
+
+* [Requirements](install/requirements/README.md)
+  * [Windows requirements](install/requirements/windows-requirements.md)
+  * [Linux requirements](install/requirements/linux-requirements.md)
+  * [MacOS requirements](install/requirements/macos-requirements.md)
+* [Quickstart](install/quickstart.md)
+* [Advanced](install/advanced/README.md)
+  * [Windows installation](install/advanced/windows-installation.md)
+  * [Linux installation](install/advanced/linux-installation.md)
+  * [MacOS installation](install/advanced/macos-installation.md)
+
+## Modules
+
+* [Module installation](modules/install.md)
+* [Module update](modules/update.md)
+* [Module settings](modules/settings/README.md)
+  * [Global settings](modules/settings/global/README.md)
+    * [brew settings](modules/settings/global/brew.md)
+    * [chocolatey settings](modules/settings/global/chocolatey.md)
+    * [env settings](modules/settings/global/env.md)
+    * [msys2 settings](modules/settings/global/msys2.md)
+    * [nix settings](modules/settings/global/nix.md)
+    * [scoop settings](modules/settings/global/scoop.md)
+    * [vscode settings](modules/settings/global/vscode.md)
+    * [zeal settings](modules/settings/global/zeal.md)
+* [Modules list](modules/list/README.md)
+  * [Ansible](modules/list/ansible.md)
+  * [Bash](modules/list/bash.md)
+  * [C / C++](modules/list/c-c++.md)
+  * [C\#](modules/list/csharp.md)
+* [Custom modules](modules/custom.md)
+
+## Structure
+
+* [apps](structure/apps.md)
+* [conf](structure/conf/README.md)
+  * [saltstack](structure/conf/saltstack/README.md)
+    * [conf-offline](structure/conf/saltstack/conf-offline.md)
+    * [conf](structure/conf/saltstack/conf.md)
+    * [pillar](structure/conf/saltstack/pillar.md)
+    * [states](structure/conf/saltstack/states.md)
+* [tools](structure/tools/README.md)
+  * [env](structure/tools/env.md)
+  * [install](structure/tools/install.md)
+  * [link](structure/tools/link.md)
+  * [update](structure/tools/update.md)
+  * [vscode](structure/tools/vscode.md)
+  * [vscode-anywhere](structure/tools/vscode-anywhere.md)
+* [Tutorials](tuto.md)
+* [Release notes](releases/README.md)
+  * [V2](releases/v2/README.md)
+    * [V2.0.0](releases/v2/v2.0.0.md)
+  * [V1](releases/v1.md)
+* [FAQ](faq.md)
+

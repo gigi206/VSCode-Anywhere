@@ -1,0 +1,2 @@
+# msys2 settings
+
