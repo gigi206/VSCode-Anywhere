@@ -29,9 +29,13 @@ After installing this module, you must configure it because it doesn't work out 
 
 Indeed to work the module **ms-vscode.cpptools**  needs to have a valid`.vscode/c_cpp_properties.json` file.
 
-You can use the C/C++ configuration UI by running the command **C/C++: Edit Configurations \(UI\)** from the Command Palette \(`Ctrl+Shift+P`\).
+You can configure it by running the command **C/C++: Edit Configurations \(UI\)** or **C/C++: Edit Configurations \(JSON\)** from the Command Palette \(`Ctrl+Shift+P`\).
 
-![C/C++: Edit Configurations \(UI\)](https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png)
+![C/C++: Edit Configurations](https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png)
+
+![C/C++: Edit Configurations \(UI\)](https://code.visualstudio.com/assets/docs/cpp/wsl/intellisense-configurations-wsl.png)
+
+
 
 For more details read [the official configuration](https://code.visualstudio.com/docs/languages/cpp) and how to configure it with:
 
