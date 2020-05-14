@@ -25,19 +25,13 @@ You can also take a look at the [VSCode-Anywhere c\_cpp module configuration](ht
 
 ## Requirements
 
-No requirements.
+After installing this module, you must configure it because it doesn't work out of the box.
 
-## VSCode
+Indeed to work the module **ms-vscode.cpptools**  needs to have a valid`.vscode/c_cpp_properties.json` file.
 
-### VSCode extensions
+You can use the C/C++ configuration UI by running the command **C/C++: Edit Configurations \(UI\)** from the Command Palette \(`Ctrl+Shift+P`\).
 
-#### ms-vscode.cpptools
-
-This [extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) adds language support for C/C++ to Visual Studio Code, including features such as [IntelliSense](https://code.visualstudio.com/docs/editor/intellisense) and [debugging](https://code.visualstudio.com/docs/editor/debugging).
-
-![C++ completion](https://code.visualstudio.com/assets/docs/languages/cpp/cpp-hero.png)
-
-After installing this extension, you must configure it.
+![](https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png)
 
 For more details read [the official configuration](https://code.visualstudio.com/docs/languages/cpp) and how to configure it with:
 
@@ -53,7 +47,9 @@ You could also read:
 * [Settings](https://code.visualstudio.com/docs/cpp/customize-default-settings-cpp)
 * [c\_cpp\_properties.json](https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference)
 
-You can create the task file `.vscode/tasks.json` to compile your program:
+### Windows examples
+
+You can also create a [task](https://code.visualstudio.com/docs/editor/tasks) file `.vscode/tasks.json` to compile your program:
 
 ```javascript
 {
@@ -97,7 +93,7 @@ You can create the task file `.vscode/tasks.json` to compile your program:
 }
 ```
 
-Now, you can create the `.vscode/launch.json` to run the debugger:
+You can also create the `.vscode/launch.json` file to run the [debugger](https://code.visualstudio.com/docs/editor/debugging):
 
 ```javascript
 {
@@ -148,6 +144,20 @@ Now, you can create the `.vscode/launch.json` to run the debugger:
     ]
 }
 ```
+
+{% hint style="info" %}
+There are examples and assuming you have installed in the default directory `C:\VSCode-Anywhere`.
+{% endhint %}
+
+## VSCode
+
+### VSCode extensions
+
+#### ms-vscode.cpptools
+
+This [extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) adds language support for C/C++ to Visual Studio Code, including features such as [IntelliSense](https://code.visualstudio.com/docs/editor/intellisense) and [debugging](https://code.visualstudio.com/docs/editor/debugging).
+
+![C++ completion](https://code.visualstudio.com/assets/docs/languages/cpp/cpp-hero.png)
 
 #### jbenden.c-cpp-flylint
 
@@ -307,7 +317,7 @@ No environment.
 
 #### llvm
 
-To enable **llvm**, set `llvm` to `True`.
+To enable [llvm](https://llvm.org), set `llvm` to `True`.
 
 ```yaml
 vscode-anywhere:

@@ -1,6 +1,6 @@
 # C\#
 
-![C\#](https://upload.wikimedia.org/wikipedia/commons/8/82/C_Sharp_logo.png)
+![](https://upload.wikimedia.org/wikipedia/commons/8/82/C_Sharp_logo.png)
 
 ## About
 
