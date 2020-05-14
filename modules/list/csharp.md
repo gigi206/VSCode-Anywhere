@@ -10,7 +10,5 @@
 You don’t need to install anything, all is already include in VSCode-Anywhere. This video gives just an example how to start a new project.
 {% endhint %}
 
-{% embed url="https://youtu.be/a6WPeTG1QEk" %}
-
-
+{% embed url="https://youtu.be/a6WPeTG1QEk" caption="" %}
 
