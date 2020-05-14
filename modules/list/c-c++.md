@@ -35,8 +35,6 @@ You can configure it by running the command **C/C++: Edit Configurations \(UI\)*
 
 ![C/C++: Edit Configurations \(UI\)](https://code.visualstudio.com/assets/docs/cpp/wsl/intellisense-configurations-wsl.png)
 
-
-
 For more details read [the official configuration](https://code.visualstudio.com/docs/languages/cpp) and how to configure it with:
 
 * [Mingw on Windows](https://code.visualstudio.com/docs/cpp/config-mingw)
