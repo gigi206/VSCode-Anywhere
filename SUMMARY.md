@@ -33,6 +33,7 @@
   * [Bash](modules/list/bash.md)
   * [C / C++](modules/list/c-c++.md)
   * [C\#](modules/list/csharp.md)
+  * [Deepcode](modules/list/deepcode.md)
 * [Custom modules](modules/custom.md)
 
 ## Structure
