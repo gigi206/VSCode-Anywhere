@@ -34,6 +34,8 @@
   * [C / C++](modules/list/c-c++.md)
   * [C\#](modules/list/csharp.md)
   * [Deepcode](modules/list/deepcode.md)
+  * [Docker](modules/list/docker.md)
+  * [Fonts](modules/list/fonts.md)
 * [Custom modules](modules/custom.md)
 
 ## Structure
