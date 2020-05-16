@@ -14,6 +14,20 @@ This module install the [Fira Code](https://github.com/tonsky/FiraCode/) fonts a
 
 ![](https://code.visualstudio.com/assets/docs/getstarted/tips-and-tricks/font-ligatures-annotated.png)
 
+## Installation
+
+Change `enable` from `False` to `True` in the `fonts` section \(cf [module installation](../install.md)\).
+
+```yaml
+vscode-anywhere:
+    fonts:
+        enabled: True
+```
+
+{% hint style="info" %}
+You can also take a look at the [VSCode-Anywhere fonts module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/fonts/defaults.yaml).
+{% endhint %}
+
 ## Requirements
 
 No requirements.

@@ -36,6 +36,7 @@
   * [Deepcode](modules/list/deepcode.md)
   * [Docker](modules/list/docker.md)
   * [Fonts](modules/list/fonts.md)
+  * [Git](modules/list/git.md)
 * [Custom modules](modules/custom.md)
 
 ## Structure
