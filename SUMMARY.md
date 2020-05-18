@@ -37,6 +37,9 @@
   * [Docker](modules/list/docker.md)
   * [Fonts](modules/list/fonts.md)
   * [Git](modules/list/git.md)
+  * [Go](modules/list/go.md)
+  * [HTML](modules/list/html.md)
+  * [Java](modules/list/java.md)
 * [Custom modules](modules/custom.md)
 
 ## Structure

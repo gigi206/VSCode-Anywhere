@@ -34,5 +34,73 @@ No requirements \(`git` is installed during the installation process\).
 
 ### VSCode extensions
 
+#### Hirse.vscode-ungit
 
+This [extension](https://marketplace.visualstudio.com/items?itemName=Hirse.vscode-ungit) shows [ungit](https://github.com/FredrikNoren/ungit) in Visual Studio Code.
+
+![Ungit](https://raw.githubusercontent.com/Hirse/vscode-ungit/master/screenshots/ungit.png)
+
+#### mhutchie.git-graph
+
+[This extension](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) allows you to view a Git Graph of your repository, and easily perform Git actions from the graph.
+
+![git-graph](https://github.com/mhutchie/vscode-git-graph/raw/master/resources/demo.gif)
+
+#### eamodio.gitlens
+
+[GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) supercharges the Git capabilities built into Visual Studio Code. It helps you to visualize code authorship at a glance via Git blame annotations and code lens, seamlessly navigate and explore Git repositories, gain valuable insights via powerful comparison commands, and so much more.
+
+![Gitlens](https://raw.githubusercontent.com/eamodio/vscode-gitlens/master/images/docs/gitlens-preview.gif)
+
+#### lamartire.git-indicators
+
+[This extensions](https://marketplace.visualstudio.com/items?itemName=lamartire.git-indicators) shows some got indicators
+
+![](https://raw.githubusercontent.com/lamartire/vscode-git-indicators/master/preview/added.png)
+
+### VSCode settings
+
+```javascript
+{
+    "gitlens.defaultGravatarsStyle": "retro",
+    "ungit.showButton": true,
+    "ungit.showInActiveColumn": true
+}
+```
+
+### VSCode keybindings
+
+No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
+
+## Software
+
+### Windows software
+
+No software.
+
+### Linux software
+
+#### brew
+
+* [node](https://formulae.brew.sh/formula/node)  \(required for credentials-helper\)
+
+### MacOS software
+
+#### brew
+
+* [node](https://formulae.brew.sh/formula/node) \(required for credentials-helper\)
+
+## Documentation
+
+No documentation.
+
+## VSCode-Anywhere
+
+### Environment
+
+No environment.
+
+### Specific settings
+
+No specific settings.
 
