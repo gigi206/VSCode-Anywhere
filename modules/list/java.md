@@ -382,5 +382,47 @@ JETTY_HOME: /home/linuxbrew/.linuxbrew/opt/jetty/libexec
 
 ### Specific settings
 
-No specific settings.
+#### spring\_boot
+
+If set to `True`, it will install additional components for [Spring Boot](https://spring.io/projects/spring-boot):
+
+```yaml
+vscode-anywhere:
+    java:
+        enabled: True
+        spring_boot: True
+```
+
+#### quarkus
+
+If set to `True`, it will install additional components for [Quarkus](https://quarkus.io/):
+
+```yaml
+vscode-anywhere:
+    java:
+        enabled: True
+        quarkus: True
+```
+
+#### tomcat
+
+If set to `True`, it will install additional components for [Tomcat](https://tomcat.apache.org/):
+
+```yaml
+vscode-anwyhere:
+    java:
+        enabled: True
+        tomcat: True
+```
+
+#### jetty
+
+If set to `True`, it will install additional components for [Jetty](https://www.eclipse.org/jetty/):
+
+```yaml
+vscode-anwyhere:
+    java:
+        enabled: True
+        jetty: True
+```
 
