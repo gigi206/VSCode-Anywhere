@@ -117,7 +117,7 @@ vscode-anywhere:
 ![](https://github.com/Microsoft/vscode-spring-boot-dashboard/raw/master/images/boot-dashboard-vsc.gif)
 
 {% hint style="info" %}
-This extension will be installed only if you had set `spring_boot` to `True` in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
+This extension will be installed only if `spring_boot` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
 
 ```yaml
 vscode-anywhere:
@@ -134,7 +134,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=redhat.vsco
 ![](https://github.com/redhat-developer/vscode-quarkus/raw/master/images/propertiesSupport.png)
 
 {% hint style="info" %}
-This extension will be installed only if you had set `quarkus` to True in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
+This extension will be installed only if `quarkus` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
 
 ```yaml
 vscode-anywhere:
@@ -151,7 +151,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=SummerSun.v
 ![](https://github.com/summersun/vscode-jetty/raw/master/resources/Jetty.gif)
 
 {% hint style="info" %}
-This extension will be installed only if you had set `jetty` to True in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
+This extension will be installed only if `jetty` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
 
 ```yaml
 vscode-anywhere:
@@ -168,7 +168,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=adashen.vsc
 ![](https://github.com/adashen/vscode-tomcat/raw/master/resources/Tomcat.gif)
 
 {% hint style="info" %}
-This extension will be installed only if you had set `jetty` to True in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
+This extension will be installed only if `jetty` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
 
 ```yaml
 vscode-anywhere:
@@ -183,6 +183,204 @@ vscode-anywhere:
 #### Global settings
 
 ```javascript
-
+{
+    "java.semanticHighlighting.enabled": true
+}
 ```
+
+#### Windows settings
+
+```javascript
+{
+    "java.home": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\openjdk\\current",
+    "xml.java.home": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\openjdk\\current"
+}
+```
+
+{% hint style="info" %}
+Assuming you have installed in the default directory `C:\VSCode-Anywhere`.
+{% endhint %}
+
+#### Linux settings
+
+```javascript
+{
+    "java.home": "/home/linuxbrew/.linuxbrew/opt/openjdk/libexec",
+    "xml.java.home": "/home/linuxbrew/.linuxbrew/opt/openjdk/libexec"
+}
+```
+
+#### MacOS settings
+
+```javascript
+{
+    "java.home": "/home/linuxbrew/.linuxbrew/opt/openjdk/libexec",
+    "xml.java.home": "/home/linuxbrew/.linuxbrew/opt/openjdk/libexec"
+}
+```
+
+### VSCode keybindings
+
+No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
+
+## Software
+
+### Windows software
+
+#### scoop
+
+* [openjdk](https://github.com/ScoopInstaller/Java/blob/master/bucket/openjdk.json)
+* [maven](https://github.com/ScoopInstaller/Main/blob/master/bucket/maven.json)
+* [gradle](https://github.com/ScoopInstaller/Main/blob/master/bucket/gradle.json)
+* [tomcat](https://github.com/lukesampson/scoop-extras/blob/master/bucket/tomcat.json)
+
+{% hint style="info" %}
+This package will be installed only if `tomcat` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+* [graalvm](https://github.com/ScoopInstaller/Java/blob/master/bucket/graalvm.json)
+
+{% hint style="info" %}
+This package will be installed only if `quarkus` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+#### chocolatey
+
+* [jetty](https://chocolatey.org/packages/jetty)
+
+{% hint style="info" %}
+This package will be installed only if you had set `jetty` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+### Linux software
+
+#### brew
+
+* [openjdk](https://formulae.brew.sh/formula/openjdk)
+* [maven](https://formulae.brew.sh/formula/maven)
+* [maven-completion](https://formulae.brew.sh/formula/maven-completion)
+* [maven-shell](https://formulae.brew.sh/formula/maven-shell)
+* [gradle](https://formulae.brew.sh/formula/gradle)
+* [gradle-completion](https://formulae.brew.sh/formula/gradle-completion)
+* [jetty](https://formulae.brew.sh/formula/jetty)
+
+{% hint style="info" %}
+This package will be installed only if `jetty` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+* [tomcat](https://formulae.brew.sh/formula/tomcat)
+
+{% hint style="info" %}
+This package will be installed only if `tomcat` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+#### nix
+
+* [graalvm11-ee](https://nixos.org/nixos/packages.html?attr=graalvm11-ee&channel=nixpkgs-unstable&query=graalvm11-ee)
+
+{% hint style="info" %}
+This package will be installed only if `quarkus` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+### MacOS software
+
+#### brew
+
+* [openjdk](https://formulae.brew.sh/formula/openjdk)
+* [maven](https://formulae.brew.sh/formula/maven)
+* [maven-completion](https://formulae.brew.sh/formula/maven-completion)
+* [maven-shell](https://formulae.brew.sh/formula/maven-shell)
+* [gradle](https://formulae.brew.sh/formula/gradle)
+* [gradle-completion](https://formulae.brew.sh/formula/gradle-completion)
+* [jetty](https://formulae.brew.sh/formula/jetty)
+
+{% hint style="info" %}
+This package will be installed only if `jetty` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+* [tomcat](https://formulae.brew.sh/formula/tomcat)
+
+{% hint style="info" %}
+This package will be installed only if `tomcat` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+{% endhint %}
+
+## Documentation
+
+* [Java\_SE14](https://github.com/Kapeli/feeds/blob/master/Java_SE14.xml)
+
+## VSCode-Anywhere
+
+### Environment
+
+#### Windows environment
+
+```yaml
+PATH: C:\VSCode-Anywhere\apps\scoop\apps\openjdk\current\bin;C:\VSCode-Anywhere\apps\scoop\apps\maven\current\bin
+JAVA_HOME: C:\VSCode-Anywhere\apps\scoop\apps\openjdk\current
+JDK_HOME: C:\VSCode-Anywhere\apps\scoop\apps\openjdk\current
+```
+
+{% hint style="info" %}
+If `quarkus` is enabled, the following `PATH` will be append:
+
+```yaml
+C:\VSCode-Anywhere\apps\scoop\apps\graalvm\current\bin
+```
+{% endhint %}
+
+If `jetty` is enabled the following envrionment will be set:
+
+```yaml
+JETTY_HOME: C:\SCode-Anywhere\apps\scoop\apps\Chocolatey\lib\jetty\tools\jetty
+```
+
+{% hint style="info" %}
+Assuming you have installed in the default directory `C:\VSCode-Anywhere`.
+{% endhint %}
+
+#### Linux environment
+
+```yaml
+PATH: /home/linuxbrew/.linuxbrew/opt/openjdk/bin
+JAVA_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+JDK_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+```
+
+If `tomcat` is enabled the following envrionment will be set:
+
+```yaml
+CATALINA_BASE: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
+CATALINA_HOME: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
+```
+
+If `jetty` is enabled the following envrionment will be set:
+
+```yaml
+JETTY_HOME: /home/linuxbrew/.linuxbrew/opt/jetty/libexec
+```
+
+#### MacOS environment
+
+```yaml
+PATH: /home/linuxbrew/.linuxbrew/opt/openjdk/bin
+JAVA_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+JDK_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
+```
+
+If `tomcat` is enabled the following envrionment will be set:
+
+```yaml
+CATALINA_BASE: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
+CATALINA_HOME: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
+```
+
+If `jetty` is enabled the following envrionment will be set:
+
+```yaml
+JETTY_HOME: /home/linuxbrew/.linuxbrew/opt/jetty/libexec
+```
+
+### Specific settings
+
+No specific settings.
 

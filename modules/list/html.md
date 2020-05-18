@@ -123,7 +123,7 @@ Extension highlights wrong properties and values when enabled. Just install the 
 
 ```javascript
 {
-    "vscode-w3cvalidation.javaHome": "C:\\VSCode-Anywhere\\apps\\openjdk\\current"
+    "vscode-w3cvalidation.javaHome": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\openjdk\\current"
 }
 ```
 
@@ -157,19 +157,19 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 #### scoop
 
-* [openjdk](https://github.com/ScoopInstaller/Main/blob/master/bucket/python.json) \(required by the extensions [Umoxfo.vscode-w3cvalidation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)\).
+* [openjdk](https://github.com/ScoopInstaller/Java/blob/master/bucket/openjdk.json) \(required by the extensions [Umoxfo.vscode-w3cvalidation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)\)
 
 ### Linux software
 
 #### brew
 
-* [openjdk](https://formulae.brew.sh/formula/openjdk) \(required by the extensions [Umoxfo.vscode-w3cvalidation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)\).
+* [openjdk](https://formulae.brew.sh/formula/openjdk) \(required by the extensions [Umoxfo.vscode-w3cvalidation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)\)
 
 ### MacOS software
 
 #### brew
 
-* [openjdk](https://formulae.brew.sh/formula/openjdk) \(required by the extensions [Umoxfo.vscode-w3cvalidation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)\).
+* [openjdk](https://formulae.brew.sh/formula/openjdk) \(required by the extensions [Umoxfo.vscode-w3cvalidation](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation)\)
 
 ## Documentation
 
