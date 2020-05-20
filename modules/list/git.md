@@ -26,6 +26,8 @@ vscode-anywhere:
 You can also take a look at the [VSCode-Anywhere git module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/git/defaults.yaml).
 {% endhint %}
 
+For more details read the [official documentation](https://code.visualstudio.com/docs/editor/versioncontrol).
+
 ## Requirements
 
 No requirements \(`git` is installed during the installation process\).

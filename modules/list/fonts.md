@@ -4,7 +4,7 @@ description: Fira Code
 
 # Fonts
 
-![ligatures](https://github.com/tonsky/FiraCode/raw/master/showcases/v3/all_ligatures.png)
+![](https://github.com/tonsky/FiraCode/raw/master/extras/ligatures.png)
 
 ## About
 

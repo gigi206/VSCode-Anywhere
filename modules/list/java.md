@@ -20,6 +20,8 @@ vscode-anywhere:
 You can also take a look at the [VSCode-Anywhere java module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/java/defaults.yaml).
 {% endhint %}
 
+For more details read the [official documentation](https://code.visualstudio.com/docs/languages/java).
+
 ## Requirements
 
 No requirements.

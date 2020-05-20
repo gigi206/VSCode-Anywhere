@@ -40,6 +40,7 @@
   * [Go](modules/list/go.md)
   * [HTML](modules/list/html.md)
   * [Java](modules/list/java.md)
+  * [JavaScript / TypeScript](modules/list/javascript-typescript.md)
 * [Custom modules](modules/custom.md)
 
 ## Structure
