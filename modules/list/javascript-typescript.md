@@ -26,7 +26,7 @@ vscode-anywhere:
 You can also take a look at the [VSCode-Anywhere javascript module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/javascript/defaults.yaml).
 {% endhint %}
 
-For more details read the [official documentation](https://code.visualstudio.com/docs/languages/javascript).
+For more details read the official documentation for [JavaScript](https://code.visualstudio.com/docs/languages/javascript) and [TypeScript](https://code.visualstudio.com/docs/languages/typescript).
 
 ## Requirements
 
@@ -200,7 +200,7 @@ vscode-anywhere:
 
 #### npm
 
-Allow to manage npm packages.
+Allow to manage [npm](https://www.npmjs.com) packages.
 
 * **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)

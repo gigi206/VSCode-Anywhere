@@ -12,7 +12,7 @@ This is a beta version and only works with Windows at the moment.
 
 VSCode-Anywhere is a cross platform installation tool that manages for you:
 
-* [VSCodium](https://vscodium.com) / [VSCode](https://code.visualstudio.com/) installation
+* [VSCodium](https://vscodium.com) / [VSCode](https://code.visualstudio.com/)
 * [VSCode extensions](https://marketplace.visualstudio.com/VSCode)
 * [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings)
 * [VSCode keybindings](https://code.visualstudio.com/docs/getstarted/keybindings)
