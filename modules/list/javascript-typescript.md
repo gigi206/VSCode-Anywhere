@@ -202,13 +202,13 @@ vscode-anywhere:
 
 Allow to manage npm packages.
 
-* `pkgs`: name of the packages to install
+* **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
   * `version`: version of the npm package
 
 
 
-* opts
+* **`opts`**
 
 `opts` is not mandatory but allow to pass extra args.
 

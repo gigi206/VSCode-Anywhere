@@ -41,6 +41,18 @@
   * [HTML](modules/list/html.md)
   * [Java](modules/list/java.md)
   * [JavaScript / TypeScript](modules/list/javascript-typescript.md)
+  * [Markdown](modules/list/markdown.md)
+  * [Perl](modules/list/perl.md)
+  * [PHP](modules/list/php.md)
+  * [PowerShell](modules/list/powershell.md)
+  * [Puppet](modules/list/puppet.md)
+  * [Python2](modules/list/python2.md)
+  * [Python3](modules/list/python3.md)
+  * [Remote](modules/list/remote.md)
+  * [ReStructuredText](modules/list/restructuredtext.md)
+  * [Ruby](modules/list/ruby.md)
+  * [Saltstack](modules/list/saltstack.md)
+  * [VSCode](modules/list/vscode.md)
 * [Custom modules](modules/custom.md)
 
 ## Structure

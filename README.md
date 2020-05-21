@@ -12,22 +12,27 @@ This is a beta version and only works with Windows at the moment.
 
 VSCode-Anywhere is a cross platform installation tool that manages for you:
 
-* [VSCodium](https://vscodium.com) / [VSCode](https://code.visualstudio.com/)
+* [VSCodium](https://vscodium.com) / [VSCode](https://code.visualstudio.com/) installation
 * [VSCode extensions](https://marketplace.visualstudio.com/VSCode)
-* VSCode settings
-* VSCode themes
-* fonts and ligature
-* git features
+* [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings)
+* [VSCode keybindings](https://code.visualstudio.com/docs/getstarted/keybindings)
+* [VSCode languages](https://code.visualstudio.com/docs/getstarted/locales)
+* [VSCode themes](https://code.visualstudio.com/docs/getstarted/themes)
+* [fonts and ligature](https://code.visualstudio.com/docs/getstarted/tips-and-tricks#_tune-your-settings)
+* [git features](https://code.visualstudio.com/docs/editor/versioncontrol)
 * environment
 * documentation
-* requirements: binaries, libraries, …
+* requirements: binaries \(like python, gcc, etc...\), libraries, …
 * updates \(documentation, binaries, librairies, extensions, VSCode…\)
-* version \(you can choose specific version\)
 * programming languages with their:
-  * [linter](https://en.wikipedia.org/wiki/Lint_%28software%29)
+* * [linter](https://en.wikipedia.org/wiki/Lint_%28software%29)
   * [debugger](https://en.wikipedia.org/wiki/Debugger)
   * [code formatter](https://en.wikipedia.org/wiki/Programming_style)
   * [autocompleter](https://en.wikipedia.org/wiki/Autocomplete)
+
+{% hint style="success" %}
+VSCode-Anywhere also manages updates for you.
+{% endhint %}
 
 ## Third-Party
 
@@ -53,27 +58,26 @@ Different software car be used depending on the OS.
 
 ## VSCode-Anywhere installation
 
-* installation instructions.
+* [requirements](install/requirements/)
+* [quickstart](install/quickstart.md)
+* [advanced](install/advanced/)
 
 ## VSCode-Anywhere installation modules
 
-* all modules
-
-## Installation structure directory
-
-* Structure
+* [installation](modules/install.md)
+* [list](modules/list/)
 
 ## Contributing
 
-TODO: must be completed
+TODO
 
 ## Issues / questions
 
-TODO: must be completed
+TODO
 
 ## Release notes
 
-* release notes
+* [release notes](releases/)
 
 ## FAQ
 
