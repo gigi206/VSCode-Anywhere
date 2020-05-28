@@ -1,5 +1,7 @@
 platform: x64
-#branches:
+branches:
+  except:
+    - doc
 #  only:
 #    - master
 #    - dev
