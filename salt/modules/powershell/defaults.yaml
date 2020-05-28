@@ -26,9 +26,9 @@ Windows:
     extensions:
       ms-vscode.PowerShell:
         settings:
-          powershell.powerShellDefaultVersion: Windows powershell
+          powershell.powerShellDefaultVersion: Scoop PowerShell
           powershell.powerShellAdditionalExePaths:
             - exePath: ${env:SystemRoot}\system32\WindowsPowerShell\v1.0\powershell.exe
-              versionName: Windows powershell
+              versionName: Windows PowerShell
             - exePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'pwsh', 'current', 'pwsh.exe') }}
-              versionName: Scoop powershell
+              versionName: Scoop PowerShell
