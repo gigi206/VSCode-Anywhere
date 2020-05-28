@@ -9,7 +9,7 @@ include:
 
 {{ salt['vscode_anywhere.get_id'](sls) + ':binary' }}:
   cmd.run:
-    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey', 'tools', 'shimgen.exe') }} -p {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -i {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -c '--user-data-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user') }} --extensions-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}' -o {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'VSCode-Anywhere.exe') }}
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey', 'tools', 'shimgen.exe') }} -p {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -i {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -c '--user-data-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user') }} --extensions-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}' -o {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'VSCode-Anywhere.exe') }}
     - shell: powershell
     - require:
       - sls: salt/core/chocolatey/install
@@ -20,7 +20,7 @@ include:
 
 {{ salt['vscode_anywhere.get_id'](sls) + ':binary:update' }}:
   cmd.run:
-    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey', 'tools', 'shimgen.exe') }} -p {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -i {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -c '--user-data-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user') }} --extensions-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}' -o {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'VSCode-Anywhere.exe') }}
+    - name: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey', 'tools', 'shimgen.exe') }} -p {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -i {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'vscode', 'current', 'Code.exe') }} -c '--user-data-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'user') }} --extensions-dir {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'vscode', 'extensions') }}' -o {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'VSCode-Anywhere.exe') }}
     - shell: powershell
     - require:
       - sls: salt/core/chocolatey/install
