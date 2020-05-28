@@ -57,8 +57,16 @@ Add-Content -Path "${config_file}" -Value "  - ${root_dir}"
 # & .\vscode-anywhere.ps1 --log-file="$log_file" state.single file.serialize "$config_file" formatter=yaml merge_if_exists=True dataset="{'fileserver_backend': ['roots'], 'file_root': null, 'file_roots': {'salt': ['$root_dir']} }"
 
 Write-Host "* Reconfigure scoop" -ForegroundColor Cyan
+foreach ($file in Get-ChildItem -Path "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:apps:path')) }}\scoop\apps\*\current") {
+    if ($file.LinkType -ne 'Junction' -and  $file.parent.Name -ne "scoop") {
+        Write-Host "  - Deleting ${file.FullName}"
+        Remove-Item -Path $file.FullName -Force
+    }
+}
 & scoop reset *
-& scoop update
+if ((Test-NetConnection -ComputerName "google.com" -port 443).TcpTestSucceeded) {
+    scoop update
+}
 
 Output "Installing grains => vscode-anywhere:path"
 & "{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:saltstack:path')) }}\salt-call.bat" --config-dir="${config_dir_offline}" --log-file="${log_file}" --pillar-root="${pillar_root}" grains.set "vscode-anywhere:path" (Resolve-Path "${PSScriptRoot}\{{ salt['vscode_anywhere.relpath'](salt['grains.get']('vscode-anywhere:tools:path'), salt['grains.get']('vscode-anywhere:path')) }}").Path
