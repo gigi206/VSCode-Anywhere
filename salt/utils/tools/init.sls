@@ -22,6 +22,14 @@
     - backup: False
 
 
+{{ salt['vscode_anywhere.get_id'](sls) + ':zeal' }}:
+  file.managed:
+    - name: {{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('zeal.ps1') }}
+    - source: salt://salt/utils/tools/files/zeal.ps1
+    - template: jinja
+    - backup: False
+
+
 {{ salt['vscode_anywhere.get_id'](sls) + ':vscode-anywhere' }}:
   file.managed:
     - name: {{ salt['grains.get']('vscode-anywhere:tools:path') | path_join('vscode-anywhere.ps1') }}

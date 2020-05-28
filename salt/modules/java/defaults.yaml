@@ -91,7 +91,7 @@ Windows:
     CATALINA_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'tomcat', 'current') }}
   {%- endif %}
 {%- if salt['pillar.get']('vscode-anywhere:java:jetty', False) %}
-    # JETTY_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('Chocolatey', 'lib', 'jetty', 'tools', 'jetty') }} #FIXME: manage the target (ie jetty-distribution-9.4.20.v20190813) dynamically...
+    # JETTY_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey', 'lib', 'jetty', 'tools', 'jetty') }} #FIXME: manage the target (ie jetty-distribution-9.4.20.v20190813) dynamically...
   chocolatey:
     pkgs:
       jetty:
