@@ -8,7 +8,7 @@
 
 ## Installation
 
-Change `enable` from `False` to `True` in the `perl` section \(cf [module installation](../install.md)\).
+Change `enable` from `False` to `True` in the `powershell` section \(cf [module installation](../install.md)\).
 
 ```yaml
 vscode-anywhere:
@@ -64,6 +64,10 @@ Now you can write and debug PowerShell scripts using the excellent IDE-like inte
 }
 ```
 
+{% hint style="info" %}
+Assuming you have installed in the default directory `C:\VSCode-Anywhere`.
+{% endhint %}
+
 #### Linux settings
 
 ```javascript
@@ -77,6 +81,10 @@ Now you can write and debug PowerShell scripts using the excellent IDE-like inte
   ]
 }
 ```
+
+{% hint style="info" %}
+Assuming you have installed in the directory `/home/myuser/VSCode-Anywhere`.
+{% endhint %}
 
 ### VSCode keybindings
 
