@@ -78,7 +78,9 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 ### Windows software
 
-No software.
+#### scoop
+
+* [nodejs](https://github.com/ScoopInstaller/Main/blob/master/bucket/nodejs.json)
 
 ### Linux software
 
@@ -100,7 +102,17 @@ No documentation.
 
 ### Environment
 
-No environment.
+```yaml
+vscode-anywhere:
+  git:
+    env:
+      PATH: C:\VSCode-Anywhere\scoop\apps\nodejs\current
+
+```
+
+{% hint style="info" %}
+Assuming you have installed in the default directory `C:\VSCode-Anywhere`.
+{% endhint %}
 
 ### Specific settings
 

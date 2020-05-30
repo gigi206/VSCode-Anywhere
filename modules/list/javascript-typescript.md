@@ -210,7 +210,7 @@ Allow to manage [npm](https://www.npmjs.com) packages.
 
 * **`opts`**
 
-`opts` is not mandatory but allow to pass extra args.
+`opts` is not mandatory but allows to pass additional arguments.
 
 Extra args can be arguments described in the [saltstack npm states](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 

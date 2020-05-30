@@ -103,7 +103,9 @@ There are 3 kinds of `profile` for different use cases :
       </td>
     </tr>
   </tbody>
-</table>## Post-installation
+</table>
+
+## Post-installation
 
 ### Linux shortcuts icons
 
