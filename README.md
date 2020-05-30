@@ -1,5 +1,5 @@
 ---
-description: Turnkey solution for VSCodium / VSCode
+description: Turnkey solution for VSCode / VSCodium
 ---
 
 # Introduction
