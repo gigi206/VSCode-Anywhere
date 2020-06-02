@@ -97,7 +97,6 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 #### scoop
 
 * [pwsh](https://github.com/ScoopInstaller/Main/blob/master/bucket/pwsh.json)
-* [pester](https://github.com/ScoopInstaller/Main/blob/master/bucket/pester.json)
 
 ### Linux software <a id="linux-software"></a>
 
