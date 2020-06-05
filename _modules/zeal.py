@@ -163,7 +163,8 @@ def _docset_contrib(docset):
             return informations about a docset if present in the docsets user contribution else None
     """
     return _http_query(
-        "https://zealusercontributions.herokuapp.com/docsets/{}.xml".format(docset),
+        # "https://zealusercontributions.herokuapp.com/docsets/{}.xml".format(docset),
+        "https://zealusercontributions.herokuapp.com/api/docsets/{}".format(docset),
         decode_type="xml",
     )
 
