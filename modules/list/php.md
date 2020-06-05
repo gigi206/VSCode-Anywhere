@@ -159,7 +159,7 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 ### Environment
 
-#### Window environment
+#### Windows environment
 
 ```yaml
 PATH: C:\VSCode-Anywhere\apps\scoop\apps\composer\current\home\vendor\bin
@@ -335,6 +335,10 @@ Specific `opts` packages settings:
 *  `pecl:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **pecl packages** when **installing** the package \(cf [states.pecl.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html#salt.states.pecl.installed)\)
 * `pecl:pkgs:<mypkg>:opts:update`: not yet implemented
 * `pecl:pkgs:<mypkg>:opts:uninstall`: not yet implemented
+
+{% hint style="info" %}
+Replace `<mypkg>` by the name of the package to install.
+{% endhint %}
 
 
 

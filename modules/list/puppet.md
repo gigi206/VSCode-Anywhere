@@ -52,11 +52,11 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 * [pdk](https://chocolatey.org/packages/pdk) \(only installed by the `windows_admin` profile\)
 
-### Documentation
+## Documentation
 
 * [Puppet](https://github.com/Kapeli/feeds/blob/master/Puppet.xml)
 
-### VSCode-Anywhere
+## VSCode-Anywhere
 
 ### Environment <a id="environment"></a>
 
