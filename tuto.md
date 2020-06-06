@@ -45,7 +45,7 @@ After that you have just to run the [installation script](structure/tools/instal
 
 ## Change the default theme
 
-All following examples must be set in in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+All following examples must be set in in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file and after editing this file you have to run the [installation script](structure/tools/install.md).
 
 ### Preconfigured theme
 
@@ -110,7 +110,7 @@ For more informations, please [read the documentation](https://code.visualstudio
 
 ## Change the default icon theme
 
-All following examples must be set in in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+All following examples must be set in in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file and after editing this file you have to run the [installation script](structure/tools/install.md).
 
 ### Preconfigured icon theme
 
