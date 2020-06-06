@@ -45,6 +45,8 @@ After that you have just to run the [installation script](structure/tools/instal
 
 ## Change the default theme
 
+All following examples must be set in in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
+
 ### Preconfigured theme
 
 If the [vscode](modules/list/vscode.md#installation) module is `enabled`, the default theme is set to [One Dark Pro](modules/list/vscode.md#zhuangtongfa-material-theme).
@@ -107,6 +109,8 @@ Change `myCustomTheme` by the theme to use.
 For more informations, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_selecting-the-color-theme).
 
 ## Change the default icon theme
+
+All following examples must be set in in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.
 
 ### Preconfigured icon theme
 
