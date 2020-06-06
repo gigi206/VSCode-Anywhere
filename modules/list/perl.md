@@ -114,7 +114,7 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 #### nix
 
-* [nixpkgs.perl528Packages.Perlcritic](https://nixos.org/nixos/packages.html?attr=perl528Packages.PerlCritic&channel=nixpkgs-unstable&query=perl528Packages.PerlCritic)
+* [nixpkgs.perl528Packages.Perlcritic](https://nixos.org/nixos/packages.html?attr=perl528Packages.PerlCritic&channel=nixpkgs-unstable)
 
 ### MacOS software <a id="macos-software"></a>
 

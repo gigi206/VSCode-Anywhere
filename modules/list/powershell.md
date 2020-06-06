@@ -102,7 +102,7 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 #### nix
 
-* [nixpkgs.powershell](https://nixos.org/nixos/packages.html?attr=powershell&channel=nixpkgs-unstable&query=powershell)
+* [nixpkgs.powershell](https://nixos.org/nixos/packages.html?attr=powershell&channel=nixpkgs-unstable)
 
 ### MacOS software <a id="macos-software"></a>
 

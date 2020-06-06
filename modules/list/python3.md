@@ -325,6 +325,8 @@ The following packages will be installed only if the profile is set to `windows_
 * [Python\_3](https://github.com/Kapeli/feeds/blob/master/Python_3.xml)
 * [PEPs](https://github.com/hashhar/dash-contrib-docset-feeds/blob/master/PEPs.xml)
 
+## VSCode-Anywhere
+
 ### Environment
 
 #### Windows environment

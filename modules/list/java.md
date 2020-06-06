@@ -278,7 +278,7 @@ This package will be installed only if `tomcat` is enabled in your [vscode-anywh
 
 #### nix
 
-* [graalvm11-ee](https://nixos.org/nixos/packages.html?attr=graalvm11-ee&channel=nixpkgs-unstable&query=graalvm11-ee)
+* [graalvm11-ee](https://nixos.org/nixos/packages.html?attr=graalvm11-ee&channel=nixpkgs-unstable)
 
 {% hint style="info" %}
 This package will be installed only if `quarkus` is enabled in your [vscode-anywhere.sls](../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file.

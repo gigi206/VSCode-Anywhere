@@ -139,8 +139,8 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 #### nix
 
-* [nixpkgs.dotnetPackages.NUnitConsole](https://nixos.org/nixos/packages.html?attr=dotnetPackages.NUnitConsole&channel=nixpkgs-unstable&query=NUnitConsole)
-* [nixpkgs.dotnet-sdk\_3](https://nixos.org/nixos/packages.html?attr=dotnet-sdk_3&channel=nixpkgs-unstable&query=dotnet-sdk)
+* [nixpkgs.dotnetPackages.NUnitConsole](https://nixos.org/nixos/packages.html?attr=dotnetPackages.NUnitConsole&channel=nixpkgs-unstable)
+* [nixpkgs.dotnet-sdk\_3](https://nixos.org/nixos/packages.html?attr=dotnet-sdk_3&channel=nixpkgs-unstable)
 
 ### MacOS software
 

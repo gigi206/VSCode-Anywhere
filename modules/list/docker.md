@@ -86,8 +86,8 @@ To work, the extension must have `docker-desktop` running.
 
 #### nix
 
-* [nixpkgs.docker](https://nixos.org/nixos/packages.html?attr=docker&channel=nixpkgs-unstable&query=docker)
-* [nixpkgs.docker-compose](https://nixos.org/nixos/packages.html?attr=docker-compose&channel=nixpkgs-unstable&page=2&query=docker)
+* [nixpkgs.docker](https://nixos.org/nixos/packages.html?attr=docker&channel=nixpkgs-unstable)
+* [nixpkgs.docker-compose](https://nixos.org/nixos/packages.html?attr=docker-compose&channel=nixpkgs-unstable)
 
 {% hint style="info" %}
 To work, the extension must have started `dockerd`. To start Docker, you need `sudo` privileges:

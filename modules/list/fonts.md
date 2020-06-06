@@ -57,7 +57,7 @@ No software.
 
 ## Documentation
 
-* No documentation.
+No documentation.
 
 ## VSCode-Anywhere
 
