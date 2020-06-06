@@ -5,7 +5,7 @@ description: Turnkey solution for VSCode / VSCodium
 # Introduction
 
 {% hint style="info" %}
-This is a beta version and only works with Windows at the moment.
+This is a beta version and only works with Linux and Windows at the moment \(MacOS is not still supported\).
 {% endhint %}
 
 ## What is VSCode-Anywhere ?
@@ -21,7 +21,7 @@ VSCode-Anywhere is a cross platform installation tool that manages for you:
 * [fonts and ligature](https://code.visualstudio.com/docs/getstarted/tips-and-tricks#_tune-your-settings)
 * [git features](https://code.visualstudio.com/docs/editor/versioncontrol)
 * environment
-* documentation
+* [documentation](https://zealdocs.org)
 * requirements: binaries \(like python, gcc, etc...\), libraries, …
 * updates \(documentation, binaries, librairies, extensions, VSCode…\)
 * programming languages with their:
@@ -73,7 +73,7 @@ TODO
 
 ## Issues / questions
 
-TODO
+You can [open an issue on Github](https://github.com/gigi206/VSCode-Anywhere/issues/new).
 
 ## Release notes
 
