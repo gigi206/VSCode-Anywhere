@@ -38,11 +38,19 @@ No requirements.
 This extension is installed but not set as the default theme.
 {% endhint %}
 
-#### yogipatel.solarized-light-no-bold
+#### ginfuru.ginfuru-better-solarized-dark-theme
 
-[Solarized Light](https://marketplace.visualstudio.com/items?itemName=yogipatel.solarized-light-no-bold) is a light color theme.
+[Better Solarized](https://marketplace.visualstudio.com/items?itemName=ginfuru.ginfuru-better-solarized-dark-theme) is a modified version of the [Boxy Solarized Theme](https://github.com/ihodev/sublime-boxy) for Sublime Text, with the original Solarized Workbench theme for Visual Studio Code.
 
-![](https://github.com/yogipatel/vscode-solarized-light-no-bold/raw/master/screenshot.png)
+This theme includes 3 variants:
+
+1. Solarized Light
+2. Solarized Dark
+3. Solarized Dark with Italics
+
+![](https://raw.github.com/ginfuru/vscode-better-solarized-dark/master/images/ScreenShotD.png)
+
+![](https://raw.github.com/ginfuru/vscode-better-solarized-dark/master/images/screenshotB.png)
 
 {% hint style="info" %}
 This extension is installed but not set as the default theme.

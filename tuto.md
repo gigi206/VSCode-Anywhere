@@ -41,7 +41,100 @@ vscode-anywhere:
       terminal.integrated.shell.windows: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'pwsh', 'current', 'pwsh.exe') }}
 ```
 
-
-
 After that you have just to run the [installation script](structure/tools/install.md) again.
+
+## Change the default theme
+
+### Preconfigured theme
+
+If the [vscode](modules/list/vscode.md#installation) module is `enabled`, the default theme is set to [One Dark Pro](modules/list/vscode.md#zhuangtongfa-material-theme).
+
+In this case you must override the the `workbench.colorTheme` settings.
+
+If you prefer change to another dark theme like [Better Solarized Dark](modules/list/vscode.md#ginfuru-ginfuru-better-solarized-dark-theme):
+
+```yaml
+vscode-anywhere:
+  vscode:
+    settings:
+      "workbench.colorTheme": "Better Solarized Dark"
+```
+
+The [vscode](modules/list/vscode.md#installation) module also installs light theme: [Ysgrifennwr](modules/list/vscode.md#xaver-theme-ysgrifennwr) and [Better Solarized Light](modules/list/vscode.md#ginfuru-ginfuru-better-solarized-dark-theme).
+
+If want to change to [Ysgrifennwr](modules/list/vscode.md#xaver-theme-ysgrifennwr) theme:
+
+```yaml
+vscode-anywhere:
+  vscode:
+    settings:
+      "workbench.colorTheme": "Ysgrifennwr"
+```
+
+Or if you prefer [Better Solarized Light](modules/list/vscode.md#ginfuru-ginfuru-better-solarized-dark-theme):
+
+```yaml
+vscode-anywhere:
+  vscode:
+    settings:
+      "workbench.colorTheme": "Better Solarized Light"
+```
+
+### Custom theme
+
+If the [vscode](modules/list/vscode.md#installation) module **is** `enabled`, in this case you must configure your own theme in the **vscode** section to override the settings:
+
+```yaml
+vscode-anywhere:
+  vscode:
+    settings:
+      "workbench.colorTheme": "myCustomTheme"
+```
+
+If the [vscode](modules/list/vscode.md#installation) module **is not** `enabled`, in this case you can configure your own theme in the **custom** section:
+
+```yaml
+vscode-anywhere:
+  custom:
+    settings:
+      "workbench.colorTheme": "myCustomTheme"
+```
+
+{% hint style="info" %}
+Change `myCustomTheme` by the theme to use.
+{% endhint %}
+
+For more informations, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_selecting-the-color-theme).
+
+## Change the default icon theme
+
+### Preconfigured icon theme
+
+If the [vscode](modules/list/vscode.md#installation) module is `enabled`, the default icon theme is set to [vscode-icons](modules/list/vscode.md#vscode-icons-team-vscode-icons).
+
+### Custom icon theme
+
+If the [vscode](modules/list/vscode.md#installation) module **is** `enabled`, in this case you must configure your own icon theme in the **vscode** section to override the settings:
+
+```yaml
+vscode-anywhere:
+  vscode:
+    settings:
+      "workbench.iconTheme": "myCustomIconTheme"
+```
+
+If the [vscode](modules/list/vscode.md#installation) module **is not** `enabled`, in this case you can configure your own icon theme in the **custom** section:
+
+```yaml
+vscode-anywhere:
+  custom:
+    settings:
+      "workbench.iconTheme": "myCustomIconTheme"
+```
+
+{% hint style="info" %}
+Change `myCustomIconTheme` by the icon theme to use.
+{% endhint %}
+
+For more informations, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_file-icon-themes).
 
