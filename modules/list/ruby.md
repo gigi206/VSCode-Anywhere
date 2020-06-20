@@ -22,7 +22,9 @@ You can also take a look at the [VSCode-Anywhere ruby module configuration](http
 
 ## Requirements
 
-No requirements.
+### Linux requirements
+
+Solargraph is compiled with [brew](https://brew.sh) and brew needs the native **gcc** package installed on your Linux distribution. If you haven't the native **gcc** package installed, it will fail to compile.
 
 ## VSCode
 

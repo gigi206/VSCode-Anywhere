@@ -71,6 +71,9 @@
   * [update](structure/tools/update.md)
   * [vscode](structure/tools/vscode.md)
   * [vscode-anywhere](structure/tools/vscode-anywhere.md)
+
+---
+
 * [Tutorials](tuto.md)
 * [Release notes](releases/README.md)
   * [V2](releases/v2/README.md)
