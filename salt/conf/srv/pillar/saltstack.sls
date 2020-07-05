@@ -1,2 +1,2 @@
 saltstack:
-  version: "3000.1"
+  version: "3001"

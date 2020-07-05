@@ -396,7 +396,7 @@ fi
 
 [ -z "$Gitenv" ] && Gitenv="master"
 [ -z "$InstallDir" ] && InstallDir=~/VSCode-Anywhere || InstallDir=$(realpath $InstallDir)
-[ -z "$SaltVersion" ] && SaltVersion="3000.1"
+[ -z "$SaltVersion" ] && SaltVersion="3001"
 [ -z "$Profile" ] && Profile="linux_user"
 
 # VSCode

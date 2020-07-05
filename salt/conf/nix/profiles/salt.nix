@@ -11,27 +11,83 @@ let
     # Descriptive name to make the store path easier to identify
     url = https://github.com/nixos/nixpkgs-channels/;
     # `git ls-remote https://github.com/nixos/nixpkgs-channels nixos-unstable`
-    ref = "refs/heads/nixos-19.09";
-    # rev = "bf7c0f0461e047bec108a5c5d5d1b144289a65ba";
-    rev = "4a0df0ce263634ea0e5d406931f62e2c21b5f6c7";
+    ref = "refs/heads/nixos-unstable";
+    rev = "8d05772134f17180fb2711d0660702dae2a67313";
   }) {};
 
   pkgs_latest = import<nixpkgs> {};
 
-  commentjson = pkgs.python36Packages.buildPythonPackage rec {
+  msgpack = pkgs.python37Packages.buildPythonPackage rec {
+    pname = "msgpack";
+    version = "0.6.2";
+    name = "${pname}-${version}";
+    # doCheck = false;
+
+    src = pkgs.python37Packages.fetchPypi {
+      inherit pname version;
+      extension = "tar.gz";
+      sha256 = "ea3c2f859346fcd55fc46e96885301d9c2f7a36d453f5d8f2967840efa1e1830";
+    };
+
+    meta = with pkgs.stdenv.lib; {
+      homepage = https://github.com/msgpack/msgpack-python;
+      description = "MessagePack serializer implementation for Python";
+      license = licenses.asl20;
+      authors = [ "Inada Naoki <songofacandy@gmail.com>" ];
+      maintainers = [ "Ghislain LE MEUR" ];
+    };
+  };
+
+  #py = pkgs.python37Packages.override {
+  #  packageOverrides = self: super: {
+  #    # Can be unpinned once https://github.com/saltstack/salt/issues/56007 is resolved
+  #    msgpack = super.msgpack.overridePythonAttrs (
+  #      oldAttrs: rec {
+  #        version = "0.6.2";
+  #        src = oldAttrs.src.override {
+  #          inherit version;
+  #          sha256 = "ea3c2f859346fcd55fc46e96885301d9c2f7a36d453f5d8f2967840efa1e1830";
+  #        };
+  #      }
+  #    );
+  #  };
+  #};
+
+  larkparser = pkgs.python37Packages.buildPythonPackage rec {
+    pname = "lark-parser";
+    version = "0.7.8";
+    name = "${pname}-${version}";
+    doCheck = false;
+
+    src = pkgs.python37Packages.fetchPypi {
+      inherit pname version;
+      extension = "tar.gz";
+      sha256 = "19103j8amnlzw5f23gi6dr2pwfwzbd2a96iifkpb4vvy2nxmw896";
+    };
+
+    meta = with pkgs.stdenv.lib; {
+      homepage = https://github.com/lark-parser/lark;
+      description = "Lark is a modern general-purpose parsing library for Python";
+      license = licenses.mit;
+      authors = [ "Erez SHINAN <erezshin@gmail.com>" ];
+      maintainers = [ "Ghislain LE MEUR" ];
+    };
+  };
+
+  commentjson = pkgs.python37Packages.buildPythonPackage rec {
     pname = "commentjson";
     version = "0.8.3";
     name = "${pname}-${version}";
     doCheck = false;
 
-    src = pkgs.python36Packages.fetchPypi {
+    src = pkgs.python37Packages.fetchPypi {
       inherit pname version;
       extension = "tar.gz";
       sha256 = "0lm6l9d1bh254ss2xvis3lfyy5lw5xqzzq1wj1bl27p4kx8h71vg";
     };
 
     propagatedBuildInputs = with pkgs; [
-      python36Packages.lark-parser
+      larkparser
     ];
 
     meta = with pkgs.stdenv.lib; {
@@ -43,87 +99,9 @@ let
     };
   };
 
-  # setuptools = pkgs.python36Packages.buildPythonPackage rec {
-  #   pname = "setuptools";
-  #   version = "46.1.3";
-  #   name = "${pname}-${version}";
-  #   doCheck = false;
-
-  #   src = pkgs.python36Packages.fetchPypi {
-  #     inherit pname version;
-  #     extension = "zip";
-  #     sha256 = "1cdzyj135abfgjj2g8m24xb9j292al6ykrhy5c4gmmvcp9sh8pkr";
-  #   };
-
-  #   meta = with pkgs.stdenv.lib; {
-  #     homepage = https://github.com/pypa/setuptools;
-  #     description = "Setuptools is a fully-featured, actively-maintained, and stable library designed to facilitate packaging Python projects";
-  #     license = licenses.mit;
-  #     maintainers = [ "Ghislain LE MEUR" ];
-  #   };
-  # };
-
-  # python36Packages.setuptools is buggy in 19.09 and can be safely removed in 20.03 (python37Packages.setuptools or python38Packages.setuptools)
-  setuptoolssrc = pkgs.stdenv.mkDerivation rec {
-    pname = "setuptools";
-    version = "46.1.3";
-    name = "${pname}-${version}-sdist.tar.gz";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "pypa";
-      repo = pname;
-      rev = "v${version}";
-      sha256 = "1f6bp3qy5zvykimadk8k11k3629hmnwlw2cfw4vwcsvdarhig673";
-      name = "${pname}-${version}-source";
-    };
-
-    buildPhase = ''
-      ${pkgs.python36Packages.python.interpreter} bootstrap.py
-      ${pkgs.python36Packages.python.interpreter} setup.py sdist --formats=gztar
-    '';
-
-    installPhase = ''
-      echo "Moving sdist..."
-      mv dist/*.tar.gz $out
-    '';
-  };
-
-  setuptools = pkgs.python36Packages.buildPythonPackage rec {
-    pname = "setuptools";
-    version = "46.1.3";
-    format = "other";
-
-    src = setuptoolssrc;
-
-    nativeBuildInputs = [
-      pkgs.python36Packages.bootstrapped-pip
-      (pkgs.python36Packages.pipInstallHook.override{pip=null;})
-      (pkgs.python36Packages.setuptoolsBuildHook.override{setuptools=null; wheel=null;})
-    ];
-
-    preBuild = pkgs.stdenv.lib.strings.optionalString (!pkgs.stdenv.hostPlatform.isWindows) ''
-      export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
-    '';
-
-    pipInstallFlags = [ "--ignore-installed" ];
-
-    # Adds setuptools to nativeBuildInputs causing infinite recursion.
-    catchConflicts = false;
-
-    # Requires pytest, causing infinite recursion.
-    doCheck = false;
-
-    meta = with pkgs.stdenv.lib; {
-      description = "Utilities to facilitate the installation of Python packages";
-      homepage = "https://pypi.python.org/pypi/setuptools";
-      license = with licenses; [ psfl zpl20 ];
-      maintainers = [ "Ghislain LE MEUR" ];
-    };
-  };
-
-  vscsaltsrc = pkgs.python36Packages.buildPythonApplication rec {
+  vscsaltsrc = pkgs.python37Packages.buildPythonApplication rec {
     pname = "vscsaltsrc";
-    version = "3001.0.0";
+    version = "3000.1.0";
     name = "${pname}-${version}";
     doCheck = false;
 
@@ -142,28 +120,30 @@ let
       commentjson
       openssl
       # libgit2
-      # python36Packages.pygit2
+      # python37Packages.pygit2
       # gitMinimal
       # setuptools and pip (pkg_resources) are required by the pip module/state
-      # python36Packages.setuptools
-      setuptools
-      python36Packages.pip
-      python36Packages.GitPython
-      python36Packages.jinja2
-      python36Packages.markupsafe
-      python36Packages.msgpack
-      python36Packages.pycrypto
-      # python36Packages.pycryptodome
-      # # python36Packages.m2crypto
-      python36Packages.pyyaml
-      python36Packages.pyzmq
-      python36Packages.requests
+      python37Packages.setuptools
+      python37Packages.pip
+      python37Packages.distro
+      python37Packages.GitPython
+      python37Packages.jinja2
+      python37Packages.markupsafe
+      msgpack
+      # python37Packages.msgpack
+      python37Packages.pycryptodomex
+      # python37Packages.pycrypto
+      # python37Packages.m2crypto
+      python37Packages.pyyaml
+      python37Packages.pyzmq
+      python37Packages.requests
+      python37Packages.tornado_4
     ];
   };
 
   vscsalt = pkgs.stdenv.mkDerivation rec {
     pname = "vscsalt";
-    version = "3001.0.0";
+    version = "3000.1.0";
     name = "${pname}-${version}";
 
     # src = vscsaltsrc.src;
