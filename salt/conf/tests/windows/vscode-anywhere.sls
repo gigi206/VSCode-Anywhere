@@ -2,7 +2,7 @@ vscode-anywhere:
   custom:
     enabled: False
   vscode_core:
-    vscodium: True
+    vscodium: False
   ansible:
     enabled: False
   bash:
@@ -17,9 +17,9 @@ vscode-anywhere:
   docker:
     enabled: False
   fonts:
-    enabled: False
+    enabled: True
   git:
-    enabled: False
+    enabled: True
   go:
     enabled: False
   html:
@@ -49,7 +49,7 @@ vscode-anywhere:
     enabled: False
     anaconda: False
   remote:
-    enabled: False
+    enabled: True
   restructuredtext:
     enabled: False
   ruby:
@@ -58,4 +58,4 @@ vscode-anywhere:
   saltstack:
     enabled: False
   vscode:
-    enabled: False
+    enabled: True

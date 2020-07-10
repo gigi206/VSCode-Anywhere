@@ -6,7 +6,7 @@ vscode-anywhere:
   ansible:
     enabled: False
   bash:
-    enabled: False
+    enabled: True
   c_cpp:
     enabled: False
     llvm: False
@@ -17,9 +17,9 @@ vscode-anywhere:
   docker:
     enabled: False
   fonts:
-    enabled: False
+    enabled: True
   git:
-    enabled: False
+    enabled: True
   go:
     enabled: False
   html:
@@ -49,7 +49,7 @@ vscode-anywhere:
     enabled: False
     anaconda: False
   remote:
-    enabled: False
+    enabled: True
   restructuredtext:
     enabled: False
   ruby:
@@ -58,4 +58,4 @@ vscode-anywhere:
   saltstack:
     enabled: False
   vscode:
-    enabled: False
+    enabled: True
