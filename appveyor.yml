@@ -8,10 +8,10 @@ branches:
 only_commits:
   files:
     - salt/**/*
+    - _modules/**/*
+    - _states/**/*
     - appveyor.yml
     - VSCode-Anywhere.ps1
-    - _modules
-    - _states
 environment:
   VSCode_Anywhere_CI: true
 clone_depth: 20
