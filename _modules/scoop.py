@@ -789,12 +789,15 @@ def is_pkg_locked(pkg):
             True if the application is locked else False
     """
     install_json = os.path.join(_pkg_current_path(pkg), "install.json")
-    with salt.utils.files.fopen(install_json) as _f:
-        json = salt.utils.json.load(_f)
-        if bool(json.get("hold")) or bool(json.get("url")):
-            return True
-        else:
-            return False
+    if os.path.isfile(install_json):
+        with salt.utils.files.fopen(install_json) as _f:
+            json = salt.utils.json.load(_f)
+            if bool(json.get("hold")) or bool(json.get("url")):
+                return True
+            else:
+                return False
+    else:
+        return False
 
 
 def is_pkg_holded(pkg):
