@@ -137,13 +137,19 @@ default:
       VisualStudioExptTeam.vscodeintellicode:
         enabled: True
         version: null
-        settings:
-          python.jediEnabled: False
-      ms-pyright.pyright:
+        # settings:
+        #   python.jediEnabled: False
+      ms-python.vscode-pylance:
         enabled: True
         version: null
         settings:
-          pyright.disableLanguageServices: True
+          python.analysis.typeCheckingMode: basic
+          python.languageServer: Pylance
+      # ms-pyright.pyright:
+      #   enabled: True
+      #   version: null
+      #   settings:
+      #     pyright.disableLanguageServices: True
       # tushortz.python-extended-snippets:
       #   enabled: True
       #   version: null

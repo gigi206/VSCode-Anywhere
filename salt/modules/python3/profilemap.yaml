@@ -21,7 +21,7 @@ windows_portable:
       VisualStudioExptTeam.vscodeintellicode:
         enabled: False
     settings:
-      python.jediEnabled: True
+      python.languageServer: Jedi
       python.pythonPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'python3') }}
       python.formatting.blackPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'black') }}
       python.poetryPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'poetry') }}

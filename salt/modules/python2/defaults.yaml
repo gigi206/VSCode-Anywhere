@@ -136,11 +136,17 @@ default:
       VisualStudioExptTeam.vscodeintellicode:
         enabled: True
         version: null
-      ms-pyright.pyright:
+      ms-python.vscode-pylance:
         enabled: True
         version: null
         settings:
-          pyright.disableLanguageServices: True
+          python.analysis.typeCheckingMode: basic
+          python.languageServer: Pylance
+      # ms-pyright.pyright:
+      #   enabled: True
+      #   version: null
+      #   settings:
+      #     pyright.disableLanguageServices: True
       # tushortz.python-extended-snippets:
       #   enabled: True
       #   version: null
@@ -158,7 +164,7 @@ default:
       python.linting.pylintEnabled: False
       python.linting.flake8Enabled: True
       python.linting.enabled: True
-      python.jediEnabled: False
+      # python.jediEnabled: False
       python.autoComplete.addBrackets: True
       # python.disableInstallationCheck: True
       # '[python]':

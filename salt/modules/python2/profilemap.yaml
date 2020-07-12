@@ -23,7 +23,7 @@ windows_portable:
         enabled: False
   {%- if not python3.enabled %}
     settings:
-      python.jediEnabled: True
+      python.languageServer: Jedi
       python.pythonPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'python2') }}
       python.formatting.autopep8Path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'autopep8') }}
       python.poetryPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current', 'usr', 'bin', 'poetry') }}
