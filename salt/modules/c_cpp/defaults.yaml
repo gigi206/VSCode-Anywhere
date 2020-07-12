@@ -12,6 +12,9 @@ default:
         settings:
           C_Cpp.default.cStandard: c11
           C_Cpp.default.cppStandard: c++17
+      ms-vscode.cmake-tools:
+        enabled: True
+        version: null
       jbenden.c-cpp-flylint:
         enabled: True
         version: null
@@ -38,6 +41,10 @@ Windows:
         enabled: True
       mingw-w64-x86_64-lldb:
         enabled: True
+      mingw-w64-x86_64-make:
+        enabled: True
+      mingw-w64-x86_64-cmake:
+        enabled: True
   vscode:
     settings:
       code-runner.executorMap.c: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'clang.exe') }} $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe
@@ -58,10 +65,10 @@ Windows:
         enabled: True
       mingw-w64-x86_64-cppcheck:
         enabled: True
-      # make:
-      #   enabled: True
-      # cmake:
-      #   enabled: True
+      mingw-w64-x86_64-make:
+        enabled: True
+      mingw-w64-x86_64-cmake:
+        enabled: True
       # autoconf:
       #   enabled: True
       # automake:
@@ -80,15 +87,18 @@ Windows:
           c-cpp-flylint.cppcheck.enable: True
           c-cpp-flylint.cppcheck.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'cppcheck.exe') }}
 {%- endif %}
+      ms-vscode.cmake-tools:
+        settings:
+          cmake.cmakePath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'msys2', 'current' ,'mingw64', 'bin', 'cmake.exe') }}
 Linux:
   # env:
   #   LDFLAGS: "-L/home/linuxbrew/.linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"
   brew:
     pkgs:
-      # make:
-      #   enabled: True
-      # cmake:
-      #   enabled: True
+      make:
+        enabled: True
+      cmake:
+        enabled: True
       # autoconf:
       #   enabled: True
       # automake:
@@ -142,3 +152,6 @@ Linux:
           # c-cpp-flylint.cppcheck.executable: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('linuxbrew', '.linuxbrew', 'bin', 'cppcheck') }}
           c-cpp-flylint.cppcheck.executable: /home/linuxbrew/.linuxbrew/bin/cppcheck
 {%- endif %}
+      ms-vscode.cmake-tools:
+        settings:
+          cmake.cmakePath: /home/linuxbrew/.linuxbrew/bin/cmake
