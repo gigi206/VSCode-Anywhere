@@ -12,7 +12,7 @@ This is a beta version and only works with Linux and Windows at the moment \(Mac
 
 VSCode-Anywhere is a cross-platform installation tool that manages for you:
 
-* [VSCode](https://code.visualstudio.com/) / [VSCodium](https://vscodium.com) \(VSCode is recommended for avoid undesired behaviour\)
+* [VSCode](https://code.visualstudio.com/) / [VSCodium](https://vscodium.com) \(VSCode is recommended to avoid undesired behavior\)
 * [VSCode extensions](https://marketplace.visualstudio.com/VSCode)
 * [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings)
 * [VSCode keybindings](https://code.visualstudio.com/docs/getstarted/keybindings)
