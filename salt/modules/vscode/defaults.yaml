@@ -75,6 +75,9 @@ default:
               background: yellow
               opacity: 50
               iconColour: yellow
+      tombonnike.vscode-status-bar-format-toggle:
+        enabled: True
+        version: null
       axosoft.gitkraken-glo:
         enabled: True
         version: null
