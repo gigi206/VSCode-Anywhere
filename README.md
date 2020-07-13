@@ -10,9 +10,9 @@ This is a beta version and only works with Linux and Windows at the moment \(Mac
 
 ## What is VSCode-Anywhere ?
 
-VSCode-Anywhere is a cross platform installation tool that manages for you:
+VSCode-Anywhere is a cross-platform installation tool that manages for you:
 
-* [VSCodium](https://vscodium.com) / [VSCode](https://code.visualstudio.com/)
+* [VSCode](https://code.visualstudio.com/) / [VSCodium](https://vscodium.com) \(VSCode is recommended for avoid undesired behaviour\)
 * [VSCode extensions](https://marketplace.visualstudio.com/VSCode)
 * [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings)
 * [VSCode keybindings](https://code.visualstudio.com/docs/getstarted/keybindings)
@@ -23,7 +23,7 @@ VSCode-Anywhere is a cross platform installation tool that manages for you:
 * environment
 * [documentation](https://zealdocs.org)
 * requirements: binaries \(like python, gcc, etc...\), libraries, …
-* updates \(documentation, binaries, librairies, extensions, VSCode…\)
+* updates \(documentation, binaries, libraries, extensions, VSCode…\)
 * programming languages with their:
 * * [linter](https://en.wikipedia.org/wiki/Lint_%28software%29)
   * [debugger](https://en.wikipedia.org/wiki/Debugger)
@@ -38,7 +38,7 @@ VSCode-Anywhere also manages updates for you.
 
 VSCode-Anywhere can use extra software for the installation process.
 
-Different software car be used depending on the OS.
+Different software can be used depending on the OS.
 
 ### Windows third-Party
 
