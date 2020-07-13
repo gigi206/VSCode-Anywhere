@@ -11,6 +11,8 @@ You can extend the functionality of VSCode-Anywhere with the installation of mod
 Please take a look [how to install a VSCode-Anywhere module](../install.md).
 
 {% hint style="success" %}
-All modules are listed on the right column. Press next at the bottom of the page to go to the first module.
+All modules are listed on the left column. Press _**next**_ at the bottom of the page to go to the first module.
 {% endhint %}
+
+
 
