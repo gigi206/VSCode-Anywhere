@@ -315,7 +315,7 @@ The following packages will be installed only if the profile is set to `windows_
 #### brew
 
 * [ctags](https://formulae.brew.sh/formula/ctags)
-* anaconda2 \(custom formulae + only if `anaconda` is set to `True`\)
+* anaconda2 \(custom brew formulae only if `anaconda` is set to `True`\)
 
 #### nix
 
