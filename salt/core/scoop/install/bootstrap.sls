@@ -15,5 +15,5 @@ include:
       - sls: salt/core/scoop/install/policy
       # - sls: salt/core/scoop/install/env
     - unless:
-      - if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop') }}' -PathType Container)) { exit 1 }
+      - powershell -Command { if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop') }}' -PathType Container)) { exit 1 } }
 {%- endif %}

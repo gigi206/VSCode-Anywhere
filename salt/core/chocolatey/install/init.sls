@@ -11,7 +11,7 @@
       - chocolateyInstall: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}
       - chocolateyToolsLocation: {{ salt['grains.get']('vscode-anywhere:apps:path') }}
     - unless:
-      - if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}' -PathType Container)) { exit 1 }
+      - powershell -Command { if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}' -PathType Container)) { exit 1 } }
 {%- endif %}
 
 

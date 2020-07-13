@@ -20,14 +20,24 @@
 
   {%- set ENV_PATH = salt['environ.item'](VAR_PATH).get(VAR_PATH, '').split(SEP_PATH) | unique %}
 
+  {%- if not salt['file.access'](salt['grains.get']('vscode-anywhere:tools:env'), mode='f') %}
+{{ salt['vscode_anywhere.get_id'](sls) + ':create:env' }}:
+  file.touch:
+    - name: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
+    - makedirs: True
+  {%- endif %}
+
+{#-
 {{ salt['vscode_anywhere.get_id'](sls) + ':create:env' }}:
   file.touch:
     - name: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
     - makedirs: True
     - unless:
+      #- powershell -Command { if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:tools:env') }}' -PathType Leaf)) { exit 1 } }
       - fun: file.access
         path: {{ salt['grains.get']('vscode-anywhere:tools:env') }}
         mode: f
+#}
 
   {%- for env, env_attr in conf.get('env', {}).items() %}
     {%- if action in ['install', 'update'] %}

@@ -10,5 +10,5 @@ include:
     - require:
       - sls: salt/core/zeal/install
     - onlyif:
-      - if ("{{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['success'] }}" -eq "False") { exit 1 }
+      - powershell -Command { if ("{{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['success'] }}" -eq "False") { exit 1 } }
 {%- endif %}

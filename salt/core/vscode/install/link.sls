@@ -15,7 +15,7 @@ include:
       - sls: salt/core/chocolatey/install
       - sls: salt/core/vscode/install
     - unless:
-      - if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'VSCode-Anywhere.exe') }}' -PathType Leaf)) { exit 1 }
+      - powershell -Command { if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'shims', 'VSCode-Anywhere.exe') }}' -PathType Leaf)) { exit 1 } }
 
 
 {{ salt['vscode_anywhere.get_id'](sls) + ':binary:update' }}:

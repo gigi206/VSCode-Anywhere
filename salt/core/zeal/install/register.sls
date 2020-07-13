@@ -11,5 +11,5 @@ include:
     - require:
       - sls: salt/core/zeal/install
     - unless:
-      - if (!({{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['vdata'] | json }}.StartsWith({{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'zeal', 'current', 'zeal.exe') | json }}))) { exit 1 }
+      - powershell -Command { if (!({{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['vdata'] | json }}.StartsWith({{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'zeal', 'current', 'zeal.exe') | json }}))) { exit 1 } }
 {%- endif %}

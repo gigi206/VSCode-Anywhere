@@ -20,7 +20,7 @@ include:
       {%- if grains.get('kernel') == 'Windows' %}
     - shell: powershell
     - unless:
-      - if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 }
+      - powershell -Command { if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 } }
     - check_cmd:
       - powershell -Command { if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 } }
       {%- else %}
