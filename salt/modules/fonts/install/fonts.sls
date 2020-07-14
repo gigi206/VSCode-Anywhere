@@ -29,11 +29,17 @@
 
 {{ salt['vscode_anywhere.get_id'](sls) + ':install:{}:{}'.format(font, font_filename) }}:
   cmd.run:
-    # CopyHere function can take 2 values 0x14 to copy fonts in C:\Users\<user>\AppData\Local\Microsoft\Windows\Fonts or 0x10 to copy in C:\Windows\Fonts
-    - name: (New-Object -ComObject Shell.Application).Namespace(0x14).CopyHere("{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'fonts', font, file) }}", 0x14)
+    # CopyHere 2nd arg: https://docs.microsoft.com/en-us/windows/win32/shell/folder-copyhere (0x10 = 16)
+    # 0x14 (C:\Windows\Fonts) is specified but in fact fonts are installed in 0x1c + "Microsoft\Windows\Fonts"
+    - name: (New-Object -ComObject Shell.Application).Namespace(0x14).CopyHere("{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'fonts', font, file) }}", 0x10)
     - shell: powershell
     - unless:
-      - powershell -Command { if (!(Test-Path "{{ fonts_target | path_join(font_filename) }}" -PathType Leaf)) { exit 1 } }
+      - IF NOT EXIST "{{ fonts_target | path_join(font_filename) }}" exit 1
+      #- if (!(Test-Path "{{ fonts_target | path_join(font_filename) }}" -PathType Leaf)) { exit 1 }
+      #- powershell -NonInteractive -NoProfile "if (!(Test-Path '{{ fonts_target | path_join(font_filename) }}' -PathType Leaf)) { exit 1 }" || exit 1
+      #- fun: file.access
+      #  path: {{ fonts_target | path_join(font_filename) }}
+      #  mode: f
 
       {%- else %}
 

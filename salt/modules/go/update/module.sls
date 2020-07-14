@@ -20,9 +20,17 @@ include:
       {%- if grains.get('kernel') == 'Windows' %}
     - shell: powershell
     - unless:
-      - powershell -Command { if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 } }
+      - IF NOT EXIST "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" exit 1
+      #- if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 }
+      #- fun: file.access
+      #  path: {{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}
+      #  mode: f
     - check_cmd:
-      - powershell -Command { if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 } }
+      - IF NOT EXIST "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" exit 1
+      #- if (!(Test-Path "{{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}" -PathType Container)) { exit 1 }
+      #- fun: file.access
+      #  path: {{ salt['environ.get']('GOPATH') | path_join('src', pkg) }}
+      #  mode: f
       {%- else %}
     - unless:
       - test {{ salt['file.directory_exists'](salt['environ.get']('GOPATH') | path_join('src', pkg)) }} = True

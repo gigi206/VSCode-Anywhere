@@ -27,8 +27,10 @@ include:
       - sls: salt/modules/php/install
       - scoop: php-xdebug
     - unless:
-      - if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}' -PathType Leaf)) { exit 1 }
-      - fun: file.file_exists
-        path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}
+      - IF NOT EXIST "{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}" exit 1
+      #- if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}' -PathType Leaf)) { exit 1 }
+      #- fun: file.file_exists
+      #  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'php', 'cli', 'conf.d', 'xdebug.ini') }}
+      #  mode: f
 #}
 {%- endif %}

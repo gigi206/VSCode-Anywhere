@@ -41,7 +41,11 @@ include:
     - unless:
   {%- for pkg, pkg_attr in php.composer.pkgs.items() %}
     {%- if salt['grains.get']('kernel') == 'Windows' and pkg_attr.get('enabled') %}
-      - powershell -Command { if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', pkg) }}' -PathType Container)) { exit 1 } }
+      - IF NOT EXIST "{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', pkg) }}" exit 1
+      #- if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', pkg) }}' -PathType Container)) { exit 1 }
+      #- fun: file.access
+      #  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'composer', 'install', 'vendor', pkg) }}
+      #  mode: f
     {%- endif %}
   {%- endfor %}
   #}

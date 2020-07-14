@@ -10,5 +10,9 @@ include:
     - require:
       - sls: salt/core/zeal/install
     - onlyif:
-      - powershell -Command { if ("{{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['success'] }}" -eq "False") { exit 1 } }
+      powershell -NonInteractive -NoProfile "if ('{{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['success'] }}' -eq 'False') { exit 1 }" || exit 1
+      #- if ("{{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['success'] }}" -eq "False") { exit 1 }
+      #- fun: cmd.run
+      #  cmd: if ("{{ salt['reg.read_value']('HKCU', 'Software\Classes\dash-plugin\shell\open\command')['success'] }}" -eq "False") { exit 1 }
+      #  shell: powershell
 {%- endif %}
