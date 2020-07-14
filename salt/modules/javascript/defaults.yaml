@@ -69,6 +69,12 @@ default:
       hbenl.vscode-mocha-test-adapter:
         enabled: True
         version: null
+      sketchbuch.vsc-quokka-statusbar:
+        enabled: True
+        version: null
+      WallabyJs.quokka-vscode:
+        enabled: True
+        version: null
   zeal:
     docsets:
       JavaScript:
