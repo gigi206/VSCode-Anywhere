@@ -128,9 +128,9 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=VisualStudi
 With the `windows_portable` [profile](../../install/advanced/windows-installation.md#profiles) this extension will not be installed.
 {% endhint %}
 
-#### ms-pyright.pyright
+#### ms-python.vscode-pylance
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=ms-pyright.pyright) is a fast type checker meant for large Python source bases. It can run in a _watch_ mode and performs fast incremental updates when files are modified.
+ [Pylance is an extension](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) that works alongside Python in Visual Studio Code to provide performant language support. Under the hood, Pylance is powered by [Pyright](https://github.com/microsoft/pyright), Microsoft's static type checking tool. Using Pyright, Pylance has the ability to supercharge your Python IntelliSense experience with rich type information, helping you write better code faster.
 
 #### kevinrose.vsc-python-indent
 
@@ -154,7 +154,8 @@ VSCode-Anywhere installs python modules `nose`, `pytest` and configure `pytest` 
 
 ```javascript
 {
-  "pyright.disableLanguageServices": True,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.languageServer": "Pylance",
   "python.testing.pytestEnabled": True,
   "code-runner.executorMap.python": "$pythonPath -u $fullFileName",
   "python.linting.pylintEnabled": False,
@@ -163,7 +164,6 @@ VSCode-Anywhere installs python modules `nose`, `pytest` and configure `pytest` 
     "--max-line-length=88"
   ],
   "python.linting.enabled": True,
-  "python.jediEnabled": False,
   "python.autoComplete.addBrackets": True,
   "python.formatting.provider": "black",
   "dash.languageIdToDocsetMap.python": [
@@ -233,7 +233,7 @@ If [profile](../../install/advanced/windows-installation.md#profiles) is set to 
 
 ```javascript
 {
-      "python.jediEnabled": true,
+      "python.languageServer": "Jedi",
       "python.pythonPath": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\msys2\\current\\usr\\bin\\python3",
       "python.formatting.blackPath": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\msys2\\current\\usr\\bin\\black",
       "python.poetryPath": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\msys2\\current\\usr\\bin\\poetry",

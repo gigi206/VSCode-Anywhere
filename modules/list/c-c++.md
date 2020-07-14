@@ -175,6 +175,14 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=matepek.vsc
 VSCode-Anywhere does not install Catch2, Google Test or doctest. You have to install them by yourself.
 {% endhint %}
 
+#### ms-vscode.cmake-tools
+
+ [CMake Tools](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools) provides the native developer a full-featured, convenient, and powerful workflow for CMake-based projects in Visual Studio Code.
+
+{% hint style="info" %}
+For more information take a look at [the official documentation](https://code.visualstudio.com/docs/cpp/cmake-linux).
+{% endhint %}
+
 ### VSCode settings
 
 #### Global settings
@@ -204,6 +212,16 @@ If `llvm` is enabled:
 
 #### Windows settings
 
+Global settings for Windows:
+
+```javascript
+{
+    "cmake.cmakePath": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\msys2\\current\\mingw64\\bin\\cmake.exe"
+}
+```
+
+If `llvm` is disabled:
+
 ```javascript
 {
     "C_Cpp.default.compilerPath": "C:\\VSCode-Anywhere\\apps\\scoop\\apps\\msys2\\current\\mingw64\\bin\\gcc.exe",
@@ -230,6 +248,16 @@ Assuming you have installed in the default directory `C:\VSCode-Anywhere`.
 {% endhint %}
 
 #### Linux settings
+
+Global settings for Linux:
+
+```javascript
+{
+    "cmake.cmakePath": "/home/linuxbrew/.linuxbrew/bin/cmake"
+}
+```
+
+If `llvm` is disabled:
 
 ```javascript
 {
@@ -261,6 +289,9 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 **msys2**
 
+* [mingw-w64-cmake](https://packages.msys2.org/base/mingw-w64-cmake)
+* [mingw-w64-make](https://packages.msys2.org/base/mingw-w64-make)
+
 if `llvm` is disable:
 
 * [mingw-w64-x86\_64-gcc](https://packages.msys2.org/package/mingw-w64-x86_64-gcc)
@@ -275,6 +306,9 @@ if `llvm` is enabled:
 ### Linux software
 
 #### brew
+
+* [cmake](https://formulae.brew.sh/formula/cmake)
+* [make](https://formulae.brew.sh/formula/make)
 
 If `llvm` is disable:
 

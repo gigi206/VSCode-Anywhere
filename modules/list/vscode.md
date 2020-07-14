@@ -136,6 +136,10 @@ For more information about tasks, [please read the documentation](https://code.v
 
 ![](https://raw.githubusercontent.com/Gruntfuggly/todo-tree/master/resources/screenshot.png)
 
+#### tombonnike.vscode-status-bar-format-toggle
+
+[A VS Code extension](https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle) that allows you to toggle the formatter \(Prettier, Beautify, …\) ON and OFF with a simple click.
+
 #### axosoft.gitkraken-glo
 
 [GitKraken Glo](https://marketplace.visualstudio.com/items?itemName=axosoft.gitkraken-glo) is an issue board for tracking issues and tasks.

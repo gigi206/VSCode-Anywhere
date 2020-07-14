@@ -98,6 +98,18 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=wix.vscode-
 
 ![](https://file-wkbcnlcvbn.now.sh/import-cost.gif)
 
+#### WallabyJs.quokka-vscode
+
+[Quokka.js](https://marketplace.visualstudio.com/items?itemName=WallabyJs.quokka-vscode) is a developer productivity tool for rapid JavaScript / TypeScript prototyping. Runtime values are updated and displayed in your IDE next to your code, as you type.
+
+![](https://quokkajs.com/assets/img/main-video.gif)
+
+#### sketchbuch.vsc-quokka-statusbar
+
+[This extension](https://marketplace.visualstudio.com/items?itemName=sketchbuch.vsc-quokka-statusbar) adds buttons to the status bar in Visual Studio Code \(VSC\) to control Quokka.
+
+![](https://raw.githubusercontent.com/sketchbuch/vsc-quokka-statusbar/master/docs/images/screenshot.png)
+
 #### hbenl.vscode-mocha-test-adapter
 
 [This extension](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter) allows to run your [Mocha](https://mochajs.org) tests using the [Test Explorer UI](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer).
