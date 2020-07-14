@@ -30,6 +30,7 @@ include:
     - salt/modules/markdown/update
     - salt/modules/perl/update
     - salt/modules/php/update
+    - salt/modules/platformio/update
     - salt/modules/powershell/update
     - salt/modules/puppet/update
     - salt/modules/python2/update

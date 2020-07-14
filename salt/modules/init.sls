@@ -23,6 +23,7 @@ include:
     - salt/modules/markdown
     - salt/modules/restructuredtext
     - salt/modules/deepcode
+    - salt/modules/platformio
     - salt/modules/custom
 {%- if salt['state.sls_exists']('vscode-anywhere') %}
     - vscode-anywhere

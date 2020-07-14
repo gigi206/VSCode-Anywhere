@@ -1,0 +1,7 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      platformio.platformio-ide:
+        enabled: True
+        version: null

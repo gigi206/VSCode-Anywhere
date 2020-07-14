@@ -38,6 +38,8 @@ vscode-anywhere:
     enabled: False
   php:
     enabled: False
+  platformio:
+    enabled: False
   powershell:
     enabled: True
   puppet:
