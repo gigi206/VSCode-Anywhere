@@ -6,7 +6,7 @@ description: Saltstack minion configuration
 
 ## minion / miniond.d
 
-The `VSCode-Anywhere/conf/saltstack/conf/minion` file is the main configuration file. VSCode-Anywhere does not configure anything in this file but in the `VSCode-Anywhere/conf/saltstack/conf/minion.d` directory.
+The `VSCode-Anywhere/conf/saltstack/conf/minion` file is the main configuration file. VSCode-Anywhere does not configure anything in this file but in the`VSCode-Anywhere/conf/saltstack/conf/minion.d`directory.
 
 The `VSCode-Anywhere/conf/saltstack/conf/minion.d` directory contains the [the Saltstack minion configuration](https://docs.saltstack.com/en/latest/ref/configuration/minion.html).
 

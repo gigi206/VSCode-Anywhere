@@ -160,7 +160,7 @@ Allow to manage [cpan](https://www.cpan.org) packages.
 
 * **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
-  * `version`: version of the cpan package
+  * `version`: the version of the cpan package
 
 
 
@@ -168,22 +168,22 @@ Allow to manage [cpan](https://www.cpan.org) packages.
 
 `opts` is not mandatory but allows to pass additional arguments.
 
-Extra args can be arguments described in the [saltstack cpan states](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack cpan states](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 
 
 Global `opts` packages settings:
 
-* `cpan:pkgs:opts:global`: allow to pass arguments **to all cpan packages** when **installing**, **updating**, or **uninstalling** a package
-*  `pm:pkgs:opts:install`: allow to pass arguments **to all cpan packages** when **installing** a package \(cf [states.cpan.installed](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.installed)\)
-* `cpan:pkgs:opts:update`: allow to pass arguments **to all cpan packages** when **updating** a package \(cf [states.cpan.uptodate](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.uptodate)\)
-* `cpan:pkgs:opts:uninstall`: allow to pass arguments **to all cpan packages** when **uninstalling** a package \(cf [states.cpan.removed](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.removed)\)
+* `cpan:pkgs:opts:global`: allow passing arguments **to all cpan packages** when **installing**, **updating**, or **uninstalling** a package
+*  `pm:pkgs:opts:install`: allow passing arguments **to all cpan packages** when **installing** a package \(cf [states.cpan.installed](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.installed)\)
+* `cpan:pkgs:opts:update`: allow passing arguments **to all cpan packages** when **updating** a package \(cf [states.cpan.uptodate](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.uptodate)\)
+* `cpan:pkgs:opts:uninstall`: allow passing arguments **to all cpan packages** when **uninstalling** a package \(cf [states.cpan.removed](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.removed)\)
 
 #### 
 
 Specific `opts` packages settings:
 
-* `cpan:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **cpan package** when **installing**, **updating**, or **uninstalling** the package
+* `cpan:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **cpan package** when **installing**, **updating**, or **uninstalling** the package
 *  `cpan:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **cpan packages** when **installing** the package \(cf [states.cpan.installed](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.installed)\)
 * `cpan:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **cpan packages** when **updating** the package \(cf [states.cpan.uptodate](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.uptodate)\)
 * `cpan:pkgs:<mypkg>:opts:uninstall`: allow to pass arguments **to** `<mypkg>` **cpan packages** when **uninstalling** the package \(cf [states.cpan.removed](https://docs.saltstack.com/en/develop/ref/states/all/salt.states.cpan.html#salt.states.cpan.removed)\)

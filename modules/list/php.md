@@ -44,13 +44,13 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=felixfbecke
 
 This [extension](https://marketplace.visualstudio.com/items?itemName=junstyle.php-cs-fixer) provides [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) command.
 
-This extension permit to [format](https://code.visualstudio.com/docs/editor/codebasics#_formatting) the PHP code.
+This extension permits to [format](https://code.visualstudio.com/docs/editor/codebasics#_formatting) the PHP code.
 
 ![](https://github.com/felixfbecker/vscode-php-debug/raw/master/images/demo.gif)
 
 #### ikappas.phpcs
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs) is linter plugin for Visual Studio Code provides an interface to [phpcs](http://pear.php.net/package/PHP_CodeSniffer/).
+This [extension](https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs) is a linter plugin for Visual Studio Code that provides an interface to [phpcs](http://pear.php.net/package/PHP_CodeSniffer/).
 
 #### MehediDracula.php-namespace-resolver
 
@@ -60,17 +60,17 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=ikappas.php
 
 #### brapifra.phpserver
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=brapifra.phpserver) allow to start / stop a PHP server in your current workspace \(or subfolder\).
+This [extension](https://marketplace.visualstudio.com/items?itemName=brapifra.phpserver) allows starting / stopping a PHP server in your current workspace \(or subfolder\).
 
 ![](https://github.com/brapifra/vscode-phpserver/raw/master/demo.gif)
 
 #### ecodes.vscode-phpmd
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=ecodes.vscode-phpmd) analyze your PHP source code on save with PHP mess detector.
+This [extension](https://marketplace.visualstudio.com/items?itemName=ecodes.vscode-phpmd) analyzes your PHP source code on save with PHP mess detector.
 
 #### recca0120.vscode-phpunit
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=recca0120.vscode-phpunit) allow to run PHP tests.
+This [extension](https://marketplace.visualstudio.com/items?itemName=recca0120.vscode-phpunit) allows to run PHP tests.
 
 ![](https://github.com/recca0120/vscode-phpunit/raw/master/img/screenshot.png)
 
@@ -201,13 +201,13 @@ This is a simple list of extensions to enable in PHP.
 
 #### composer
 
-Allow to install packages with [composer](https://packagist.org).
+Allow installing packages with [composer](https://packagist.org).
 
 
 
 * **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
-  * `version`: version of the composer package
+  * `version`: the version of the composer package
 
 
 
@@ -215,22 +215,22 @@ Allow to install packages with [composer](https://packagist.org).
 
 `opts` is not mandatory but allows to pass additional arguments.
 
-Extra args can be arguments described in the [saltstack composer states](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack composer states](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 
 
 Global `opts` packages settings:
 
-* `composer:pkgs:opts:global`: allow to pass arguments **to all composer packages** when **installing**, **updating**, or **uninstalling** a package
-*  `pm:pkgs:opts:install`: allow to pass arguments **to all composer packages** when **installing** a package \(cf [states.composer.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html#salt.states.composer.installed)\)
-* `composer:pkgs:opts:update`: allow to pass arguments **to all composer packages** when **updating** a package \(cf [states.composer.update](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html#salt.states.composer.update)\)
+* `composer:pkgs:opts:global`: allow passing arguments **to all composer packages** when **installing**, **updating**, or **uninstalling** a package
+*  `pm:pkgs:opts:install`: allow passing arguments **to all composer packages** when **installing** a package \(cf [states.composer.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html#salt.states.composer.installed)\)
+* `composer:pkgs:opts:update`: allow passing arguments **to all composer packages** when **updating** a package \(cf [states.composer.update](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html#salt.states.composer.update)\)
 * `composer:pkgs:opts:uninstall`: not yet implemented
 
 #### 
 
 Specific `opts` packages settings:
 
-* `composer:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **composer package** when **installing**, **updating**, or **uninstalling** the package
+* `composer:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **composer package** when **installing**, **updating**, or **uninstalling** the package
 *  `composer:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **composer packages** when **installing** the package \(cf [states.composer.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html#salt.states.composer.installed)\)
 * `composer:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **composer packages** when **updating** the package \(cf [states.composer.update](https://docs.saltstack.com/en/master/ref/states/all/salt.states.composer.html#salt.states.composer.update)\)
 * `composer:pkgs:<mypkg>:opts:uninstall`: not yet implemented
@@ -308,7 +308,7 @@ Assuming you have installed in the directory `/home/myuser/VSCode-Anywhere`.
 
 * **`pkgs`**: name of the extension to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
-  * `version`: version of the pecl extension
+  * `version`: the version of the pecl extension
 
 
 
@@ -316,14 +316,14 @@ Assuming you have installed in the directory `/home/myuser/VSCode-Anywhere`.
 
 `opts` is not mandatory but allows to pass additional arguments.
 
-Extra args can be arguments described in the [saltstack pecl states](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack pecl states](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 
 
 Global `opts` packages settings:
 
-* `pecl:pkgs:opts:global`: allow to pass arguments **to all pecl packages** when **installing**, **updating**, or **uninstalling** a package
-*  `pm:pkgs:opts:install`: allow to pass arguments **to all pecl packages** when **installing** a package \(cf [states.pecl.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html#salt.states.pecl.installed)\)
+* `pecl:pkgs:opts:global`: allow passing arguments **to all pecl packages** when **installing**, **updating**, or **uninstalling** a package
+*  `pm:pkgs:opts:install`: allow passing arguments **to all pecl packages** when **installing** a package \(cf [states.pecl.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html#salt.states.pecl.installed)\)
 * `pecl:pkgs:opts:update`: not yet implemented
 * `pecl:pkgs:opts:uninstall`: not yet implemented
 
@@ -331,8 +331,8 @@ Global `opts` packages settings:
 
 Specific `opts` packages settings:
 
-* `pecl:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **pecl package** when **installing**, **updating**, or **uninstalling** the package
-*  `pecl:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **pecl packages** when **installing** the package \(cf [states.pecl.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html#salt.states.pecl.installed)\)
+* `pecl:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **pecl package** when **installing**, **updating**, or **uninstalling** the package
+*  `pecl:pkgs:<mypkg>:opts:install`: allow passing arguments **to** `<mypkg>` **pecl packages** when **installing** the package \(cf [states.pecl.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.pecl.html#salt.states.pecl.installed)\)
 * `pecl:pkgs:<mypkg>:opts:update`: not yet implemented
 * `pecl:pkgs:<mypkg>:opts:uninstall`: not yet implemented
 

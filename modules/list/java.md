@@ -4,7 +4,7 @@
 
 ## About
 
-[Java](https://www.oracle.com/java/) Java is a general-purpose programming language that is class-based, object-oriented, and designed to have as few implementation dependencies as possible.
+[Java](https://www.oracle.com/java/) Java is a general-purpose programming language that is class-based, object-oriented, and designed to have a few implementation dependencies as possible.
 
 ## Installation
 
@@ -50,7 +50,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=vscjava.vsc
 
 #### vscjava.vscode-maven
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven) allow to manage Maven projects, execute goals, generate project from archetype, improve user experience for Java developers.
+This [extension](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven) allows to manage Maven projects, execute goals, generate a project from the archetype, improve the user experience for Java developers.
 
 ![](https://github.com/Microsoft/vscode-maven/raw/master/images/explorer.png)
 
@@ -97,7 +97,7 @@ vscode-anywhere:
 
 #### vscjava.vscode-spring-initializr
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr) quickly generate a Spring Boot project in Visual Studio Code \(VS Code\). It helps you to customize your projects with configurations and manage Spring Boot dependencies.
+This [extension](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr) quickly generates a Spring Boot project in Visual Studio Code \(VS Code\). It helps you to customize your projects with configurations and manage Spring Boot dependencies.
 
 ![](https://github.com/Microsoft/vscode-spring-initializr/raw/master/images/spring-initializr-vsc.gif)
 
@@ -148,7 +148,7 @@ vscode-anywhere:
 
 #### SummerSun.vscode-jetty
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=SummerSun.vscode-jetty) allow to start and run or debug your war package on Jetty.
+This [extension](https://marketplace.visualstudio.com/items?itemName=SummerSun.vscode-jetty) allows to start and run or debug your war package on Jetty.
 
 ![](https://github.com/summersun/vscode-jetty/raw/master/resources/Jetty.gif)
 
@@ -165,7 +165,7 @@ vscode-anywhere:
 
 #### adashen.vscode-tomcat
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=adashen.vscode-tomcat) allow to debug or run your java war package in Apache Tomcat.
+This [extension](https://marketplace.visualstudio.com/items?itemName=adashen.vscode-tomcat) allows to debug or run your java war package in Apache Tomcat.
 
 ![](https://github.com/adashen/vscode-tomcat/raw/master/resources/Tomcat.gif)
 
@@ -330,7 +330,7 @@ C:\VSCode-Anywhere\apps\scoop\apps\graalvm\current\bin
 ```
 {% endhint %}
 
-If `jetty` is enabled the following envrionment will be set:
+If `jetty` is enabled the following environment will be set:
 
 ```yaml
 JETTY_HOME: C:\SCode-Anywhere\apps\scoop\apps\Chocolatey\lib\jetty\tools\jetty
@@ -348,14 +348,14 @@ JAVA_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
 JDK_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
 ```
 
-If `tomcat` is enabled the following envrionment will be set:
+If `tomcat` is enabled the following environment will be set:
 
 ```yaml
 CATALINA_BASE: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
 CATALINA_HOME: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec
 ```
 
-If `jetty` is enabled the following envrionment will be set:
+If `jetty` is enabled the following environment will be set:
 
 ```yaml
 JETTY_HOME: /home/linuxbrew/.linuxbrew/opt/jetty/libexec
@@ -369,7 +369,7 @@ JAVA_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
 JDK_HOME: /home/linuxbrew/.linuxbrew/opt/openjdk/libexec
 ```
 
-If `tomcat` is enabled the following envrionment will be set:
+If `tomcat` is enabled the following environment will be set:
 
 ```yaml
 CATALINA_BASE: /home/linuxbrew/.linuxbrew/opt/tomcat/libexec

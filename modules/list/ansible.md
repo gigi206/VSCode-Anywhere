@@ -30,7 +30,7 @@ No requirements.
 
 #### vscoss.vscode-ansible
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=vscoss.vscode-ansible) is designed to increase developer productivity authoring, testing and using Ansible with Azure. The extension provides cool features around playbook authoring and execution. It supports running playbook from various places e.g. Docker, local installation, remote machines via ssh and Cloud Shell. 
+This [extension](https://marketplace.visualstudio.com/items?itemName=vscoss.vscode-ansible) is designed to increase developer productivity authoring, testing and using Ansible with Azure. The extension provides cool features around playbook authoring and execution. It supports running playbooks from various places e.g. Docker, local installation, remote machines via ssh, and Cloud Shell. 
 
 ![Code snippets](https://github.com/VSChina/vscode-ansible/raw/master/images/authoring.gif)
 

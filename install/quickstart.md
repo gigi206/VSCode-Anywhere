@@ -2,7 +2,7 @@
 
 ## Windows
 
-Open a powershell console and enter the following command:
+Open a PowerShell console and enter the following command:
 
 {% tabs %}
 {% tab title="Powershell" %}
@@ -24,7 +24,7 @@ Open a terminal and enter the following command:
 bash <(curl -sL https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V2/VSCode-Anywhere.sh)
 ```
 
-VSCode-Anywhere will be install in `~/VSCode-Anywhere`.
+VSCode-Anywhere will be installed in `~/VSCode-Anywhere`.
 
 For more information, please read the full Linux documentation for more details.
 

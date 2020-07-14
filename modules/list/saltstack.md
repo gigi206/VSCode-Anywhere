@@ -21,7 +21,7 @@ vscode-anywhere:
 ```
 
 {% hint style="info" %}
-You can also take a look at the [VSCode-Anywhere saltstak module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/saltstack/defaults.yaml).
+You can also take a look at the [VSCode-Anywhere Saltstack module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/saltstack/defaults.yaml).
 {% endhint %}
 
 ## Requirements

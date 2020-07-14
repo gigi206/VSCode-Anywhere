@@ -8,6 +8,6 @@ The script `VSCode-Anywhere/tools/install.ps1` for Windows or `VSCode-Anywhere/t
 
 To apply changes:
 
-* on Windows, right clic on the `install.ps1` file and clic on `Run with PowerShell`
+* on Windows, right-click on the `install.ps1` file and click on `Run with PowerShell`
 * on Linux / Mac run the script with your favorite terminal
 

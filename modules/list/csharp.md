@@ -23,7 +23,7 @@ You can also take a look at the [VSCode-Anywhere csharp module configuration](ht
 {% embed url="https://youtu.be/a6WPeTG1QEk" caption="Start a new C\# project" %}
 
 {% hint style="info" %}
-You don’t need to install anything, all is already include in VSCode-Anywhere. This video gives just an example how to start a new project.
+You don’t need to install anything, all is already include in VSCode-Anywhere. This video gives just an example of how to start a new project.
 {% endhint %}
 
 For more details read the [official documentation](https://code.visualstudio.com/docs/languages/csharp).

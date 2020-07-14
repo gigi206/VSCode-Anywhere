@@ -12,7 +12,7 @@ VSCode-Anywhere actually does not support spaces in the install directory path.
 
 This is a limitation due to your file manager, please read [the available solutions](install/advanced/linux-installation.md#linux-shortcuts-icons).
 
-## On Linux my $HOME is not my real HOME
+## On Linux, my $HOME is not my real HOME
 
 Please read [the possible workarounds](install/advanced/linux-installation.md#home).
 
@@ -57,13 +57,13 @@ Replace `vscode-anywhere.sh` by `vscode-anywhere.ps1` on Windows.
 
 ## Language is only detected at the 2nd run
 
-VSCode-Anywhere detects the OS locale and set it automatically inside VSCode.
+VSCode-Anywhere detects the OS locale and sets it automatically inside VSCode.
 
 There is a bug inside VSCode and the language is only detected in the **2nd** run.
 
 VSCode-Anywhere auto-detects and configure for you the following languages: `en`, `fr`, `es`, `de`, `it`, `ja`, `ru`, `hu`, `ko`, `bg`, `tr`, `pt_br`, `zh_cn` and `zh_tw`.
 
-## I have the following message: _found a tab character that violate indentation_
+## I have the following message: _found a tab character that violates indentation_
 
 In all files in the conf directory of your root installation, you must use spaces and not tabs.
 

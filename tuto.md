@@ -2,7 +2,7 @@
 
 ## Replace VSCode by VSCodium
 
- [VSCode](https://code.visualstudio.com) ****is installed by default. If you prefer use [VSCodium](https://vscodium.com) instead then set `vscodium` to `True` inside the `vscode_core` section in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
+ [VSCode](https://code.visualstudio.com) ****is installed by default. If you prefer to use [VSCodium](https://vscodium.com) instead then set`vscodium`to`True`inside the`vscode_core`section in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
 
 ```yaml
 vscode-anywhere:
@@ -10,11 +10,11 @@ vscode-anywhere:
     vscodium: True
 ```
 
-After that you have just to run the [installation script](structure/tools/install.md) again.
+After that, you have just to run the [installation script](structure/tools/install.md) again.
 
 ## Set bash or PowerShell as default shell in Windows
 
-The git installer provides the bash binary and it can be used as the default shell. To use bash as the default shell, set the following settings in the `custom` section in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
+The git installer provides the bash binary and it can be used as the default shell. To use bash as the default shell, set the following settings in the`custom`section in the [vscode-anywhere.sls](structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file:
 
 ```yaml
 vscode-anywhere:
@@ -23,7 +23,7 @@ vscode-anywhere:
       terminal.integrated.shell.windows: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'git', 'current', 'bin', 'bash.exe') }}
 ```
 
-Or you can use the default Windows powershell:
+Or you can use the default Windows PowerShell:
 
 ```yaml
 vscode-anywhere:
@@ -32,7 +32,7 @@ vscode-anywhere:
       terminal.integrated.shell.windows: {{ salt['environ.get']('SystemRoot') | path_join('system32', 'WindowsPowerShell', 'v1.0', 'powershell.exe')' }}
 ```
 
-Or if [powershell](modules/list/powershell.md#installation) module is set to `enabled`, you can use `pwsh` \(powershell core\) instead:
+Or if [powershell](modules/list/powershell.md#installation) module is set to `enabled`, you can use `pwsh` \(PowerShell core\) instead:
 
 ```yaml
 vscode-anywhere:
@@ -41,7 +41,7 @@ vscode-anywhere:
       terminal.integrated.shell.windows: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'pwsh', 'current', 'pwsh.exe') }}
 ```
 
-After that you have just to run the [installation script](structure/tools/install.md) again.
+After that, you have just to run the [installation script](structure/tools/install.md) again.
 
 ## Change the default theme
 
@@ -51,9 +51,9 @@ All following examples must be set in in the [vscode-anywhere.sls](structure/con
 
 If the [vscode](modules/list/vscode.md#installation) module is `enabled`, the default theme is set to [One Dark Pro](modules/list/vscode.md#zhuangtongfa-material-theme).
 
-In this case you must override the the `workbench.colorTheme` settings.
+In this case, you must override the the `workbench.colorTheme` settings.
 
-If you prefer change to another dark theme like [Better Solarized Dark](modules/list/vscode.md#ginfuru-ginfuru-better-solarized-dark-theme):
+If you prefer to change to another dark theme like [Better Solarized Dark](modules/list/vscode.md#ginfuru-ginfuru-better-solarized-dark-theme):
 
 ```yaml
 vscode-anywhere:
@@ -84,7 +84,7 @@ vscode-anywhere:
 
 ### Custom theme
 
-If the [vscode](modules/list/vscode.md#installation) module **is** `enabled`, in this case you must configure your own theme in the **vscode** section to override the settings:
+If the [vscode](modules/list/vscode.md#installation) module **is** `enabled`, in this case, you must configure your own theme in the **vscode** section to override the settings:
 
 ```yaml
 vscode-anywhere:
@@ -93,7 +93,7 @@ vscode-anywhere:
       "workbench.colorTheme": "myCustomTheme"
 ```
 
-If the [vscode](modules/list/vscode.md#installation) module **is not** `enabled`, in this case you can configure your own theme in the **custom** section:
+If the [vscode](modules/list/vscode.md#installation) module **is not** `enabled`, in this case, you can configure your own theme in the **custom** section:
 
 ```yaml
 vscode-anywhere:
@@ -106,7 +106,7 @@ vscode-anywhere:
 Change `myCustomTheme` by the theme to use.
 {% endhint %}
 
-For more informations, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_selecting-the-color-theme).
+For more information, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_selecting-the-color-theme).
 
 ## Change the default icon theme
 
@@ -118,7 +118,7 @@ If the [vscode](modules/list/vscode.md#installation) module is `enabled`, the de
 
 ### Custom icon theme
 
-If the [vscode](modules/list/vscode.md#installation) module **is** `enabled`, in this case you must configure your own icon theme in the **vscode** section to override the settings:
+If the [vscode](modules/list/vscode.md#installation) module **is** `enabled`, in this case, you must configure your own icon theme in the **vscode** section to override the settings:
 
 ```yaml
 vscode-anywhere:
@@ -127,7 +127,7 @@ vscode-anywhere:
       "workbench.iconTheme": "myCustomIconTheme"
 ```
 
-If the [vscode](modules/list/vscode.md#installation) module **is not** `enabled`, in this case you can configure your own icon theme in the **custom** section:
+If the [vscode](modules/list/vscode.md#installation) module **is not** `enabled`, in this case, you can configure your own icon theme in the **custom** section:
 
 ```yaml
 vscode-anywhere:
@@ -140,5 +140,5 @@ vscode-anywhere:
 Change `myCustomIconTheme` by the icon theme to use.
 {% endhint %}
 
-For more informations, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_file-icon-themes).
+For more information, please [read the documentation](https://code.visualstudio.com/docs/getstarted/themes#_file-icon-themes).
 

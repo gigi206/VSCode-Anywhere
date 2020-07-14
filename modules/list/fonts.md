@@ -8,7 +8,7 @@ description: Fira Code
 
 ## About
 
-This module install the [Fira Code](https://github.com/tonsky/FiraCode/) fonts and configure VSCode to use these fonts and enable ligatures.
+This module installs the [Fira Code](https://github.com/tonsky/FiraCode/) fonts and configure VSCode to use these fonts and enable ligatures.
 
 [Fira Code](https://github.com/tonsky/FiraCode/) is an extension of the Fira Mono font containing a set of ligatures for common programming multi-character combinations.
 
@@ -69,13 +69,13 @@ No environment.
 
 ### fonts
 
-The setting `fonts` allow to install some fonts.
+The setting `fonts` allow installing some fonts.
 
 `FiraCode` is the name of the font to install and it takes some params:
 
-* `provider`: machanism to download the fonts \(only `git` at the moment\)
-* `url`: where to downlod the fonts \(depending of the `provider`\)
-* `files`: list of files that must be synchronised
+* `provider`: mechanism to download the fonts \(only `git` at the moment\)
+* `url`: where to download the fonts \(depending on the `provider`\)
+* `files`: list of files that must be synchronized
 
 ```yaml
 vscode-anywhare:

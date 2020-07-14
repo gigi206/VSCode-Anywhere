@@ -37,7 +37,7 @@ In addition to the `windows_admin` profile, Docker requires **Windows 10 64-bit:
 Also BIOS-level hardware virtualization support must be enabled in the BIOS settings.
 
 {% hint style="info" %}
-If you haven’t set the `windows_admin` profile, you can manually install Docker. Please take a look at the [documentation](https://docs.docker.com/docker-for-windows/install/).
+If you haven’t set the`windows_admin`profile, you can manually install Docker. Please take a look at the [documentation](https://docs.docker.com/docker-for-windows/install/).
 {% endhint %}
 
 ## VSCode

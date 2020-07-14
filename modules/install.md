@@ -4,9 +4,9 @@ description: Activate a VSCode-Anywhere module
 
 # Module installation
 
-To install a VSCode-Anywhere module, you must edit the file [`VSCode-Anywhere/conf/saltstack/pillar/vscode-anywhere.sls`](../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) in your installation directory and and change the `enabled` key of the module you wish to activate by changing its value from `False` to `True`.
+To install a VSCode-Anywhere module, you must edit the file [`VSCode-Anywhere/conf/saltstack/pillar/vscode-anywhere.sls`](../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) in your installation directory and change the `enabled` key of the module you wish to activate by changing its value from `False` to `True`.
 
-Example for the `python3` module:
+`python3` module example:
 
 ```yaml
 vscode-anywhere:

@@ -4,7 +4,7 @@
 
 ## About
 
-[Bash](https://www.gnu.org/software/bash/) is the Bourne Again SHell. Bash is an sh-compatible shell that incorporates useful features from the Korn shell \(ksh\) and C shell \(csh\).
+[Bash](https://www.gnu.org/software/bash/) is the Bourne Again SHell. Bash is a sh-compatible shell that incorporates useful features from the Korn shell \(ksh\) and C shell \(csh\).
 
 ## Installation
 

@@ -2,7 +2,7 @@
 
 ## Installation
 
-VSCode-Anywhere has been tested only with Windows 10 but it supposed to work also with recent Windows version.
+VSCode-Anywhere has been tested only with Windows 10 but it supposed to work also with the recent Windows version.
 
 To install VSCode-Anywhere on Windows, you need have to have PowerShell installed.
 
@@ -32,7 +32,7 @@ There are 3 kinds of `profile` \(see **Profile** option\) for different use case
 
 * **windows\_admin**: require administrator rights \(for local use\)
 * **windows\_user**: no administrator rights required \(for local use\)
-* **windows\_portable**: no administrator rights required \(for use with a portable device like an usb stick\)
+* **windows\_portable**: no administrator rights required \(for use with a portable device like an USB stick\)
 
 <table>
   <thead>
@@ -51,7 +51,7 @@ There are 3 kinds of `profile` \(see **Profile** option\) for different use case
       </td>
       <td style="text-align:left">
         <ul>
-          <li>Few modules need administrator rights for a better compatibility (see
+          <li>Few modules need administrator rights for better compatibility (see the
             documentation of each module)</li>
           <li>Good performance</li>
         </ul>
@@ -60,9 +60,9 @@ There are 3 kinds of `profile` \(see **Profile** option\) for different use case
         <ul>
           <li>Some applications will be installed on the system (outside the installation
             folder <code>InstallDir</code>)</li>
-          <li>Not recommended to run on another computer with portable device like usb
-            stick (<code>tools/link.ps1</code> may have a high chance to install some
-            missing components)</li>
+          <li>Not recommended to run on another computer with a portable device like
+            a USB stick (<code>tools/link.ps1</code> may have a high chance to install
+            some missing components)</li>
           <li>Add only a few possibilities, just some modules uses it (see the module
             documentation for know if it is a requirement)</li>
         </ul>
@@ -79,9 +79,9 @@ There are 3 kinds of `profile` \(see **Profile** option\) for different use case
       </td>
       <td style="text-align:left">
         <ul>
-          <li>Not recommended to run on another computer with portable device like usb
-            stick (<code>tools/link.ps1</code> may have a low chance to install some
-            missing components)</li>
+          <li>Not recommended to run on another computer with a portable device like
+            a USB stick (<code>tools/link.ps1</code> may have a low chance to install
+            some missing components)</li>
         </ul>
       </td>
     </tr>
@@ -90,7 +90,7 @@ There are 3 kinds of `profile` \(see **Profile** option\) for different use case
       </td>
       <td style="text-align:left">
         <ul>
-          <li>Can be installed on a portable device like an usb stick</li>
+          <li>Can be installed on a portable device like a USB stick</li>
         </ul>
       </td>
       <td style="text-align:left">

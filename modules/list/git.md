@@ -9,7 +9,7 @@
 Not that there is already [native component to manage git](https://code.visualstudio.com/docs/editor/versioncontrol) within VSCode. This module extends the capabilities of git by adding some features.
 
 {% hint style="success" %}
-Git is already installed during the VSCode-Anywhere installation process. This module allow you to install only additional VSCode extensions.
+Git is already installed during the VSCode-Anywhere installation process. This module allows you to install only additional VSCode extensions.
 {% endhint %}
 
 ## Installation
@@ -56,7 +56,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=Hirse.vscod
 
 #### lamartire.git-indicators
 
-[This extensions](https://marketplace.visualstudio.com/items?itemName=lamartire.git-indicators) shows some got indicators
+[This extension](https://marketplace.visualstudio.com/items?itemName=lamartire.git-indicators) shows some got indicators
 
 ![](https://raw.githubusercontent.com/lamartire/vscode-git-indicators/master/preview/added.png)
 

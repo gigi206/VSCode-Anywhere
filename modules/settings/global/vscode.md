@@ -1,6 +1,6 @@
 # vscode settings
 
-Allow to manage [vscode](https://code.visualstudio.com/).
+Allow managing [vscode](https://code.visualstudio.com/).
 
 ## extensions
 
@@ -10,14 +10,14 @@ Allow to manage [vscode](https://code.visualstudio.com/).
 
 You need to specify the name of the extensions to install.
 
-For each extensions you can specify the following arguments:
+For each extension you can specify the following arguments:
 
 * `enabled`: `True` to install or `False` to ignore \(default to `False`\)
 * `version`: specify the version to install \(default to `null`\). If `null` the latest version will be installed
 * `settings`: set [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings) only if this extension is enabled
 * `keybindings`: set [VSCode keybindings](https://code.visualstudio.com/docs/getstarted/keybindings) only if this extension is enabled
 
-Simple example, in the [vscode-anywhere.sls](../../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file to ask to the `python3` module to install `settings` with the `extenxions` `ms-pyright.pyrighr` and `keybindings` with the extenxion `alefragnani.Bookmarks`:
+Simple example, in the [vscode-anywhere.sls](../../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file to ask to install `settings` in the `python3` module  with the `extensions` `ms-pyright.pyrighr` and `keybindings` with the extension `alefragnani.Bookmarks`:
 
 ```yaml
 vscode-anywhere:
@@ -46,7 +46,7 @@ vscode-anywhere:
 ```
 
 {% hint style="warning" %}
-If the 2 extensions `ms-pyright.pyrighr` and `alefragnani.Bookmarks` are set to `enabled: False` then no keybings or settings will be applied. But reverts the value from `True` to `False` will not remove the settings or keybindings already applied.
+If the 2 extensions `ms-pyright.pyrighr` and `alefragnani.Bookmarks` are set to `enabled: False` then no keybindings or settings will be applied. But reverts the value from `True` to `False` will not remove the settings or keybindings already applied.
 {% endhint %}
 
 ## settings
@@ -57,7 +57,7 @@ Manage [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings)
 
 You need to specify the name of the settings and their values.
 
-Simple example to set `settings` globally for the `python3` module:
+A simple example to set `settings` globally for the `python3` module:
 
 ```yaml
 vscode-anywhere:
@@ -95,7 +95,7 @@ Keybinds is an array with the followings values:
 * **command** a command containing the identifier of the command to execute
 * **when**: an optional when clause containing a boolean expression that will be evaluated depending on the current context
 
-Simple example to set `keybindings` globally for the `python3` module:
+A simple example to set `keybindings` globally for the `python3` module:
 
 ```yaml
 python3:

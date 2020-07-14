@@ -8,10 +8,10 @@ The script `VSCode-Anywhere/tools/link.ps1` for Windows or `VSCode-Anywhere/tool
 
 To apply changes:
 
-* on Windows, right clic on the `install.ps1` file and clic on `Run with PowerShell`
+* on Windows, right-click on the `install.ps1` file and click on `Run with PowerShell`
 * on Linux / Mac run the script with your favorite terminal
 
-  Rename or move the installation directory is not recommended without having the profile set to [windows\_portable](../../install/advanced/windows-installation.md#profiles), mac\_admin or [linux\_user](../../install/advanced/linux-installation.md#profiles).
+  Rename or move the installation directory is not recommended without having the profile set to [windows\_portable](../../install/advanced/windows-installation.md#profiles), mac\_admin, or [linux\_user](../../install/advanced/linux-installation.md#profiles).
 
 
 

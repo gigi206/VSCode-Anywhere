@@ -1,6 +1,6 @@
 # nix settings
 
-Allow to manage [nix](https://nixos.org).
+Allow managing [nix](https://nixos.org).
 
 {% hint style="warning" %}
 **nix** is only available for Linux and MacOS.
@@ -55,7 +55,7 @@ nix-instantiate --eval -E '(import <nixpkgs> {}).python3Full.pname'
 "python3"
 ```
 
-Sometimes `pname` doesn't exist. In this case you can use name and remove the version:
+Sometimes `pname` doesn't exist. In this case, you can use name and remove the version:
 
 ```text
 nix-instantiate --eval -E '(import <nixpkgs> {}).dotnetPackages.NUnitConsole.pname'
@@ -75,17 +75,17 @@ nix-instantiate --eval -E '(import <nixpkgs> {}).dotnetPackages.NUnitConsole.nam
 
 ### opts
 
-`opts` is not mandatory but allow to pass extra args.
+`opts` is not mandatory but allows to pass extra args.
 
-Extra args can be arguments described in the [saltstack nix states](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack nix states](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 {% hint style="info" %}
-[nix](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) is not an official saltstack states but a custom states written for VSCode-Anywhere.
+[nix](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) is not an official Saltstack states but a custom states written for VSCode-Anywhere.
 {% endhint %}
 
 #### channel
 
-It use the `-I` option of `nix-env` \(`man nix-env`\):
+It uses the `-I` option of `nix-env` \(`man nix-env`\):
 
 ```text
    -I path
@@ -123,15 +123,15 @@ nix-env -iA python3Full -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/mast
 
 #### Global packages settings
 
-* `nix:pkgs:opts:global`: allow to pass arguments **to all nix packages** when **installing**, **updating**, or **uninstalling** a package
-* `nix:pkgs:opts:install`: allow to pass arguments **to all nix packages** when **installing** a package  \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
-* `nix:pkgs:opts:update`: allow to pass arguments **to all nix packages** when **updating** a package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
-* `nix:pkgs:opts:uninstall`: allow to pass arguments **to all nix packages** when **uninstalling** a package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
+* `nix:pkgs:opts:global`: allow passing arguments **to all nix packages** when **installing**, **updating**, or **uninstalling** a package
+* `nix:pkgs:opts:install`: allow passing arguments **to all nix packages** when **installing** a package  \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
+* `nix:pkgs:opts:update`: allow passing arguments **to all nix packages** when **updating** a package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
+* `nix:pkgs:opts:uninstall`: allow passing arguments **to all nix packages** when **uninstalling** a package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
 
 #### Specific packages settings
 
-* `nix:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **nix package** when **installing**, **updating**, or **uninstalling** the package
-* `nix:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **nix packages** when **installing** the package \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
-* `nix:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **nix packages** when **updating** the package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
-* `nix:pkgs:<mypkg>:opts:uninstall`: allow to pass arguments **to** `<mypkg>` **nix packages** when **uninstalling** the package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
+* `nix:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **nix package** when **installing**, **updating**, or **uninstalling** the package
+* `nix:pkgs:<mypkg>:opts:install`: allow passing arguments **to** `<mypkg>` **nix packages** when **installing** the package \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
+* `nix:pkgs:<mypkg>:opts:update`: allow passing arguments **to** `<mypkg>` **nix packages** when **updating** the package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
+* `nix:pkgs:<mypkg>:opts:uninstall`: allow passing arguments **to** `<mypkg>` **nix packages** when **uninstalling** the package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/nix.py) function\)
 

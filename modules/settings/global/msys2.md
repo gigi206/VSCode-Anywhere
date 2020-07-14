@@ -1,6 +1,6 @@
 # msys2 settings
 
-Allow to manage [msys2](https://www.msys2.org).
+Allow managing [msys2](https://www.msys2.org).
 
 {% hint style="warning" %}
 **msys2** is only available for Windows.
@@ -8,11 +8,11 @@ Allow to manage [msys2](https://www.msys2.org).
 
 ## pkgs
 
-`pkgs` allow to install some [msys2 packages](https://packages.msys2.org/updates).
+`pkgs` allow installing some [msys2 packages](https://packages.msys2.org/updates).
 
 You need to specify the name of the packages to install.
 
-Simple example, in the [vscode-anywhere.sls](../../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file to ask to the `python3`module to install the [msys2 python 3.8.2-1 package](https://packages.msys2.org/base/python3):
+A simple example, in the [vscode-anywhere.sls](../../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file to ask to install the [msys2 python 3.8.2-1 package](https://packages.msys2.org/base/python3) in the `python3`module:
 
 ```yaml
 vscode-anywhere:
@@ -46,24 +46,24 @@ This is just an example, if you do that you will have 2 python packages installe
 
 ### opts
 
-`opts` is not mandatory but allow to pass extra args.
+`opts` is not mandatory but allows to pass extra args.
 
-Extra args can be arguments described in the [saltstack msys2 states](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack msys2 states](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 {% hint style="info" %}
-[msys2](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) is not an official saltstack states but a custom states written for VSCode-Anywhere.
+[msys2](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) is not an official Saltstack states but a custom states written for VSCode-Anywhere.
 {% endhint %}
 
 #### Global packages settings
 
-* `msys2:pkgs:opts:global`: allow to pass arguments **to all msys2 packages** when **installing**, **updating**, or **uninstalling** a package
-*  `msys2:pkgs:opts:install`: allow to pass arguments **to all msys2 packages** when **installing** a package \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
-* `msys2:pkgs:opts:update`: allow to pass arguments **to all msys2 packages** when **updating** a package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
-* `msys2:pkgs:opts:uninstall`: allow to pass arguments **to all msys2 packages** when **uninstalling** a package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
+* `msys2:pkgs:opts:global`: allow passing arguments **to all msys2 packages** when **installing**, **updating**, or **uninstalling** a package
+*  `msys2:pkgs:opts:install`: allow passing arguments **to all msys2 packages** when **installing** a package \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
+* `msys2:pkgs:opts:update`: allow passing arguments **to all msys2 packages** when **updating** a package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
+* `msys2:pkgs:opts:uninstall`: allow passing arguments **to all msys2 packages** when **uninstalling** a package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
 
 #### Specific packages settings
 
-* `msys2:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **msys2 package** when **installing**, **updating**, or **uninstalling** the package
+* `msys2:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **msys2 package** when **installing**, **updating**, or **uninstalling** the package
 *  `msys2:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **msys2 packages** when **installing** the package \(cf [pkg\_installed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
 * `msys2:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **msys2 packages** when **updating** the package \(cf [pkg\_latest](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)
 * `msys2:<mypkg>:opts:uninstall`: allow to pass arguments **to** `<mypkg>` **msys2 packages** when **uninstalling** the package \(cf [pkg\_removed](https://github.com/gigi206/VSCode-Anywhere/blob/V2/_states/msys2.py) function\)

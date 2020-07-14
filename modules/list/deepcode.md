@@ -32,7 +32,7 @@ No requirements.
 
 #### DeepCode.deepcode
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=DeepCode.deepcode) finds bugs, security vulnerabilities, performance and API issues based on AI. DeepCode’s speed of analysis allow us to analyse your code in real time and deliver results when you hit the save button in Visual Studio Code. We support Java, C/C++, JavaScript, Python, TypeScript and XML.
+This [extension](https://marketplace.visualstudio.com/items?itemName=DeepCode.deepcode) finds bugs, security vulnerabilities, performance, and API issues based on AI. DeepCode’s speed of analysis allows us to analyze your code in real-time and deliver results when you hit the save button in Visual Studio Code. We support Java, C/C++, JavaScript, Python, TypeScript, and XML.
 
 ### VSCode settings
 

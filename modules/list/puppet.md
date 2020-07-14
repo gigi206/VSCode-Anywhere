@@ -25,7 +25,7 @@ You can also take a look at the [VSCode-Anywhere puppet module configuration](ht
 The [puppet.puppet-vscode](https://marketplace.visualstudio.com/items?itemName=puppet.puppet-vscode) extension required to have [pdk](https://puppet.com/docs/pdk/1.x/pdk.html) \(Puppet Development Kit\) installed.
 
 {% hint style="warning" %}
-**pdk** will be installed only with the `windows_admin` profile or with MacOS.
+**pdk** will be installed only with the`windows_admin`profile or with MacOS.
 {% endhint %}
 
 ## VSCode
@@ -34,7 +34,7 @@ The [puppet.puppet-vscode](https://marketplace.visualstudio.com/items?itemName=p
 
 #### puppet.puppet-vscode
 
-Official [Puppet VSCode extension](https://marketplace.visualstudio.com/items?itemName=puppet.puppet-vscode). Provides full Puppet DSL intellisense, syntax highlighting, Puppet command support, Puppet node graphs, and much more.
+Official [Puppet VSCode extension](https://marketplace.visualstudio.com/items?itemName=puppet.puppet-vscode). Provides full Puppet DSL IntelliSense, syntax highlighting, Puppet command support, Puppet node graphs, and much more.
 
 ### VSCode settings
 

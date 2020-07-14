@@ -102,13 +102,13 @@ This extension is set as the default icon theme.
 
 #### formulahendry.code-runner
 
-[Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) can run code snippet or code file for multiple languages.
+[Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) can run code snippets or code files for multiple languages.
 
 ![](https://github.com/formulahendry/vscode-code-runner/raw/master/images/usage.gif)
 
 #### spmeesseman.vscode-taskexplorer
 
-[Task Explorer](https://marketplace.visualstudio.com/items?itemName=spmeesseman.vscode-taskexplorer) allow to manage tasks for npm, vscode, ant, gradle, grunt, gulp, batch, bash, make, python, perl, powershell, ruby, and nsis.
+[Task Explorer](https://marketplace.visualstudio.com/items?itemName=spmeesseman.vscode-taskexplorer) allows to manage tasks for npm, vscode, ant, gradle, grunt, gulp, batch, bash, make, python, perl, powershell, ruby, and nsis.
 
 For more information about tasks, [please read the documentation](https://code.visualstudio.com/docs/editor/tasks).
 
@@ -128,7 +128,7 @@ For more information about tasks, [please read the documentation](https://code.v
 
 #### Rubymaniac.vscode-paste-and-indent
 
-[Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent) adds limited support for pasting and indenting code.
+[Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent) add limited support for pasting and indenting code.
 
 #### Gruntfuggly.todo-tree
 

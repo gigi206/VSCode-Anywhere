@@ -1,8 +1,8 @@
 # zeal settings
 
-Allow to manage [Zeal](https://zealdocs.org) docsets \(documentation\).
+Allow managing [Zeal](https://zealdocs.org) docsets \(documentation\).
 
-## docksets
+## docsets
 
 Docsets allow to install:
 

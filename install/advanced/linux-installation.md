@@ -67,7 +67,7 @@ There are 3 kinds of `profile` for different use cases :
           <li><code>/nix</code> and <code>/home/linuxbrew</code> will be created on your
             system</li>
           <li>Not recommended if you already nix or brew is installed on your system</li>
-          <li>Need to have a privileged account (sudo)</li>
+          <li>Need to have a privileged account (<em>sudo</em>)</li>
         </ul>
       </td>
     </tr>
@@ -84,7 +84,7 @@ There are 3 kinds of `profile` for different use cases :
       <td style="text-align:left">
         <ul>
           <li>less compatibility</li>
-          <li>Must have a Linux distribution that manage namespaces</li>
+          <li>Must have a Linux distribution that manages namespaces</li>
         </ul>
       </td>
     </tr>
@@ -109,12 +109,12 @@ There are 3 kinds of `profile` for different use cases :
 
 ### Linux shortcuts icons
 
-For some security reasons, some file manager like the [gnome Files](https://wiki.gnome.org/action/show/Apps/Files) are no longer allow to run desktop files inside the file manager which causes some problems for VSCode-Anywhere.
+For some security reasons, some file managers like the [gnome Files](https://wiki.gnome.org/action/show/Apps/Files) are no longer allowed to run desktop files inside the file manager which causes some problems for VSCode-Anywhere.
 
 If you are in this case, there are multiple choices:
 
 * if you are **root**, you can install another file manager that allow to run desktop files like [nemo](https://en.wikipedia.org/wiki/Nemo_%28file_manager%29) and run the desktop files with this manager
-* On [gnome](https://www.gnome.org), you can copy desktop fils in the desktop and right click on them and select `Allow Launching`
+* On [gnome](https://www.gnome.org), you can copy desktop files in the desktop and right-click on them and select `Allow Launching`
 
 {% embed url="https://youtu.be/fUvqz2G\_G64" %}
 
@@ -129,7 +129,7 @@ vscode-anywhere:
 
 ### HOME
 
-After the installation with the `linux_user` profile \(default\), the home directory is not longer your home inside VSCode-Anywhere but  it is inside`VSCode-Anywhere/apps/vscode-anywhere/home`.
+After the installation with the `linux_user` profile \(default\), the home directory is no longer your home inside VSCode-Anywhere but  it is inside`VSCode-Anywhere/apps/vscode-anywhere/home`.
 
 This mechanism aims to avoid polluting your home directory. If you want to retrieve your real home directory, there are 2 ways:
 

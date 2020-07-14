@@ -1,8 +1,8 @@
 # env settings
 
-Allow to add enironment variables in VSCode-Anywhere.
+Allow adding environment variables in VSCode-Anywhere.
 
-Simple example, in the [vscode-anywhere.sls](../../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file to ask to the `python3`module to add some variables in the [env](../../../structure/tools/env.md) file:
+A simple example, in the [vscode-anywhere.sls](../../../structure/conf/saltstack/pillar.md#vscode-anywhere-sls) file to ask to add some variables in the [env](../../../structure/tools/env.md) file in `python3`module :
 
 ```yaml
 vscode-anywhere:
@@ -14,6 +14,6 @@ vscode-anywhere:
 ```
 
 {% hint style="success" %}
-`PATH` variable is a specific variable that **append** in this case`/mypath/bin` to the `PATH` variable. Other variables will be **replaced**. `PYTHONPATH` will be set to `/mypythonpath/lib`.
+`PATH` variable is a specific variable that **appends** in this case`/mypath/bin` to the `PATH` variable. Other variables will be **replaced**. `PYTHONPATH` will be set to `/mypythonpath/lib`.
 {% endhint %}
 

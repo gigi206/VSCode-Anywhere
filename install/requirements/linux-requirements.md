@@ -37,7 +37,7 @@ $ command -v echo
 
 `realpath`, `cut`, `readlink`, `test`, `mkdir`, `chmod`, `id`, `rm` and `echo` are part of the `coreutils` package.
 
-If you have an unprivileged account and the `curl` binary is not installed on your system, you can [download the static curl binary](https://github.com/gigi206/VSCode-Anywhere/raw/V2/bin/linux/curl-linux-x86_64) .
+If you have an unprivileged account and the `curl` binary is not installed on your system, you can [download the static curl binary](https://github.com/gigi206/VSCode-Anywhere/raw/V2/bin/linux/curl-linux-x86_64).
 
 After that, you must rename `curl-linux-x86_64` to `curl` and put it in your `PATH`.
 
@@ -59,7 +59,7 @@ Assuming that `~/download` is where the file was downloaded.
 
 ## Namespaces
 
-If you install VSCode-Anywhere with the `linux_user` profile \(by default\), you must to have a kernel that support the user namespaces \(3.8 minimal\).
+If you install VSCode-Anywhere with the `linux_user` profile \(by default\), you must have a kernel that supports the user namespaces \(3.8 minimal\).
 
 If the `unshare` binary is installed on your system, you can test with:
 

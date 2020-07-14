@@ -36,30 +36,30 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=rebornix.Ru
 
 #### castwide.solargraph
 
-[Solargraph](https://marketplace.visualstudio.com/items?itemName=castwide.solargraph) is a language server that provides intellisense, code completion, and inline documentation for Ruby.
+[Solargraph](https://marketplace.visualstudio.com/items?itemName=castwide.solargraph) is a language server that provides IntelliSense, code completion, and inline documentation for Ruby.
 
 ![](https://github.com/castwide/vscode-solargraph/raw/master/vscode-solargraph-0.34.1.gif)
 
 #### connorshea.vscode-ruby-test-adapter
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=connorshea.vscode-ruby-test-adapter) allow to run your Ruby tests.
+This [extension](https://marketplace.visualstudio.com/items?itemName=connorshea.vscode-ruby-test-adapter) allows to run your Ruby tests.
 
 ![](https://github.com/connorshea/vscode-ruby-test-adapter/raw/master/img/screenshot.png)
 
 #### kaiwood.endwise
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=kaiwood.endwise) allow to run your Ruby tests.
+This [extension](https://marketplace.visualstudio.com/items?itemName=kaiwood.endwise) allows to run your Ruby tests.
 
 ![](https://github.com/kaiwood/vscode-endwise/raw/master/images/endwise.gif)
 
 #### bung87.rails
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=bung87.rails) allow Ruby on Rails support in VSCode.
+This [extension](https://marketplace.visualstudio.com/items?itemName=bung87.rails) allows Ruby on Rails support in VSCode.
 
 ![](../../.gitbook/assets/image.png)
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 #### shanehofstetter.rails-i18n
@@ -69,7 +69,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=shanehofste
 ![](https://github.com/shanehofstetter/rails-i18n-vscode/raw/master/docs/autocomplete.gif)
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 #### aki77.rails-routes
@@ -79,17 +79,17 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=aki77.rails
 ![](https://i.gyazo.com/2478adce19549f877fcb7389bd7a1f9f.gif)
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 #### jemmyw.rails-fast-nav
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=jemmyw.rails-fast-nav) allow Navigation in Rails.
+This [extension](https://marketplace.visualstudio.com/items?itemName=jemmyw.rails-fast-nav) allows Navigation in Rails.
 
 ![](https://github.com/jemmyw/vscode-rails-fast-nav/raw/master/images/railsnav.gif)
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 #### vortizhe.simple-ruby-erb
@@ -99,17 +99,17 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=vortizhe.si
 ![](https://raw.githubusercontent.com/vortizhe/vscode-ruby-erb/master/images/toggleTags.gif)
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 #### karunamurti.haml
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=karunamurti.haml) provides haml support, with parentheses coloring, auto close parentheses, brackets, curly braces, quote, double quote, backtick, ruby interpolations, etc.
+This [extension](https://marketplace.visualstudio.com/items?itemName=karunamurti.haml) provides haml support, with parentheses coloring, auto-close parentheses, brackets, curly braces, quote, double quote, backtick, ruby interpolations, etc.
 
 ![](https://github.com/karuna/haml-vscode/raw/master/images/screenshot.png)
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 #### aki77.haml-lint
@@ -117,7 +117,7 @@ This exension will be installed only if `rails` is enabled.
 This [extension](https://marketplace.visualstudio.com/items?itemName=aki77.haml-lint) provides a haml linter.
 
 {% hint style="info" %}
-This exension will be installed only if `rails` is enabled.
+This extension will be installed only if `rails` is enabled.
 {% endhint %}
 
 ### VSCode settings
@@ -200,7 +200,7 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 * [ruby](https://github.com/ScoopInstaller/Main/blob/master/bucket/ruby.json)
 
 {% hint style="success" %}
-`ridk install 3` command will be executed after installing ruby.
+The`ridk install 3`command will be executed after installing ruby.
 
 `ridk` will install all dependencies for compiling ruby modules by installing some [msys2](../settings/global/msys2.md) packages.
 {% endhint %}
@@ -260,13 +260,13 @@ vscode-anywhere:
 
 #### gem
 
-Allow to install [ruby gems](https://rubygems.org).
+Allow installing [ruby gems](https://rubygems.org).
 
 
 
 * **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
-  * `version`: version of the gem package
+  * `version`: the version of the gem package
 
 
 
@@ -274,22 +274,22 @@ Allow to install [ruby gems](https://rubygems.org).
 
 `opts` is not mandatory but allows to pass additional arguments.
 
-Extra args can be arguments described in the [saltstack gem states](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack gem states](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 
 
 Global `opts` packages settings:
 
-* `gem:pkgs:opts:global`: allow to pass arguments **to all gem packages** when **installing**, **updating**, or **uninstalling** a package
-*  `pm:pkgs:opts:install`: allow to pass arguments **to all gem packages** when **installing** a package \(cf [states.gem.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.installed)\)
-* `gem:pkgs:opts:update`: allow to pass arguments **to all gem packages** when **updating** a package \(cf [states.gem.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.installed)\)
-* `gem:pkgs:opts:uninstall`: allow to pass arguments **to** `<mypkg>` **gem packages** when **uninstalling** the package \(cf [states.gem.removed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.removed)\)
+* `gem:pkgs:opts:global`: allow passing arguments **to all gem packages** when **installing**, **updating**, or **uninstalling** a package
+*  `pm:pkgs:opts:install`: allow passing arguments **to all gem packages** when **installing** a package \(cf [states.gem.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.installed)\)
+* `gem:pkgs:opts:update`: allow passing arguments **to all gem packages** when **updating** a package \(cf [states.gem.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.installed)\)
+* `gem:pkgs:opts:uninstall`: allow passing arguments **to** `<mypkg>` **gem packages** when **uninstalling** the package \(cf [states.gem.removed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.removed)\)
 
 #### 
 
 Specific `opts` packages settings:
 
-* `gem:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **gem package** when **installing**, **updating**, or **uninstalling** the package
+* `gem:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **gem package** when **installing**, **updating**, or **uninstalling** the package
 *  `gem:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **gem packages** when **installing** the package \(cf [states.gem.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.installed)\)
 * `gem:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **gem packages** when **updating** the package \(cf [states.gem.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.installed)\)
 * `gem:pkgs:<mypkg>:opts:uninstall`: allow to pass arguments **to** `<mypkg>` **gem packages** when **uninstalling** the package \(cf [states.gem.removed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.gem.html#salt.states.gem.removed)\)

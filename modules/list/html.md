@@ -26,7 +26,7 @@ You can also take a look at the [VSCode-Anywhere html module configuration](http
 
 For more details, read the the official documentation [HTML](https://code.visualstudio.com/docs/languages/html) and [CSS / SCSS / Less](https://code.visualstudio.com/docs/languages/css).
 
-VSCode includes a native support of [emmet](https://code.visualstudio.com/docs/editor/emmet).
+VSCode includes native support of [emmet](https://code.visualstudio.com/docs/editor/emmet).
 
 ## Requirements
 
@@ -54,15 +54,15 @@ No requirements.
 
 #### bradgashler.htmltagwrap
 
-[This extension](https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap) allow to wrap your selection in HTML tags. Can wrap inline selections and selections that span multiple lines \(works with both single selections and multiple selections at once\).
+[This extension](https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap) allows to wrap your selection in HTML tags. Can wrap inline selections and selections that span multiple lines \(works with both single selections and multiple selections at once\).
 
 ![](https://github.com/bgashler1/vscode-htmltagwrap/raw/master/images/screenshot.gif)
 
 #### Umoxfo.vscode-w3cvalidation
 
-[This extension](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation) enable W3C validation support by the [Nu Html Checker library](https://validator.github.io/validator/).
+[This extension](https://marketplace.visualstudio.com/items?itemName=Umoxfo.vscode-w3cvalidation) enables W3C validation support by the [Nu Html Checker library](https://validator.github.io/validator/).
 
-Extension highlights wrong properties and values when enabled. Just install the extension and open your CSS file. Validation will be performing in background.
+Extension highlights the wrong properties and values when enabled. Just install the extension and open your CSS file. Validation will be performing in background.
 
 #### vincaslt.highlight-matching-tag
 
@@ -72,7 +72,7 @@ Extension highlights wrong properties and values when enabled. Just install the 
 
 #### formulahendry.auto-rename-tag
 
-[This extension](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) Automatically rename paired HTML/XML tag.
+[This extension](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) automatically renames paired HTML/XML tag.
 
 ![](https://github.com/formulahendry/vscode-auto-rename-tag/raw/master/images/usage.gif)
 

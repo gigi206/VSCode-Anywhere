@@ -6,7 +6,7 @@ description: VSCode-Anywhere configuration
 
 `VSCode-Anywhere/conf` is the directory where the configuration of VSCode-Anywhere is stored.
 
-This directory include configuration for:
+This directory includes configuration for:
 
 * Saltstack
 

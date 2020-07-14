@@ -1,6 +1,6 @@
 # Global settings
 
-Below, the global settings that can be added to each modules:
+Below, the global settings that can be added to each module:
 
 * [brew](brew.md)
 * [chocolatey](chocolatey.md)

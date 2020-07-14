@@ -17,7 +17,7 @@ vscode-anywhere:
 ```
 
 {% hint style="info" %}
-You can also take a look at the [VSCode-Anywhere PowersShell module configuration](https://code.visualstudio.com/docs/languages/powershell).
+You can also take a look at the [VSCode-Anywhere PowerShell module configuration](https://code.visualstudio.com/docs/languages/powershell).
 {% endhint %}
 
 ## Requirements

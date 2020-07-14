@@ -34,9 +34,9 @@ No requirements.
 
 #### ms-vscode-remote.remote-ssh
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) lets you use any remote machine with a SSH server as your development environment.
+This [extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) lets you use any remote machine with an SSH server as your development environment.
 
-Read the [documentation](https://code.visualstudio.com/remote-tutorials/ssh/getting-started), the [tutorial](https://code.visualstudio.com/remote-tutorials/ssh/getting-started) and [tips](https://code.visualstudio.com/docs/remote/troubleshooting#_ssh-tips) for more details.
+Read the [documentation](https://code.visualstudio.com/remote-tutorials/ssh/getting-started), the [tutorial](https://code.visualstudio.com/remote-tutorials/ssh/getting-started), and [tips](https://code.visualstudio.com/docs/remote/troubleshooting#_ssh-tips) for more details.
 
 ![](https://microsoft.github.io/vscode-remote-release/images/ssh-readme.gif)
 

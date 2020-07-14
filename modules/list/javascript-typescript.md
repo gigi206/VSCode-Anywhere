@@ -8,7 +8,7 @@
 
 [Javascript](https://www.oracle.com/java/) \(JS\) is a lightweight, interpreted, or just-in-time compiled programming language with first-class functions.
 
-While it is most well-known as the scripting language for Web pages, many non-browser environments also use it, such as Node.js, Apache CouchDB and Adobe Acrobat.
+While it is most well-known as the scripting language for Web pages, many non-browser environments also use it, such as Node.js, Apache CouchDB, and Adobe Acrobat.
 
 JavaScript is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting object-oriented, imperative, and declarative \(e.g. functional programming\) styles.
 
@@ -47,7 +47,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=VisualStudi
 [ESLint](http://eslint.org/) support inside VS Code.
 
 {% hint style="info" %}
-This extension doesn’t work out of the box. You must configure it for each project for this extension works properly.
+This extension doesn’t work out of the box. You must configure it for each project for this extension to work properly.
 
 Please read the [documentation](https://eslint.org/docs/user-guide/configuring).
 {% endhint %}
@@ -88,7 +88,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=christian-k
 
 #### msjsdiag.debugger-for-chrome
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) allow to debug your JavaScript code in the Chrome browser, or any other target that supports the Chrome Debugger protocol.
+This [extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) allows you to debug your JavaScript code in the Chrome browser or any other target that supports the Chrome Debugger protocol.
 
 ![](https://github.com/Microsoft/vscode-chrome-debug/blob/master/images/demo.gif?raw=true)
 
@@ -112,7 +112,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=wix.vscode-
 
 #### hbenl.vscode-mocha-test-adapter
 
-[This extension](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter) allows to run your [Mocha](https://mochajs.org) tests using the [Test Explorer UI](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer).
+[This extension](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter) allows you to run your [Mocha](https://mochajs.org) tests using the [Test Explorer UI](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer).
 
 ![](https://github.com/hbenl/vscode-mocha-test-adapter/raw/master/img/screenshot.png)
 
@@ -147,7 +147,7 @@ No [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 ## Software
 
-### Windows softwares
+### Windows software
 
 #### scoop
 
@@ -212,11 +212,11 @@ vscode-anywhere:
 
 #### npm
 
-Allow to manage [npm](https://www.npmjs.com) packages.
+Allow manageing [npm](https://www.npmjs.com) packages.
 
 * **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
-  * `version`: version of the npm package
+  * `version`: the version of the npm package
 
 
 
@@ -224,25 +224,25 @@ Allow to manage [npm](https://www.npmjs.com) packages.
 
 `opts` is not mandatory but allows to pass additional arguments.
 
-Extra args can be arguments described in the [saltstack npm states](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack npm states](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 
 
 Global `opts` packages settings:
 
-* `npm:pkgs:opts:global`: allow to pass arguments **to all npm packages** when **installing**, **updating**, or **uninstalling** a package
-*  `pm:pkgs:opts:install`: allow to pass arguments **to all npm packages** when **installing** a package \(cf [states.npm.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.installed)\)
-* `npm:pkgs:opts:update`: allow to pass arguments **to all npm packages** when **updating** a package \(cf [states.npm.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.chocolatey.html#salt.states.chocolatey.upgraded) is also called during the update process\)
-* `npm:pkgs:opts:uninstall`: allow to pass arguments **to all npm packages** when **uninstalling** a package \(cf [states.npm.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.removed)\)
+* `npm:pkgs:opts:global`: allow passing arguments **to all npm packages** when **installing**, **updating**, or **uninstalling** a package
+*  `pm:pkgs:opts:install`: allow passing arguments **to all npm packages** when **installing** a package \(cf [states.npm.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.installed)\)
+* `npm:pkgs:opts:update`: allow passing arguments **to all npm packages** when **updating** a package \(cf [states.npm.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.chocolatey.html#salt.states.chocolatey.upgraded) is also called during the update process\)
+* `npm:pkgs:opts:uninstall`: allow passing arguments **to all npm packages** when **uninstalling** a package \(cf [states.npm.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.removed)\)
 
 #### 
 
 Specific `opts` packages settings:
 
-* `npm:pkgs:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **npm package** when **installing**, **updating**, or **uninstalling** the package
-*  `npm:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **npm packages** when **installing** the package \(cf [states.npm.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.installed)\)
-* `npm:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **npm packages** when **updating** the package \(cf [states.npm.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.chocolatey.html#salt.states.chocolatey.upgraded) is also called during the update process\)
-* `npm:pkgs:<mypkg>:opts:uninstall`: allow to pass arguments **to** `<mypkg>` **npm packages** when **uninstalling** the package \(cf [states.npm.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.removed)\)
+* `npm:pkgs:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **npm package** when **installing**, **updating**, or **uninstalling** the package
+*  `npm:pkgs:<mypkg>:opts:install`: allow passing arguments **to** `<mypkg>` **npm packages** when **installing** the package \(cf [states.npm.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.installed)\)
+* `npm:pkgs:<mypkg>:opts:update`: allow passing arguments **to** `<mypkg>` **npm packages** when **updating** the package \(cf [states.npm.installed](https://docs.saltstack.com/en/master/ref/states/all/salt.states.chocolatey.html#salt.states.chocolatey.upgraded) is also called during the update process\)
+* `npm:pkgs:<mypkg>:opts:uninstall`: allow passing arguments **to** `<mypkg>` **npm packages** when **uninstalling** the package \(cf [states.npm.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.npm.html#salt.states.npm.removed)\)
 
 
 

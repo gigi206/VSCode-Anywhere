@@ -39,7 +39,7 @@ By default, the Python extension looks for and loads a file named `.env` in the 
 And you can also interact with your environment with the VSCode settings `.vscode/settings.json`:
 
 * `python.envFile`: Absolute path to a file containing environment variable definitions
-* `python.venvPath`: Path to folder with a list of Virtual Environments
+* `python.venvPath`: Path to the folder with a list of Virtual Environments
 * `python.venvFolders`: Folders in your home directory to look into for virtual environments \(supports pyenv, direnv and virtualenvwrapper by default\)
 
 And also use environment variable \(you can set these variables directly in your `python.envFile`:
@@ -49,7 +49,7 @@ And also use environment variable \(you can set these variables directly in your
 
 #### virtualenv
 
-If you want to test directly your `virtualenv` without configure your settings:
+If you want to test directly your `virtualenv` without configuring your settings:
 
 ```text
 cd <path_to_your_project>
@@ -70,7 +70,7 @@ And select the right interpreter \(virtualenv\) from the list provided.
 
 #### pipenv
 
-If you want to test directly your `pipenv` without configure your settings:
+If you want to test directly your `pipenv` without configuring your settings:
 
 ```text
 cd <path_to_your_project>
@@ -89,7 +89,7 @@ And select the right interpreter from the list provided.
 
 #### poetry
 
-If you want to test directly your `poetry` without configure your settings:
+If you want to test directly your `poetry` without configuring your settings:
 
 ```text
 cd <path_to_your_project>
@@ -145,7 +145,7 @@ This [extension](https://vscode-anywhere.readthedocs.io/en/dev/modules/littlefox
 ![](https://github.com/kondratyev-nv/vscode-python-test-adapter/raw/master/img/screenshot.png)
 
 {% hint style="info" %}
-VSCode-Anywhere installs python modules `nose`, `pytest` and configure `pytest` to the default test adapter. `unittest` is a builtin python module.
+VSCode-Anywhere installs python modules `nose`, `pytest` and configure`pytest`to the default test adapter. `unittest` is a builtin python module.
 {% endhint %}
 
 ### VSCode settings
@@ -410,13 +410,13 @@ Requires that `anaconda` be set to `True`.
 
 #### pip
 
-Allow to install packages with [pip](https://pypi.org).
+Allow installing packages with [pip](https://pypi.org).
 
 
 
 * **`pkgs`**: name of the packages to install
   * `enabled`: `True` to `enable`, `False` to skip \(default to `False`\)
-  * `version`: version of the pip package
+  * `version`: the version of the pip package
 
 
 
@@ -424,25 +424,25 @@ Allow to install packages with [pip](https://pypi.org).
 
 `opts` is not mandatory but allows to pass additional arguments.
 
-Extra args can be arguments described in the [saltstack pip states](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html) or can be [global saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
+Extra args can be arguments described in the [Saltstack pip states](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html) or can be [global Saltstack arguments](https://docs.saltstack.com/en/latest/ref/states/requisites.html).
 
 
 
 Global `opts` packages settings:
 
-* `pip:pkgs:opts:global`: allow to pass arguments **to all pip packages** when **installing**, **updating**, or **uninstalling** a package
-*  `pm:pkgs:opts:install`: allow to pass arguments **to all pip packages** when **installing** a package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
-* `pip:pkgs:opts:update`: allow to pass arguments **to all pip packages** when **updating** a package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
-* `pip:pkgs:opts:uninstall`: allow to pass arguments **to all pip packages** when **uninstatalling** a package \(cf [states.pip.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.removed)\)
+* `pip:pkgs:opts:global`: allow passing arguments **to all pip packages** when **installing**, **updating**, or **uninstalling** a package
+*  `pm:pkgs:opts:install`: allow passing arguments **to all pip packages** when **installing** a package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
+* `pip:pkgs:opts:update`: allow passing arguments **to all pip packages** when **updating** a package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
+* `pip:pkgs:opts:uninstall`: allow passing arguments **to all pip packages** when **uninstalling** a package \(cf [states.pip.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.removed)\)
 
 
 
 Specific `opts` packages settings:
 
-* `pip:<mypkg>:opts:global`: allow to pass arguments **to** `<mypkg>` **pip package** when **installing**, **updating**, or **uninstalling** the package
-*  `pip:pkgs:<mypkg>:opts:install`: allow to pass arguments **to** `<mypkg>` **pip packages** when **installing** the package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
-* `pip:pkgs:<mypkg>:opts:update`: allow to pass arguments **to** `<mypkg>` **pip packages** when **updating** the package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
-* `pip:pkgs:<mypkg>:opts:uninstall`: allow to pass arguments **to all pip packages** when **uninstatalling** a package \(cf [states.pip.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.removed)\)
+* `pip:<mypkg>:opts:global`: allow passing arguments **to** `<mypkg>` **pip package** when **installing**, **updating**, or **uninstalling** the package
+*  `pip:pkgs:<mypkg>:opts:install`: allow passing arguments **to** `<mypkg>` **pip packages** when **installing** the package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
+* `pip:pkgs:<mypkg>:opts:update`: allow passing arguments **to** `<mypkg>` **pip packages** when **updating** the package \(cf [states.pip.installed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.installed)\)
+* `pip:pkgs:<mypkg>:opts:uninstall`: allow passing arguments **to all pip packages** when **uninstalling** a package \(cf [states.pip.removed](https://docs.saltstack.com/en/latest/ref/states/all/salt.states.pip_state.html#salt.states.pip_state.removed)\)
 
 {% hint style="info" %}
 Replace `<mypkg>` by the name of the package to install.

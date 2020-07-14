@@ -20,7 +20,7 @@ vscode-anywhere:
 You can also take a look at the [VSCode-Anywhere go module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/go/defaults.yaml).
 {% endhint %}
 
-For more details read the the [official documentation](https://code.visualstudio.com/docs/languages/go).
+For more details read the [official documentation](https://code.visualstudio.com/docs/languages/go).
 
 ## Requirements
 
@@ -155,10 +155,10 @@ vscode-anywhere:
 
 #### modules
 
-For each modules you must specify the path like `github.com/ramya-rao-a/go-outline`.
+For each module you must specify the path like `github.com/ramya-rao-a/go-outline`.
 
 * `enabled`: enabled the module
-* `version`:  version of the module to install
+* `version`:  the version of the module to install
 
 Below are all `go` modules installed by SCode-Anywhere:
 

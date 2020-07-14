@@ -167,7 +167,7 @@ This [extension](https://marketplace.visualstudio.com/items?itemName=jbenden.c-c
 
 #### matepek.vscode-catch2-test-adapter
 
-This [extension](https://marketplace.visualstudio.com/items?itemName=matepek.vscode-catch2-test-adapter) allows you to run your [Catch2](https://github.com/catchorg/Catch2), [Google Test](https://github.com/google/googletest) and [doctest](https://github.com/onqtam/doctest) \(experimental\) tests for Visual Studio Code.
+This [extension](https://marketplace.visualstudio.com/items?itemName=matepek.vscode-catch2-test-adapter) allows you to run your [Catch2](https://github.com/catchorg/Catch2), [Google Test](https://github.com/google/googletest), and [doctest](https://github.com/onqtam/doctest) \(experimental\) tests for Visual Studio Code.
 
 ![Cpp tests](https://github.com/matepek/vscode-catch2-test-adapter/raw/master/resources/Screenshot_2019-05-28.png)
 

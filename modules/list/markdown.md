@@ -22,7 +22,7 @@ vscode-anywhere:
 You can also take a look at the [VSCode-Anywhere markdown module configuration](https://github.com/gigi206/VSCode-Anywhere/blob/V2/salt/modules/markdown/defaults.yaml).
 {% endhint %}
 
-For more details read the the [official documentation](https://code.visualstudio.com/docs/languages/markdown).
+For more details read the [official documentation](https://code.visualstudio.com/docs/languages/markdown).
 
 ## Requirements
 
