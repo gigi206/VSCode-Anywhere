@@ -18,6 +18,7 @@ include:
     - salt/modules/bash/update
     - salt/modules/c_cpp/update
     - salt/modules/csharp/update
+    - salt/modules/custom/update
     - salt/modules/deepcode/update
     - salt/modules/docker/update
     - salt/modules/fonts/update
