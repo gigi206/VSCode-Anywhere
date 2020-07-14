@@ -36,6 +36,7 @@ include:
     - salt/modules/python2/update
     - salt/modules/python3/update
     - salt/modules/remote/update
+    - salt/modules/rest/update
     - salt/modules/restructuredtext/update
     - salt/modules/ruby/update
     - salt/modules/saltstack/update

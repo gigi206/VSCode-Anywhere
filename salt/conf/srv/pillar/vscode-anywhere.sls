@@ -55,6 +55,8 @@ vscode-anywhere:
     anaconda: False
   remote:
     enabled: False
+  rest:
+    enabled: False
   restructuredtext:
     enabled: False
   ruby:

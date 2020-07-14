@@ -1,0 +1,7 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      humao.rest-client:
+        enabled: True
+        version: null
