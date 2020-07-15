@@ -7,7 +7,7 @@ Open a PowerShell console and enter the following command:
 {% tabs %}
 {% tab title="Powershell" %}
 ```text
-Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V2/VSCode-Anywhere.ps1 -OutFile $env:TMP\VSCode-Anywhere.ps1; & $env:TMP\VSCode-Anywhere.ps1 -Gitenv V2
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-WebRequest -Uri https://raw.githubusercontent.com/gigi206/VSCode-Anywhere/V2/VSCode-Anywhere.ps1 -OutFile $env:TMP\VSCode-Anywhere.ps1; & $env:TMP\VSCode-Anywhere.ps1
 ```
 {% endtab %}
 {% endtabs %}
