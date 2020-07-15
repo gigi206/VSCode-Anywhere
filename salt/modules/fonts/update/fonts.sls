@@ -4,10 +4,11 @@
 {%- if fonts.enabled %}
   {%- if grains['kernel'] == 'Windows' %}
     # Namespace 0x14 is C:\Windows\Fonts and 0x1c is C:\Users\gigi\AppData\Local
-    {#-
-    {%- set fonts_target = salt['cmd.run']('(New-Object -ComObject Shell.Application).Namespace(0x14).self.Path', shell='powershell') %}
-    #}
-    {%- set fonts_target = salt['cmd.run']('(New-Object -ComObject Shell.Application).Namespace(0x1c).self.Path', shell='powershell') | path_join('Microsoft', 'Windows', 'Fonts') %}
+    {%- if salt['cmd.run']("(New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)", shell='powershell') == 'False' %}
+      {%- set fonts_target = salt['cmd.run']('(New-Object -ComObject Shell.Application).Namespace(0x1c).self.Path', shell='powershell') | path_join('Microsoft', 'Windows', 'Fonts') %}
+    {%- else %}
+      {%- set fonts_target = salt['cmd.run']('(New-Object -ComObject Shell.Application).Namespace(0x14).self.Path', shell='powershell') %}
+    {%- endif %}
   {%- else %}
     {%- set fonts_target = salt['grains.get']('vscode-anywhere:apps:path') | path_join('vscode-anywhere', 'home', '.local', 'share', 'fonts') %}
   {%- endif %}
