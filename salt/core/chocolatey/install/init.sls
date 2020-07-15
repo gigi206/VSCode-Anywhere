@@ -2,22 +2,5 @@
 {%- from 'salt/core/chocolatey/map.jinja' import chocolatey with context %}
 
 
-{%- if chocolatey.enabled %}
-{{ salt['vscode_anywhere.get_id'](sls) + ':bootstrap' }}:
-  cmd.run:
-    - name: iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    - shell: powershell
-    - env:
-      - chocolateyInstall: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}
-      - chocolateyToolsLocation: {{ salt['grains.get']('vscode-anywhere:apps:path') }}
-    - unless:
-      - IF NOT EXIST "{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}" exit 1
-      #- if (!(Test-Path '{{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}' -PathType Container)) { exit 1 }
-      #- fun: file.access
-      #  path: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('chocolatey') }}
-      #  mode: f
-{%- endif %}
-
-
 {#- {{ init(chocolatey, action='install', func=[], include=['salt/core/chocolatey/install/env']) }} #}
-{{ init(chocolatey, action='install', func=['env']) }}
+{{ init(chocolatey, action='install', func=['env'], include=['salt/core/chocolatey/install/bootstrap']) }}
