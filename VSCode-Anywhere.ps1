@@ -2,7 +2,7 @@
 #   Params   #
 ##############
 Param(
-    [string]$Gitenv = "master",
+    [string]$Gitenv = "V2",
     [string]$InstallDir = "C:\VSCode-Anywhere",
     [string]$SaltVersion = "3001",
     [string]$Profile = "windows_user",

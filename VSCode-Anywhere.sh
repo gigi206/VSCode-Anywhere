@@ -60,7 +60,7 @@ function Params {
 function Usage {
     echo "usage :"
     echo "    -h | --help        : print this help"
-    echo "    -e | --gitenv      : git branch (default: master)"
+    echo "    -e | --gitenv      : git branch (default: V2)"
     echo "    -d | --installdir  : installation directory (default: ~/VSCode-Anywhere)"
     echo "    -v | --saltversion : saltstack version to use"
     echo "    -p | --profile     : VSCode-Anywhere profile to use (default: linux_user)"
@@ -394,7 +394,7 @@ then
     Gitenv="${TRAVIS_BRANCH}"
 fi
 
-[ -z "$Gitenv" ] && Gitenv="master"
+[ -z "$Gitenv" ] && Gitenv="V2"
 [ -z "$InstallDir" ] && InstallDir=~/VSCode-Anywhere || InstallDir=$(realpath $InstallDir)
 [ -z "$SaltVersion" ] && SaltVersion="3001"
 [ -z "$Profile" ] && Profile="linux_user"
