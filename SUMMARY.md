@@ -77,7 +77,8 @@
 
 ---
 
-* [Tutorials](tuto.md)
+* [Tutorials](tuto/README.md)
+  * [Youtube tutorials](tuto/youtube-tutorials.md)
 * [Release notes](releases/README.md)
   * [V2](releases/v2/README.md)
     * [V2.0.0](releases/v2/v2.0.0.md)
