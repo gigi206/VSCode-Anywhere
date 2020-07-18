@@ -21,3 +21,7 @@ With traditionnal VSCode, for example if you want to develop with the _Python_ l
 Also, VSCode-Anywhere installs for you the documentation of your language. Still with the Python example, the Python2 and Python3 documentation will be downloaded and you will have access to this documentation directly through your code.
 
 Many modules are available in this tool like git, platformio, python, perl, ruby, C, C++, PHP, Java, JavaScript...
+
+## Tutorials
+
+[Youtube tutorials](https://gigi206.gitbook.io/vscode-anywhere/tuto/youtube-tutorials)
