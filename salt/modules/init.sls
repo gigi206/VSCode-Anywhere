@@ -7,6 +7,7 @@ include:
     - salt/modules/python2
     - salt/modules/python3
     - salt/modules/ruby
+    - salt/modules/rust
     - salt/modules/perl
     - salt/modules/c_cpp
     - salt/modules/csharp

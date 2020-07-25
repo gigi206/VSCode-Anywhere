@@ -59,6 +59,8 @@ vscode-anywhere:
   ruby:
     enabled: False
     rails: False
+  rust:
+    enabled: False
   saltstack:
     enabled: False
   vscode:

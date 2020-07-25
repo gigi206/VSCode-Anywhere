@@ -1,0 +1,51 @@
+default:
+  enabled: False
+  vscode:
+    extensions:
+      rust-lang.rust:
+        enabled: True
+        version: null
+      serayuzgur.crates:
+        enabled: True
+        version: null
+      swellaby.vscode-rust-test-adapter:
+        enabled: True
+        version: null
+      bungcip.better-toml:
+        enabled: True
+        version: null
+  zeal:
+    docsets:
+      Rust:
+        enabled: True
+        version: null
+  target: stable-x86_64-pc-windows-gnu
+  components:
+    - rust-analysis
+    - rust-src
+    - rls
+# rustup uninstall toolchain stable-x86_64-pc-windows-msvc
+# rustup toolchain install stable-x86_64-pc-windows-gnu
+# rustup default stable-x86_64-pc-windows-gnu
+# rustup component add rls --toolchain stable-x86_64-pc-windows-msvc
+Windows:
+  vscode:
+    extensions:
+      rust-lang.rust:
+        settings:
+          rust-client.rustupPath: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'rustup', 'current', '.gargo', 'bin', 'rustup.exe') }}
+  env:
+    PATH: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'apps', 'rustup', 'current', '.cargo', 'bin') }}
+    CARGO_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'rustup', '.cargo') }}
+    RUSTUP_HOME: {{ salt['grains.get']('vscode-anywhere:apps:path') | path_join('scoop', 'persist', 'rustup', '.rustup') }}
+  scoop:
+    pkgs:
+      rustup:
+        enabled: True
+        version: null
+Linux:
+  vscode:
+    extensions:
+      rust-lang.rust:
+        settings:
+          rust-client.rustupPath: xxx

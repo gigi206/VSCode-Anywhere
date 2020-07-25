@@ -39,5 +39,6 @@ include:
     - salt/modules/rest/update
     - salt/modules/restructuredtext/update
     - salt/modules/ruby/update
+    - salt/modules/rust/update
     - salt/modules/saltstack/update
     - salt/modules/vscode/update
